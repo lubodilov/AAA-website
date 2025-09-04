@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced smooth scrolling with custom timing */
+* {
+  scroll-behavior: auto;
+}
+
+/* Custom smooth scrolling with acceleration/deceleration curve */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  .smooth-scroll {
+    scroll-behavior: auto;
+    scroll-snap-type: y mandatory;
+  }
+  
+  /* Custom scroll timing for smoother transitions */
+  .smooth-transition {
+    transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+}
