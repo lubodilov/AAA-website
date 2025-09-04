@@ -8,19 +8,38 @@ function App() {
   const [currentSection, setCurrentSection] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [scrollVelocity, setScrollVelocity] = useState(0);
+  const [lastScrollPosition, setLastScrollPosition] = useState(0);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isSnappingRef = useRef(false);
   const lastScrollTimeRef = useRef(0);
+  const velocityTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollAccumulatorRef = useRef(0);
+  const lastWheelTimeRef = useRef(0);
 
   const sections = ['hero', 'strategic', 'transformation-1', 'transformation-2', 'transformation-3'];
 
   // Smooth scroll with section snapping
   useEffect(() => {
     let ticking = false;
+    let lastTime = Date.now();
 
     const updateScrollProgress = () => {
+      const now = Date.now();
+      const deltaTime = now - lastTime;
+      lastTime = now;
+      
       const scrollTop = window.scrollY;
+      const deltaScroll = scrollTop - lastScrollPosition;
+      
+      // Calculate velocity (pixels per millisecond)
+      if (deltaTime > 0) {
+        const velocity = Math.abs(deltaScroll / deltaTime);
+        setScrollVelocity(velocity);
+        setLastScrollPosition(scrollTop);
+      }
+      
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight - windowHeight;
       const progress = Math.min(scrollTop / documentHeight, 1);
@@ -70,14 +89,24 @@ function App() {
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
       }
+      
+      // Clear velocity timeout
+      if (velocityTimeoutRef.current) {
+        clearTimeout(velocityTimeoutRef.current);
+      }
 
-      // Set new timeout for scroll end detection
+      // Set new timeout for scroll end detection (longer for smoother experience)
       scrollTimeoutRef.current = setTimeout(() => {
-        if (Date.now() - lastScrollTimeRef.current >= 150) {
+        if (Date.now() - lastScrollTimeRef.current >= 200) {
           setIsScrolling(false);
           snapToNearestSection();
         }
-      }, 150);
+      }, 200);
+      
+      // Reset velocity after a delay
+      velocityTimeoutRef.current = setTimeout(() => {
+        setScrollVelocity(0);
+      }, 100);
     };
 
     const snapToNearestSection = () => {
@@ -85,6 +114,7 @@ function App() {
       
       const scrollTop = window.scrollY;
       const windowHeight = window.innerHeight;
+      const currentVelocity = scrollVelocity;
       
       // Find the closest section/slide
       let closestSection = 0;
@@ -107,12 +137,34 @@ function App() {
         }
       });
 
+      // Velocity-based section prediction for smoother experience
+      if (currentVelocity > 0.3) { // High velocity threshold
+        const scrollDirection = scrollTop > lastScrollPosition ? 1 : -1;
+        const predictedSection = closestSection + scrollDirection;
+        
+        // Only predict if we're close to a boundary and moving fast
+        if (predictedSection >= 0 && predictedSection < scrollTargets.length) {
+          const distanceToNext = Math.abs(scrollTop - scrollTargets[predictedSection]);
+          const distanceToCurrent = Math.abs(scrollTop - scrollTargets[closestSection]);
+          
+          // If we're closer to the predicted section and moving fast, use it
+          if (distanceToNext < windowHeight * 0.4 && currentVelocity > 0.5) {
+            closestSection = predictedSection;
+          }
+        }
+      }
       // Only snap if we're not already very close to a section boundary
       const targetScrollTop = scrollTargets[closestSection];
       const distanceToTarget = Math.abs(scrollTop - targetScrollTop);
       
-      if (distanceToTarget > 50) { // Only snap if more than 50px away
+      // Dynamic snap threshold based on velocity
+      const snapThreshold = Math.max(30, Math.min(100, currentVelocity * 100));
+      
+      if (distanceToTarget > snapThreshold) {
         isSnappingRef.current = true;
+        
+        // Smoother easing based on distance and velocity
+        const duration = Math.max(600, Math.min(1200, distanceToTarget * 2));
         
         window.scrollTo({
           top: targetScrollTop,
@@ -122,30 +174,50 @@ function App() {
         // Reset snapping flag after animation completes
         setTimeout(() => {
           isSnappingRef.current = false;
-        }, 800);
+        }, duration + 200);
       }
     };
 
-    // Enhanced wheel handling for smoother experience
+    // Enhanced wheel handling with momentum and resistance
     const handleWheel = (e: WheelEvent) => {
       if (isSnappingRef.current) {
         e.preventDefault();
         return;
       }
 
-      // Allow natural scrolling but with momentum
+      const now = Date.now();
+      const timeSinceLastWheel = now - lastWheelTimeRef.current;
+      lastWheelTimeRef.current = now;
+      
+      // Accumulate scroll delta for smoother experience
+      scrollAccumulatorRef.current += e.deltaY;
+      
+      // Reset accumulator if too much time has passed
+      if (timeSinceLastWheel > 100) {
+        scrollAccumulatorRef.current = e.deltaY;
+      }
+      
+      // Apply resistance to prevent slide skipping
       const delta = e.deltaY;
+      const resistance = Math.min(1, Math.max(0.3, 1 - Math.abs(scrollAccumulatorRef.current) / 1000));
+      const adjustedDelta = delta * resistance;
+      
       const scrollTop = window.scrollY;
       const windowHeight = window.innerHeight;
       const maxScroll = windowHeight * 5 - windowHeight; // 5 sections total
       
-      // Smooth momentum scrolling
-      const targetScroll = Math.max(0, Math.min(scrollTop + delta * 1.2, maxScroll));
+      // Smooth momentum scrolling with resistance
+      const targetScroll = Math.max(0, Math.min(scrollTop + adjustedDelta * 0.8, maxScroll));
       
       window.scrollTo({
         top: targetScroll,
         behavior: 'auto'
       });
+      
+      // Decay accumulator
+      setTimeout(() => {
+        scrollAccumulatorRef.current *= 0.9;
+      }, 50);
       
       e.preventDefault();
     };
@@ -153,6 +225,7 @@ function App() {
     // Touch handling for mobile
     let touchStartY = 0;
     let touchStartTime = 0;
+    let touchVelocity = 0;
 
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY;
@@ -167,11 +240,22 @@ function App() {
 
       const touchY = e.touches[0].clientY;
       const deltaY = touchStartY - touchY;
+      const deltaTime = Date.now() - touchStartTime;
+      
+      // Calculate touch velocity
+      if (deltaTime > 0) {
+        touchVelocity = Math.abs(deltaY / deltaTime);
+      }
+      
+      // Apply resistance for smoother touch scrolling
+      const resistance = Math.min(1, Math.max(0.4, 1 - touchVelocity * 2));
+      const adjustedDelta = deltaY * resistance;
+      
       const scrollTop = window.scrollY;
       const windowHeight = window.innerHeight;
       const maxScroll = windowHeight * 5 - windowHeight;
       
-      const targetScroll = Math.max(0, Math.min(scrollTop + deltaY * 2, maxScroll));
+      const targetScroll = Math.max(0, Math.min(scrollTop + adjustedDelta * 1.5, maxScroll));
       
       window.scrollTo({
         top: targetScroll,
@@ -179,18 +263,19 @@ function App() {
       });
       
       touchStartY = touchY;
+      touchStartTime = Date.now();
     };
 
     const handleTouchEnd = () => {
       const touchDuration = Date.now() - touchStartTime;
       
-      // Add momentum for quick swipes
-      if (touchDuration < 200) {
+      // Add momentum for quick swipes with velocity consideration
+      if (touchDuration < 300 && touchVelocity > 0.5) {
         setTimeout(() => {
           if (!isScrolling) {
             snapToNearestSection();
           }
-        }, 100);
+        }, 150);
       }
     };
 
@@ -211,8 +296,11 @@ function App() {
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
       }
+      if (velocityTimeoutRef.current) {
+        clearTimeout(velocityTimeoutRef.current);
+      }
     };
-  }, [currentSection, isScrolling, sections.length]);
+  }, [currentSection, isScrolling, sections.length, scrollVelocity, lastScrollPosition]);
 
   // Section visibility observers for animations
   useEffect(() => {
