@@ -369,75 +369,8 @@ export default function TransformationProcess() {
       
       if (!isInSection) return;
 
-      // Don't navigate if already transitioning or just transitioned
-      if (isTransitioning || now - lastScrollTime < 300) {
-        e.preventDefault();
-        return;
-      }
-      
-      // Prevent default scroll behavior within section
-      e.preventDefault();
-      
-      // Accumulate scroll delta for less sensitive navigation
-      const newAccumulator = scrollAccumulator + Math.abs(e.deltaY);
-      setScrollAccumulator(newAccumulator);
-      
-      // Require moderate scroll distance before navigating - perfect balance
-      const scrollThreshold = 30; // Optimized threshold for smooth but controlled navigation
-      
-      if (newAccumulator < scrollThreshold) {
-        setLastScrollTime(now);
-        return;
-      }
-      
-      // Reset accumulator after successful navigation
-      setScrollAccumulator(0);
-      
-      // Don't navigate if already transitioning
-      if (isTransitioning) return;
-      
-      const direction = e.deltaY > 0 ? 1 : -1;
-      const targetSlide = currentSlide + direction;
-      
-      // Navigate to next/previous slide if within bounds
-      if (targetSlide >= 0 && targetSlide < slides.length) {
-        setLastScrollTime(now);
-        navigateToSlide(targetSlide);
-      } else if (targetSlide >= slides.length) {
-        // Allow scrolling out of section to next page section
-        setIsTransitioning(true);
-        window.scrollTo({
-          top: container.offsetTop + container.offsetHeight,
-          behavior: 'smooth'
-        });
-        setTimeout(() => setIsTransitioning(false), 800);
-        setLastScrollTime(now);
-      } else if (targetSlide < 0) {
-        // Allow scrolling out of section to previous page section
-        setIsTransitioning(true);
-        window.scrollTo({
-          top: container.offsetTop - window.innerHeight,
-          behavior: 'smooth'
-        });
-        setTimeout(() => setIsTransitioning(false), 800);
-        setLastScrollTime(now);
-      }
-    };
-
-    // Reset scroll accumulator when not scrolling for a while
-    const resetAccumulator = () => {
-      const now = Date.now();
-      if (now - lastScrollTime > 400) {
-        setScrollAccumulator(0);
-      }
-    };
-
-    const resetInterval = setInterval(resetAccumulator, 200);
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    return () => {
-      window.removeEventListener('wheel', handleWheel);
-      clearInterval(resetInterval);
-    };
+    // Remove global wheel handling - now handled by parent App component
+    return () => {};
   }, [currentSlide, isTransitioning, slides.length, lastScrollTime, scrollAccumulator]);
 
   return (
