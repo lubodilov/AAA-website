@@ -39,210 +39,232 @@ export default function TransformationProcess() {
 
   // Animated SVG Icons
   const EyeIcon = ({ isAnimated }: { isAnimated: boolean }) => (
-    <svg width="120" height="80" viewBox="0 0 120 80" className="w-full h-full">
-      <path
-        d="M10 40 Q60 10 110 40 Q60 70 10 40"
+    <svg width="120" height="120" viewBox="0 0 120 120" className="w-full h-full">
+      <defs>
+        <linearGradient id="analyzeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0.3" />
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+          <feMerge> 
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      
+      {/* Outer hexagonal frame */}
+      <polygon
+        points="60,15 90,35 90,65 60,85 30,65 30,35"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2"
-        strokeDasharray="200"
-        strokeDashoffset={isAnimated ? "0" : "200"}
+        strokeWidth="1.5"
+        opacity="0.4"
+        strokeDasharray="240"
+        strokeDashoffset={isAnimated ? "0" : "240"}
         style={{
-          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 0.8s ease-out',
-          transitionDelay: '0.2s'
+          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          transitionDelay: '0.1s'
         }}
       />
-      <circle
-        cx="60"
-        cy="40"
-        r="15"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeDasharray="95"
-        strokeDashoffset={isAnimated ? "0" : "95"}
-        style={{
-          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 0.6s ease-out',
-          transitionDelay: '0.6s'
-        }}
-      />
-      <circle
-        cx="60"
-        cy="40"
-        r="6"
-        fill="currentColor"
-        opacity={isAnimated ? "1" : "0"}
-        style={{
-          transition: prefersReducedMotion ? 'none' : 'opacity 0.3s ease-out',
-          transitionDelay: '1s'
-        }}
-      />
+      
+      {/* Inner geometric pattern */}
+      <g opacity={isAnimated ? "1" : "0"} style={{
+        transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+        transitionDelay: '0.4s'
+      }}>
+        {/* Central diamond */}
+        <polygon
+          points="60,35 75,50 60,65 45,50"
+          fill="url(#analyzeGradient)"
+          stroke="currentColor"
+          strokeWidth="1"
+          filter="url(#glow)"
+        />
+        
+        {/* Corner triangles */}
+        <polygon points="60,20 70,30 50,30" fill="currentColor" opacity="0.6" />
+        <polygon points="85,50 75,40 75,60" fill="currentColor" opacity="0.6" />
+        <polygon points="60,80 50,70 70,70" fill="currentColor" opacity="0.6" />
+        <polygon points="35,50 45,60 45,40" fill="currentColor" opacity="0.6" />
+      </g>
+      
+      {/* Scanning lines */}
+      <g opacity={isAnimated ? "0.8" : "0"} style={{
+        transition: prefersReducedMotion ? 'none' : 'opacity 0.6s ease-out',
+        transitionDelay: '0.8s'
+      }}>
+        <line x1="30" y1="50" x2="90" y2="50" stroke="currentColor" strokeWidth="0.5" opacity="0.7" />
+        <line x1="60" y1="30" x2="60" y2="70" stroke="currentColor" strokeWidth="0.5" opacity="0.7" />
+      </g>
     </svg>
   );
 
   const BlueprintIcon = ({ isAnimated }: { isAnimated: boolean }) => (
     <svg width="120" height="120" viewBox="0 0 120 120" className="w-full h-full">
-      {/* Grid lines */}
-      {[20, 40, 60, 80, 100].map((pos, i) => (
-        <g key={i}>
-          <line
-            x1={pos}
-            y1="10"
-            x2={pos}
-            y2="110"
-            stroke="currentColor"
-            strokeWidth="1"
-            opacity="0.3"
-            strokeDasharray="100"
-            strokeDashoffset={isAnimated ? "0" : "100"}
-            style={{
-              transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 0.6s ease-out',
-              transitionDelay: `${i * 0.1}s`
-            }}
-          />
-          <line
-            x1="10"
-            y1={pos}
-            x2="110"
-            y2={pos}
-            stroke="currentColor"
-            strokeWidth="1"
-            opacity="0.3"
-            strokeDasharray="100"
-            strokeDashoffset={isAnimated ? "0" : "100"}
-            style={{
-              transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 0.6s ease-out',
-              transitionDelay: `${i * 0.1 + 0.3}s`
-            }}
-          />
-        </g>
-      ))}
-      {/* Main structure */}
+      <defs>
+        <linearGradient id="upgradeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.9" />
+          <stop offset="50%" stopColor="currentColor" stopOpacity="0.6" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0.3" />
+        </linearGradient>
+        <filter id="architectGlow">
+          <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+          <feMerge> 
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      
+      {/* Outer architectural frame */}
       <rect
-        x="30"
-        y="30"
-        width="60"
-        height="40"
+        x="20" y="20" width="80" height="80"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2"
-        strokeDasharray="200"
-        strokeDashoffset={isAnimated ? "0" : "200"}
+        strokeWidth="1"
+        opacity="0.3"
+        strokeDasharray="320"
+        strokeDashoffset={isAnimated ? "0" : "320"}
         style={{
-          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 0.8s ease-out',
-          transitionDelay: '0.8s'
+          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          transitionDelay: '0.1s'
         }}
       />
-      <rect
-        x="40"
-        y="80"
-        width="40"
-        height="20"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeDasharray="120"
-        strokeDashoffset={isAnimated ? "0" : "120"}
-        style={{
-          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 0.6s ease-out',
-          transitionDelay: '1.2s'
-        }}
-      />
+      
+      {/* Central processing core */}
+      <g opacity={isAnimated ? "1" : "0"} style={{
+        transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+        transitionDelay: '0.3s'
+      }}>
+        <rect
+          x="45" y="45" width="30" height="30"
+          fill="url(#upgradeGradient)"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          filter="url(#architectGlow)"
+        />
+        
+        {/* Neural network nodes */}
+        <circle cx="35" cy="35" r="3" fill="currentColor" opacity="0.8" />
+        <circle cx="85" cy="35" r="3" fill="currentColor" opacity="0.8" />
+        <circle cx="35" cy="85" r="3" fill="currentColor" opacity="0.8" />
+        <circle cx="85" cy="85" r="3" fill="currentColor" opacity="0.8" />
+        
+        {/* Connection lines */}
+        <line x1="35" y1="35" x2="45" y2="45" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+        <line x1="85" y1="35" x2="75" y2="45" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+        <line x1="35" y1="85" x2="45" y2="75" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+        <line x1="85" y1="85" x2="75" y2="75" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+      </g>
+      
+      {/* Data flow indicators */}
+      <g opacity={isAnimated ? "0.7" : "0"} style={{
+        transition: prefersReducedMotion ? 'none' : 'opacity 0.6s ease-out',
+        transitionDelay: '0.6s'
+      }}>
+        <polygon points="60,25 65,30 55,30" fill="currentColor" opacity="0.8" />
+        <polygon points="95,60 90,55 90,65" fill="currentColor" opacity="0.8" />
+        <polygon points="60,95 55,90 65,90" fill="currentColor" opacity="0.8" />
+        <polygon points="25,60 30,65 30,55" fill="currentColor" opacity="0.8" />
+      </g>
     </svg>
   );
 
   const RocketIcon = ({ isAnimated }: { isAnimated: boolean }) => (
     <svg width="120" height="120" viewBox="0 0 120 120" className="w-full h-full">
-      {/* Rocket body */}
-      <path
-        d="M60 20 L50 80 L60 75 L70 80 Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeDasharray="150"
-        strokeDashoffset={isAnimated ? "0" : "150"}
-        style={{
-          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 0.8s ease-out',
-          transitionDelay: '0.2s'
-        }}
-      />
-      {/* Fins */}
-      <path
-        d="M45 70 L50 80 L45 85"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeDasharray="50"
-        strokeDashoffset={isAnimated ? "0" : "50"}
-        style={{
-          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 0.6s ease-out',
-          transitionDelay: '0.8s'
-        }}
-      />
-      <path
-        d="M75 70 L70 80 L75 85"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeDasharray="50"
-        strokeDashoffset={isAnimated ? "0" : "50"}
-        style={{
-          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 0.6s ease-out',
-          transitionDelay: '0.8s'
-        }}
-      />
-      {/* Flame trails */}
-      <path
-        d="M55 80 Q50 90 45 100"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        opacity="0.7"
-        strokeDasharray="40"
-        strokeDashoffset={isAnimated ? "0" : "40"}
-        style={{
-          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 0.6s ease-out',
-          transitionDelay: '1.2s'
-        }}
-      />
-      <path
-        d="M60 80 Q60 95 55 105"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        opacity="0.7"
-        strokeDasharray="45"
-        strokeDashoffset={isAnimated ? "0" : "45"}
-        style={{
-          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 0.6s ease-out',
-          transitionDelay: '1.4s'
-        }}
-      />
-      <path
-        d="M65 80 Q70 90 75 100"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        opacity="0.7"
-        strokeDasharray="40"
-        strokeDashoffset={isAnimated ? "0" : "40"}
-        style={{
-          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 0.6s ease-out',
-          transitionDelay: '1.2s'
-        }}
-      />
-      {/* Tip */}
+      <defs>
+        <linearGradient id="scaleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="currentColor" stopOpacity="1" />
+          <stop offset="50%" stopColor="currentColor" stopOpacity="0.7" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0.4" />
+        </linearGradient>
+        <filter id="scaleGlow">
+          <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+          <feMerge> 
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      
+      {/* Outer orbital rings */}
       <circle
-        cx="60"
-        cy="40"
-        r="3"
-        fill="currentColor"
-        opacity={isAnimated ? "1" : "0"}
+        cx="60" cy="60" r="45"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.3"
+        strokeDasharray="283"
+        strokeDashoffset={isAnimated ? "0" : "283"}
         style={{
-          transition: prefersReducedMotion ? 'none' : 'opacity 0.3s ease-out',
-          transitionDelay: '1.6s'
+          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          transitionDelay: '0.1s'
         }}
       />
+      
+      <circle
+        cx="60" cy="60" r="35"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.4"
+        strokeDasharray="220"
+        strokeDashoffset={isAnimated ? "0" : "220"}
+        style={{
+          transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          transitionDelay: '0.3s'
+        }}
+      />
+      
+      {/* Central core */}
+      <g opacity={isAnimated ? "1" : "0"} style={{
+        transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+        transitionDelay: '0.5s'
+      }}>
+        <circle
+          cx="60" cy="60" r="18"
+          fill="url(#scaleGradient)"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          filter="url(#scaleGlow)"
+        />
+        
+        {/* Inner geometric pattern */}
+        <polygon
+          points="60,48 68,60 60,72 52,60"
+          fill="currentColor"
+          opacity="0.8"
+        />
+      </g>
+      
+      {/* Orbital elements */}
+      <g opacity={isAnimated ? "0.9" : "0"} style={{
+        transition: prefersReducedMotion ? 'none' : 'opacity 0.6s ease-out',
+        transitionDelay: '0.8s'
+      }}>
+        {/* Strategic points */}
+        <circle cx="60" cy="15" r="2.5" fill="currentColor" opacity="0.8" />
+        <circle cx="105" cy="60" r="2.5" fill="currentColor" opacity="0.8" />
+        <circle cx="60" cy="105" r="2.5" fill="currentColor" opacity="0.8" />
+        <circle cx="15" cy="60" r="2.5" fill="currentColor" opacity="0.8" />
+        
+        {/* Connection vectors */}
+        <line x1="60" y1="25" x2="60" y2="42" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+        <line x1="95" y1="60" x2="78" y2="60" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+        <line x1="60" y1="95" x2="60" y2="78" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+        <line x1="25" y1="60" x2="42" y2="60" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+      </g>
+      
+      {/* Growth trajectory arrows */}
+      <g opacity={isAnimated ? "0.8" : "0"} style={{
+        transition: prefersReducedMotion ? 'none' : 'opacity 0.5s ease-out',
+        transitionDelay: '1.0s'
+      }}>
+        <polygon points="60,12 63,18 57,18" fill="currentColor" opacity="0.9" />
+        <polygon points="108,60 102,57 102,63" fill="currentColor" opacity="0.9" />
+      </g>
     </svg>
   );
 
