@@ -528,29 +528,45 @@ export default function TransformationProcess() {
           <div 
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{
-              opacity: animationStates[index] ? 0 : 1,
-              transform: animationStates[index] ? 'scale(0.92) translateY(-30px)' : 'scale(1) translateY(0px)',
+              opacity: 1,
+              transform: animationStates[index] ? 'scale(0.3) translateY(-280px)' : 'scale(1) translateY(0px)',
               transition: prefersReducedMotion ? 'none' : 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
               transitionDelay: '0.5s'
             }}
           >
             {/* Elite backdrop */}
-            <div className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-3xl" />
+            <div 
+              className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-3xl"
+              style={{
+                opacity: animationStates[index] ? 0 : 1,
+                transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+                transitionDelay: '0.3s'
+              }}
+            />
             
             {/* Premium frame */}
-            <div className="absolute top-20 left-8 right-8 bottom-8 border border-white/10 rounded-2xl" />
+            <div 
+              className="absolute top-20 left-8 right-8 bottom-8 border border-white/10 rounded-2xl"
+              style={{
+                opacity: animationStates[index] ? 0 : 1,
+                transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+                transitionDelay: '0.3s'
+              }}
+            />
             
             <h2 
               className="text-[12vw] md:text-[8vw] font-extralight select-none relative z-10"
               style={{
                 fontFamily: 'Inter, system-ui, sans-serif',
-                letterSpacing: '0.15em',
+                letterSpacing: animationStates[index] ? '0.05em' : '0.15em',
                 background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(239,68,68,0.8) 50%, rgba(255,255,255,0.7) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
                 textShadow: '0 0 60px rgba(239, 68, 68, 0.3), 0 0 120px rgba(0, 0, 0, 0.8)',
-                filter: 'drop-shadow(0 4px 20px rgba(0, 0, 0, 0.5))'
+                filter: 'drop-shadow(0 4px 20px rgba(0, 0, 0, 0.5))',
+                transition: prefersReducedMotion ? 'none' : 'letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                transitionDelay: '0.5s'
               }}
             >
               {slide.phase}
@@ -577,10 +593,38 @@ export default function TransformationProcess() {
             />
             
             {/* Corner elements */}
-            <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-white/20" />
-            <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-white/20" />
-            <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-white/20" />
-            <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-white/20" />
+            <div 
+              className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-white/20"
+              style={{
+                opacity: animationStates[index] ? 0 : 1,
+                transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+                transitionDelay: '0.3s'
+              }}
+            />
+            <div 
+              className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-white/20"
+              style={{
+                opacity: animationStates[index] ? 0 : 1,
+                transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+                transitionDelay: '0.3s'
+              }}
+            />
+            <div 
+              className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-white/20"
+              style={{
+                opacity: animationStates[index] ? 0 : 1,
+                transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+                transitionDelay: '0.3s'
+              }}
+            />
+            <div 
+              className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-white/20"
+              style={{
+                opacity: animationStates[index] ? 0 : 1,
+                transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+                transitionDelay: '0.3s'
+              }}
+            />
           </div>
 
           {/* Content Container */}
