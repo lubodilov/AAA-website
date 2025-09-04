@@ -2,44 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Enhanced smooth scrolling with momentum */
+/* GSAP and Lenis smooth scrolling setup */
 html {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   overflow-x: hidden;
 }
 
 body {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   overflow-x: hidden;
 }
 
-/* Smooth momentum scrolling */
+/* Performance optimizations for animations */
 @media (prefers-reduced-motion: no-preference) {
-  * {
-    scroll-behavior: auto;
+  .will-change-transform {
+    will-change: transform;
   }
   
-  /* Custom easing for buttery smooth scrolling */
-  .scroll-smooth {
-    scroll-behavior: smooth;
-    scroll-snap-type: none;
+  /* Smooth text reveals */
+  .split-text {
+    overflow: hidden;
   }
   
-  /* Momentum-based transitions */
-  .momentum-scroll {
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  .split-text .line {
+    overflow: hidden;
+    display: block;
   }
   
-  /* Buttery smooth section transitions */
-  .section-transition {
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  /* Reveal animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  
+  /* Parallax elements */
+  .parallax {
+    will-change: transform;
   }
 }
 
-/* Disable momentum scrolling on reduced motion */
+/* Disable animations on reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .momentum-scroll,
-  .section-transition {
+  .will-change-transform,
+  .reveal,
+  .parallax {
     transition: none;
+    animation: none;
+    will-change: auto;
+  }
+  
+  .reveal {
+    opacity: 1;
+    transform: none;
   }
 }

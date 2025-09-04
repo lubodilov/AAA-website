@@ -68,9 +68,9 @@ export default function OpportunityStatement() {
   }, [isVisible]);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      className="min-h-screen flex items-center relative overflow-hidden"
+      className="min-h-screen flex items-center relative overflow-hidden will-change-transform"
     >
       <div className="w-full max-w-none">
         {/* Desktop & Tablet Layout (≥768px) */}
@@ -79,15 +79,7 @@ export default function OpportunityStatement() {
           <div className="w-[55%] flex items-center px-20 lg:px-24 relative z-10">
             <div className="max-w-2xl">
               {/* Headline */}
-              <h2 
-                className={`text-3xl lg:text-5xl font-thin text-white leading-tight mb-8 transition-all duration-400 ${
-                  prefersReducedMotion ? 'ease-linear' : 'cubic-bezier(0.4,0,0.2,1)'
-                }`}
-                style={{
-                  transform: headlineVisible ? 'translateY(0px)' : 'translateY(30px)',
-                  opacity: headlineVisible ? 1 : 0
-                }}
-              >
+              <h2 className="split-text text-3xl lg:text-5xl font-thin text-white leading-tight mb-8 will-change-transform">
                 While Others Automate Tasks,{' '}
                 <span 
                   className="font-extralight italic"
@@ -103,18 +95,13 @@ export default function OpportunityStatement() {
               </h2>
               
               {/* Supporting Copy */}
-              <div 
-                className={`space-y-6 transition-opacity duration-400 delay-75`}
-                style={{
-                  opacity: copyVisible ? 0.8 : 0
-                }}
-              >
-                <p className="text-base lg:text-lg font-extralight text-white leading-relaxed">
+              <div className="space-y-6 reveal">
+                <p className="text-base lg:text-lg font-extralight text-white leading-relaxed reveal">
                   Most AI companies help you work faster. We help you{' '}
                   <span className="text-red-400 font-light">grow exponentially</span>.
                 </p>
                 
-                <p className="text-base lg:text-lg font-extralight text-white leading-relaxed">
+                <p className="text-base lg:text-lg font-extralight text-white leading-relaxed reveal">
                   The difference? We focus on{' '}
                   <span className="text-white font-light">acquisition acceleration</span>, not operational efficiency. 
                   While competitors optimize customer service, we architect intelligent systems that{' '}
@@ -126,7 +113,7 @@ export default function OpportunityStatement() {
           
           {/* Right Column - 45% */}
           <div 
-            className="w-[45%] flex items-center justify-center relative overflow-hidden z-10"
+            className="w-[45%] flex items-center justify-center relative overflow-hidden z-10 reveal"
           >
             <div className="text-center ml-8 relative z-10">
               {/* Counter */}
@@ -146,13 +133,13 @@ export default function OpportunityStatement() {
                   <div 
                     className="relative text-7xl lg:text-8xl font-bold transition-all duration-700"
                     style={{
-                      color: '#ef4444',
+                      color: '#ef4444', 
                       fontFamily: 'Inter, sans-serif',
                       letterSpacing: '-0.02em',
                       fontWeight: '700'
                     }}
                   >
-                    {counterValue}%
+                    <span className="counter-value">0</span>%
                   </div>
                 
                   {/* Horizontal line */}
@@ -186,15 +173,7 @@ export default function OpportunityStatement() {
         {/* Mobile Layout (<768px) */}
         <div className="md:hidden min-h-screen flex flex-col justify-center px-6 py-20 relative z-10">
           {/* Headline */}
-          <h2 
-            className={`text-2xl font-thin text-white leading-tight mb-6 transition-all duration-400 ${
-              prefersReducedMotion ? 'ease-linear' : 'cubic-bezier(0.4,0,0.2,1)'
-            }`}
-            style={{
-              transform: headlineVisible ? 'translateY(0px)' : 'translateY(30px)',
-              opacity: headlineVisible ? 1 : 0
-            }}
-          >
+          <h2 className="split-text text-2xl font-thin text-white leading-tight mb-6 will-change-transform">
             While Others Automate Tasks,{' '}
             <span 
               className="font-extralight italic"
@@ -210,18 +189,13 @@ export default function OpportunityStatement() {
           </h2>
           
           {/* Supporting Copy */}
-          <div 
-            className={`space-y-4 mb-8 transition-opacity duration-400 delay-75`}
-            style={{
-              opacity: copyVisible ? 0.8 : 0
-            }}
-          >
-            <p className="text-sm font-extralight text-white leading-relaxed">
+          <div className="space-y-4 mb-8 reveal">
+            <p className="text-sm font-extralight text-white leading-relaxed reveal">
               Most AI companies help you work faster. We help you{' '}
               <span className="text-red-400 font-light">grow exponentially</span>.
             </p>
             
-            <p className="text-sm font-extralight text-white leading-relaxed">
+            <p className="text-sm font-extralight text-white leading-relaxed reveal">
               The difference? We focus on{' '}
               <span className="text-white font-light">acquisition acceleration</span>, not operational efficiency.
             </p>
@@ -229,7 +203,7 @@ export default function OpportunityStatement() {
           
           {/* Inline Visualization */}
           <div 
-            className="p-8 rounded-2xl text-center bg-black/30 backdrop-blur-sm border border-red-600/20"
+            className="p-8 rounded-2xl text-center bg-black/30 backdrop-blur-sm border border-red-600/20 reveal"
           >
             {/* Counter */}
             <div className="relative mb-4">
@@ -248,13 +222,13 @@ export default function OpportunityStatement() {
                 <div 
                   className="relative text-5xl font-bold transition-all duration-700"
                   style={{
-                    color: '#ef4444',
+                    color: '#ef4444', 
                     fontFamily: 'Inter, sans-serif',
                     letterSpacing: '-0.02em',
                     fontWeight: '700'
                   }}
                 >
-                  {counterValue}%
+                  <span className="counter-value">0</span>%
                 </div>
               
                 {/* Horizontal line */}
