@@ -516,7 +516,7 @@ export default function TransformationProcess() {
             <div className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-3xl" />
             
             {/* Premium frame */}
-            <div className="absolute inset-8 border border-white/10 rounded-2xl" />
+            <div className="absolute top-20 left-8 right-8 bottom-8 border border-white/10 rounded-2xl" />
             
             <h2 
               className="text-[12vw] md:text-[8vw] font-extralight select-none relative z-10"
