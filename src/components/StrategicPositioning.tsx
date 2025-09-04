@@ -34,14 +34,14 @@ export default function OpportunityStatement() {
   useEffect(() => {
     if (isVisible) {
       // Start headline animation
-      setTimeout(() => setHeadlineVisible(true), 100);
+      setTimeout(() => setHeadlineVisible(true), 50);
       
       // Start copy animation after headline
-      setTimeout(() => setCopyVisible(true), 700);
+      setTimeout(() => setCopyVisible(true), 300);
       
       // Start counter animation
       setTimeout(() => {
-        const duration = 1200; // Smooth loading
+        const duration = 800; // Faster loading
         const targetValue = 467;
         const startTime = Date.now();
         
@@ -63,7 +63,7 @@ export default function OpportunityStatement() {
         };
         
         animateCounter();
-      }, 400); // Start counter timing
+      }, 200); // Start counter timing
     }
   }, [isVisible]);
 
@@ -80,7 +80,7 @@ export default function OpportunityStatement() {
             <div className="max-w-2xl">
               {/* Headline */}
               <h2 
-                className={`text-3xl lg:text-5xl font-thin text-white leading-tight mb-8 transition-all duration-600 ${
+                className={`text-3xl lg:text-5xl font-thin text-white leading-tight mb-8 transition-all duration-400 ${
                   prefersReducedMotion ? 'ease-linear' : 'cubic-bezier(0.4,0,0.2,1)'
                 }`}
                 style={{
@@ -104,7 +104,7 @@ export default function OpportunityStatement() {
               
               {/* Supporting Copy */}
               <div 
-                className={`space-y-6 transition-opacity duration-600 delay-100`}
+                className={`space-y-6 transition-opacity duration-400 delay-75`}
                 style={{
                   opacity: copyVisible ? 0.8 : 0
                 }}
@@ -168,7 +168,7 @@ export default function OpportunityStatement() {
               
               {/* Supporting Label */}
               <div 
-                className={`text-sm lg:text-base font-normal max-w-xs mx-auto leading-relaxed transition-all duration-700`}
+                className={`text-sm font-normal leading-relaxed transition-all duration-500`}
                 style={{
                   opacity: counterFinished ? 0.9 : 0,
                   transform: counterFinished ? 'translateY(0)' : 'translateY(15px)',
@@ -187,7 +187,7 @@ export default function OpportunityStatement() {
         <div className="md:hidden min-h-screen flex flex-col justify-center px-6 py-20 relative z-10">
           {/* Headline */}
           <h2 
-            className={`text-2xl font-thin text-white leading-tight mb-6 transition-all duration-600 ${
+            className={`text-2xl font-thin text-white leading-tight mb-6 transition-all duration-400 ${
               prefersReducedMotion ? 'ease-linear' : 'cubic-bezier(0.4,0,0.2,1)'
             }`}
             style={{
@@ -211,7 +211,7 @@ export default function OpportunityStatement() {
           
           {/* Supporting Copy */}
           <div 
-            className={`space-y-4 mb-8 transition-opacity duration-600 delay-100`}
+            className={`space-y-4 mb-8 transition-opacity duration-400 delay-75`}
             style={{
               opacity: copyVisible ? 0.8 : 0
             }}
@@ -270,7 +270,7 @@ export default function OpportunityStatement() {
             
             {/* Supporting Label */}
             <div 
-              className={`text-sm font-normal leading-relaxed transition-all duration-700`}
+              className={`text-sm lg:text-base font-normal max-w-xs mx-auto leading-relaxed transition-all duration-500`}
               style={{
                 opacity: counterFinished ? 0.9 : 0,
                 transform: counterFinished ? 'translateY(0)' : 'translateY(15px)',
