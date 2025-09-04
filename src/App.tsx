@@ -3,6 +3,8 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import OpportunityStatement from './components/StrategicPositioning';
 import TransformationProcess from './components/TransformationProcess';
+import ProofOfDominance from './components/ProofOfDominance';
+import VisionAssessment from './components/VisionAssessment';
 
 function App() {
   const [currentSection, setCurrentSection] = useState(0);
@@ -14,7 +16,7 @@ function App() {
   // Check for reduced motion preference
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const sections = ['hero', 'strategic', 'transformation'];
+  const sections = ['hero', 'strategic', 'transformation', 'proof', 'assessment'];
 
   // Navigate to specific section
   const navigateToSection = (targetSection: number) => {
@@ -171,6 +173,20 @@ function App() {
         className="snap-start"
       >
         <TransformationProcess />
+      </div>
+      
+      <div 
+        ref={el => sectionRefs.current[3] = el}
+        className="snap-start"
+      >
+        <ProofOfDominance />
+      </div>
+      
+      <div 
+        ref={el => sectionRefs.current[4] = el}
+        className="snap-start"
+      >
+        <VisionAssessment />
       </div>
     </div>
   );
