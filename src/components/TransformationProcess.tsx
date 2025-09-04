@@ -616,7 +616,7 @@ export default function TransformationProcess() {
               </div>
 
               {/* Right Content - 1/3 */}
-              <div className="flex justify-center md:justify-end">
+              <div className="flex justify-center md:justify-start">
                 <div 
                   className="w-48 h-48 flex items-center justify-center"
                   style={{
