@@ -508,8 +508,8 @@ export default function TransformationProcess() {
             style={{
               opacity: animationStates[index] ? 0 : 1,
               transform: animationStates[index] ? 'scale(0.95) translateY(-20px)' : 'scale(1) translateY(0px)',
-              transition: prefersReducedMotion ? 'none' : 'all 0.8s cubic-bezier(0.23, 1, 0.32, 1)',
-              transitionDelay: '1.0s'
+              transition: prefersReducedMotion ? 'none' : 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+              transitionDelay: '0s'
             }}
           >
             {/* Elite backdrop */}
@@ -540,8 +540,8 @@ export default function TransformationProcess() {
               style={{
                 opacity: animationStates[index] ? 0 : 1,
                 transform: animationStates[index] ? 'translateX(-20px)' : 'translateX(0px)',
-                transition: prefersReducedMotion ? 'none' : 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
-                transitionDelay: '0.8s'
+                transition: prefersReducedMotion ? 'none' : 'all 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
+                transitionDelay: '0s'
               }}
             />
             <div 
@@ -549,8 +549,8 @@ export default function TransformationProcess() {
               style={{
                 opacity: animationStates[index] ? 0 : 1,
                 transform: animationStates[index] ? 'translateX(20px)' : 'translateX(0px)',
-                transition: prefersReducedMotion ? 'none' : 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
-                transitionDelay: '0.8s'
+                transition: prefersReducedMotion ? 'none' : 'all 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
+                transitionDelay: '0s'
               }}
             />
             
@@ -570,8 +570,8 @@ export default function TransformationProcess() {
                   style={{
                     opacity: animationStates[index] ? 1 : 0,
                     transform: animationStates[index] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.98)',
-                    transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.7s cubic-bezier(0.23, 1, 0.32, 1)',
-                    transitionDelay: '1.4s'
+                    transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                    transitionDelay: '0.2s'
                   }}
                 >
                   <h3 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white mb-4 leading-tight">
@@ -600,8 +600,8 @@ export default function TransformationProcess() {
                   style={{
                     opacity: animationStates[index] ? 1 : 0,
                     transform: animationStates[index] ? 'scale(1) rotate(0deg)' : 'scale(0.85) rotate(-5deg)',
-                    transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.7s cubic-bezier(0.23, 1, 0.32, 1)',
-                    transitionDelay: '1.6s'
+                    transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                    transitionDelay: '0.3s'
                   }}
                 >
                   <div className="text-red-400 w-full h-full flex items-center justify-center">
