@@ -404,15 +404,15 @@ export default function TransformationProcess() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative transformation-section">
+    <section ref={sectionRef} className="relative">
       {/* Container for all slides */}
-      <div ref={containerRef} className="will-change-transform" style={{ height: `${slides.length * 100}vh` }}>
+      <div ref={containerRef} style={{ height: `${slides.length * 100}vh` }}>
         {/* Slides */}
         {slides.map((slide, index) => (
           <div
             key={index}
             ref={el => slideRefs.current[index] = el}
-            className="transformation-slide h-screen flex items-center relative overflow-hidden sticky top-0 will-change-transform"
+            className="h-screen flex items-center relative overflow-hidden sticky top-0"
             style={{
               zIndex: slides.length - index,
             }}
@@ -463,7 +463,13 @@ export default function TransformationProcess() {
 
             {/* Large Phase Word Background */}
             <div 
-              className="phase-text absolute inset-0 flex items-center justify-center pointer-events-none will-change-transform"
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              style={{
+                opacity: animationStates[index] ? 0 : 1,
+                transform: animationStates[index] ? 'scale(0.92) translateY(-30px)' : 'scale(1) translateY(0px)',
+                transition: prefersReducedMotion ? 'none' : 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                transitionDelay: '0.5s'
+              }}
             >
               {/* Elite backdrop */}
               <div className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-3xl" />
@@ -489,10 +495,22 @@ export default function TransformationProcess() {
               
               {/* Elite accent lines */}
               <div 
-                className="absolute top-1/2 left-8 w-16 h-0.5 bg-gradient-to-r from-transparent via-red-400 to-transparent will-change-transform"
+                className="absolute top-1/2 left-8 w-16 h-0.5 bg-gradient-to-r from-transparent via-red-400 to-transparent"
+                style={{
+                  opacity: animationStates[index] ? 0 : 1,
+                  transform: animationStates[index] ? 'translateX(-30px)' : 'translateX(0px)',
+                  transition: prefersReducedMotion ? 'none' : 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                  transitionDelay: '0.3s'
+                }}
               />
               <div 
-                className="absolute top-1/2 right-8 w-16 h-0.5 bg-gradient-to-r from-transparent via-red-400 to-transparent will-change-transform"
+                className="absolute top-1/2 right-8 w-16 h-0.5 bg-gradient-to-r from-transparent via-red-400 to-transparent"
+                style={{
+                  opacity: animationStates[index] ? 0 : 1,
+                  transform: animationStates[index] ? 'translateX(30px)' : 'translateX(0px)',
+                  transition: prefersReducedMotion ? 'none' : 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                  transitionDelay: '0.3s'
+                }}
               />
               
               {/* Corner elements */}
@@ -503,11 +521,19 @@ export default function TransformationProcess() {
             </div>
 
             {/* Content Container */}
-            <div className="slide-content relative z-10 max-w-7xl mx-auto px-6 w-full will-change-transform">
+            <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
                 {/* Left Content - Icon */}
                 <div className="flex justify-center md:justify-start">
-                  <div className="w-48 h-48 flex items-center justify-center will-change-transform">
+                  <div 
+                    className="w-48 h-48 flex items-center justify-center"
+                    style={{
+                      opacity: animationStates[index] ? 1 : 0,
+                      transform: animationStates[index] ? 'scale(1) rotate(0deg)' : 'scale(0.85) rotate(-5deg)',
+                      transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                      transitionDelay: '1.0s'
+                    }}
+                  >
                     <div className="text-red-400 w-full h-full flex items-center justify-center">
                       {getIcon(slide.icon, animationStates[index])}
                     </div>
@@ -516,7 +542,14 @@ export default function TransformationProcess() {
 
                 {/* Right Content - Text */}
                 <div className="md:col-span-2 space-y-6">
-                  <div className="will-change-transform">
+                  <div
+                    style={{
+                      opacity: animationStates[index] ? 1 : 0,
+                      transform: animationStates[index] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.98)',
+                      transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
+                      transitionDelay: '1.1s'
+                    }}
+                  >
                     <h3 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white mb-4 leading-tight">
                       {slide.title}
                     </h3>

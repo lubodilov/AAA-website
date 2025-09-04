@@ -4,7 +4,7 @@ export default function Hero() {
   const headlines = [
     {
       line1: "Your Business Vision",
-      highlight: "Our Upgrade", 
+      highlight: "Our Upgrade",
       line2: "Unmatched Results"
     },
     {
@@ -13,7 +13,7 @@ export default function Hero() {
       line2: "Your Business"
     },
     {
-      line1: "Results First", 
+      line1: "Results First",
       highlight: "Technology Second",
       line2: "Your Success Always"
     }
@@ -79,12 +79,12 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 relative overflow-hidden will-change-transform">
+    <section className="h-screen flex items-center justify-center px-6 relative overflow-hidden">
       {/* Dark overlay for text readability */}
       <div className="absolute inset-0 bg-black/10 z-0"></div>
       
       <div className="relative text-center max-w-6xl mx-auto z-10">
-        <h1 className="split-text text-5xl md:text-7xl lg:text-8xl font-extralight text-white leading-tight mb-8 min-h-[300px] md:min-h-[400px] lg:min-h-[500px] flex flex-col justify-center will-change-transform">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-extralight text-white leading-tight mb-8 min-h-[300px] md:min-h-[400px] lg:min-h-[500px] flex flex-col justify-center">
           <div className="font-mono font-thin">
             <div>
               {displayText.line1}
@@ -134,7 +134,9 @@ export default function Hero() {
             </div>
           </div>
         </h1>
+        
       </div>
+      
     </section>
   );
 }
