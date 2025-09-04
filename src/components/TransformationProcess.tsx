@@ -507,9 +507,9 @@ export default function TransformationProcess() {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{
               opacity: animationStates[index] ? 0 : 1,
-              transform: animationStates[index] ? 'scale(0.95) translateY(-20px)' : 'scale(1) translateY(0px)',
-              transition: prefersReducedMotion ? 'none' : 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
-              transitionDelay: '0.3s'
+              transform: animationStates[index] ? 'scale(0.92) translateY(-30px)' : 'scale(1) translateY(0px)',
+              transition: prefersReducedMotion ? 'none' : 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+              transitionDelay: '0.5s'
             }}
           >
             {/* Elite backdrop */}
@@ -539,18 +539,18 @@ export default function TransformationProcess() {
               className="absolute top-1/2 left-8 w-16 h-0.5 bg-gradient-to-r from-transparent via-red-400 to-transparent"
               style={{
                 opacity: animationStates[index] ? 0 : 1,
-                transform: animationStates[index] ? 'translateX(-20px)' : 'translateX(0px)',
-                transition: prefersReducedMotion ? 'none' : 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-                transitionDelay: '0.2s'
+                transform: animationStates[index] ? 'translateX(-30px)' : 'translateX(0px)',
+                transition: prefersReducedMotion ? 'none' : 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                transitionDelay: '0.3s'
               }}
             />
             <div 
               className="absolute top-1/2 right-8 w-16 h-0.5 bg-gradient-to-r from-transparent via-red-400 to-transparent"
               style={{
                 opacity: animationStates[index] ? 0 : 1,
-                transform: animationStates[index] ? 'translateX(20px)' : 'translateX(0px)',
-                transition: prefersReducedMotion ? 'none' : 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-                transitionDelay: '0.2s'
+                transform: animationStates[index] ? 'translateX(30px)' : 'translateX(0px)',
+                transition: prefersReducedMotion ? 'none' : 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                transitionDelay: '0.3s'
               }}
             />
             
