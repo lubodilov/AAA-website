@@ -368,6 +368,7 @@ export default function TransformationProcess() {
       const isInSection = rect.top <= 100 && rect.bottom >= window.innerHeight - 100;
       
       if (!isInSection) return;
+    };
 
     // Remove global wheel handling - now handled by parent App component
     return () => {};
