@@ -34,26 +34,6 @@ export default function TransformationProcess() {
       outcome: "Strategic focus liberation", 
       description: "We automate 70% of routine leadership decisions through intelligent systems, returning your bandwidth to exponential thinking.",
       icon: "rocket"
-    },
-    {
-      phase: "PROOF",
-      title: "The Vision Elevation Results",
-      outcome: "Proven market dominance acceleration",
-      description: "Within 6 months, our clients shift from managing operations to architecting market dominance.",
-      icon: "metrics",
-      metrics: [
-        { value: "467%", label: "Average Customer Acquisition Increase" },
-        { value: "89", label: "Hours Weekly Leadership Time Reclaimed" },
-        { value: "$2.4M", label: "Average Annual Growth Acceleration" }
-      ]
-    },
-    {
-      phase: "ASSESS",
-      title: "Discover Your Hidden AI Revenue Potential",
-      outcome: "60-second strategic clarity",
-      description: "Take our Vision Assessment to reveal exactly how AI can multiply your acquisition and liberate your strategic focus.",
-      icon: "assessment",
-      isAssessment: true
     }
   ];
 
@@ -548,29 +528,45 @@ export default function TransformationProcess() {
           <div 
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{
-              opacity: animationStates[index] ? 0 : 1,
-              transform: animationStates[index] ? 'scale(0.92) translateY(-30px)' : 'scale(1) translateY(0px)',
+              opacity: 1,
+              transform: animationStates[index] ? 'scale(0.3) translateY(-280px)' : 'scale(1) translateY(0px)',
               transition: prefersReducedMotion ? 'none' : 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
               transitionDelay: '0.5s'
             }}
           >
             {/* Elite backdrop */}
-            <div className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-3xl" />
+            <div 
+              className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-3xl"
+              style={{
+                opacity: animationStates[index] ? 0 : 1,
+                transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+                transitionDelay: '0.3s'
+              }}
+            />
             
             {/* Premium frame */}
-            <div className="absolute top-20 left-8 right-8 bottom-8 border border-white/10 rounded-2xl" />
+            <div 
+              className="absolute top-20 left-8 right-8 bottom-8 border border-white/10 rounded-2xl"
+              style={{
+                opacity: animationStates[index] ? 0 : 1,
+                transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+                transitionDelay: '0.3s'
+              }}
+            />
             
             <h2 
               className="text-[12vw] md:text-[8vw] font-extralight select-none relative z-10"
               style={{
                 fontFamily: 'Inter, system-ui, sans-serif',
-                letterSpacing: '0.15em',
+                letterSpacing: animationStates[index] ? '0.05em' : '0.15em',
                 background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(239,68,68,0.8) 50%, rgba(255,255,255,0.7) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
                 textShadow: '0 0 60px rgba(239, 68, 68, 0.3), 0 0 120px rgba(0, 0, 0, 0.8)',
-                filter: 'drop-shadow(0 4px 20px rgba(0, 0, 0, 0.5))'
+                filter: 'drop-shadow(0 4px 20px rgba(0, 0, 0, 0.5))',
+                transition: prefersReducedMotion ? 'none' : 'letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                transitionDelay: '0.5s'
               }}
             >
               {slide.phase}
@@ -597,10 +593,38 @@ export default function TransformationProcess() {
             />
             
             {/* Corner elements */}
-            <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-white/20" />
-            <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-white/20" />
-            <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-white/20" />
-            <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-white/20" />
+            <div 
+              className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-white/20"
+              style={{
+                opacity: animationStates[index] ? 0 : 1,
+                transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+                transitionDelay: '0.3s'
+              }}
+            />
+            <div 
+              className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-white/20"
+              style={{
+                opacity: animationStates[index] ? 0 : 1,
+                transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+                transitionDelay: '0.3s'
+              }}
+            />
+            <div 
+              className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-white/20"
+              style={{
+                opacity: animationStates[index] ? 0 : 1,
+                transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+                transitionDelay: '0.3s'
+              }}
+            />
+            <div 
+              className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-white/20"
+              style={{
+                opacity: animationStates[index] ? 0 : 1,
+                transition: prefersReducedMotion ? 'none' : 'opacity 0.8s ease-out',
+                transitionDelay: '0.3s'
+              }}
+            />
           </div>
 
           {/* Content Container */}
@@ -674,271 +698,5 @@ export default function TransformationProcess() {
         </div>
       ))}
     </section>
-  );
-}
-
-// Metrics Slide Component
-function MetricsSlide({ slide, animationStates, index, prefersReducedMotion }: {
-  slide: any;
-  animationStates: boolean[];
-  index: number;
-  prefersReducedMotion: boolean;
-}) {
-  return (
-    <div className="text-center space-y-12">
-      {/* Title */}
-      <div
-        style={{
-          opacity: animationStates[index] ? 1 : 0,
-          transform: animationStates[index] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.98)',
-          transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-          transitionDelay: '1.0s'
-        }}
-      >
-        <h3 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white mb-4 leading-tight">
-          {slide.title}
-        </h3>
-        <p className="text-lg font-extralight text-white/90 leading-relaxed max-w-3xl mx-auto">
-          {slide.description}
-        </p>
-      </div>
-
-      {/* Metrics Grid */}
-      <div 
-        className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto"
-        style={{
-          opacity: animationStates[index] ? 1 : 0,
-          transform: animationStates[index] ? 'translateY(0) scale(1)' : 'translateY(60px) scale(0.95)',
-          transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
-          transitionDelay: '1.3s'
-        }}
-      >
-        {slide.metrics.map((metric: any, metricIndex: number) => (
-          <div 
-            key={metricIndex}
-            className="bg-black/30 backdrop-blur-sm border border-red-600/20 rounded-2xl p-8 hover:border-red-600/40 transition-all duration-300"
-          >
-            <div className="text-4xl md:text-5xl font-bold text-red-400 mb-4">
-              {metric.value}
-            </div>
-            <div className="text-sm font-light text-white/80 leading-relaxed">
-              {metric.label}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// Assessment Slide Component
-function AssessmentSlide({ slide, animationStates, index, prefersReducedMotion }: {
-  slide: any;
-  animationStates: boolean[];
-  index: number;
-  prefersReducedMotion: boolean;
-}) {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, string>>({});
-  const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    company: '',
-    title: '',
-    email: '',
-    phone: ''
-  });
-
-  const questions = [
-    {
-      title: "Current Challenge",
-      question: "What's limiting your customer acquisition growth?",
-      options: [
-        "Lead generation volume",
-        "Lead qualification accuracy", 
-        "Executive bandwidth constraints",
-        "Market expansion speed"
-      ]
-    },
-    {
-      title: "Growth Ambition",
-      question: "What would 3x revenue growth in 18 months enable?",
-      options: [
-        "Market leadership positioning",
-        "Strategic exit opportunity",
-        "Geographic expansion", 
-        "Industry transformation"
-      ]
-    },
-    {
-      title: "Investment Readiness",
-      question: "Investment capacity for AI systems that multiply revenue?",
-      options: [
-        "$25K-75K (Foundation)",
-        "$75K-150K (Acceleration)",
-        "$150K+ (Market Domination)"
-      ]
-    }
-  ];
-
-  const handleAnswer = (answer: string) => {
-    setAnswers(prev => ({ ...prev, [currentQuestion]: answer }));
-    
-    if (currentQuestion < questions.length - 1) {
-      setTimeout(() => setCurrentQuestion(currentQuestion + 1), 300);
-    } else {
-      setTimeout(() => setShowForm(true), 300);
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Assessment Results:', { answers, formData });
-    // Handle form submission here
-  };
-
-  if (showForm) {
-    return (
-      <div className="max-w-2xl mx-auto">
-        <div
-          style={{
-            opacity: animationStates[index] ? 1 : 0,
-            transform: animationStates[index] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.98)',
-            transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-            transitionDelay: '1.0s'
-          }}
-        >
-          <h3 className="text-3xl md:text-4xl font-thin text-white mb-8 text-center">
-            Get Your Personalized AI Strategy
-          </h3>
-          
-          <form onSubmit={handleSubmit} className="space-y-6 bg-black/30 backdrop-blur-sm border border-red-600/20 rounded-2xl p-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <input
-                type="text"
-                placeholder="Name"
-                value={formData.name}
-                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                className="bg-black/50 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/60 focus:border-red-400 focus:outline-none transition-colors"
-                required
-              />
-              <input
-                type="text"
-                placeholder="Company"
-                value={formData.company}
-                onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
-                className="bg-black/50 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/60 focus:border-red-400 focus:outline-none transition-colors"
-                required
-              />
-            </div>
-            <input
-              type="text"
-              placeholder="Title"
-              value={formData.title}
-              onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-              className="w-full bg-black/50 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/60 focus:border-red-400 focus:outline-none transition-colors"
-              required
-            />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <input
-                type="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                className="bg-black/50 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/60 focus:border-red-400 focus:outline-none transition-colors"
-                required
-              />
-              <input
-                type="tel"
-                placeholder="Phone"
-                value={formData.phone}
-                onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                className="bg-black/50 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/60 focus:border-red-400 focus:outline-none transition-colors"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-4 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-all duration-300 transform hover:scale-105"
-            >
-              Get My AI Revenue Strategy
-            </button>
-          </form>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="max-w-4xl mx-auto text-center">
-      {/* Title */}
-      <div
-        style={{
-          opacity: animationStates[index] ? 1 : 0,
-          transform: animationStates[index] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.98)',
-          transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-          transitionDelay: '1.0s'
-        }}
-      >
-        <h3 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white mb-4 leading-tight">
-          {slide.title}
-        </h3>
-        <p className="text-lg font-extralight text-white/90 leading-relaxed mb-12">
-          {slide.description}
-        </p>
-      </div>
-
-      {/* Progress */}
-      <div 
-        className="flex justify-center mb-8"
-        style={{
-          opacity: animationStates[index] ? 1 : 0,
-          transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'opacity 0.5s ease-out',
-          transitionDelay: '1.2s'
-        }}
-      >
-        <div className="flex space-x-2">
-          {questions.map((_, qIndex) => (
-            <div
-              key={qIndex}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                qIndex <= currentQuestion ? 'bg-red-600' : 'bg-red-600/30'
-              }`}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Question */}
-      <div
-        style={{
-          opacity: animationStates[index] ? 1 : 0,
-          transform: animationStates[index] ? 'translateY(0) scale(1)' : 'translateY(60px) scale(0.95)',
-          transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
-          transitionDelay: '1.4s'
-        }}
-      >
-        <div className="bg-black/30 backdrop-blur-sm border border-red-600/20 rounded-2xl p-8 mb-8">
-          <h4 className="text-xl font-light text-red-400 mb-4">
-            {questions[currentQuestion].title}
-          </h4>
-          <p className="text-2xl font-thin text-white mb-8">
-            {questions[currentQuestion].question}
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {questions[currentQuestion].options.map((option, optionIndex) => (
-              <button
-                key={optionIndex}
-                onClick={() => handleAnswer(option)}
-                className="bg-black/50 border border-white/20 rounded-lg px-6 py-4 text-white hover:border-red-400 hover:bg-red-600/10 transition-all duration-300 text-left"
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }
