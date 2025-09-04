@@ -375,44 +375,16 @@ export default function TransformationProcess() {
   }, [currentSlide, isTransitioning, slides.length, lastScrollTime, scrollAccumulator]);
 
   return (
-    <section ref={sectionRef} className="relative">
+    <section ref={sectionRef} className="relative" style={{ height: '300vh' }}>
       {/* Progress Indicator - Only visible when section is in view */}
-      <div className={`fixed right-8 top-1/2 transform -translate-y-1/2 z-50 md:flex flex-col space-y-4 transition-all duration-500 ${
-        sectionInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'
-      } hidden`}>
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => navigateToSlide(index)}
-            className="group relative"
-            disabled={isTransitioning}
-          >
-            <div 
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                currentSlide === index 
-                  ? 'bg-red-600 scale-125' 
-                  : 'bg-red-600/30 hover:bg-red-600/60'
-              }`}
-              style={{
-                boxShadow: currentSlide === index ? '0 0 15px rgba(239, 68, 68, 0.6)' : 'none',
-                animation: currentSlide === index && !prefersReducedMotion ? 'pulse 2s infinite' : 'none'
-              }}
-            />
-            <div className="absolute right-6 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-              <div className="bg-black/90 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap">
-                {slides[index].phase}
-              </div>
-            </div>
-          </button>
-        ))}
-      </div>
 
       {/* Slides */}
       {slides.map((slide, index) => (
         <div
           key={index}
           ref={el => slideRefs.current[index] = el}
-          className="h-screen flex items-center relative overflow-hidden snap-start"
+          className="h-screen flex items-center relative overflow-hidden sticky top-0"
+          style={{ zIndex: slides.length - index }}
         >
           {/* Background Parallax Layer */}
           <div className="absolute inset-0 overflow-hidden z-10">
@@ -569,13 +541,18 @@ export default function TransformationProcess() {
           </div>
 
           {/* Mobile Navigation Dots */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 md:hidden">
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 md:hidden z-50">
             <div className="flex space-x-3">
               {slides.map((_, dotIndex) => (
                 <button
                   key={dotIndex}
-                  onClick={() => navigateToSlide(dotIndex)}
-                  disabled={isTransitioning}
+                  onClick={() => {
+                    const targetScroll = window.innerHeight * (2 + dotIndex);
+                    window.scrollTo({
+                      top: targetScroll,
+                      behavior: 'smooth'
+                    });
+                  }}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     currentSlide === dotIndex 
                       ? 'bg-red-600 scale-125' 
