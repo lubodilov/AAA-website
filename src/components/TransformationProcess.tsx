@@ -605,53 +605,62 @@ export default function TransformationProcess() {
 
           {/* Content Container */}
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
-              {/* Left Content - 2/3 */}
-              <div className="md:col-span-2 space-y-6">
-                <div
-                  style={{
-                    opacity: animationStates[index] ? 1 : 0,
-                    transform: animationStates[index] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.98)',
-                    transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-                    transitionDelay: '1.0s'
-                  }}
-                >
-                  <h3 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white mb-4 leading-tight">
-                    {slide.title}
-                  </h3>
-                  
-                  <p 
-                    className="text-xl md:text-2xl font-extralight italic text-red-400 mb-6"
+            {slide.isAssessment ? (
+              /* Assessment Layout */
+              <AssessmentSlide slide={slide} animationStates={animationStates} index={index} prefersReducedMotion={prefersReducedMotion} />
+            ) : slide.metrics ? (
+              /* Metrics Layout */
+              <MetricsSlide slide={slide} animationStates={animationStates} index={index} prefersReducedMotion={prefersReducedMotion} />
+            ) : (
+              /* Default Layout */
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+                {/* Left Content - 2/3 */}
+                <div className="md:col-span-2 space-y-6">
+                  <div
                     style={{
-                      fontFamily: 'Inter, sans-serif'
+                      opacity: animationStates[index] ? 1 : 0,
+                      transform: animationStates[index] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.98)',
+                      transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
+                      transitionDelay: '1.0s'
                     }}
                   >
-                    {slide.outcome}
-                  </p>
-                  
-                  <p className="text-lg font-extralight text-white/90 leading-relaxed max-w-2xl">
-                    {slide.description}
-                  </p>
+                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white mb-4 leading-tight">
+                      {slide.title}
+                    </h3>
+                    
+                    <p 
+                      className="text-xl md:text-2xl font-extralight italic text-red-400 mb-6"
+                      style={{
+                        fontFamily: 'Inter, sans-serif'
+                      }}
+                    >
+                      {slide.outcome}
+                    </p>
+                    
+                    <p className="text-lg font-extralight text-white/90 leading-relaxed max-w-2xl">
+                      {slide.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Right Content - 1/3 */}
-              <div className="flex justify-center md:justify-start">
-                <div 
-                  className="w-48 h-48 flex items-center justify-center"
-                  style={{
-                    opacity: animationStates[index] ? 1 : 0,
-                    transform: animationStates[index] ? 'scale(1) rotate(0deg)' : 'scale(0.85) rotate(-5deg)',
-                    transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
-                    transitionDelay: '1.1s'
-                  }}
-                >
-                  <div className="text-red-400 w-full h-full flex items-center justify-center">
-                    {getIcon(slide.icon, animationStates[index])}
+                {/* Right Content - 1/3 */}
+                <div className="flex justify-center md:justify-start">
+                  <div 
+                    className="w-48 h-48 flex items-center justify-center"
+                    style={{
+                      opacity: animationStates[index] ? 1 : 0,
+                      transform: animationStates[index] ? 'scale(1) rotate(0deg)' : 'scale(0.85) rotate(-5deg)',
+                      transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                      transitionDelay: '1.1s'
+                    }}
+                  >
+                    <div className="text-red-400 w-full h-full flex items-center justify-center">
+                      {getIcon(slide.icon, animationStates[index])}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Mobile Navigation Dots */}
