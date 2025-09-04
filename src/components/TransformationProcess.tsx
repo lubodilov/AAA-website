@@ -34,6 +34,26 @@ export default function TransformationProcess() {
       outcome: "Strategic focus liberation", 
       description: "We automate 70% of routine leadership decisions through intelligent systems, returning your bandwidth to exponential thinking.",
       icon: "rocket"
+    },
+    {
+      phase: "PROOF",
+      title: "The Vision Elevation Results",
+      outcome: "Proven market dominance acceleration",
+      description: "Within 6 months, our clients shift from managing operations to architecting market dominance.",
+      icon: "metrics",
+      metrics: [
+        { value: "467%", label: "Average Customer Acquisition Increase" },
+        { value: "89", label: "Hours Weekly Leadership Time Reclaimed" },
+        { value: "$2.4M", label: "Average Annual Growth Acceleration" }
+      ]
+    },
+    {
+      phase: "ASSESS",
+      title: "Discover Your Hidden AI Revenue Potential",
+      outcome: "60-second strategic clarity",
+      description: "Take our Vision Assessment to reveal exactly how AI can multiply your acquisition and liberate your strategic focus.",
+      icon: "assessment",
+      isAssessment: true
     }
   ];
 
@@ -266,7 +286,6 @@ export default function TransformationProcess() {
         <polygon points="108,60 102,57 102,63" fill="currentColor" opacity="0.9" />
       </g>
     </svg>
-  );
 
   const getIcon = (iconType: string, isAnimated: boolean) => {
     switch (iconType) {
