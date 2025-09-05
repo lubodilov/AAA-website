@@ -13,7 +13,7 @@ function App() {
   const isSnappingRef = useRef(false);
   const lastScrollTimeRef = useRef(0);
 
-  const sections = ['hero', 'strategic', 'transformation-1', 'transformation-2', 'transformation-3'];
+  const sections = ['hero', 'strategic', 'transformation'];
 
   // Smooth scroll with section snapping
   useEffect(() => {
@@ -27,21 +27,9 @@ function App() {
       
       setScrollProgress(progress);
       
-      // Determine current section based on scroll position with individual slide detection
-      let currentSectionIndex = 0;
-      
-      if (scrollTop < windowHeight * 0.5) {
-        currentSectionIndex = 0; // Hero
-      } else if (scrollTop < windowHeight * 1.5) {
-        currentSectionIndex = 1; // Strategic
-      } else {
-        // Transformation slides (each is 100vh)
-        const transformationStart = windowHeight * 2;
-        const transformationProgress = scrollTop - transformationStart;
-        const slideIndex = Math.floor(transformationProgress / windowHeight);
-        currentSectionIndex = Math.min(2 + slideIndex, 4); // Slides 2, 3, 4
-      }
-      
+      // Determine current section based on scroll position
+      const sectionHeight = windowHeight;
+      const currentSectionIndex = Math.round(scrollTop / sectionHeight);
       const clampedIndex = Math.max(0, Math.min(currentSectionIndex, sections.length - 1));
       
       if (clampedIndex !== currentSection) {
@@ -86,29 +74,24 @@ function App() {
       const scrollTop = window.scrollY;
       const windowHeight = window.innerHeight;
       
-      // Find the closest section/slide
+      // Find the closest section
       let closestSection = 0;
       let minDistance = Infinity;
       
-      // Check all possible scroll positions
-      const scrollTargets = [
-        0, // Hero
-        windowHeight, // Strategic
-        windowHeight * 2, // Transformation slide 1
-        windowHeight * 3, // Transformation slide 2
-        windowHeight * 4, // Transformation slide 3
-      ];
-      
-      scrollTargets.forEach((targetScroll, index) => {
-        const distance = Math.abs(scrollTop - targetScroll);
-        if (distance < minDistance) {
-          minDistance = distance;
-          closestSection = index;
+      sectionRefs.current.forEach((ref, index) => {
+        if (ref) {
+          const sectionTop = index * windowHeight;
+          const distance = Math.abs(scrollTop - sectionTop);
+          
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestSection = index;
+          }
         }
       });
 
       // Only snap if we're not already very close to a section boundary
-      const targetScrollTop = scrollTargets[closestSection];
+      const targetScrollTop = closestSection * windowHeight;
       const distanceToTarget = Math.abs(scrollTop - targetScrollTop);
       
       if (distanceToTarget > 50) { // Only snap if more than 50px away
@@ -136,8 +119,7 @@ function App() {
       // Allow natural scrolling but with momentum
       const delta = e.deltaY;
       const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const maxScroll = windowHeight * 5 - windowHeight; // 5 sections total
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       
       // Smooth momentum scrolling
       const targetScroll = Math.max(0, Math.min(scrollTop + delta * 1.2, maxScroll));
@@ -168,8 +150,7 @@ function App() {
       const touchY = e.touches[0].clientY;
       const deltaY = touchStartY - touchY;
       const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const maxScroll = windowHeight * 5 - windowHeight;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       
       const targetScroll = Math.max(0, Math.min(scrollTop + deltaY * 2, maxScroll));
       
@@ -216,7 +197,7 @@ function App() {
 
   // Section visibility observers for animations
   useEffect(() => {
-    const observers = sectionRefs.current.slice(0, 2).map((sectionRef, index) => {
+    const observers = sectionRefs.current.map((sectionRef, index) => {
       if (!sectionRef) return null;
       
       const observer = new IntersectionObserver(
@@ -286,14 +267,23 @@ function App() {
           ref={el => sectionRefs.current[1] = el}
           className="min-h-screen"
           style={{
-            transform: `translateY(${Math.max(0, (scrollProgress - 0.2) * -30)}px)`,
+            transform: `translateY(${Math.max(0, (scrollProgress - 0.33) * -30)}px)`,
             transition: isScrolling ? 'none' : 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
           }}
         >
           <OpportunityStatement />
         </div>
         
-        <TransformationProcess />
+        <div 
+          ref={el => sectionRefs.current[2] = el}
+          className="min-h-screen"
+          style={{
+            transform: `translateY(${Math.max(0, (scrollProgress - 0.66) * -40)}px)`,
+            transition: isScrolling ? 'none' : 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+          }}
+        >
+          <TransformationProcess />
+        </div>
       </div>
 
       {/* Section Navigation Dots */}
@@ -302,14 +292,7 @@ function App() {
           <button
             key={index}
             onClick={() => {
-              const scrollTargets = [
-                0, // Hero
-                window.innerHeight, // Strategic
-                window.innerHeight * 2, // Transformation slide 1
-                window.innerHeight * 3, // Transformation slide 2
-                window.innerHeight * 4, // Transformation slide 3
-              ];
-              const targetScroll = scrollTargets[index];
+              const targetScroll = index * window.innerHeight;
               isSnappingRef.current = true;
               window.scrollTo({
                 top: targetScroll,
@@ -330,7 +313,7 @@ function App() {
             />
             <div className="absolute right-6 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
               <div className="bg-black/90 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap">
-                {index < 2 ? sections[index].toUpperCase() : `PHASE ${index - 1}`}
+                {sections[index].toUpperCase()}
               </div>
             </div>
           </button>
