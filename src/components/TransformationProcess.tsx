@@ -288,39 +288,18 @@ export default function TransformationProcess() {
       setLastScrollTime(Date.now());
       setCurrentSlide(targetSlide);
       
-      // Custom smooth scroll with slower, more elegant timing
       const targetElement = slideRefs.current[targetSlide];
       if (targetElement) {
-        const startPosition = sectionRef.current?.scrollTop || 0;
-        const targetPosition = targetElement.offsetTop - (sectionRef.current?.offsetTop || 0);
-        const distance = targetPosition - startPosition;
-        const duration = 1800; // Slower animation for more elegance
-        const startTime = performance.now();
-        
-        const smoothScroll = (currentTime: number) => {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          
-          // More elegant easing curve
-          const easeInOutQuart = progress < 0.5 
-            ? 8 * progress * progress * progress * progress
-            : 1 - Math.pow(-2 * progress + 2, 4) / 2;
-          
-          const currentPosition = startPosition + (distance * easeInOutQuart);
-          window.scrollTo(0, currentPosition + (sectionRef.current?.offsetTop || 0));
-          
-          if (progress < 1) {
-            requestAnimationFrame(smoothScroll);
-          }
-        };
-        
-        requestAnimationFrame(smoothScroll);
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
       }
 
       // Reset transition lock
       setTimeout(() => {
         setIsTransitioning(false);
-      }, 2200); // Longer lock for smoother transitions
+      }, 1200);
     }
   };
 

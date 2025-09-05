@@ -24,40 +24,14 @@ function App() {
       setCurrentSection(targetSection);
       
       sectionRefs.current[targetSection]?.scrollIntoView({
-        behavior: 'auto',
+        behavior: 'smooth',
         block: 'start'
       });
-      
-      // Custom smooth scroll with slower timing
-      const startPosition = window.pageYOffset;
-      const targetPosition = sectionRefs.current[targetSection]?.offsetTop || 0;
-      const distance = targetPosition - startPosition;
-      const duration = 1500; // Slower animation duration
-      const startTime = performance.now();
-      
-      const smoothScroll = (currentTime: number) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        
-        // Smooth easing function for more elegant movement
-        const easeInOutCubic = progress < 0.5 
-          ? 4 * progress * progress * progress 
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-        
-        const currentPosition = startPosition + (distance * easeInOutCubic);
-        window.scrollTo(0, currentPosition);
-        
-        if (progress < 1) {
-          requestAnimationFrame(smoothScroll);
-        }
-      };
-      
-      requestAnimationFrame(smoothScroll);
 
       // Reset transition lock
       setTimeout(() => {
         setIsTransitioning(false);
-      }, 1800);
+      }, 1200);
     }
   };
 
