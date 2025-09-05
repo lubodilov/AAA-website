@@ -3,12 +3,9 @@ import React, { useState, useEffect, useRef } from 'react';
 export default function TransformationProcess() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [animationStates, setAnimationStates] = useState([false, false, false]);
-  const [sectionInView, setSectionInView] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const wheelSamplesRef = useRef<Array<{delta: number, time: number}>>([]);
-  const lastWheelTimeRef = useRef(0);
-  const isScrollingRef = useRef(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout>();
 
   // Check for reduced motion preference
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -36,6 +33,31 @@ export default function TransformationProcess() {
       icon: "rocket"
     }
   ];
+
+  // Simple scroll to slide function
+  const scrollToSlide = (slideIndex: number) => {
+    if (isScrolling || slideIndex < 0 || slideIndex > 2) return;
+    
+    setIsScrolling(true);
+    setCurrentSlide(slideIndex);
+    
+    const targetScroll = window.innerHeight * (2 + slideIndex);
+    
+    window.scrollTo({
+      top: targetScroll,
+      behavior: 'smooth'
+    });
+    
+    // Reset scrolling state and trigger animation
+    setTimeout(() => {
+      setIsScrolling(false);
+      setAnimationStates(prev => {
+        const newStates = [...prev];
+        newStates[slideIndex] = true;
+        return newStates;
+      });
+    }, 1000);
+  };
 
   // Animated SVG Icons
   const EyeIcon = ({ isAnimated }: { isAnimated: boolean }) => (
@@ -281,158 +303,74 @@ export default function TransformationProcess() {
     }
   };
 
-  // Section visibility observer
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setSectionInView(entry.isIntersecting);
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Simple scroll to slide
-  const scrollToSlide = (targetSlide: number) => {
-    if (isScrollingRef.current) return;
-    
-    isScrollingRef.current = true;
-    const targetScroll = window.innerHeight * (2 + targetSlide);
-    
-    window.scrollTo({
-      top: targetScroll,
-      behavior: 'smooth'
-    });
-    
-    setTimeout(() => {
-      isScrollingRef.current = false;
-      setCurrentSlide(targetSlide);
-    }, 800);
-  };
-
-  // Simple momentum detection
-  const detectMomentum = () => {
-    const samples = wheelSamplesRef.current;
-    if (samples.length < 2) return { hasMomentum: false, direction: 0 };
-    
-    const recentSamples = samples.slice(-3);
-    const totalDelta = recentSamples.reduce((sum, sample) => sum + sample.delta, 0);
-    
-    const hasMomentum = Math.abs(totalDelta) > 8;
-    const direction = totalDelta > 0 ? 1 : -1;
-    
-    return { hasMomentum, direction };
-  };
-
-  // Handle wheel events
+  // Handle wheel events for transformation slides
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      // Only handle if we're in the transformation section
+      if (isScrolling) {
+        e.preventDefault();
+        return;
+      }
+
+      // Only handle wheel events in transformation section
       const scrollTop = window.scrollY;
       const transformationStart = window.innerHeight * 2;
       const transformationEnd = window.innerHeight * 5;
       
-      if (scrollTop < transformationStart - 100 || scrollTop > transformationEnd + 100) {
-        return; // Let parent handle
-      }
-      
-      if (isScrollingRef.current) {
-        e.preventDefault();
+      if (scrollTop < transformationStart || scrollTop > transformationEnd) {
         return;
-      }
-      
-      const now = performance.now();
-      lastWheelTimeRef.current = now;
-      
-      wheelSamplesRef.current.push({ delta: e.deltaY, time: now });
-      
-      if (wheelSamplesRef.current.length > 5) {
-        wheelSamplesRef.current.shift();
       }
       
       e.preventDefault();
       
-      setTimeout(() => {
-        if (now === lastWheelTimeRef.current) {
-          processWheelGesture();
-        }
-      }, 100);
-    };
-
-    const processWheelGesture = () => {
-      const currentScroll = window.scrollY;
-      const transformationStart = window.innerHeight * 2;
-      const transformationProgress = currentScroll - transformationStart;
-      const currentSlideIndex = Math.max(0, Math.min(Math.floor(transformationProgress / window.innerHeight), 2));
-      
-      const momentum = detectMomentum();
-      
-      if (momentum.hasMomentum) {
-        let targetSlideIndex;
-        
-        if (momentum.direction > 0) {
-          targetSlideIndex = Math.min(currentSlideIndex + 1, 2);
-        } else {
-          targetSlideIndex = Math.max(currentSlideIndex - 1, 0);
-        }
-        
-        if (targetSlideIndex !== currentSlideIndex) {
-          scrollToSlide(targetSlideIndex);
-        }
-      } else {
-        const currentTargetScroll = transformationStart + (currentSlideIndex * window.innerHeight);
-        const distanceFromCenter = Math.abs(currentScroll - currentTargetScroll);
-        
-        if (distanceFromCenter > 50) {
-          scrollToSlide(currentSlideIndex);
-        }
+      // Clear existing timeout
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
       }
       
-      wheelSamplesRef.current = [];
+      // Wait for wheel events to settle
+      scrollTimeoutRef.current = setTimeout(() => {
+        const direction = e.deltaY > 0 ? 1 : -1;
+        const nextSlide = currentSlide + direction;
+        
+        if (nextSlide >= 0 && nextSlide <= 2) {
+          scrollToSlide(nextSlide);
+        }
+      }, 50);
     };
 
     window.addEventListener('wheel', handleWheel, { passive: false });
     
     return () => {
       window.removeEventListener('wheel', handleWheel);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
     };
-  }, []);
+  }, [currentSlide, isScrolling]);
 
-  // Individual slide observers
+  // Set initial animation state based on scroll position
   useEffect(() => {
-    if (isScrollingRef.current) return;
-    
-    const observers = slideRefs.current.map((slideRef, index) => {
-      if (!slideRef) return null;
+    const handleScroll = () => {
+      if (isScrolling) return;
       
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          const threshold = index === 0 ? 0.95 : 0.6;
-          if (entry.isIntersecting && entry.intersectionRatio > threshold) {
-            setCurrentSlide(index);
-            setAnimationStates(prev => {
-              const newStates = [...prev];
-              newStates[index] = true;
-              return newStates;
-            });
-          }
-        },
-        { threshold: index === 0 ? 0.95 : 0.6 }
-      );
+      const scrollTop = window.scrollY;
+      const transformationStart = window.innerHeight * 2;
+      const transformationProgress = scrollTop - transformationStart;
+      const slideIndex = Math.max(0, Math.min(Math.floor(transformationProgress / window.innerHeight), 2));
       
-      observer.observe(slideRef);
-      return observer;
-    });
-
-    return () => {
-      observers.forEach(observer => observer?.disconnect());
+      if (slideIndex !== currentSlide) {
+        setCurrentSlide(slideIndex);
+        setAnimationStates(prev => {
+          const newStates = [...prev];
+          newStates[slideIndex] = true;
+          return newStates;
+        });
+      }
     };
-  }, []);
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [currentSlide, isScrolling]);
 
   return (
     <section ref={sectionRef} className="relative" style={{ height: '300vh' }}>
@@ -441,7 +379,6 @@ export default function TransformationProcess() {
       {slides.map((slide, index) => (
         <div
           key={index}
-          ref={el => slideRefs.current[index] = el}
           className="h-screen flex items-center relative overflow-hidden sticky top-0"
           style={{ zIndex: slides.length - index }}
         >
@@ -605,17 +542,13 @@ export default function TransformationProcess() {
               {slides.map((_, dotIndex) => (
                 <button
                   key={dotIndex}
-                  onClick={() => {
-                    if (!isScrollingRef.current) {
-                      scrollToSlide(dotIndex);
-                    }
-                  }}
-                  disabled={isScrollingRef.current}
+                  onClick={() => scrollToSlide(dotIndex)}
+                  disabled={isScrolling}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     currentSlide === dotIndex 
                       ? 'bg-red-600 scale-125' 
                       : 'bg-red-600/30'
-                  } ${isScrollingRef.current ? 'opacity-50' : ''}`}
+                  } ${isScrolling ? 'opacity-50' : ''}`}
                 />
               ))}
             </div>

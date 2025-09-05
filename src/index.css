@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Disable default smooth scrolling - we control it manually */
+/* Clean scroll behavior */
 html {
   scroll-behavior: auto;
   overflow-x: hidden;
