@@ -7,17 +7,17 @@ import TransformationProcess from './components/TransformationProcess';
 function App() {
   const [currentSection, setCurrentSection] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isScrolling, setIsScrolling] = useState(false);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const isSnappingRef = useRef(false);
-  const lastScrollTimeRef = useRef(0);
+  const momentumTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastScrollPositionRef = useRef(0);
+  const scrollVelocityRef = useRef(0);
 
   const sections = ['hero', 'strategic', 'transformation-1', 'transformation-2', 'transformation-3'];
 
-  // Smooth scroll with section snapping
+  // Momentum-aware scroll with prediction
   useEffect(() => {
     let ticking = false;
+    let lastTime = 0;
 
     const updateScrollProgress = () => {
       const scrollTop = window.scrollY;
@@ -27,7 +27,19 @@ function App() {
       
       setScrollProgress(progress);
       
-      // Determine current section based on scroll position with individual slide detection
+      // Calculate scroll velocity for momentum prediction
+      const currentTime = performance.now();
+      const deltaTime = currentTime - lastTime;
+      const deltaScroll = scrollTop - lastScrollPositionRef.current;
+      
+      if (deltaTime > 0) {
+        scrollVelocityRef.current = deltaScroll / deltaTime;
+      }
+      
+      lastScrollPositionRef.current = scrollTop;
+      lastTime = currentTime;
+      
+      // Determine current section
       let currentSectionIndex = 0;
       
       if (scrollTop < windowHeight * 0.5) {
@@ -35,11 +47,10 @@ function App() {
       } else if (scrollTop < windowHeight * 1.5) {
         currentSectionIndex = 1; // Strategic
       } else {
-        // Transformation slides (each is 100vh)
         const transformationStart = windowHeight * 2;
         const transformationProgress = scrollTop - transformationStart;
         const slideIndex = Math.floor(transformationProgress / windowHeight);
-        currentSectionIndex = Math.min(2 + slideIndex, 4); // Slides 2, 3, 4
+        currentSectionIndex = Math.min(2 + slideIndex, 4);
       }
       
       const clampedIndex = Math.max(0, Math.min(currentSectionIndex, sections.length - 1));
@@ -52,167 +63,97 @@ function App() {
     };
 
     const handleScroll = () => {
-      if (isSnappingRef.current) return;
-      
-      const now = Date.now();
-      lastScrollTimeRef.current = now;
-      
-      if (!isScrolling) {
-        setIsScrolling(true);
-      }
-
       if (!ticking) {
         requestAnimationFrame(updateScrollProgress);
         ticking = true;
       }
-
-      // Clear existing timeout
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
+      
+      // Clear existing momentum timeout
+      if (momentumTimeoutRef.current) {
+        clearTimeout(momentumTimeoutRef.current);
       }
-
-      // Set new timeout for scroll end detection
-      scrollTimeoutRef.current = setTimeout(() => {
-        if (Date.now() - lastScrollTimeRef.current >= 150) {
-          setIsScrolling(false);
-          snapToNearestSection();
-        }
-      }, 150);
+      
+      // Predict momentum direction and target
+      momentumTimeoutRef.current = setTimeout(() => {
+        predictAndSnapToTarget();
+      }, 50); // Much shorter delay for immediate prediction
     };
 
-    const snapToNearestSection = () => {
-      if (isSnappingRef.current) return;
-      
+    const predictAndSnapToTarget = () => {
       const scrollTop = window.scrollY;
       const windowHeight = window.innerHeight;
+      const velocity = scrollVelocityRef.current;
       
-      // Find the closest section/slide
-      let closestSection = 0;
-      let minDistance = Infinity;
-      
-      // Check all possible scroll positions
       const scrollTargets = [
-        0, // Hero
-        windowHeight, // Strategic
-        windowHeight * 2, // Transformation slide 1
-        windowHeight * 3, // Transformation slide 2
-        windowHeight * 4, // Transformation slide 3
+        0,
+        windowHeight,
+        windowHeight * 2,
+        windowHeight * 3,
+        windowHeight * 4,
       ];
       
-      scrollTargets.forEach((targetScroll, index) => {
-        const distance = Math.abs(scrollTop - targetScroll);
-        if (distance < minDistance) {
-          minDistance = distance;
-          closestSection = index;
+      let targetSection = 0;
+      let minDistance = Infinity;
+      
+      // Find closest section considering momentum
+      scrollTargets.forEach((target, index) => {
+        const distance = Math.abs(scrollTop - target);
+        
+        // Apply momentum prediction - if scrolling fast in a direction, 
+        // prefer the target in that direction
+        let adjustedDistance = distance;
+        
+        if (Math.abs(velocity) > 0.5) { // If there's significant velocity
+          if (velocity > 0 && target > scrollTop) {
+            // Scrolling down, prefer targets below
+            adjustedDistance *= 0.7;
+          } else if (velocity < 0 && target < scrollTop) {
+            // Scrolling up, prefer targets above
+            adjustedDistance *= 0.7;
+          }
+        }
+        
+        if (adjustedDistance < minDistance) {
+          minDistance = adjustedDistance;
+          targetSection = index;
         }
       });
-
-      // Only snap if we're not already very close to a section boundary
-      const targetScrollTop = scrollTargets[closestSection];
+      
+      const targetScrollTop = scrollTargets[targetSection];
       const distanceToTarget = Math.abs(scrollTop - targetScrollTop);
       
-      if (distanceToTarget > 50) { // Only snap if more than 50px away
-        isSnappingRef.current = true;
+      // Snap if we're not already very close
+      if (distanceToTarget > 30) {
+        // Use CSS scroll-behavior for ultra-smooth snapping
+        document.documentElement.style.scrollBehavior = 'smooth';
+        window.scrollTo(0, targetScrollTop);
         
-        window.scrollTo({
-          top: targetScrollTop,
-          behavior: 'smooth'
-        });
-
-        // Reset snapping flag after animation completes
+        // Reset scroll behavior after animation
         setTimeout(() => {
-          isSnappingRef.current = false;
-        }, 800);
+          document.documentElement.style.scrollBehavior = 'auto';
+        }, 1000);
       }
     };
 
-    // Enhanced wheel handling for smoother experience
+    // Wheel handling with momentum prediction
     const handleWheel = (e: WheelEvent) => {
-      if (isSnappingRef.current) {
-        e.preventDefault();
-        return;
-      }
-
-      // Allow natural scrolling but with momentum
-      const delta = e.deltaY;
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const maxScroll = windowHeight * 5 - windowHeight; // 5 sections total
-      
-      // Smooth momentum scrolling
-      const targetScroll = Math.max(0, Math.min(scrollTop + delta * 1.2, maxScroll));
-      
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'auto'
-      });
-      
-      e.preventDefault();
+      // Let the browser handle natural scrolling with momentum
+      // Our scroll handler will predict and snap appropriately
     };
 
-    // Touch handling for mobile
-    let touchStartY = 0;
-    let touchStartTime = 0;
-
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY;
-      touchStartTime = Date.now();
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (isSnappingRef.current) {
-        e.preventDefault();
-        return;
-      }
-
-      const touchY = e.touches[0].clientY;
-      const deltaY = touchStartY - touchY;
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const maxScroll = windowHeight * 5 - windowHeight;
-      
-      const targetScroll = Math.max(0, Math.min(scrollTop + deltaY * 2, maxScroll));
-      
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'auto'
-      });
-      
-      touchStartY = touchY;
-    };
-
-    const handleTouchEnd = () => {
-      const touchDuration = Date.now() - touchStartTime;
-      
-      // Add momentum for quick swipes
-      if (touchDuration < 200) {
-        setTimeout(() => {
-          if (!isScrolling) {
-            snapToNearestSection();
-          }
-        }, 100);
-      }
-    };
-
-    // Add event listeners
+    // Event listeners
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    window.addEventListener('wheel', handleWheel, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
       
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
+      if (momentumTimeoutRef.current) {
+        clearTimeout(momentumTimeoutRef.current);
       }
     };
-  }, [currentSection, isScrolling, sections.length]);
+  }, [currentSection, sections.length]);
 
   // Section visibility observers for animations
   useEffect(() => {
@@ -273,22 +214,14 @@ function App() {
       <div className="relative">
         <div 
           ref={el => sectionRefs.current[0] = el}
-          className="min-h-screen"
-          style={{
-            transform: `translateY(${scrollProgress * -20}px)`,
-            transition: isScrolling ? 'none' : 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-          }}
+          className="min-h-screen snap-start"
         >
           <Hero />
         </div>
         
         <div 
           ref={el => sectionRefs.current[1] = el}
-          className="min-h-screen"
-          style={{
-            transform: `translateY(${Math.max(0, (scrollProgress - 0.2) * -30)}px)`,
-            transition: isScrolling ? 'none' : 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-          }}
+          className="min-h-screen snap-start"
         >
           <OpportunityStatement />
         </div>
@@ -303,21 +236,11 @@ function App() {
             key={index}
             onClick={() => {
               const scrollTargets = [
-                0, // Hero
-                window.innerHeight, // Strategic
-                window.innerHeight * 2, // Transformation slide 1
-                window.innerHeight * 3, // Transformation slide 2
-                window.innerHeight * 4, // Transformation slide 3
+                0, window.innerHeight, window.innerHeight * 2, window.innerHeight * 3, window.innerHeight * 4
               ];
-              const targetScroll = scrollTargets[index];
-              isSnappingRef.current = true;
-              window.scrollTo({
-                top: targetScroll,
-                behavior: 'smooth'
-              });
-              setTimeout(() => {
-                isSnappingRef.current = false;
-              }, 800);
+              document.documentElement.style.scrollBehavior = 'smooth';
+              window.scrollTo(0, scrollTargets[index]);
+              setTimeout(() => { document.documentElement.style.scrollBehavior = 'auto'; }, 1000);
             }}
             className="group relative"
           >

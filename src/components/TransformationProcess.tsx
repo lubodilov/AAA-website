@@ -375,7 +375,7 @@ export default function TransformationProcess() {
   }, [currentSlide, isTransitioning, slides.length, lastScrollTime, scrollAccumulator]);
 
   return (
-    <section ref={sectionRef} className="relative" style={{ height: '300vh' }}>
+    <section ref={sectionRef} className="relative snap-scroll-container" style={{ height: '300vh' }}>
       {/* Progress Indicator - Only visible when section is in view */}
 
       {/* Slides */}
@@ -383,7 +383,7 @@ export default function TransformationProcess() {
         <div
           key={index}
           ref={el => slideRefs.current[index] = el}
-          className="h-screen flex items-center relative overflow-hidden sticky top-0"
+          className="h-screen flex items-center relative overflow-hidden sticky top-0 snap-start"
           style={{ zIndex: slides.length - index }}
         >
           {/* Background Parallax Layer */}

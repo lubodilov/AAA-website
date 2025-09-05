@@ -2,44 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Enhanced smooth scrolling with momentum */
+/* Ultra-smooth momentum-aware scrolling */
 html {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   overflow-x: hidden;
+  scroll-snap-type: y mandatory;
 }
 
 body {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   overflow-x: hidden;
 }
 
-/* Smooth momentum scrolling */
-@media (prefers-reduced-motion: no-preference) {
-  * {
-    scroll-behavior: auto;
-  }
-  
-  /* Custom easing for buttery smooth scrolling */
-  .scroll-smooth {
-    scroll-behavior: smooth;
-    scroll-snap-type: none;
-  }
-  
-  /* Momentum-based transitions */
-  .momentum-scroll {
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  
-  /* Buttery smooth section transitions */
-  .section-transition {
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-  }
+/* Snap scroll container for transformation section */
+.snap-scroll-container {
+  scroll-snap-type: y mandatory;
 }
 
-/* Disable momentum scrolling on reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .momentum-scroll,
-  .section-transition {
-    transition: none;
-  }
+/* Snap alignment for sections */
+.snap-start {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
+
+/* Enhanced momentum scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Ultra-smooth scroll timing */
+  html, body {
+    scroll-padding-top: 0;
+    scroll-margin-top: 0;
+  }
+  
+  /* Smooth section transitions */
+  .snap-start {
+    scroll-margin-top: 0;
+    scroll-padding-top: 0;
+  }
