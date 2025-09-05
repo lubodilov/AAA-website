@@ -292,15 +292,14 @@ export default function TransformationProcess() {
       if (targetElement) {
         targetElement.scrollIntoView({
           behavior: 'smooth',
-          block: 'start',
-          inline: 'nearest'
+          block: 'start'
         });
       }
 
       // Reset transition lock
       setTimeout(() => {
         setIsTransitioning(false);
-      }, 2800); // Even longer for transformation slides
+      }, 1200);
     }
   };
 
