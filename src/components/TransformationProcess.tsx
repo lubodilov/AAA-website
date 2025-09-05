@@ -3,9 +3,12 @@ import React, { useState, useEffect, useRef } from 'react';
 export default function TransformationProcess() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [animationStates, setAnimationStates] = useState([false, false, false]);
-  const [isScrolling, setIsScrolling] = useState(false);
+  const [sectionInView, setSectionInView] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [lastScrollTime, setLastScrollTime] = useState(0);
+  const [scrollAccumulator, setScrollAccumulator] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout>();
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Check for reduced motion preference
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -33,31 +36,6 @@ export default function TransformationProcess() {
       icon: "rocket"
     }
   ];
-
-  // Simple scroll to slide function
-  const scrollToSlide = (slideIndex: number) => {
-    if (isScrolling || slideIndex < 0 || slideIndex > 2) return;
-    
-    setIsScrolling(true);
-    setCurrentSlide(slideIndex);
-    
-    const targetScroll = window.innerHeight * (2 + slideIndex);
-    
-    window.scrollTo({
-      top: targetScroll,
-      behavior: 'smooth'
-    });
-    
-    // Reset scrolling state and trigger animation
-    setTimeout(() => {
-      setIsScrolling(false);
-      setAnimationStates(prev => {
-        const newStates = [...prev];
-        newStates[slideIndex] = true;
-        return newStates;
-      });
-    }, 1000);
-  };
 
   // Animated SVG Icons
   const EyeIcon = ({ isAnimated }: { isAnimated: boolean }) => (
@@ -303,82 +281,108 @@ export default function TransformationProcess() {
     }
   };
 
-  // Handle wheel events for transformation slides
+  // Navigate to specific slide
+  const navigateToSlide = (targetSlide: number) => {
+    if (targetSlide >= 0 && targetSlide < slides.length && !isTransitioning) {
+      setIsTransitioning(true);
+      setLastScrollTime(Date.now());
+      setCurrentSlide(targetSlide);
+      
+      slideRefs.current[targetSlide]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+
+      // Reset transition lock
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 2000); // Slower, more elegant transitions
+    }
+  };
+
+  // Section visibility observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setSectionInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Individual slide observers
+  useEffect(() => {
+    const observers = slideRefs.current.map((slideRef, index) => {
+      if (!slideRef) return null;
+      
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          // Use much higher threshold for first slide to delay animation trigger significantly
+          const threshold = index === 0 ? 0.98 : 0.6;
+          if (entry.isIntersecting && entry.intersectionRatio > threshold) {
+            setCurrentSlide(index);
+            setAnimationStates(prev => {
+              const newStates = [...prev];
+              newStates[index] = true;
+              return newStates;
+            });
+          }
+        },
+        // Use much higher threshold for first slide
+        { threshold: index === 0 ? 0.98 : 0.6 }
+      );
+      
+      observer.observe(slideRef);
+      return observer;
+    });
+
+    return () => {
+      observers.forEach(observer => observer?.disconnect());
+    };
+  }, []);
+
+  // Smooth wheel navigation
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (isScrolling) {
+      const now = Date.now();
+      
+      // Ignore rapid scroll events (debounce to 150ms for accumulation)
+      if (now - lastScrollTime < 150) {
         e.preventDefault();
         return;
       }
+      
+      // Only handle on desktop
+      if (window.innerWidth < 768) return;
+      
+      const container = sectionRef.current;
+      if (!container) return;
 
-      // Only handle wheel events in transformation section
-      const scrollTop = window.scrollY;
-      const transformationStart = window.innerHeight * 2;
-      const transformationEnd = window.innerHeight * 5;
+      const rect = container.getBoundingClientRect();
+      const isInSection = rect.top <= 100 && rect.bottom >= window.innerHeight - 100;
       
-      if (scrollTop < transformationStart || scrollTop > transformationEnd) {
-        return;
-      }
-      
-      e.preventDefault();
-      
-      // Clear existing timeout
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-      
-      // Wait for wheel events to settle
-      scrollTimeoutRef.current = setTimeout(() => {
-        const direction = e.deltaY > 0 ? 1 : -1;
-        const nextSlide = currentSlide + direction;
-        
-        if (nextSlide >= 0 && nextSlide <= 2) {
-          scrollToSlide(nextSlide);
-        }
-      }, 50);
+      if (!isInSection) return;
     };
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    
-    return () => {
-      window.removeEventListener('wheel', handleWheel);
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-    };
-  }, [currentSlide, isScrolling]);
-
-  // Set initial animation state based on scroll position
-  useEffect(() => {
-    const handleScroll = () => {
-      if (isScrolling) return;
-      
-      const scrollTop = window.scrollY;
-      const transformationStart = window.innerHeight * 2;
-      const transformationProgress = scrollTop - transformationStart;
-      const slideIndex = Math.max(0, Math.min(Math.floor(transformationProgress / window.innerHeight), 2));
-      
-      if (slideIndex !== currentSlide) {
-        setCurrentSlide(slideIndex);
-        setAnimationStates(prev => {
-          const newStates = [...prev];
-          newStates[slideIndex] = true;
-          return newStates;
-        });
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [currentSlide, isScrolling]);
+    // Remove global wheel handling - now handled by parent App component
+    return () => {};
+  }, [currentSlide, isTransitioning, slides.length, lastScrollTime, scrollAccumulator]);
 
   return (
     <section ref={sectionRef} className="relative" style={{ height: '300vh' }}>
+      {/* Progress Indicator - Only visible when section is in view */}
 
       {/* Slides */}
       {slides.map((slide, index) => (
         <div
           key={index}
+          ref={el => slideRefs.current[index] = el}
           className="h-screen flex items-center relative overflow-hidden sticky top-0"
           style={{ zIndex: slides.length - index }}
         >
@@ -542,13 +546,18 @@ export default function TransformationProcess() {
               {slides.map((_, dotIndex) => (
                 <button
                   key={dotIndex}
-                  onClick={() => scrollToSlide(dotIndex)}
-                  disabled={isScrolling}
+                  onClick={() => {
+                    const targetScroll = window.innerHeight * (2 + dotIndex);
+                    window.scrollTo({
+                      top: targetScroll,
+                      behavior: 'smooth'
+                    });
+                  }}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     currentSlide === dotIndex 
                       ? 'bg-red-600 scale-125' 
                       : 'bg-red-600/30'
-                  } ${isScrolling ? 'opacity-50' : ''}`}
+                  }`}
                 />
               ))}
             </div>
