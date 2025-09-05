@@ -7,41 +7,19 @@ import TransformationProcess from './components/TransformationProcess';
 function App() {
   const [currentSection, setCurrentSection] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [isAnimating, setIsAnimating] = useState(false);
   
-  // Momentum detection system
-  const velocityRef = useRef(0);
-  const lastScrollTimeRef = useRef(0);
-  const lastScrollPositionRef = useRef(0);
-  const scrollSamplesRef = useRef<Array<{position: number, time: number}>>([]);
-  const isScrollingRef = useRef(false);
-  const scrollEndTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const isAnimatingRef = useRef(false);
-  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
+  // Refs for momentum detection and control
+  const scrollSamplesRef = useRef<Array<{position: number, time: number, delta: number}>>([]);
+  const lastWheelTimeRef = useRef(0);
+  const animationFrameRef = useRef<number | null>(null);
+  const isControllingScrollRef = useRef(false);
+  const targetSectionRef = useRef<number | null>(null);
+  
   const sections = ['hero', 'strategic', 'transformation-1', 'transformation-2', 'transformation-3'];
   const scrollTargets = [0, window.innerHeight, window.innerHeight * 2, window.innerHeight * 3, window.innerHeight * 4];
 
-  // Calculate momentum from scroll samples
-  const calculateMomentum = () => {
-    const samples = scrollSamplesRef.current;
-    if (samples.length < 2) return { velocity: 0, direction: 0 };
-    
-    // Use last 3 samples for momentum calculation
-    const recentSamples = samples.slice(-3);
-    const firstSample = recentSamples[0];
-    const lastSample = recentSamples[recentSamples.length - 1];
-    
-    const deltaPosition = lastSample.position - firstSample.position;
-    const deltaTime = lastSample.time - firstSample.time;
-    
-    const velocity = deltaTime > 0 ? Math.abs(deltaPosition / deltaTime) : 0;
-    const direction = deltaPosition > 0 ? 1 : deltaPosition < 0 ? -1 : 0;
-    
-    return { velocity, direction };
-  };
-
-  // Get current section index based on scroll position
+  // Get current section based on scroll position
   const getCurrentSectionIndex = (scrollTop: number) => {
     const windowHeight = window.innerHeight;
     
@@ -57,208 +35,198 @@ function App() {
     }
   };
 
-  // Smooth scroll to target with deceleration
-  const smoothScrollToTarget = (targetScroll: number) => {
-    isAnimatingRef.current = true;
+  // Smooth scroll to target with easing
+  const smoothScrollToTarget = (targetScroll: number, duration: number = 800) => {
+    if (isControllingScrollRef.current) return;
     
-    // Enable smooth scrolling
-    document.documentElement.style.scrollBehavior = 'smooth';
+    isControllingScrollRef.current = true;
+    setIsAnimating(true);
     
-    // Scroll to target
-    window.scrollTo({
-      top: targetScroll,
-      behavior: 'smooth'
-    });
+    const startScroll = window.scrollY;
+    const distance = targetScroll - startScroll;
+    const startTime = performance.now();
     
-    // Reset after animation
-    setTimeout(() => {
-      isAnimatingRef.current = false;
-      document.documentElement.style.scrollBehavior = 'auto';
-    }, 1000);
-  };
-
-  // Handle scroll end with momentum detection
-  const handleScrollEnd = () => {
-    if (isAnimatingRef.current) return;
+    // Easing function for smooth deceleration
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
     
-    const currentScroll = window.scrollY;
-    const currentSectionIndex = getCurrentSectionIndex(currentScroll);
-    const momentum = calculateMomentum();
-    
-    // Momentum threshold - very sensitive to detect any momentum
-    const MOMENTUM_THRESHOLD = 0.1;
-    const hasMomentum = momentum.velocity > MOMENTUM_THRESHOLD;
-    
-    if (hasMomentum && momentum.direction !== 0) {
-      // HAS MOMENTUM - move to next slide in direction
-      let targetSectionIndex;
+    const animateScroll = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutCubic(progress);
       
-      if (momentum.direction > 0) {
-        // Scrolling down - go to next section
-        targetSectionIndex = Math.min(currentSectionIndex + 1, sections.length - 1);
+      const currentScroll = startScroll + (distance * easedProgress);
+      window.scrollTo(0, currentScroll);
+      
+      if (progress < 1) {
+        animationFrameRef.current = requestAnimationFrame(animateScroll);
       } else {
-        // Scrolling up - go to previous section
-        targetSectionIndex = Math.max(currentSectionIndex - 1, 0);
-      }
-      
-      const targetScroll = scrollTargets[targetSectionIndex];
-      
-      // Only animate if we're moving to a different section
-      if (targetSectionIndex !== currentSectionIndex) {
-        smoothScrollToTarget(targetScroll);
-      } else {
-        // Same section - center it
-        const currentTargetScroll = scrollTargets[currentSectionIndex];
-        if (Math.abs(currentScroll - currentTargetScroll) > 30) {
-          smoothScrollToTarget(currentTargetScroll);
+        // Animation complete
+        isControllingScrollRef.current = false;
+        setIsAnimating(false);
+        targetSectionRef.current = null;
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+          animationFrameRef.current = null;
         }
       }
-    } else {
-      // NO MOMENTUM - stay on current slide and center it
-      const currentTargetScroll = scrollTargets[currentSectionIndex];
-      const distanceFromCenter = Math.abs(currentScroll - currentTargetScroll);
-      
-      // Only center if we're significantly off-center
-      if (distanceFromCenter > 30) {
-        smoothScrollToTarget(currentTargetScroll);
-      }
-    }
+    };
     
-    // Clear scroll samples
-    scrollSamplesRef.current = [];
+    animationFrameRef.current = requestAnimationFrame(animateScroll);
   };
 
-  // Add scroll sample for momentum calculation
-  const addScrollSample = (position: number, time: number) => {
-    scrollSamplesRef.current.push({ position, time });
+  // Add scroll sample for momentum detection
+  const addScrollSample = (position: number, delta: number) => {
+    const now = performance.now();
+    scrollSamplesRef.current.push({ position, time: now, delta });
     
-    // Keep only last 5 samples for momentum calculation
-    if (scrollSamplesRef.current.length > 5) {
+    // Keep only last 10 samples for momentum calculation
+    if (scrollSamplesRef.current.length > 10) {
       scrollSamplesRef.current.shift();
     }
   };
 
-  // Main scroll handler
-  useEffect(() => {
-    let ticking = false;
+  // Calculate momentum from recent samples
+  const calculateMomentum = () => {
+    const samples = scrollSamplesRef.current;
+    if (samples.length < 3) return { hasMomentum: false, direction: 0, velocity: 0 };
+    
+    // Use last 5 samples for momentum calculation
+    const recentSamples = samples.slice(-5);
+    const totalDelta = recentSamples.reduce((sum, sample) => sum + sample.delta, 0);
+    const timeSpan = recentSamples[recentSamples.length - 1].time - recentSamples[0].time;
+    
+    if (timeSpan === 0) return { hasMomentum: false, direction: 0, velocity: 0 };
+    
+    const velocity = Math.abs(totalDelta / timeSpan);
+    const direction = totalDelta > 0 ? 1 : -1;
+    
+    // Very sensitive momentum detection - any velocity > 0.05 is considered momentum
+    const hasMomentum = velocity > 0.05;
+    
+    return { hasMomentum, direction, velocity };
+  };
 
-    const updateScrollProgress = () => {
+  // Handle wheel events with momentum detection
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      // Don't interfere if we're already controlling scroll
+      if (isControllingScrollRef.current) {
+        e.preventDefault();
+        return;
+      }
+      
+      const now = performance.now();
+      lastWheelTimeRef.current = now;
+      
+      // Add scroll sample
+      addScrollSample(window.scrollY, e.deltaY);
+      
+      // Prevent default to control scrolling ourselves
+      e.preventDefault();
+      
+      // Wait a bit to see if more wheel events come (indicating momentum)
+      setTimeout(() => {
+        // Only process if this was the last wheel event (no newer events)
+        if (now === lastWheelTimeRef.current && !isControllingScrollRef.current) {
+          processScrollGesture();
+        }
+      }, 50);
+    };
+
+    const processScrollGesture = () => {
+      const currentScroll = window.scrollY;
+      const currentSectionIndex = getCurrentSectionIndex(currentScroll);
+      const momentum = calculateMomentum();
+      
+      console.log('Processing scroll gesture:', {
+        hasMomentum: momentum.hasMomentum,
+        direction: momentum.direction,
+        velocity: momentum.velocity,
+        currentSection: currentSectionIndex
+      });
+      
+      if (momentum.hasMomentum) {
+        // HAS MOMENTUM - move to next slide in direction
+        let targetSectionIndex;
+        
+        if (momentum.direction > 0) {
+          // Scrolling down - go to next section (max one step)
+          targetSectionIndex = Math.min(currentSectionIndex + 1, sections.length - 1);
+        } else {
+          // Scrolling up - go to previous section (max one step)
+          targetSectionIndex = Math.max(currentSectionIndex - 1, 0);
+        }
+        
+        // Only move if we're actually changing sections
+        if (targetSectionIndex !== currentSectionIndex) {
+          const targetScroll = scrollTargets[targetSectionIndex];
+          targetSectionRef.current = targetSectionIndex;
+          
+          // Use longer duration for momentum-based scrolling for smooth deceleration
+          smoothScrollToTarget(targetScroll, 1000);
+          setCurrentSection(targetSectionIndex);
+        }
+      } else {
+        // NO MOMENTUM - stay on current slide and center it
+        const currentTargetScroll = scrollTargets[currentSectionIndex];
+        const distanceFromCenter = Math.abs(currentScroll - currentTargetScroll);
+        
+        // Only center if we're significantly off-center
+        if (distanceFromCenter > 30) {
+          smoothScrollToTarget(currentTargetScroll, 600);
+        }
+      }
+      
+      // Clear scroll samples after processing
+      scrollSamplesRef.current = [];
+    };
+
+    // Add wheel event listener with passive: false to allow preventDefault
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [sections.length]);
+
+  // Handle regular scroll for progress tracking
+  useEffect(() => {
+    const handleScroll = () => {
+      // Don't update during our controlled animations
+      if (isControllingScrollRef.current) return;
+      
       const scrollTop = window.scrollY;
-      const currentTime = performance.now();
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight - windowHeight;
       const progress = Math.min(scrollTop / documentHeight, 1);
       
       setScrollProgress(progress);
       
-      // Add scroll sample for momentum detection
-      addScrollSample(scrollTop, currentTime);
-      
       // Update current section
       const currentSectionIndex = getCurrentSectionIndex(scrollTop);
       const clampedIndex = Math.max(0, Math.min(currentSectionIndex, sections.length - 1));
       
-      if (clampedIndex !== currentSection) {
+      if (clampedIndex !== currentSection && !isAnimating) {
         setCurrentSection(clampedIndex);
       }
-      
-      ticking = false;
-    };
-
-    const handleScroll = () => {
-      // Skip if we're animating
-      if (isAnimatingRef.current) return;
-      
-      if (!ticking) {
-        requestAnimationFrame(updateScrollProgress);
-        ticking = true;
-      }
-      
-      // Mark as actively scrolling
-      isScrollingRef.current = true;
-      
-      // Clear existing timeout
-      if (scrollEndTimeoutRef.current) {
-        clearTimeout(scrollEndTimeoutRef.current);
-      }
-      
-      // Set timeout to detect scroll end
-      scrollEndTimeoutRef.current = setTimeout(() => {
-        isScrollingRef.current = false;
-        handleScrollEnd();
-      }, 150); // 150ms delay to detect scroll end
-    };
-
-    // Wheel event handler - block during animation
-    const handleWheel = (e: WheelEvent) => {
-      if (isAnimatingRef.current) {
-        e.preventDefault();
-        return;
-      }
-      
-      // Clear wheel timeout
-      if (wheelTimeoutRef.current) {
-        clearTimeout(wheelTimeoutRef.current);
-      }
-      
-      // Set wheel timeout to detect wheel end
-      wheelTimeoutRef.current = setTimeout(() => {
-        // Wheel ended - this helps detect momentum vs manual scroll
-        const currentTime = performance.now();
-        addScrollSample(window.scrollY, currentTime);
-      }, 50);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [currentSection, sections.length, isAnimating]);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('wheel', handleWheel);
-      
-      if (scrollEndTimeoutRef.current) {
-        clearTimeout(scrollEndTimeoutRef.current);
-      }
-      if (wheelTimeoutRef.current) {
-        clearTimeout(wheelTimeoutRef.current);
-      }
-    };
-  }, [currentSection, sections.length]);
-
-  // Navigation function for dots and manual navigation
+  // Navigation function for dots
   const navigateToSection = (targetIndex: number) => {
-    if (targetIndex >= 0 && targetIndex < sections.length && !isAnimatingRef.current) {
+    if (targetIndex >= 0 && targetIndex < sections.length && !isControllingScrollRef.current) {
       const targetScroll = scrollTargets[targetIndex];
-      smoothScrollToTarget(targetScroll);
+      targetSectionRef.current = targetIndex;
+      smoothScrollToTarget(targetScroll, 800);
       setCurrentSection(targetIndex);
     }
   };
-
-  // Section visibility observers for animations
-  useEffect(() => {
-    const observers = sectionRefs.current.slice(0, 2).map((sectionRef, index) => {
-      if (!sectionRef) return null;
-      
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-            setCurrentSection(index);
-          }
-        },
-        { 
-          threshold: [0.1, 0.3, 0.5, 0.7, 0.9],
-          rootMargin: '-10% 0px -10% 0px'
-        }
-      );
-      
-      observer.observe(sectionRef);
-      return observer;
-    });
-
-    return () => {
-      observers.forEach(observer => observer?.disconnect());
-    };
-  }, []);
 
   return (
     <div className="bg-black min-h-screen">
@@ -289,19 +257,13 @@ function App() {
       
       <Header />
       
-      {/* Smooth scroll container */}
+      {/* Content sections */}
       <div className="relative">
-        <div 
-          ref={el => sectionRefs.current[0] = el}
-          className="min-h-screen"
-        >
+        <div className="min-h-screen">
           <Hero />
         </div>
         
-        <div 
-          ref={el => sectionRefs.current[1] = el}
-          className="min-h-screen"
-        >
+        <div className="min-h-screen">
           <OpportunityStatement />
         </div>
         
@@ -315,13 +277,14 @@ function App() {
             key={index}
             onClick={() => navigateToSection(index)}
             className="group relative"
+            disabled={isAnimating}
           >
             <div 
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 currentSection === index 
                   ? 'bg-red-600 scale-125 shadow-lg shadow-red-600/50' 
                   : 'bg-red-600/30 hover:bg-red-600/60'
-              }`}
+              } ${isAnimating ? 'opacity-50' : ''}`}
             />
             <div className="absolute right-6 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
               <div className="bg-black/90 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap">
