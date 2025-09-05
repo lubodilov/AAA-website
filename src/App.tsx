@@ -24,14 +24,40 @@ function App() {
       setCurrentSection(targetSection);
       
       sectionRefs.current[targetSection]?.scrollIntoView({
-        behavior: 'smooth',
+        behavior: 'auto',
         block: 'start'
       });
+      
+      // Custom smooth scroll with slower timing
+      const startPosition = window.pageYOffset;
+      const targetPosition = sectionRefs.current[targetSection]?.offsetTop || 0;
+      const distance = targetPosition - startPosition;
+      const duration = 1500; // Slower animation duration
+      const startTime = performance.now();
+      
+      const smoothScroll = (currentTime: number) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Smooth easing function for more elegant movement
+        const easeInOutCubic = progress < 0.5 
+          ? 4 * progress * progress * progress 
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+        
+        const currentPosition = startPosition + (distance * easeInOutCubic);
+        window.scrollTo(0, currentPosition);
+        
+        if (progress < 1) {
+          requestAnimationFrame(smoothScroll);
+        }
+      };
+      
+      requestAnimationFrame(smoothScroll);
 
       // Reset transition lock
       setTimeout(() => {
         setIsTransitioning(false);
-      }, 1200);
+      }, 1800);
     }
   };
 
@@ -63,14 +89,14 @@ function App() {
     const handleWheel = (e: WheelEvent) => {
       const now = Date.now();
       
-      // Ignore rapid scroll events
-      if (now - lastScrollTime < 150) {
+      // Ignore rapid scroll events - reduced for easier navigation
+      if (now - lastScrollTime < 100) {
         e.preventDefault();
         return;
       }
       
       // Don't handle if already transitioning
-      if (isTransitioning || now - lastScrollTime < 300) {
+      if (isTransitioning || now - lastScrollTime < 200) {
         e.preventDefault();
         return;
       }
@@ -94,8 +120,8 @@ function App() {
       const newAccumulator = scrollAccumulator + Math.abs(e.deltaY);
       setScrollAccumulator(newAccumulator);
       
-      // Require moderate scroll distance before navigating
-      const scrollThreshold = 30;
+      // Reduced threshold for easier navigation
+      const scrollThreshold = 15;
       
       if (newAccumulator < scrollThreshold) {
         setLastScrollTime(now);
