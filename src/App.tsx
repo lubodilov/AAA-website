@@ -11,6 +11,8 @@ function App() {
   const momentumTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastScrollPositionRef = useRef(0);
   const scrollVelocityRef = useRef(0);
+  const isSnappingRef = useRef(false);
+  const targetScrollRef = useRef<number | null>(null);
 
   const sections = ['hero', 'strategic', 'transformation-1', 'transformation-2', 'transformation-3'];
 
@@ -34,6 +36,17 @@ function App() {
       
       if (deltaTime > 0) {
         scrollVelocityRef.current = deltaScroll / deltaTime;
+      }
+      
+      // Check if we've reached our target during snapping
+      if (isSnappingRef.current && targetScrollRef.current !== null) {
+        const distanceToTarget = Math.abs(scrollTop - targetScrollRef.current);
+        if (distanceToTarget < 10) {
+          // We've reached the target, stop momentum
+          isSnappingRef.current = false;
+          targetScrollRef.current = null;
+          document.documentElement.style.scrollBehavior = 'auto';
+        }
       }
       
       lastScrollPositionRef.current = scrollTop;
@@ -125,18 +138,30 @@ function App() {
       // Snap if we're not already very close
       if (distanceToTarget > 30) {
         // Use CSS scroll-behavior for ultra-smooth snapping
+        isSnappingRef.current = true;
+        targetScrollRef.current = targetScrollTop;
         document.documentElement.style.scrollBehavior = 'smooth';
         window.scrollTo(0, targetScrollTop);
         
-        // Reset scroll behavior after animation
+        // Fallback reset in case we don't detect arrival
         setTimeout(() => {
-          document.documentElement.style.scrollBehavior = 'auto';
-        }, 1000);
+          if (isSnappingRef.current) {
+            isSnappingRef.current = false;
+            targetScrollRef.current = null;
+            document.documentElement.style.scrollBehavior = 'auto';
+          }
+        }, 1500);
       }
     };
 
     // Wheel handling with momentum prediction
     const handleWheel = (e: WheelEvent) => {
+      // If we're currently snapping to a target, prevent additional wheel events
+      if (isSnappingRef.current) {
+        e.preventDefault();
+        return;
+      }
+      
       // Let the browser handle natural scrolling with momentum
       // Our scroll handler will predict and snap appropriately
     };
@@ -238,9 +263,17 @@ function App() {
               const scrollTargets = [
                 0, window.innerHeight, window.innerHeight * 2, window.innerHeight * 3, window.innerHeight * 4
               ];
+              isSnappingRef.current = true;
+              targetScrollRef.current = scrollTargets[index];
               document.documentElement.style.scrollBehavior = 'smooth';
               window.scrollTo(0, scrollTargets[index]);
-              setTimeout(() => { document.documentElement.style.scrollBehavior = 'auto'; }, 1000);
+              setTimeout(() => { 
+                if (isSnappingRef.current) {
+                  isSnappingRef.current = false;
+                  targetScrollRef.current = null;
+                  document.documentElement.style.scrollBehavior = 'auto';
+                }
+              }, 1500);
             }}
             className="group relative"
           >
