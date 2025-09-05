@@ -104,7 +104,7 @@ export default function ProofOfDominance() {
   return (
     <section 
       ref={sectionRef}
-      className="min-h-screen flex items-center relative overflow-hidden snap-start"
+      className="h-screen flex items-center relative overflow-hidden snap-start"
     >
       {/* Elite Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -164,9 +164,9 @@ export default function ProofOfDominance() {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <div 
             className="inline-block mb-6"
             style={{
@@ -176,13 +176,13 @@ export default function ProofOfDominance() {
             }}
           >
             {/* Elite badge */}
-            <div className="inline-flex items-center space-x-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 mb-6">
+            <div className="inline-flex items-center space-x-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-4 py-2 mb-4">
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-              <span className="text-white/80 text-sm font-light tracking-wider uppercase">Proof of Dominance</span>
+              <span className="text-white/80 text-xs font-light tracking-wider uppercase">Proof of Dominance</span>
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
             </div>
             
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-thin text-white leading-tight">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-thin text-white leading-tight">
               The Vision{' '}
               <span 
                 className="font-extralight italic"
@@ -201,7 +201,7 @@ export default function ProofOfDominance() {
         </div>
 
         {/* Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-8">
           {metrics.map((metric, index) => (
             <div
               key={index}
@@ -214,7 +214,7 @@ export default function ProofOfDominance() {
               }}
             >
               {/* Card Background */}
-              <div className="relative bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:border-white/20 transition-all duration-500 group-hover:bg-black/40">
+              <div className="relative bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/20 transition-all duration-500 group-hover:bg-black/40">
                 {/* Glow effect */}
                 <div 
                   className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -227,9 +227,9 @@ export default function ProofOfDominance() {
                 {/* Content */}
                 <div className="relative z-10 text-center">
                   {/* Main Metric */}
-                  <div className="mb-4">
+                  <div className="mb-3">
                     <div 
-                      className="text-5xl lg:text-6xl font-bold mb-2"
+                      className="text-4xl lg:text-5xl font-bold mb-2"
                       style={{ 
                         color: metric.color,
                         fontFamily: 'Inter, sans-serif',
@@ -251,10 +251,10 @@ export default function ProofOfDominance() {
                   
                   {/* Labels */}
                   <div className="space-y-1">
-                    <div className="text-white font-light text-lg">
+                    <div className="text-white font-light text-base">
                       {metric.label}
                     </div>
-                    <div className="text-white/70 font-extralight text-base">
+                    <div className="text-white/70 font-extralight text-sm">
                       {metric.sublabel}
                     </div>
                   </div>
@@ -272,7 +272,7 @@ export default function ProofOfDominance() {
 
         {/* Bottom Statement */}
         <div 
-          className="text-center max-w-4xl mx-auto"
+          className="text-center max-w-3xl mx-auto"
           style={{
             opacity: descriptionVisible ? 1 : 0,
             transform: descriptionVisible ? 'translateY(0)' : 'translateY(30px)',
@@ -282,8 +282,8 @@ export default function ProofOfDominance() {
           <div className="relative">
             {/* Elite frame */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent rounded-2xl" />
-            <div className="relative bg-black/20 backdrop-blur-sm border border-white/10 rounded-2xl p-8 lg:p-12">
-              <p className="text-xl lg:text-2xl font-extralight text-white leading-relaxed">
+            <div className="relative bg-black/20 backdrop-blur-sm border border-white/10 rounded-2xl p-6 lg:p-8">
+              <p className="text-lg lg:text-xl font-extralight text-white leading-relaxed">
                 Within <span className="text-red-400 font-light">6 months</span>, our clients shift from{' '}
                 <span className="text-white/90">managing operations</span> to{' '}
                 <span 
@@ -300,19 +300,19 @@ export default function ProofOfDominance() {
               </p>
               
               {/* Decorative elements */}
-              <div className="absolute top-6 left-6 w-8 h-8">
+              <div className="absolute top-4 left-4 w-6 h-6">
                 <div className="w-full h-full border border-white/20 rounded-full flex items-center justify-center">
-                  <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                  <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
                 </div>
               </div>
-              <div className="absolute top-6 right-6 w-8 h-8">
+              <div className="absolute top-4 right-4 w-6 h-6">
                 <div className="w-full h-full border border-white/20 rounded-full flex items-center justify-center">
-                  <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+                  <div className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
                 </div>
               </div>
-              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-8 h-8">
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-6 h-6">
                 <div className="w-full h-full border border-white/20 rounded-full flex items-center justify-center">
-                  <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
                 </div>
               </div>
             </div>
