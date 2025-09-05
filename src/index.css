@@ -6,6 +6,19 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 0;
+  /* Slower scroll timing for smoother transitions */
+  scroll-snap-type: y mandatory;
+}
+
+/* Custom slower scroll behavior */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Slower transitions for all scrollable elements */
+html, body {
+  scroll-behavior: smooth;
+  transition: scroll-position 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Smooth scroll timing when enabled */

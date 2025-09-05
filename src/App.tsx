@@ -25,13 +25,14 @@ function App() {
       
       sectionRefs.current[targetSection]?.scrollIntoView({
         behavior: 'smooth',
-        block: 'start'
+        block: 'start',
+        inline: 'nearest'
       });
 
       // Reset transition lock
       setTimeout(() => {
         setIsTransitioning(false);
-      }, 1200);
+      }, 2500); // Much longer lock for slower animations
     }
   };
 
