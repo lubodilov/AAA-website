@@ -9,7 +9,7 @@ export default function TransformationProcess() {
   const [scrollAccumulator, setScrollAccumulator] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const isSlideSnappingRef = useRef(false);
+  const momentumInterceptRef = useRef(false);
 
   // Check for reduced motion preference
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -286,21 +286,20 @@ export default function TransformationProcess() {
   const navigateToSlide = (targetSlide: number) => {
     if (targetSlide >= 0 && targetSlide < slides.length && !isTransitioning) {
       setIsTransitioning(true);
-      isSlideSnappingRef.current = true;
+      momentumInterceptRef.current = true;
       setLastScrollTime(Date.now());
       setCurrentSlide(targetSlide);
       
       const targetScroll = window.innerHeight * (2 + targetSlide);
-      slideRefs.current[targetSlide]?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
+      document.documentElement.style.scrollBehavior = 'smooth';
+      window.scrollTo(0, targetScroll);
 
       // Reset transition lock
       setTimeout(() => {
         setIsTransitioning(false);
-        isSlideSnappingRef.current = false;
-      }, 2000); // Slower, more elegant transitions
+        momentumInterceptRef.current = false;
+        document.documentElement.style.scrollBehavior = 'auto';
+      }, 1000);
     }
   };
 
@@ -552,14 +551,16 @@ export default function TransformationProcess() {
                   key={dotIndex}
                   onClick={() => {
                     const targetScroll = window.innerHeight * (2 + dotIndex);
-                    isSlideSnappingRef.current = true;
+                    momentumInterceptRef.current = true;
+                    document.documentElement.style.scrollBehavior = 'smooth';
                     window.scrollTo({
                       top: targetScroll,
                       behavior: 'smooth'
                     });
                     setTimeout(() => {
-                      isSlideSnappingRef.current = false;
-                    }, 1500);
+                      momentumInterceptRef.current = false;
+                      document.documentElement.style.scrollBehavior = 'auto';
+                    }, 1000);
                   }}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     currentSlide === dotIndex 

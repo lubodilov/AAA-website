@@ -8,49 +8,93 @@ function App() {
   const [currentSection, setCurrentSection] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const momentumTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const velocityRef = useRef(0);
+  const lastScrollTimeRef = useRef(0);
   const lastScrollPositionRef = useRef(0);
-  const scrollVelocityRef = useRef(0);
-  const isSnappingRef = useRef(false);
-  const targetScrollRef = useRef<number | null>(null);
+  const momentumInterceptRef = useRef(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const sections = ['hero', 'strategic', 'transformation-1', 'transformation-2', 'transformation-3'];
+  const scrollTargets = [0, window.innerHeight, window.innerHeight * 2, window.innerHeight * 3, window.innerHeight * 4];
 
-  // Momentum-aware scroll with prediction
+  // Calculate scroll velocity
+  const calculateVelocity = (currentScroll: number, currentTime: number) => {
+    const deltaScroll = currentScroll - lastScrollPositionRef.current;
+    const deltaTime = currentTime - lastScrollTimeRef.current;
+    
+    if (deltaTime > 0) {
+      velocityRef.current = deltaScroll / deltaTime;
+    }
+    
+    lastScrollPositionRef.current = currentScroll;
+    lastScrollTimeRef.current = currentTime;
+  };
+
+  // Predict target based on momentum
+  const predictMomentumTarget = (currentScroll: number, velocity: number) => {
+    // Only predict if there's significant velocity
+    if (Math.abs(velocity) < 0.3) {
+      // Low velocity - snap to nearest
+      let nearestTarget = scrollTargets[0];
+      let minDistance = Math.abs(currentScroll - nearestTarget);
+      
+      scrollTargets.forEach(target => {
+        const distance = Math.abs(currentScroll - target);
+        if (distance < minDistance) {
+          minDistance = distance;
+          nearestTarget = target;
+        }
+      });
+      
+      return nearestTarget;
+    }
+    
+    // High velocity - predict momentum target
+    const momentumDistance = velocity * 300; // Predict momentum travel
+    const predictedPosition = currentScroll + momentumDistance;
+    
+    // Find target in the direction of momentum
+    if (velocity > 0) {
+      // Scrolling down - find next target
+      const nextTarget = scrollTargets.find(target => target > currentScroll + 50);
+      return nextTarget || scrollTargets[scrollTargets.length - 1];
+    } else {
+      // Scrolling up - find previous target
+      const prevTargets = scrollTargets.filter(target => target < currentScroll - 50);
+      return prevTargets[prevTargets.length - 1] || scrollTargets[0];
+    }
+  };
+
+  // Smooth momentum interception
+  const interceptMomentum = (targetScroll: number) => {
+    momentumInterceptRef.current = true;
+    
+    // Use smooth scroll behavior for natural deceleration
+    document.documentElement.style.scrollBehavior = 'smooth';
+    window.scrollTo(0, targetScroll);
+    
+    // Reset after animation completes
+    setTimeout(() => {
+      momentumInterceptRef.current = false;
+      document.documentElement.style.scrollBehavior = 'auto';
+    }, 1000);
+  };
+
+  // Main scroll handler
   useEffect(() => {
     let ticking = false;
-    let lastTime = 0;
 
     const updateScrollProgress = () => {
       const scrollTop = window.scrollY;
+      const currentTime = performance.now();
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight - windowHeight;
       const progress = Math.min(scrollTop / documentHeight, 1);
       
       setScrollProgress(progress);
       
-      // Calculate scroll velocity for momentum prediction
-      const currentTime = performance.now();
-      const deltaTime = currentTime - lastTime;
-      const deltaScroll = scrollTop - lastScrollPositionRef.current;
-      
-      if (deltaTime > 0) {
-        scrollVelocityRef.current = deltaScroll / deltaTime;
-      }
-      
-      // Check if we've reached our target during snapping
-      if (isSnappingRef.current && targetScrollRef.current !== null) {
-        const distanceToTarget = Math.abs(scrollTop - targetScrollRef.current);
-        if (distanceToTarget < 10) {
-          // We've reached the target, stop momentum
-          isSnappingRef.current = false;
-          targetScrollRef.current = null;
-          document.documentElement.style.scrollBehavior = 'auto';
-        }
-      }
-      
-      lastScrollPositionRef.current = scrollTop;
-      lastTime = currentTime;
+      // Calculate velocity
+      calculateVelocity(scrollTop, currentTime);
       
       // Determine current section
       let currentSectionIndex = 0;
@@ -81,101 +125,43 @@ function App() {
         ticking = true;
       }
       
-      // Clear existing momentum timeout
-      if (momentumTimeoutRef.current) {
-        clearTimeout(momentumTimeoutRef.current);
+      // Clear existing timeout
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
       }
       
-      // Predict momentum direction and target
-      momentumTimeoutRef.current = setTimeout(() => {
-        predictAndSnapToTarget();
-      }, 50); // Much shorter delay for immediate prediction
-    };
-
-    const predictAndSnapToTarget = () => {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const velocity = scrollVelocityRef.current;
-      
-      const scrollTargets = [
-        0,
-        windowHeight,
-        windowHeight * 2,
-        windowHeight * 3,
-        windowHeight * 4,
-      ];
-      
-      let targetSection = 0;
-      let minDistance = Infinity;
-      
-      // Find closest section considering momentum
-      scrollTargets.forEach((target, index) => {
-        const distance = Math.abs(scrollTop - target);
-        
-        // Apply momentum prediction - if scrolling fast in a direction, 
-        // prefer the target in that direction
-        let adjustedDistance = distance;
-        
-        if (Math.abs(velocity) > 0.5) { // If there's significant velocity
-          if (velocity > 0 && target > scrollTop) {
-            // Scrolling down, prefer targets below
-            adjustedDistance *= 0.7;
-          } else if (velocity < 0 && target < scrollTop) {
-            // Scrolling up, prefer targets above
-            adjustedDistance *= 0.7;
+      // Set timeout to detect scroll end and predict target
+      scrollTimeoutRef.current = setTimeout(() => {
+        if (!momentumInterceptRef.current) {
+          const currentScroll = window.scrollY;
+          const velocity = velocityRef.current;
+          const targetScroll = predictMomentumTarget(currentScroll, velocity);
+          
+          // Only intercept if we're not already at the target
+          const distanceToTarget = Math.abs(currentScroll - targetScroll);
+          if (distanceToTarget > 30) {
+            interceptMomentum(targetScroll);
           }
         }
-        
-        if (adjustedDistance < minDistance) {
-          minDistance = adjustedDistance;
-          targetSection = index;
-        }
-      });
-      
-      const targetScrollTop = scrollTargets[targetSection];
-      const distanceToTarget = Math.abs(scrollTop - targetScrollTop);
-      
-      // Snap if we're not already very close
-      if (distanceToTarget > 30) {
-        // Use CSS scroll-behavior for ultra-smooth snapping
-        isSnappingRef.current = true;
-        targetScrollRef.current = targetScrollTop;
-        document.documentElement.style.scrollBehavior = 'smooth';
-        window.scrollTo(0, targetScrollTop);
-        
-        // Fallback reset in case we don't detect arrival
-        setTimeout(() => {
-          if (isSnappingRef.current) {
-            isSnappingRef.current = false;
-            targetScrollRef.current = null;
-            document.documentElement.style.scrollBehavior = 'auto';
-          }
-        }, 1500);
-      }
+      }, 100); // Shorter delay for responsive prediction
     };
 
-    // Wheel handling with momentum prediction
+    // Wheel handling - block during momentum interception
     const handleWheel = (e: WheelEvent) => {
-      // If we're currently snapping to a target, prevent additional wheel events
-      if (isSnappingRef.current) {
+      if (momentumInterceptRef.current) {
         e.preventDefault();
-        return;
       }
-      
-      // Let the browser handle natural scrolling with momentum
-      // Our scroll handler will predict and snap appropriately
     };
 
-    // Event listeners
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('wheel', handleWheel, { passive: true });
+    window.addEventListener('wheel', handleWheel, { passive: false });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('wheel', handleWheel);
       
-      if (momentumTimeoutRef.current) {
-        clearTimeout(momentumTimeoutRef.current);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
       }
     };
   }, [currentSection, sections.length]);
@@ -260,20 +246,13 @@ function App() {
           <button
             key={index}
             onClick={() => {
-              const scrollTargets = [
-                0, window.innerHeight, window.innerHeight * 2, window.innerHeight * 3, window.innerHeight * 4
-              ];
-              isSnappingRef.current = true;
-              targetScrollRef.current = scrollTargets[index];
+              momentumInterceptRef.current = true;
               document.documentElement.style.scrollBehavior = 'smooth';
               window.scrollTo(0, scrollTargets[index]);
               setTimeout(() => { 
-                if (isSnappingRef.current) {
-                  isSnappingRef.current = false;
-                  targetScrollRef.current = null;
-                  document.documentElement.style.scrollBehavior = 'auto';
-                }
-              }, 1500);
+                momentumInterceptRef.current = false;
+                document.documentElement.style.scrollBehavior = 'auto';
+              }, 1000);
             }}
             className="group relative"
           >
