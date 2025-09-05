@@ -2,44 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ultra-smooth momentum-aware scrolling */
+/* Smooth scrolling base */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   overflow-x: hidden;
-  scroll-snap-type: y mandatory;
 }
 
 body {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   overflow-x: hidden;
 }
 
-/* Snap scroll container for transformation section */
-.snap-scroll-container {
-  scroll-snap-type: y mandatory;
-}
-
-/* Snap alignment for sections */
-.snap-start {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
-/* Enhanced momentum scrolling */
+/* Reduced motion support */
 @media (prefers-reduced-motion: no-preference) {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
   
-  /* Ultra-smooth scroll timing */
+  /* Smooth scroll timing when enabled */
   html, body {
     scroll-padding-top: 0;
     scroll-margin-top: 0;
-  }
-  
-  /* Smooth section transitions */
-  .snap-start {
-    scroll-margin-top: 0;
-    scroll-padding-top: 0;
   }
 }

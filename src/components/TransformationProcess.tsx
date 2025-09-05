@@ -4,12 +4,8 @@ export default function TransformationProcess() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [animationStates, setAnimationStates] = useState([false, false, false]);
   const [sectionInView, setSectionInView] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [lastScrollTime, setLastScrollTime] = useState(0);
-  const [scrollAccumulator, setScrollAccumulator] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const momentumInterceptRef = useRef(false);
 
   // Check for reduced motion preference
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -282,27 +278,6 @@ export default function TransformationProcess() {
     }
   };
 
-  // Navigate to specific slide
-  const navigateToSlide = (targetSlide: number) => {
-    if (targetSlide >= 0 && targetSlide < slides.length && !isTransitioning) {
-      setIsTransitioning(true);
-      momentumInterceptRef.current = true;
-      setLastScrollTime(Date.now());
-      setCurrentSlide(targetSlide);
-      
-      const targetScroll = window.innerHeight * (2 + targetSlide);
-      document.documentElement.style.scrollBehavior = 'smooth';
-      window.scrollTo(0, targetScroll);
-
-      // Reset transition lock
-      setTimeout(() => {
-        setIsTransitioning(false);
-        momentumInterceptRef.current = false;
-        document.documentElement.style.scrollBehavior = 'auto';
-      }, 1000);
-    }
-  };
-
   // Section visibility observer
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -350,43 +325,15 @@ export default function TransformationProcess() {
     };
   }, []);
 
-  // Smooth wheel navigation
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      const now = Date.now();
-      
-      // Ignore rapid scroll events (debounce to 150ms for accumulation)
-      if (now - lastScrollTime < 150) {
-        e.preventDefault();
-        return;
-      }
-      
-      // Only handle on desktop
-      if (window.innerWidth < 768) return;
-      
-      const container = sectionRef.current;
-      if (!container) return;
-
-      const rect = container.getBoundingClientRect();
-      const isInSection = rect.top <= 100 && rect.bottom >= window.innerHeight - 100;
-      
-      if (!isInSection) return;
-    };
-
-    // Remove global wheel handling - now handled by parent App component
-    return () => {};
-  }, [currentSlide, isTransitioning, slides.length, lastScrollTime, scrollAccumulator]);
-
   return (
-    <section ref={sectionRef} className="relative snap-scroll-container" style={{ height: '300vh' }}>
-      {/* Progress Indicator - Only visible when section is in view */}
+    <section ref={sectionRef} className="relative" style={{ height: '300vh' }}>
 
       {/* Slides */}
       {slides.map((slide, index) => (
         <div
           key={index}
           ref={el => slideRefs.current[index] = el}
-          className="h-screen flex items-center relative overflow-hidden sticky top-0 snap-start"
+          className="h-screen flex items-center relative overflow-hidden sticky top-0"
           style={{ zIndex: slides.length - index }}
         >
           {/* Background Parallax Layer */}
@@ -551,14 +498,12 @@ export default function TransformationProcess() {
                   key={dotIndex}
                   onClick={() => {
                     const targetScroll = window.innerHeight * (2 + dotIndex);
-                    momentumInterceptRef.current = true;
                     document.documentElement.style.scrollBehavior = 'smooth';
                     window.scrollTo({
                       top: targetScroll,
                       behavior: 'smooth'
                     });
                     setTimeout(() => {
-                      momentumInterceptRef.current = false;
                       document.documentElement.style.scrollBehavior = 'auto';
                     }, 1000);
                   }}
