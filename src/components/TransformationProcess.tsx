@@ -355,8 +355,8 @@ export default function TransformationProcess() {
     const handleWheel = (e: WheelEvent) => {
       const now = Date.now();
       
-      // Increased debounce for single slide navigation
-      if (now - lastScrollTime < 400) {
+      // Reduced debounce for easier navigation
+      if (now - lastScrollTime < 100) {
         e.preventDefault();
         return;
       }
@@ -372,8 +372,8 @@ export default function TransformationProcess() {
       
       if (!isInSection) return;
 
-      // Strict transition blocking - prevent navigation during transitions
-      if (isTransitioning) {
+      // Don't navigate if already transitioning or just transitioned
+      if (isTransitioning || now - lastScrollTime < 200) {
         e.preventDefault();
         return;
       }
@@ -381,12 +381,12 @@ export default function TransformationProcess() {
       // Prevent default scroll behavior within section
       e.preventDefault();
       
-      // Accumulate scroll delta with higher threshold for single slide navigation
+      // Accumulate scroll delta for less sensitive navigation
       const newAccumulator = scrollAccumulator + Math.abs(e.deltaY);
       setScrollAccumulator(newAccumulator);
       
-      // Higher threshold to prevent accidental multi-slide jumps
-      const scrollThreshold = 60;
+      // Reduced threshold for easier navigation
+      const scrollThreshold = 15;
       
       if (newAccumulator < scrollThreshold) {
         setLastScrollTime(now);
@@ -413,7 +413,7 @@ export default function TransformationProcess() {
           top: container.offsetTop + container.offsetHeight,
           behavior: 'smooth'
         });
-        setTimeout(() => setIsTransitioning(false), 1200);
+        setTimeout(() => setIsTransitioning(false), 800);
         setLastScrollTime(now);
       } else if (targetSlide < 0) {
         // Allow scrolling out of section to previous page section
@@ -422,7 +422,7 @@ export default function TransformationProcess() {
           top: container.offsetTop - window.innerHeight,
           behavior: 'smooth'
         });
-        setTimeout(() => setIsTransitioning(false), 1200);
+        setTimeout(() => setIsTransitioning(false), 800);
         setLastScrollTime(now);
       }
     };
@@ -430,12 +430,12 @@ export default function TransformationProcess() {
     // Reset scroll accumulator when not scrolling for a while
     const resetAccumulator = () => {
       const now = Date.now();
-      if (now - lastScrollTime > 800) {
+      if (now - lastScrollTime > 400) {
         setScrollAccumulator(0);
       }
     };
 
-    const resetInterval = setInterval(resetAccumulator, 400);
+    const resetInterval = setInterval(resetAccumulator, 200);
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => {
       window.removeEventListener('wheel', handleWheel);

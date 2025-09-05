@@ -64,14 +64,14 @@ function App() {
     const handleWheel = (e: WheelEvent) => {
       const now = Date.now();
       
-      // Prevent rapid scroll events - increased debounce for single slide navigation
-      if (now - lastScrollTime < 300) {
+      // Ignore rapid scroll events - reduced for easier navigation
+      if (now - lastScrollTime < 100) {
         e.preventDefault();
         return;
       }
       
-      // Strict transition blocking - prevent any navigation during transitions
-      if (isTransitioning) {
+      // Don't handle if already transitioning
+      if (isTransitioning || now - lastScrollTime < 200) {
         e.preventDefault();
         return;
       }
@@ -91,12 +91,12 @@ function App() {
       // Prevent default scroll behavior for section navigation
       e.preventDefault();
       
-      // Accumulate scroll delta with higher threshold for single slide navigation
+      // Accumulate scroll delta
       const newAccumulator = scrollAccumulator + Math.abs(e.deltaY);
       setScrollAccumulator(newAccumulator);
       
-      // Higher threshold to prevent accidental multi-slide jumps
-      const scrollThreshold = 50;
+      // Reduced threshold for easier navigation
+      const scrollThreshold = 15;
       
       if (newAccumulator < scrollThreshold) {
         setLastScrollTime(now);
@@ -119,12 +119,12 @@ function App() {
     // Reset scroll accumulator when not scrolling
     const resetAccumulator = () => {
       const now = Date.now();
-      if (now - lastScrollTime > 600) {
+      if (now - lastScrollTime > 400) {
         setScrollAccumulator(0);
       }
     };
 
-    const resetInterval = setInterval(resetAccumulator, 300);
+    const resetInterval = setInterval(resetAccumulator, 200);
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => {
       window.removeEventListener('wheel', handleWheel);
