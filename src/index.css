@@ -14,14 +14,10 @@ body {
 }
 
 /* Reduced motion support */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: auto;
-  }
-  
-  /* Smooth scroll timing when enabled */
-  html, body {
-    scroll-padding-top: 0;
-    scroll-margin-top: 0;
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
