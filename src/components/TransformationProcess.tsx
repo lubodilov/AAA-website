@@ -4,8 +4,13 @@ export default function TransformationProcess() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [animationStates, setAnimationStates] = useState([false, false, false]);
   const [sectionInView, setSectionInView] = useState(false);
+  const [isScrollControlled, setIsScrollControlled] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollSamplesRef = useRef<Array<{position: number, time: number, delta: number}>>([]);
+  const lastWheelTimeRef = useRef(0);
+  const animationFrameRef = useRef<number | null>(null);
+  const isControllingScrollRef = useRef(false);
 
   // Check for reduced motion preference
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -294,15 +299,172 @@ export default function TransformationProcess() {
     return () => observer.disconnect();
   }, []);
 
+  // Add scroll sample for momentum detection
+  const addScrollSample = (position: number, delta: number) => {
+    const now = performance.now();
+    scrollSamplesRef.current.push({ position, time: now, delta });
+    
+    // Keep only last 8 samples for momentum calculation
+    if (scrollSamplesRef.current.length > 8) {
+      scrollSamplesRef.current.shift();
+    }
+  };
+
+  // Calculate momentum from recent samples
+  const calculateMomentum = () => {
+    const samples = scrollSamplesRef.current;
+    if (samples.length < 3) return { hasMomentum: false, direction: 0, velocity: 0 };
+    
+    // Use last 4 samples for momentum calculation
+    const recentSamples = samples.slice(-4);
+    const totalDelta = recentSamples.reduce((sum, sample) => sum + sample.delta, 0);
+    const timeSpan = recentSamples[recentSamples.length - 1].time - recentSamples[0].time;
+    
+    if (timeSpan === 0) return { hasMomentum: false, direction: 0, velocity: 0 };
+    
+    const velocity = Math.abs(totalDelta / timeSpan);
+    const direction = totalDelta > 0 ? 1 : -1;
+    
+    // Sensitive momentum detection for transformation slides
+    const hasMomentum = velocity > 0.03;
+    
+    return { hasMomentum, direction, velocity };
+  };
+
+  // Smooth scroll to target slide
+  const smoothScrollToSlide = (targetSlide: number, duration: number = 900) => {
+    if (isControllingScrollRef.current) return;
+    
+    isControllingScrollRef.current = true;
+    setIsScrollControlled(true);
+    
+    const startScroll = window.scrollY;
+    const targetScroll = window.innerHeight * (2 + targetSlide);
+    const distance = targetScroll - startScroll;
+    const startTime = performance.now();
+    
+    // Smooth easing function
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+    
+    const animateScroll = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutCubic(progress);
+      
+      const currentScroll = startScroll + (distance * easedProgress);
+      window.scrollTo(0, currentScroll);
+      
+      if (progress < 1) {
+        animationFrameRef.current = requestAnimationFrame(animateScroll);
+      } else {
+        // Animation complete
+        isControllingScrollRef.current = false;
+        setIsScrollControlled(false);
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+          animationFrameRef.current = null;
+        }
+      }
+    };
+    
+    animationFrameRef.current = requestAnimationFrame(animateScroll);
+  };
+
+  // Handle wheel events within transformation section
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      // Only handle if we're in the transformation section
+      const scrollTop = window.scrollY;
+      const transformationStart = window.innerHeight * 2;
+      const transformationEnd = window.innerHeight * 5;
+      
+      if (scrollTop < transformationStart - 100 || scrollTop > transformationEnd + 100) {
+        return; // Let parent handle
+      }
+      
+      // Don't interfere if we're already controlling scroll
+      if (isControllingScrollRef.current) {
+        e.preventDefault();
+        return;
+      }
+      
+      const now = performance.now();
+      lastWheelTimeRef.current = now;
+      
+      // Add scroll sample
+      addScrollSample(scrollTop, e.deltaY);
+      
+      // Prevent default to control scrolling ourselves
+      e.preventDefault();
+      
+      // Wait to see if more wheel events come
+      setTimeout(() => {
+        if (now === lastWheelTimeRef.current && !isControllingScrollRef.current) {
+          processTransformationScroll();
+        }
+      }, 40);
+    };
+
+    const processTransformationScroll = () => {
+      const currentScroll = window.scrollY;
+      const transformationStart = window.innerHeight * 2;
+      const transformationProgress = currentScroll - transformationStart;
+      const currentSlideIndex = Math.max(0, Math.min(Math.floor(transformationProgress / window.innerHeight), 2));
+      
+      const momentum = calculateMomentum();
+      
+      if (momentum.hasMomentum) {
+        // HAS MOMENTUM - move to next slide only
+        let targetSlideIndex;
+        
+        if (momentum.direction > 0) {
+          // Scrolling down - next slide
+          targetSlideIndex = Math.min(currentSlideIndex + 1, 2);
+        } else {
+          // Scrolling up - previous slide
+          targetSlideIndex = Math.max(currentSlideIndex - 1, 0);
+        }
+        
+        // Only move if changing slides
+        if (targetSlideIndex !== currentSlideIndex) {
+          smoothScrollToSlide(targetSlideIndex, 1000);
+          setCurrentSlide(targetSlideIndex);
+        }
+      } else {
+        // NO MOMENTUM - center current slide
+        const currentTargetScroll = transformationStart + (currentSlideIndex * window.innerHeight);
+        const distanceFromCenter = Math.abs(currentScroll - currentTargetScroll);
+        
+        if (distanceFromCenter > 30) {
+          smoothScrollToSlide(currentSlideIndex, 600);
+        }
+      }
+      
+      // Clear samples
+      scrollSamplesRef.current = [];
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
+
   // Individual slide observers
   useEffect(() => {
+    // Don't set up observers if we're controlling scroll
+    if (isScrollControlled) return;
+    
     const observers = slideRefs.current.map((slideRef, index) => {
       if (!slideRef) return null;
       
       const observer = new IntersectionObserver(
         ([entry]) => {
-          // Use much higher threshold for first slide to delay animation trigger significantly
-          const threshold = index === 0 ? 0.98 : 0.6;
+          const threshold = index === 0 ? 0.95 : 0.6;
           if (entry.isIntersecting && entry.intersectionRatio > threshold) {
             setCurrentSlide(index);
             setAnimationStates(prev => {
@@ -312,8 +474,7 @@ export default function TransformationProcess() {
             });
           }
         },
-        // Use much higher threshold for first slide
-        { threshold: index === 0 ? 0.98 : 0.6 }
+        { threshold: index === 0 ? 0.95 : 0.6 }
       );
       
       observer.observe(slideRef);
@@ -323,7 +484,7 @@ export default function TransformationProcess() {
     return () => {
       observers.forEach(observer => observer?.disconnect());
     };
-  }, []);
+  }, [isScrollControlled]);
 
   return (
     <section ref={sectionRef} className="relative" style={{ height: '300vh' }}>
@@ -497,21 +658,17 @@ export default function TransformationProcess() {
                 <button
                   key={dotIndex}
                   onClick={() => {
-                    const targetScroll = window.innerHeight * (2 + dotIndex);
-                    document.documentElement.style.scrollBehavior = 'smooth';
-                    window.scrollTo({
-                      top: targetScroll,
-                      behavior: 'smooth'
-                    });
-                    setTimeout(() => {
-                      document.documentElement.style.scrollBehavior = 'auto';
-                    }, 1000);
+                    if (!isControllingScrollRef.current) {
+                      smoothScrollToSlide(dotIndex, 800);
+                      setCurrentSlide(dotIndex);
+                    }
                   }}
+                  disabled={isScrollControlled}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     currentSlide === dotIndex 
                       ? 'bg-red-600 scale-125' 
                       : 'bg-red-600/30'
-                  }`}
+                  } ${isScrollControlled ? 'opacity-50' : ''}`}
                 />
               ))}
             </div>
