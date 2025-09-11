@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react';
 export default function TransformationProcess() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [animationStates, setAnimationStates] = useState([false, false, false]);
-  const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -34,110 +33,55 @@ export default function TransformationProcess() {
     }
   ];
 
-  // Scroll to specific slide within this section
-  const scrollToSlide = (slideIndex: number) => {
-    if (slideIndex >= 0 && slideIndex < slides.length && slideRefs.current[slideIndex]) {
-      slideRefs.current[slideIndex]?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
-  };
-
-  // Track current slide based on scroll position within this section
+  // Main scroll detection and animation trigger
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
-      { threshold: 0.3 }
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
     const handleScroll = () => {
-      if (!containerRef.current) return;
-      
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const sectionInView = containerRect.top <= window.innerHeight && containerRect.bottom >= 0;
-      
-      if (!sectionInView) return;
-
-      // Find which slide is most visible in the viewport
-      let activeSlideIndex = 0;
-      let maxVisibility = 0;
+      // Check each slide's position relative to viewport
+      let newActiveSlide = 0;
+      let bestScore = -Infinity;
       
       slideRefs.current.forEach((slideRef, index) => {
         if (slideRef) {
           const slideRect = slideRef.getBoundingClientRect();
+          const slideCenter = slideRect.top + slideRect.height / 2;
+          const viewportCenter = window.innerHeight / 2;
           
-          // Calculate how much of the slide is visible
-          const slideTop = Math.max(0, slideRect.top);
-          const slideBottom = Math.min(window.innerHeight, slideRect.bottom);
-          const visibleHeight = Math.max(0, slideBottom - slideTop);
-          const visibilityRatio = visibleHeight / window.innerHeight;
+          // Score based on how close slide center is to viewport center
+          const distanceFromCenter = Math.abs(slideCenter - viewportCenter);
+          const score = -distanceFromCenter; // Closer = higher score
           
-          // The slide with the highest visibility ratio is the active one
-          if (visibilityRatio > maxVisibility) {
-            maxVisibility = visibilityRatio;
-            activeSlideIndex = index;
+          // Only consider slides that are at least partially visible
+          const isVisible = slideRect.bottom > 0 && slideRect.top < window.innerHeight;
+          
+          if (isVisible && score > bestScore) {
+            bestScore = score;
+            newActiveSlide = index;
           }
         }
       });
       
-      // Update current slide and trigger animation if changed and visibility is significant
-      if (maxVisibility > 0.3 && currentSlide !== activeSlideIndex) {
-        setCurrentSlide(activeSlideIndex);
+      // Update current slide and trigger animation if changed
+      if (currentSlide !== newActiveSlide) {
+        console.log(`Switching to slide ${newActiveSlide}: ${slides[newActiveSlide].phase}`);
+        setCurrentSlide(newActiveSlide);
         
-        // Reset all animations first, then trigger the new active slide
+        // Reset all animations, then trigger the new one
         setTimeout(() => {
-          setAnimationStates(prev => {
-            const newStates = [false, false, false]; // Reset all
-            newStates[activeSlideIndex] = true;
-            return newStates;
-          });
-        }, 100);
+          const newStates = [false, false, false];
+          newStates[newActiveSlide] = true;
+          setAnimationStates(newStates);
+          console.log(`Animation triggered for slide ${newActiveSlide}`);
+        }, 50);
       }
     };
 
-    // Throttle scroll events for performance
-    let ticking = false;
-    const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', throttledScroll);
+    window.addEventListener('scroll', handleScroll);
     handleScroll(); // Initial call
 
     return () => {
-      window.removeEventListener('scroll', throttledScroll);
-      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [currentSlide]);
-
-  // Initial animation trigger when section comes into view
-  useEffect(() => {
-    if (isInView && !animationStates[0]) {
-      // Start with first slide animation only if we're on slide 0
-      setTimeout(() => {
-        if (currentSlide === 0) {
-          setAnimationStates(prev => {
-            const newStates = [false, false, false]; // Reset all
-            newStates[0] = true;
-            return newStates;
-          });
-        }
-      }, 200);
-    }
-  }, [isInView, currentSlide]);
+  }, [currentSlide, slides]);
 
   // Animated SVG Icons
   const EyeIcon = ({ isAnimated }: { isAnimated: boolean }) => (
@@ -547,22 +491,6 @@ export default function TransformationProcess() {
               </div>
             </div>
 
-            {/* Mobile Navigation Dots */}
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 md:hidden">
-              <div className="flex space-x-3">
-                {slides.map((_, dotIndex) => (
-                  <button
-                    key={dotIndex}
-                    onClick={() => scrollToSlide(dotIndex)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      currentSlide === dotIndex 
-                        ? 'bg-red-600 scale-125' 
-                        : 'bg-red-600/30'
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
           </div>
         ))}
       </div>
