@@ -10,33 +10,6 @@ interface SlideNavigationProps {
 export default function SlideNavigation({ slides, currentSlide, onSlideChange }: SlideNavigationProps) {
   return (
     <>
-      {/* Dot Navigation - Right Side */}
-      <div className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 flex flex-col space-y-4">
-        {slides.map((slide, index) => (
-          <button
-            key={slide.id}
-            onClick={() => onSlideChange(index)}
-            className="group relative"
-            aria-label={`Go to ${slide.name} section`}
-          >
-            <div 
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                currentSlide === index 
-                  ? 'bg-red-600 scale-125 shadow-lg shadow-red-600/50' 
-                  : 'bg-white/30 hover:bg-red-600/60 hover:scale-110'
-              }`}
-            />
-            
-            {/* Tooltip */}
-            <div className="absolute right-6 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-              <div className="bg-black/90 backdrop-blur-sm text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap border border-white/10">
-                {slide.name}
-              </div>
-            </div>
-          </button>
-        ))}
-      </div>
-
       {/* Arrow Navigation - Left Side */}
       <div className="fixed left-8 top-1/2 transform -translate-y-1/2 z-50 flex flex-col space-y-4">
         <button
