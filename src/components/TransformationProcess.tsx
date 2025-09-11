@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 export default function TransformationProcess() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [animationStates, setAnimationStates] = useState([false, false, false]);
+  const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -45,13 +46,24 @@ export default function TransformationProcess() {
 
   // Track current slide based on scroll position within this section
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.3 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
     const handleScroll = () => {
       if (!containerRef.current) return;
       
       const containerRect = containerRef.current.getBoundingClientRect();
-      const isInView = containerRect.top <= 100 && containerRect.bottom >= window.innerHeight - 100;
+      const sectionInView = containerRect.top <= 100 && containerRect.bottom >= window.innerHeight - 100;
       
-      if (!isInView) return;
+      if (!sectionInView) return;
 
       const scrollPosition = Math.abs(containerRect.top) + window.innerHeight / 2;
       
@@ -64,6 +76,14 @@ export default function TransformationProcess() {
           if (scrollPosition >= slideTop && scrollPosition < slideBottom) {
             if (currentSlide !== index) {
               setCurrentSlide(index);
+              // Trigger animation for current slide
+              setTimeout(() => {
+                setAnimationStates(prev => {
+                  const newStates = [...prev];
+                  newStates[index] = true;
+                  return newStates;
+                });
+              }, 100);
               setAnimationStates(prev => {
                 const newStates = [...prev];
                 newStates[index] = true;
@@ -90,8 +110,25 @@ export default function TransformationProcess() {
     window.addEventListener('scroll', throttledScroll);
     handleScroll(); // Initial call
 
-    return () => window.removeEventListener('scroll', throttledScroll);
+    return () => {
+      window.removeEventListener('scroll', throttledScroll);
+      observer.disconnect();
+    };
   }, [currentSlide]);
+
+  // Initial animation trigger when section comes into view
+  useEffect(() => {
+    if (isInView && !animationStates[0]) {
+      // Start with first slide animation
+      setTimeout(() => {
+        setAnimationStates(prev => {
+          const newStates = [...prev];
+          newStates[0] = true;
+          return newStates;
+        });
+      }, 200);
+    }
+  }, [isInView]);
 
   // Animated SVG Icons
   const EyeIcon = ({ isAnimated }: { isAnimated: boolean }) => (
