@@ -61,38 +61,39 @@ export default function TransformationProcess() {
       if (!containerRef.current) return;
       
       const containerRect = containerRef.current.getBoundingClientRect();
-      const sectionInView = containerRect.top <= 100 && containerRect.bottom >= window.innerHeight - 100;
+      const sectionInView = containerRect.top <= window.innerHeight / 2 && containerRect.bottom >= window.innerHeight / 2;
       
       if (!sectionInView) return;
 
-      const scrollPosition = Math.abs(containerRect.top) + window.innerHeight / 2;
+      // Calculate which slide is currently in view
+      const viewportCenter = window.innerHeight / 2;
+      let activeSlideIndex = -1;
       
       slideRefs.current.forEach((slideRef, index) => {
         if (slideRef) {
           const slideRect = slideRef.getBoundingClientRect();
-          const slideTop = Math.abs(containerRect.top) + (index * window.innerHeight);
-          const slideBottom = slideTop + window.innerHeight;
+          const slideCenter = slideRect.top + slideRect.height / 2;
           
-          if (scrollPosition >= slideTop && scrollPosition < slideBottom) {
-            if (currentSlide !== index) {
-              setCurrentSlide(index);
-              // Trigger animation for current slide
-              setTimeout(() => {
-                setAnimationStates(prev => {
-                  const newStates = [...prev];
-                  newStates[index] = true;
-                  return newStates;
-                });
-              }, 100);
-              setAnimationStates(prev => {
-                const newStates = [...prev];
-                newStates[index] = true;
-                return newStates;
-              });
-            }
+          // Check if this slide is closest to viewport center
+          if (Math.abs(slideCenter - viewportCenter) < window.innerHeight / 2) {
+            activeSlideIndex = index;
           }
         }
       });
+      
+      // Update current slide and trigger animation if changed
+      if (activeSlideIndex !== -1 && currentSlide !== activeSlideIndex) {
+        setCurrentSlide(activeSlideIndex);
+        
+        // Trigger animation for the new active slide
+        setTimeout(() => {
+          setAnimationStates(prev => {
+            const newStates = [...prev];
+            newStates[activeSlideIndex] = true;
+            return newStates;
+          });
+        }, 100);
+      }
     };
 
     // Throttle scroll events for performance
