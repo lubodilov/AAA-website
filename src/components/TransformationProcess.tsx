@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 
 export default function TransformationProcess() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
   const [animationStates, setAnimationStates] = useState([false, false, false]);
   const containerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -34,32 +33,6 @@ export default function TransformationProcess() {
     }
   ];
 
-  // Main visibility detection for the entire section
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
-          setIsVisible(true);
-          // Start first slide animation immediately
-          setTimeout(() => {
-            setAnimationStates(prev => {
-              const newStates = [...prev];
-              newStates[0] = true;
-              return newStates;
-            });
-          }, 200);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   // Scroll to specific slide within this section
   const scrollToSlide = (slideIndex: number) => {
     if (slideIndex >= 0 && slideIndex < slides.length && slideRefs.current[slideIndex]) {
@@ -72,8 +45,6 @@ export default function TransformationProcess() {
 
   // Track current slide based on scroll position within this section
   useEffect(() => {
-    if (!isVisible) return;
-    
     const handleScroll = () => {
       if (!containerRef.current) return;
       
@@ -93,14 +64,11 @@ export default function TransformationProcess() {
           if (scrollPosition >= slideTop && scrollPosition < slideBottom) {
             if (currentSlide !== index) {
               setCurrentSlide(index);
-              // Trigger animation for current slide with delay
-              setTimeout(() => {
-                setAnimationStates(prev => {
-                  const newStates = [...prev];
-                  newStates[index] = true;
-                  return newStates;
-                });
-              }, 100);
+              setAnimationStates(prev => {
+                const newStates = [...prev];
+                newStates[index] = true;
+                return newStates;
+              });
             }
           }
         }
@@ -123,7 +91,7 @@ export default function TransformationProcess() {
     handleScroll(); // Initial call
 
     return () => window.removeEventListener('scroll', throttledScroll);
-  }, [currentSlide, isVisible]);
+  }, [currentSlide]);
 
   // Animated SVG Icons
   const EyeIcon = ({ isAnimated }: { isAnimated: boolean }) => (
@@ -427,14 +395,10 @@ export default function TransformationProcess() {
             <div 
               className="absolute inset-0 flex items-center justify-center pointer-events-none"
               style={{
-                opacity: animationStates[index] ? 0 : (isVisible ? 1 : 0),
-                transform: animationStates[index] 
-                  ? 'scale(0.92) translateY(-30px)' 
-                  : isVisible 
-                    ? 'scale(1) translateY(0px)' 
-                    : 'scale(1.05) translateY(20px)',
-                transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                transitionDelay: animationStates[index] ? '0.5s' : '0.1s'
+                opacity: animationStates[index] ? 0 : 1,
+                transform: animationStates[index] ? 'scale(0.92) translateY(-30px)' : 'scale(1) translateY(0px)',
+                transition: prefersReducedMotion ? 'none' : 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                transitionDelay: '0.5s'
               }}
             >
               {/* Elite backdrop */}
@@ -463,27 +427,19 @@ export default function TransformationProcess() {
               <div 
                 className="absolute top-1/2 left-8 w-16 h-0.5 bg-gradient-to-r from-transparent via-red-400 to-transparent"
                 style={{
-                  opacity: animationStates[index] ? 0 : (isVisible ? 1 : 0),
-                  transform: animationStates[index] 
-                    ? 'translateX(-30px)' 
-                    : isVisible 
-                      ? 'translateX(0px)' 
-                      : 'translateX(-50px)',
+                  opacity: animationStates[index] ? 0 : 1,
+                  transform: animationStates[index] ? 'translateX(-30px)' : 'translateX(0px)',
                   transition: prefersReducedMotion ? 'none' : 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                  transitionDelay: animationStates[index] ? '0.3s' : '0.2s'
+                  transitionDelay: '0.3s'
                 }}
               />
               <div 
                 className="absolute top-1/2 right-8 w-16 h-0.5 bg-gradient-to-r from-transparent via-red-400 to-transparent"
                 style={{
-                  opacity: animationStates[index] ? 0 : (isVisible ? 1 : 0),
-                  transform: animationStates[index] 
-                    ? 'translateX(30px)' 
-                    : isVisible 
-                      ? 'translateX(0px)' 
-                      : 'translateX(50px)',
+                  opacity: animationStates[index] ? 0 : 1,
+                  transform: animationStates[index] ? 'translateX(30px)' : 'translateX(0px)',
                   transition: prefersReducedMotion ? 'none' : 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                  transitionDelay: animationStates[index] ? '0.3s' : '0.3s'
+                  transitionDelay: '0.3s'
                 }}
               />
               
@@ -502,13 +458,9 @@ export default function TransformationProcess() {
                   <div
                     style={{
                       opacity: animationStates[index] ? 1 : 0,
-                      transform: animationStates[index] 
-                        ? 'translateY(0) scale(1)' 
-                        : 'translateY(40px) scale(0.98)',
-                      transition: prefersReducedMotion 
-                        ? 'opacity 0.3s ease-out' 
-                        : 'all 0.8s cubic-bezier(0.23, 1, 0.32, 1)',
-                      transitionDelay: '0.6s'
+                      transform: animationStates[index] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.98)',
+                      transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
+                      transitionDelay: '1.0s'
                     }}
                   >
                     <h3 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white mb-4 leading-tight">
@@ -536,13 +488,9 @@ export default function TransformationProcess() {
                     className="w-48 h-48 flex items-center justify-center"
                     style={{
                       opacity: animationStates[index] ? 1 : 0,
-                      transform: animationStates[index] 
-                        ? 'scale(1) rotate(0deg)' 
-                        : 'scale(0.85) rotate(-5deg)',
-                      transition: prefersReducedMotion 
-                        ? 'opacity 0.3s ease-out' 
-                        : 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
-                      transitionDelay: '0.8s'
+                      transform: animationStates[index] ? 'scale(1) rotate(0deg)' : 'scale(0.85) rotate(-5deg)',
+                      transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                      transitionDelay: '1.1s'
                     }}
                   >
                     <div className="text-red-400 w-full h-full flex items-center justify-center">
@@ -550,6 +498,23 @@ export default function TransformationProcess() {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Mobile Navigation Dots */}
+            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 md:hidden">
+              <div className="flex space-x-3">
+                {slides.map((_, dotIndex) => (
+                  <button
+                    key={dotIndex}
+                    onClick={() => scrollToSlide(dotIndex)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      currentSlide === dotIndex 
+                        ? 'bg-red-600 scale-125' 
+                        : 'bg-red-600/30'
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           </div>
