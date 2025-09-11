@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 export default function TransformationProcess() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [animationStates, setAnimationStates] = useState([false, false, false]);
+  const [sectionVisible, setSectionVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -33,55 +34,98 @@ export default function TransformationProcess() {
     }
   ];
 
-  // Main scroll detection and animation trigger
+  // Section visibility detection
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+          setSectionVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Initial animation when section becomes visible
+  useEffect(() => {
+    if (sectionVisible) {
+      // Trigger animation for first slide immediately
+      setTimeout(() => {
+        const newStates = [false, false, false];
+        newStates[0] = true;
+        setAnimationStates(newStates);
+        console.log('Initial animation triggered for slide 0: ANALYZE');
+      }, 200);
+    }
+  }, [sectionVisible]);
+
+  // Slide detection and animation trigger
   useEffect(() => {
     const handleScroll = () => {
-      // Check each slide's position relative to viewport
-      let newActiveSlide = 0;
-      let bestScore = -Infinity;
+      if (!sectionVisible) return;
+      
+      let newActiveSlide = currentSlide;
+      let minDistance = Infinity;
       
       slideRefs.current.forEach((slideRef, index) => {
         if (slideRef) {
           const slideRect = slideRef.getBoundingClientRect();
           const slideCenter = slideRect.top + slideRect.height / 2;
           const viewportCenter = window.innerHeight / 2;
+          const distance = Math.abs(slideCenter - viewportCenter);
           
-          // Score based on how close slide center is to viewport center
-          const distanceFromCenter = Math.abs(slideCenter - viewportCenter);
-          const score = -distanceFromCenter; // Closer = higher score
+          // Check if slide is at least 40% visible
+          const visibleTop = Math.max(0, slideRect.top);
+          const visibleBottom = Math.min(window.innerHeight, slideRect.bottom);
+          const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+          const visibilityRatio = visibleHeight / slideRect.height;
           
-          // Only consider slides that are at least partially visible
-          const isVisible = slideRect.bottom > 0 && slideRect.top < window.innerHeight;
-          
-          if (isVisible && score > bestScore) {
-            bestScore = score;
+          if (visibilityRatio > 0.4 && distance < minDistance) {
+            minDistance = distance;
             newActiveSlide = index;
           }
         }
       });
       
-      // Update current slide and trigger animation if changed
       if (currentSlide !== newActiveSlide) {
         console.log(`Switching to slide ${newActiveSlide}: ${slides[newActiveSlide].phase}`);
         setCurrentSlide(newActiveSlide);
         
-        // Reset all animations, then trigger the new one
+        // Reset all animations first, then trigger the new one
         setTimeout(() => {
           const newStates = [false, false, false];
           newStates[newActiveSlide] = true;
           setAnimationStates(newStates);
           console.log(`Animation triggered for slide ${newActiveSlide}`);
-        }, 50);
+        }, 100);
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Use throttling to prevent too many calls
+    let ticking = false;
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', throttledScroll);
     handleScroll(); // Initial call
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', throttledScroll);
     };
-  }, [currentSlide, slides]);
+  }, [currentSlide, sectionVisible]);
 
   // Animated SVG Icons
   const EyeIcon = ({ isAnimated }: { isAnimated: boolean }) => (
