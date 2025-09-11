@@ -339,30 +339,6 @@ export default function TransformationProcess() {
 
   return (
     <section ref={containerRef} className="relative">
-      {/* Internal Navigation for Process Slides */}
-      <div className="fixed right-20 top-1/2 transform -translate-y-1/2 z-40 flex flex-col space-y-3">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => scrollToSlide(index)}
-            className="group relative"
-          >
-            <div 
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                currentSlide === index 
-                  ? 'bg-red-400 scale-125' 
-                  : 'bg-red-400/30 hover:bg-red-400/60'
-              }`}
-            />
-            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-              <div className="bg-black/90 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
-                {slides[index].phase}
-              </div>
-            </div>
-          </button>
-        ))}
-      </div>
-
       {/* Process Slides Container with Snap */}
       <div className="snap-y snap-mandatory overflow-y-auto h-screen">
         {slides.map((slide, index) => (
