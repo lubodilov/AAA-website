@@ -4,136 +4,68 @@ import Hero from './components/Hero';
 import OpportunityStatement from './components/StrategicPositioning';
 import TransformationProcess from './components/TransformationProcess';
 import ProofOfDominance from './components/ProofOfDominance';
+import SlideNavigation from './components/SlideNavigation';
 
 function App() {
-  const [currentSection, setCurrentSection] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [lastScrollTime, setLastScrollTime] = useState(0);
-  const [scrollAccumulator, setScrollAccumulator] = useState(0);
-  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Check for reduced motion preference
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const slides = [
+    { id: 'hero', name: 'Hero' },
+    { id: 'strategic', name: 'Strategic' },
+    { id: 'transformation', name: 'Process' },
+    { id: 'proof', name: 'Results' }
+  ];
 
-  const sections = ['hero', 'strategic', 'transformation', 'proof'];
-
-  // Navigate to specific section
-  const navigateToSection = (targetSection: number) => {
-    if (targetSection >= 0 && targetSection < sections.length && !isTransitioning) {
-      setIsTransitioning(true);
-      setLastScrollTime(Date.now());
-      setCurrentSection(targetSection);
-      
-      sectionRefs.current[targetSection]?.scrollIntoView({
+  // Scroll to specific slide
+  const scrollToSlide = (slideIndex: number) => {
+    if (slideIndex >= 0 && slideIndex < slides.length && slideRefs.current[slideIndex]) {
+      slideRefs.current[slideIndex]?.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
-
-      // Reset transition lock
-      setTimeout(() => {
-        setIsTransitioning(false);
-      }, 1200);
     }
   };
 
-  // Section visibility observers
+  // Track current slide based on scroll position
   useEffect(() => {
-    const observers = sectionRefs.current.map((sectionRef, index) => {
-      if (!sectionRef) return null;
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
       
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-            setCurrentSection(index);
+      slideRefs.current.forEach((slideRef, index) => {
+        if (slideRef) {
+          const rect = slideRef.getBoundingClientRect();
+          const slideTop = window.scrollY + rect.top;
+          const slideBottom = slideTop + rect.height;
+          
+          if (scrollPosition >= slideTop && scrollPosition < slideBottom) {
+            setCurrentSlide(index);
           }
-        },
-        { threshold: 0.6 }
-      );
-      
-      observer.observe(sectionRef);
-      return observer;
-    });
-
-    return () => {
-      observers.forEach(observer => observer?.disconnect());
+        }
+      });
     };
+
+    // Throttle scroll events for performance
+    let ticking = false;
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', throttledScroll);
+    handleScroll(); // Initial call
+
+    return () => window.removeEventListener('scroll', throttledScroll);
   }, []);
 
-  // Global wheel navigation
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      const now = Date.now();
-      
-      // Ignore rapid scroll events - reduced for easier navigation
-      if (now - lastScrollTime < 100) {
-        e.preventDefault();
-        return;
-      }
-      
-      // Don't handle if already transitioning
-      if (isTransitioning || now - lastScrollTime < 200) {
-        e.preventDefault();
-        return;
-      }
-      
-      // Check if we're in the transformation section (which has its own scroll handling)
-      const transformationSection = sectionRefs.current[2];
-      if (transformationSection) {
-        const rect = transformationSection.getBoundingClientRect();
-        const isInTransformationSection = rect.top <= 100 && rect.bottom >= window.innerHeight - 100;
-        
-        // If we're in the transformation section, let it handle its own scrolling
-        if (isInTransformationSection && currentSection === 2) {
-          return;
-        }
-      }
-      
-      // Prevent default scroll behavior for section navigation
-      e.preventDefault();
-      
-      // Accumulate scroll delta
-      const newAccumulator = scrollAccumulator + Math.abs(e.deltaY);
-      setScrollAccumulator(newAccumulator);
-      
-      // Reduced threshold for easier navigation
-      const scrollThreshold = 15;
-      
-      if (newAccumulator < scrollThreshold) {
-        setLastScrollTime(now);
-        return;
-      }
-      
-      // Reset accumulator after successful navigation
-      setScrollAccumulator(0);
-      
-      const direction = e.deltaY > 0 ? 1 : -1;
-      const targetSection = currentSection + direction;
-      
-      // Navigate to next/previous section if within bounds
-      if (targetSection >= 0 && targetSection < sections.length) {
-        setLastScrollTime(now);
-        navigateToSection(targetSection);
-      }
-    };
-
-    // Reset scroll accumulator when not scrolling
-    const resetAccumulator = () => {
-      const now = Date.now();
-      if (now - lastScrollTime > 400) {
-        setScrollAccumulator(0);
-      }
-    };
-
-    const resetInterval = setInterval(resetAccumulator, 200);
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    return () => {
-      window.removeEventListener('wheel', handleWheel);
-      clearInterval(resetInterval);
-    };
-  }, [currentSection, isTransitioning, lastScrollTime, scrollAccumulator]);
-
   return (
-    <div className="bg-black min-h-screen overflow-hidden smooth-scroll">
+    <div className="bg-black">
       {/* Fixed Video Background */}
       <div className="fixed inset-0 z-0">
         <video
@@ -153,33 +85,46 @@ function App() {
       
       <Header />
       
+      {/* Main Scroll Container with Snap */}
       <div 
-        ref={el => sectionRefs.current[0] = el}
-        className="snap-start"
+        ref={containerRef}
+        className="relative z-10 snap-y snap-mandatory overflow-y-auto h-screen"
       >
-        <Hero />
+        <div 
+          ref={el => slideRefs.current[0] = el}
+          className="snap-start snap-always"
+        >
+          <Hero />
+        </div>
+        
+        <div 
+          ref={el => slideRefs.current[1] = el}
+          className="snap-start snap-always"
+        >
+          <OpportunityStatement />
+        </div>
+        
+        <div 
+          ref={el => slideRefs.current[2] = el}
+          className="snap-start snap-always"
+        >
+          <TransformationProcess />
+        </div>
+        
+        <div 
+          ref={el => slideRefs.current[3] = el}
+          className="snap-start snap-always"
+        >
+          <ProofOfDominance />
+        </div>
       </div>
-      
-      <div 
-        ref={el => sectionRefs.current[1] = el}
-        className="snap-start"
-      >
-        <OpportunityStatement />
-      </div>
-      
-      <div 
-        ref={el => sectionRefs.current[2] = el}
-        className="snap-start"
-      >
-        <TransformationProcess />
-      </div>
-      
-      <div 
-        ref={el => sectionRefs.current[3] = el}
-        className="snap-start"
-      >
-        <ProofOfDominance />
-      </div>
+
+      {/* Slide Navigation */}
+      <SlideNavigation 
+        slides={slides}
+        currentSlide={currentSlide}
+        onSlideChange={scrollToSlide}
+      />
     </div>
   );
 }

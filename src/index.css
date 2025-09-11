@@ -2,21 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Enhanced smooth scrolling */
+/* CSS Scroll Snap Configuration */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 0;
+  overflow-x: hidden;
 }
 
-/* Smooth scroll timing when enabled */
-html, body {
-  scroll-padding-top: 0;
-  scroll-margin-top: 0;
-}
-
-/* Respect user motion preferences */
+/* Respect user motion preferences for smooth scrolling */
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Ensure snap scrolling works properly */
+.snap-y {
+  scroll-snap-type: y mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+.snap-always {
+  scroll-snap-stop: always;
 }
