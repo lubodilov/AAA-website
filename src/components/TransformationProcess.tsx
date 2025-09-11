@@ -85,14 +85,14 @@ export default function TransformationProcess() {
       if (activeSlideIndex !== -1 && currentSlide !== activeSlideIndex) {
         setCurrentSlide(activeSlideIndex);
         
-        // Trigger animation for the new active slide
+        // Reset all animations first, then trigger the new active slide
         setTimeout(() => {
           setAnimationStates(prev => {
-            const newStates = [...prev];
+            const newStates = [false, false, false]; // Reset all
             newStates[activeSlideIndex] = true;
             return newStates;
           });
-        }, 100);
+        }, 50);
       }
     };
 
@@ -120,16 +120,18 @@ export default function TransformationProcess() {
   // Initial animation trigger when section comes into view
   useEffect(() => {
     if (isInView && !animationStates[0]) {
-      // Start with first slide animation
+      // Start with first slide animation only if we're on slide 0
       setTimeout(() => {
-        setAnimationStates(prev => {
-          const newStates = [...prev];
-          newStates[0] = true;
-          return newStates;
-        });
+        if (currentSlide === 0) {
+          setAnimationStates(prev => {
+            const newStates = [false, false, false]; // Reset all
+            newStates[0] = true;
+            return newStates;
+          });
+        }
       }, 200);
     }
-  }, [isInView]);
+  }, [isInView, currentSlide]);
 
   // Animated SVG Icons
   const EyeIcon = ({ isAnimated }: { isAnimated: boolean }) => (
