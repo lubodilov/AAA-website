@@ -61,28 +61,34 @@ export default function TransformationProcess() {
       if (!containerRef.current) return;
       
       const containerRect = containerRef.current.getBoundingClientRect();
-      const sectionInView = containerRect.top <= window.innerHeight / 2 && containerRect.bottom >= window.innerHeight / 2;
+      const sectionInView = containerRect.top <= window.innerHeight && containerRect.bottom >= 0;
       
       if (!sectionInView) return;
 
-      // Calculate which slide is currently in view
-      const viewportCenter = window.innerHeight / 2;
-      let activeSlideIndex = -1;
+      // Find which slide is most visible in the viewport
+      let activeSlideIndex = 0;
+      let maxVisibility = 0;
       
       slideRefs.current.forEach((slideRef, index) => {
         if (slideRef) {
           const slideRect = slideRef.getBoundingClientRect();
-          const slideCenter = slideRect.top + slideRect.height / 2;
           
-          // Check if this slide is closest to viewport center
-          if (Math.abs(slideCenter - viewportCenter) < window.innerHeight / 2) {
+          // Calculate how much of the slide is visible
+          const slideTop = Math.max(0, slideRect.top);
+          const slideBottom = Math.min(window.innerHeight, slideRect.bottom);
+          const visibleHeight = Math.max(0, slideBottom - slideTop);
+          const visibilityRatio = visibleHeight / window.innerHeight;
+          
+          // The slide with the highest visibility ratio is the active one
+          if (visibilityRatio > maxVisibility) {
+            maxVisibility = visibilityRatio;
             activeSlideIndex = index;
           }
         }
       });
       
-      // Update current slide and trigger animation if changed
-      if (activeSlideIndex !== -1 && currentSlide !== activeSlideIndex) {
+      // Update current slide and trigger animation if changed and visibility is significant
+      if (maxVisibility > 0.3 && currentSlide !== activeSlideIndex) {
         setCurrentSlide(activeSlideIndex);
         
         // Reset all animations first, then trigger the new active slide
@@ -92,7 +98,7 @@ export default function TransformationProcess() {
             newStates[activeSlideIndex] = true;
             return newStates;
           });
-        }, 50);
+        }, 100);
       }
     };
 
