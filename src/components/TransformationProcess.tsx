@@ -67,65 +67,55 @@ export default function TransformationProcess() {
 
   // Slide detection and animation trigger
   useEffect(() => {
+    if (!sectionVisible) return;
+
     const handleScroll = () => {
-      if (!sectionVisible) return;
-      
-      let newActiveSlide = currentSlide;
+      const viewportCenter = window.innerHeight / 2;
+      let closestSlide = 0;
       let minDistance = Infinity;
       
       slideRefs.current.forEach((slideRef, index) => {
         if (slideRef) {
-          const slideRect = slideRef.getBoundingClientRect();
-          const slideCenter = slideRect.top + slideRect.height / 2;
-          const viewportCenter = window.innerHeight / 2;
+          const rect = slideRef.getBoundingClientRect();
+          const slideCenter = rect.top + rect.height / 2;
           const distance = Math.abs(slideCenter - viewportCenter);
           
-          // Check if slide is at least 40% visible
-          const visibleTop = Math.max(0, slideRect.top);
-          const visibleBottom = Math.min(window.innerHeight, slideRect.bottom);
-          const visibleHeight = Math.max(0, visibleBottom - visibleTop);
-          const visibilityRatio = visibleHeight / slideRect.height;
+          // Only consider slides that are at least partially visible
+          const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
           
-          if (visibilityRatio > 0.4 && distance < minDistance) {
+          console.log(`Slide ${index} (${slides[index].phase}): center=${slideCenter.toFixed(0)}, distance=${distance.toFixed(0)}, visible=${isVisible}`);
+          
+          if (isVisible && distance < minDistance) {
             minDistance = distance;
-            newActiveSlide = index;
+            closestSlide = index;
           }
         }
       });
       
-      if (currentSlide !== newActiveSlide) {
-        console.log(`Switching to slide ${newActiveSlide}: ${slides[newActiveSlide].phase}`);
-        setCurrentSlide(newActiveSlide);
+      if (closestSlide !== currentSlide) {
+        console.log(`🎯 Switching from slide ${currentSlide} to slide ${closestSlide}: ${slides[closestSlide].phase}`);
+        setCurrentSlide(closestSlide);
         
         // Reset all animations first, then trigger the new one
+        setAnimationStates([false, false, false]);
+        
         setTimeout(() => {
           const newStates = [false, false, false];
-          newStates[newActiveSlide] = true;
+          newStates[closestSlide] = true;
           setAnimationStates(newStates);
-          console.log(`Animation triggered for slide ${newActiveSlide}`);
+          console.log(`✨ Animation triggered for slide ${closestSlide}: ${slides[closestSlide].phase}`);
         }, 100);
       }
     };
 
-    // Use throttling to prevent too many calls
-    let ticking = false;
-    const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll);
+    
+    // Initial check
+    handleScroll();
 
-    window.addEventListener('scroll', throttledScroll);
-    handleScroll(); // Initial call
-
-    return () => {
-      window.removeEventListener('scroll', throttledScroll);
-    };
-  }, [currentSlide, sectionVisible]);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [currentSlide, sectionVisible, slides]);
 
   // Animated SVG Icons
   const EyeIcon = ({ isAnimated }: { isAnimated: boolean }) => (
