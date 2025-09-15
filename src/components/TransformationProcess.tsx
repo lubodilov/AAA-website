@@ -70,31 +70,38 @@ export default function TransformationProcess() {
     const handleScroll = () => {
       if (!sectionVisible) return;
       
-      let newActiveSlide = currentSlide;
-      let minDistance = Infinity;
+      let newActiveSlide = -1;
+      let bestScore = -1;
       
       slideRefs.current.forEach((slideRef, index) => {
         if (slideRef) {
           const slideRect = slideRef.getBoundingClientRect();
-          const slideCenter = slideRect.top + slideRect.height / 2;
-          const viewportCenter = window.innerHeight / 2;
-          const distance = Math.abs(slideCenter - viewportCenter);
           
-          // Check if slide is at least 40% visible
-          const visibleTop = Math.max(0, slideRect.top);
-          const visibleBottom = Math.min(window.innerHeight, slideRect.bottom);
-          const visibleHeight = Math.max(0, visibleBottom - visibleTop);
-          const visibilityRatio = visibleHeight / slideRect.height;
+          // Calculate how much of the slide is visible
+          const viewportTop = 0;
+          const viewportBottom = window.innerHeight;
+          const slideTop = slideRect.top;
+          const slideBottom = slideRect.bottom;
           
-          if (visibilityRatio > 0.4 && distance < minDistance) {
-            minDistance = distance;
+          // Calculate intersection
+          const intersectionTop = Math.max(viewportTop, slideTop);
+          const intersectionBottom = Math.min(viewportBottom, slideBottom);
+          const intersectionHeight = Math.max(0, intersectionBottom - intersectionTop);
+          const slideHeight = slideRect.height;
+          const visibilityRatio = intersectionHeight / slideHeight;
+          
+          console.log(`Slide ${index} (${slides[index].phase}): visibility=${visibilityRatio.toFixed(2)}, top=${slideTop.toFixed(0)}, bottom=${slideBottom.toFixed(0)}`);
+          
+          // Find the slide with the highest visibility ratio
+          if (visibilityRatio > bestScore && visibilityRatio > 0.3) {
+            bestScore = visibilityRatio;
             newActiveSlide = index;
           }
         }
       });
       
-      if (currentSlide !== newActiveSlide) {
-        console.log(`Switching to slide ${newActiveSlide}: ${slides[newActiveSlide].phase}`);
+      if (newActiveSlide !== -1 && currentSlide !== newActiveSlide) {
+        console.log(`🎯 Switching to slide ${newActiveSlide}: ${slides[newActiveSlide].phase} (visibility: ${bestScore.toFixed(2)})`);
         setCurrentSlide(newActiveSlide);
         
         // Reset all animations first, then trigger the new one
@@ -102,7 +109,7 @@ export default function TransformationProcess() {
           const newStates = [false, false, false];
           newStates[newActiveSlide] = true;
           setAnimationStates(newStates);
-          console.log(`Animation triggered for slide ${newActiveSlide}`);
+          console.log(`✨ Animation triggered for slide ${newActiveSlide}: ${slides[newActiveSlide].phase}`);
         }, 100);
       }
     };
