@@ -1,12 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import OpportunityStatement from './components/StrategicPositioning';
 import TransformationProcess from './components/TransformationProcess';
 import ProofOfDominance from './components/ProofOfDominance';
 import SlideNavigation from './components/SlideNavigation';
+import Portfolio from './components/Portfolio';
 
 function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/portfolio" element={<Portfolio />} />
+      </Routes>
+    </Router>
+  );
+}
+
+function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
