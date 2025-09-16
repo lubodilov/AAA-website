@@ -209,15 +209,15 @@ export default function Portfolio() {
             {/* Metrics Bar */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
-                <div className="text-3xl lg:text-4xl font-bold text-white mb-2">23</div>
+                <div className="text-3xl lg:text-4xl font-bold text-red-400 mb-2">23</div>
                 <div className="text-white/70 font-light">Businesses Transformed</div>
               </div>
               <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
-                <div className="text-3xl lg:text-4xl font-bold text-white mb-2">$47M+</div>
+                <div className="text-3xl lg:text-4xl font-bold text-red-400 mb-2">$47M+</div>
                 <div className="text-white/70 font-light">Revenue Unlocked</div>
               </div>
               <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
-                <div className="text-3xl lg:text-4xl font-bold text-white mb-2">1,247</div>
+                <div className="text-3xl lg:text-4xl font-bold text-red-400 mb-2">1,247</div>
                 <div className="text-white/70 font-light">Hours Weekly Executive Time Reclaimed</div>
               </div>
             </div>
@@ -289,16 +289,16 @@ export default function Portfolio() {
                     {/* Key Metrics */}
                     <div className="flex space-x-6">
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-white">{transformation.metrics.primary}</div>
+                        <div className="text-2xl font-bold text-red-400">{transformation.metrics.primary}</div>
                         <div className="text-xs text-white/60 font-light">Primary Impact</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-white/90">{transformation.metrics.secondary}</div>
+                        <div className="text-2xl font-bold text-red-400">{transformation.metrics.secondary}</div>
                         <div className="text-xs text-white/60 font-light">Secondary Gain</div>
                       </div>
                       {transformation.metrics.tertiary && (
                         <div className="text-center">
-                          <div className="text-2xl font-bold text-white/80">{transformation.metrics.tertiary}</div>
+                          <div className="text-2xl font-bold text-red-400">{transformation.metrics.tertiary}</div>
                           <div className="text-xs text-white/60 font-light">Efficiency</div>
                         </div>
                       )}
@@ -336,6 +336,20 @@ export default function Portfolio() {
                       <div>
                         <h4 className="text-white/90 font-medium mb-3 uppercase tracking-wider text-sm">Business Impact</h4>
                         <p className="text-white/90 font-light leading-relaxed">
+                          <span className="text-red-400 font-medium">{transformation.businessImpact.split(',')[0]}</span>
+                          {transformation.businessImpact.includes(',') ? ',' + transformation.businessImpact.split(',').slice(1).join(',') : ''}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Executive Outcome */}
+                  <div className="mt-8 pt-6 border-t border-white/10">
+                    <h4 className="text-red-400 font-medium mb-3 uppercase tracking-wider text-sm">Executive Outcome</h4>
+                    <p className="text-white font-light leading-relaxed text-lg">
+                      {transformation.executiveOutcome}
+                    </p>
+                  </div>
                           {transformation.businessImpact}
                         </p>
                       </div>
