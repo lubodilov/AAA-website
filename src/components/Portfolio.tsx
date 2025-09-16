@@ -1,131 +1,161 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, ExternalLink, Github, ArrowLeft, X } from 'lucide-react';
+import { ArrowRight, Filter, TrendingUp, Clock, Target } from 'lucide-react';
 
-interface Project {
+interface Transformation {
   id: string;
+  category: 'acquisition' | 'operations' | 'expansion';
   title: string;
-  category: string;
-  description: string;
-  fullDescription: string;
-  technologies: string[];
-  videoUrl: string;
-  demoUrl?: string;
-  githubUrl?: string;
-  results: {
-    metric: string;
-    value: string;
-    description: string;
-  }[];
-  thumbnail: string;
+  businessChallenge: string;
+  hiddenOpportunity: string;
+  visionSolution: string;
+  businessImpact: string;
+  executiveOutcome: string;
+  metrics: {
+    primary: string;
+    secondary: string;
+    tertiary?: string;
+  };
+  timeline: string;
+  industry: string;
 }
 
-const projects: Project[] = [
+const transformations: Transformation[] = [
   {
-    id: 'ai-customer-acquisition',
-    title: 'AI Customer Acquisition Engine',
-    category: 'Revenue Acceleration',
-    description: 'Intelligent system that multiplies customer acquisition through predictive targeting and automated nurturing.',
-    fullDescription: 'We built an AI-powered customer acquisition engine that analyzes behavioral patterns, predicts high-value prospects, and automatically nurtures them through personalized touchpoints. The system integrates with existing CRM and marketing tools to create a seamless acquisition pipeline.',
-    technologies: ['Machine Learning', 'Python', 'TensorFlow', 'React', 'Node.js', 'PostgreSQL'],
-    videoUrl: '/hero_animation.mp4', // Using the same video as demo
-    demoUrl: 'https://demo.example.com',
-    githubUrl: 'https://github.com/example',
-    results: [
-      { metric: '467%', value: 'Customer Acquisition Increase', description: 'Average increase in qualified leads' },
-      { metric: '89%', value: 'Conversion Rate Improvement', description: 'From lead to paying customer' },
-      { metric: '$2.4M', value: 'Additional Annual Revenue', description: 'Generated in first 6 months' }
-    ],
-    thumbnail: 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800'
+    id: 'manufacturing-leadership',
+    category: 'acquisition',
+    title: 'Manufacturing Leadership Crisis',
+    businessChallenge: 'Sales team spending 60% of time on unqualified leads',
+    hiddenOpportunity: '$12M in high-value prospects being ignored',
+    visionSolution: 'AI-driven lead intelligence system',
+    businessImpact: '467% qualified pipeline increase, market leadership achieved',
+    executiveOutcome: 'Sales leadership refocused on strategic accounts',
+    metrics: {
+      primary: '467%',
+      secondary: '$12M',
+      tertiary: '60%'
+    },
+    timeline: '4 months',
+    industry: 'Manufacturing'
   },
   {
-    id: 'intelligent-operations',
-    title: 'Intelligent Operations Platform',
-    category: 'Process Automation',
-    description: 'AI system that eliminates 70% of routine decisions, freeing leadership for strategic thinking.',
-    fullDescription: 'A comprehensive operations platform that uses AI to automate routine business decisions, optimize resource allocation, and predict operational bottlenecks before they occur. The system learns from historical data and continuously improves decision-making accuracy.',
-    technologies: ['AI/ML', 'React', 'Node.js', 'MongoDB', 'Docker', 'AWS'],
-    videoUrl: '/hero_animation.mp4',
-    demoUrl: 'https://operations-demo.example.com',
-    results: [
-      { metric: '70%', value: 'Decision Automation', description: 'Routine decisions handled automatically' },
-      { metric: '45%', value: 'Operational Efficiency', description: 'Improvement in process speed' },
-      { metric: '89hrs', value: 'Weekly Time Saved', description: 'Leadership time reclaimed' }
-    ],
-    thumbnail: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'
+    id: 'services-plateau',
+    category: 'acquisition',
+    title: 'Services Company Plateau',
+    businessChallenge: 'Revenue growth stalled at $50M ceiling',
+    hiddenOpportunity: '40% of inquiries never reached decision-makers',
+    visionSolution: 'Intelligent lead routing and qualification',
+    businessImpact: '$15M revenue breakthrough, 67% margin improvement',
+    executiveOutcome: 'CEO bandwidth freed for market expansion',
+    metrics: {
+      primary: '$15M',
+      secondary: '67%',
+      tertiary: '40%'
+    },
+    timeline: '6 months',
+    industry: 'Professional Services'
   },
   {
-    id: 'predictive-analytics',
-    title: 'Predictive Market Analytics',
-    category: 'Strategic Intelligence',
-    description: 'Advanced analytics platform that predicts market opportunities 6 months ahead.',
-    fullDescription: 'Our predictive analytics platform combines market data, competitor analysis, and consumer behavior patterns to forecast market opportunities with 94% accuracy. It provides actionable insights for strategic planning and investment decisions.',
-    technologies: ['Python', 'Scikit-learn', 'D3.js', 'FastAPI', 'Redis', 'Kubernetes'],
-    videoUrl: '/hero_animation.mp4',
-    demoUrl: 'https://analytics-demo.example.com',
-    githubUrl: 'https://github.com/analytics-example',
-    results: [
-      { metric: '94%', value: 'Prediction Accuracy', description: 'Market opportunity forecasting' },
-      { metric: '6mo', value: 'Advance Warning', description: 'Market shift predictions' },
-      { metric: '340%', value: 'ROI Improvement', description: 'On strategic investments' }
-    ],
-    thumbnail: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800'
+    id: 'healthcare-bottleneck',
+    category: 'operations',
+    title: 'Healthcare Network Bottleneck',
+    businessChallenge: 'Patient routing consuming 4 hours daily executive time',
+    hiddenOpportunity: '40% capacity increase through intelligent workflow',
+    visionSolution: 'Automated decision-making system',
+    businessImpact: 'New market entry 18 months early, $2.4M acceleration',
+    executiveOutcome: 'Leadership focus shifted to strategic growth',
+    metrics: {
+      primary: '$2.4M',
+      secondary: '18mo',
+      tertiary: '4hrs'
+    },
+    timeline: '5 months',
+    industry: 'Healthcare'
   },
   {
-    id: 'revenue-optimization',
-    title: 'Revenue Optimization AI',
-    category: 'Growth Acceleration',
-    description: 'Dynamic pricing and revenue optimization system powered by real-time market intelligence.',
-    fullDescription: 'An AI-driven revenue optimization platform that dynamically adjusts pricing strategies based on market conditions, competitor analysis, and demand patterns. The system maximizes revenue while maintaining competitive positioning.',
-    technologies: ['Machine Learning', 'React', 'Python', 'Apache Kafka', 'Elasticsearch', 'GCP'],
-    videoUrl: '/hero_animation.mp4',
-    demoUrl: 'https://revenue-demo.example.com',
-    results: [
-      { metric: '28%', value: 'Revenue Increase', description: 'Through dynamic pricing' },
-      { metric: '15%', value: 'Margin Improvement', description: 'Optimized pricing strategies' },
-      { metric: '99.9%', value: 'System Uptime', description: 'Real-time optimization' }
-    ],
-    thumbnail: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800'
+    id: 'technology-scaling',
+    category: 'operations',
+    title: 'Technology Firm Scaling Crisis',
+    businessChallenge: 'Founders trapped in operational decisions',
+    hiddenOpportunity: '73% of decisions could be automated',
+    visionSolution: 'Executive liberation framework',
+    businessImpact: '300% team scaling, $8M valuation increase',
+    executiveOutcome: 'Founder availability for strategic partnerships',
+    metrics: {
+      primary: '300%',
+      secondary: '$8M',
+      tertiary: '73%'
+    },
+    timeline: '7 months',
+    industry: 'Technology'
+  },
+  {
+    id: 'retail-expansion',
+    category: 'expansion',
+    title: 'Regional Retail Expansion',
+    businessChallenge: 'Market entry decisions taking 6 months each',
+    hiddenOpportunity: 'AI could predict market viability in days',
+    visionSolution: 'Market intelligence automation',
+    businessImpact: '5 new markets opened, 180% revenue growth',
+    executiveOutcome: 'CEO positioned for acquisition discussions',
+    metrics: {
+      primary: '180%',
+      secondary: '5',
+      tertiary: '6mo'
+    },
+    timeline: '8 months',
+    industry: 'Retail'
   }
 ];
 
-export default function Portfolio() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+const categories = [
+  { id: 'all', name: 'All Transformations', icon: Target },
+  { id: 'acquisition', name: 'Acquisition Acceleration', icon: TrendingUp },
+  { id: 'operations', name: 'Operational Intelligence', icon: Clock },
+  { id: 'expansion', name: 'Market Expansion', icon: ArrowRight }
+];
 
-  // Handle video play/pause
-  const toggleVideo = () => {
-    if (videoRef.current) {
-      if (isVideoPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsVideoPlaying(!isVideoPlaying);
+export default function Portfolio() {
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Filter transformations based on selected category
+  const filteredTransformations = selectedCategory === 'all' 
+    ? transformations 
+    : transformations.filter(t => t.category === selectedCategory);
+
+  // Intersection Observer for card animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+            setVisibleCards(prev => new Set([...prev, entry.target.id]));
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    Object.values(cardRefs.current).forEach(ref => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, [filteredTransformations]);
+
+  const getCategoryTitle = (category: string) => {
+    switch (category) {
+      case 'acquisition': return 'Revenue Growth Bottlenecks';
+      case 'operations': return 'Executive Bandwidth Constraints';
+      case 'expansion': return 'Growth Vision Limitations';
+      default: return 'Business Transformation Categories';
     }
   };
-
-  // Close modal on escape key
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setSelectedProject(null);
-      }
-    };
-
-    if (selectedProject) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
-    };
-  }, [selectedProject]);
 
   return (
     <div className="min-h-screen bg-black relative">
@@ -144,22 +174,22 @@ export default function Portfolio() {
           <source src="/hero_animation.mp4" type="video/mp4" />
           <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
         </video>
-        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-0 bg-black/50"></div>
       </div>
 
       {/* Content */}
       <div className="relative z-10 pt-24 pb-16">
         <div className="max-w-7xl mx-auto px-6">
-          {/* Header */}
+          {/* Hero Section */}
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 mb-8">
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-              <span className="text-white/80 text-sm font-light tracking-wider uppercase">Our Portfolio</span>
+              <span className="text-white/80 text-sm font-light tracking-wider uppercase">Business Transformations</span>
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-thin text-white leading-tight mb-6">
-              Proven{' '}
+              Business Challenges We've{' '}
               <span 
                 className="font-extralight italic"
                 style={{
@@ -169,232 +199,204 @@ export default function Portfolio() {
                   backgroundClip: 'text'
                 }}
               >
-                Excellence
-              </span>
+                Transformed
+              </span>{' '}
+              Into Market Advantages
             </h1>
             
-            <p className="text-xl font-extralight text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Real projects. Real results. Real transformation. 
-              See how we've helped businesses achieve exponential growth through intelligent AI systems.
+            <p className="text-xl font-extralight text-white/80 max-w-4xl mx-auto leading-relaxed mb-12">
+              See how we've elevated business vision for companies facing acquisition bottlenecks, 
+              operational inefficiencies, and growth constraints.
             </p>
+
+            {/* Metrics Bar */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
+                <div className="text-3xl lg:text-4xl font-bold text-red-400 mb-2">23</div>
+                <div className="text-white/80 font-light">Businesses Transformed</div>
+              </div>
+              <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
+                <div className="text-3xl lg:text-4xl font-bold text-amber-400 mb-2">$47M+</div>
+                <div className="text-white/80 font-light">Revenue Unlocked</div>
+              </div>
+              <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
+                <div className="text-3xl lg:text-4xl font-bold text-emerald-400 mb-2">1,247</div>
+                <div className="text-white/80 font-light">Hours Weekly Executive Time Reclaimed</div>
+              </div>
+            </div>
           </div>
 
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            {projects.map((project, index) => (
+          {/* Category Filter */}
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {categories.map((category) => {
+              const Icon = category.icon;
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`flex items-center space-x-2 px-6 py-3 rounded-full border transition-all duration-300 ${
+                    selectedCategory === category.id
+                      ? 'bg-red-600/20 border-red-600/50 text-red-400'
+                      : 'bg-black/30 border-white/10 text-white/70 hover:border-red-600/30 hover:text-white'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span className="font-light">{category.name}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Category Title */}
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-light text-white mb-4">
+              Problem Category: "{getCategoryTitle(selectedCategory)}"
+            </h2>
+          </div>
+
+          {/* Transformations Grid */}
+          <div className="space-y-8">
+            {filteredTransformations.map((transformation, index) => (
               <div
-                key={project.id}
-                className="group relative cursor-pointer"
-                onMouseEnter={() => setHoveredProject(project.id)}
-                onMouseLeave={() => setHoveredProject(null)}
-                onClick={() => setSelectedProject(project)}
+                key={transformation.id}
+                id={transformation.id}
+                ref={el => cardRefs.current[transformation.id] = el}
+                className="group relative"
+                onMouseEnter={() => setHoveredCard(transformation.id)}
+                onMouseLeave={() => setHoveredCard(null)}
                 style={{
-                  opacity: hoveredProject && hoveredProject !== project.id ? 0.6 : 1,
-                  transform: hoveredProject === project.id ? 'scale(1.02)' : 'scale(1)',
-                  transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                  opacity: visibleCards.has(transformation.id) ? 1 : 0,
+                  transform: visibleCards.has(transformation.id) ? 'translateY(0)' : 'translateY(40px)',
+                  transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                  transitionDelay: `${index * 0.1}s`
                 }}
               >
-                {/* Project Card */}
-                <div className="relative bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden group-hover:border-red-600/30 transition-all duration-500">
-                  {/* Thumbnail */}
-                  <div className="relative h-64 overflow-hidden">
-                    <img 
-                      src={project.thumbnail} 
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                    
-                    {/* Play Button Overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="w-16 h-16 bg-red-600/90 backdrop-blur-sm rounded-full flex items-center justify-center">
-                        <Play className="w-6 h-6 text-white ml-1" />
+                {/* Transformation Card */}
+                <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-3xl p-8 lg:p-12 hover:border-red-600/30 transition-all duration-500 group-hover:bg-black/40">
+                  {/* Header */}
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8">
+                    <div className="mb-4 lg:mb-0">
+                      <div className="flex items-center space-x-4 mb-3">
+                        <span className="bg-red-600/20 text-red-400 text-sm font-medium px-3 py-1 rounded-full">
+                          TRANSFORMATION {index + 1}
+                        </span>
+                        <span className="text-white/60 text-sm font-light">
+                          {transformation.industry} • {transformation.timeline}
+                        </span>
                       </div>
+                      <h3 className="text-2xl lg:text-3xl font-light text-white group-hover:text-red-400 transition-colors duration-300">
+                        {transformation.title}
+                      </h3>
                     </div>
                     
-                    {/* Category Badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-red-600/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full">
-                        {project.category}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  {/* Content */}
-                  <div className="p-6">
-                    <h3 className="text-2xl font-light text-white mb-3 group-hover:text-red-400 transition-colors duration-300">
-                      {project.title}
-                    </h3>
-                    
-                    <p className="text-white/70 font-extralight leading-relaxed mb-4">
-                      {project.description}
-                    </p>
-                    
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.technologies.slice(0, 3).map((tech) => (
-                        <span 
-                          key={tech}
-                          className="text-xs bg-white/10 text-white/80 px-2 py-1 rounded-md font-light"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.technologies.length > 3 && (
-                        <span className="text-xs text-white/60 px-2 py-1">
-                          +{project.technologies.length - 3} more
-                        </span>
+                    {/* Key Metrics */}
+                    <div className="flex space-x-6">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-red-400">{transformation.metrics.primary}</div>
+                        <div className="text-xs text-white/60 font-light">Primary Impact</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-amber-400">{transformation.metrics.secondary}</div>
+                        <div className="text-xs text-white/60 font-light">Secondary Gain</div>
+                      </div>
+                      {transformation.metrics.tertiary && (
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-emerald-400">{transformation.metrics.tertiary}</div>
+                          <div className="text-xs text-white/60 font-light">Efficiency</div>
+                        </div>
                       )}
                     </div>
-                    
-                    {/* Key Metric */}
-                    <div className="flex items-center justify-between">
+                  </div>
+
+                  {/* Problem-Solution Flow */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Left Column - Problem */}
+                    <div className="space-y-6">
                       <div>
-                        <div className="text-2xl font-bold text-red-400">
-                          {project.results[0].metric}
-                        </div>
-                        <div className="text-sm text-white/60 font-light">
-                          {project.results[0].value}
-                        </div>
+                        <h4 className="text-red-400 font-medium mb-3 uppercase tracking-wider text-sm">Business Challenge</h4>
+                        <p className="text-white/90 font-light leading-relaxed">
+                          {transformation.businessChallenge}
+                        </p>
                       </div>
                       
-                      <div className="text-white/40 group-hover:text-red-400 transition-colors duration-300">
-                        <ExternalLink className="w-5 h-5" />
+                      <div>
+                        <h4 className="text-amber-400 font-medium mb-3 uppercase tracking-wider text-sm">Hidden Opportunity</h4>
+                        <p className="text-white/90 font-light leading-relaxed">
+                          {transformation.hiddenOpportunity}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Right Column - Solution */}
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="text-emerald-400 font-medium mb-3 uppercase tracking-wider text-sm">Vision Solution</h4>
+                        <p className="text-white/90 font-light leading-relaxed">
+                          {transformation.visionSolution}
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h4 className="text-blue-400 font-medium mb-3 uppercase tracking-wider text-sm">Business Impact</h4>
+                        <p className="text-white/90 font-light leading-relaxed">
+                          {transformation.businessImpact}
+                        </p>
                       </div>
                     </div>
                   </div>
+
+                  {/* Executive Outcome */}
+                  <div className="mt-8 pt-6 border-t border-white/10">
+                    <h4 className="text-purple-400 font-medium mb-3 uppercase tracking-wider text-sm">Executive Outcome</h4>
+                    <p className="text-white font-light leading-relaxed text-lg">
+                      {transformation.executiveOutcome}
+                    </p>
+                  </div>
+
+                  {/* Hover Effect Overlay */}
+                  <div 
+                    className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                      background: `radial-gradient(circle at center, rgba(239, 68, 68, 0.05) 0%, transparent 70%)`,
+                      filter: 'blur(20px)'
+                    }}
+                  />
                 </div>
               </div>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* Project Modal */}
-      {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-            onClick={() => setSelectedProject(null)}
-          />
-          
-          {/* Modal Content */}
-          <div className="relative bg-black/90 backdrop-blur-md border border-white/20 rounded-3xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
-            {/* Close Button */}
-            <button
-              onClick={() => setSelectedProject(null)}
-              className="absolute top-6 right-6 z-10 w-10 h-10 bg-white/10 hover:bg-red-600/20 rounded-full flex items-center justify-center transition-colors duration-300"
-            >
-              <X className="w-5 h-5 text-white" />
-            </button>
-            
-            {/* Video Section */}
-            <div className="relative h-96 bg-black rounded-t-3xl overflow-hidden">
-              <video
-                ref={videoRef}
-                className="w-full h-full object-cover"
-                poster={selectedProject.thumbnail}
-                onPlay={() => setIsVideoPlaying(true)}
-                onPause={() => setIsVideoPlaying(false)}
-              >
-                <source src={selectedProject.videoUrl} type="video/mp4" />
-              </video>
-              
-              {/* Video Controls */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <button
-                  onClick={toggleVideo}
-                  className="w-20 h-20 bg-red-600/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-300"
+          {/* Strategic CTA */}
+          <div className="mt-16 text-center">
+            <div className="bg-black/40 backdrop-blur-sm border border-red-600/20 rounded-3xl p-8 lg:p-12 max-w-4xl mx-auto">
+              <h3 className="text-3xl lg:text-4xl font-light text-white mb-6">
+                Ready to Transform Your{' '}
+                <span 
+                  className="font-extralight italic"
+                  style={{
+                    background: 'linear-gradient(135deg, #ef4444 0%, #f59e0b 50%, #10b981 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
+                  }}
                 >
-                  <Play className="w-8 h-8 text-white ml-1" />
-                </button>
-              </div>
-            </div>
-            
-            {/* Content */}
-            <div className="p-8">
-              {/* Header */}
-              <div className="mb-8">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="bg-red-600/20 text-red-400 text-sm font-medium px-3 py-1 rounded-full">
-                    {selectedProject.category}
-                  </span>
-                  
-                  <div className="flex items-center space-x-4">
-                    {selectedProject.demoUrl && (
-                      <a
-                        href={selectedProject.demoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2 text-white/70 hover:text-red-400 transition-colors duration-300"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        <span className="text-sm">Live Demo</span>
-                      </a>
-                    )}
-                    
-                    {selectedProject.githubUrl && (
-                      <a
-                        href={selectedProject.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2 text-white/70 hover:text-red-400 transition-colors duration-300"
-                      >
-                        <Github className="w-4 h-4" />
-                        <span className="text-sm">Code</span>
-                      </a>
-                    )}
-                  </div>
-                </div>
-                
-                <h2 className="text-4xl font-light text-white mb-4">
-                  {selectedProject.title}
-                </h2>
-                
-                <p className="text-lg font-extralight text-white/80 leading-relaxed">
-                  {selectedProject.fullDescription}
-                </p>
-              </div>
+                  Business Vision
+                </span>?
+              </h3>
               
-              {/* Technologies */}
-              <div className="mb-8">
-                <h3 className="text-xl font-light text-white mb-4">Technologies Used</h3>
-                <div className="flex flex-wrap gap-3">
-                  {selectedProject.technologies.map((tech) => (
-                    <span 
-                      key={tech}
-                      className="bg-white/10 text-white/90 px-4 py-2 rounded-lg font-light"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <p className="text-xl font-extralight text-white/80 mb-8 leading-relaxed">
+                Every transformation starts with understanding your unique challenges and hidden opportunities. 
+                Let's architect your path to market dominance.
+              </p>
               
-              {/* Results */}
-              <div>
-                <h3 className="text-xl font-light text-white mb-6">Key Results</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {selectedProject.results.map((result, index) => (
-                    <div key={index} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 text-center">
-                      <div className="text-3xl font-bold text-red-400 mb-2">
-                        {result.metric}
-                      </div>
-                      <div className="text-white font-light mb-2">
-                        {result.value}
-                      </div>
-                      <div className="text-white/60 text-sm font-extralight">
-                        {result.description}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <button className="group bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-4 rounded-full font-light hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center space-x-3 mx-auto">
+                <span className="text-lg">Start Your Vision Assessment</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+              </button>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
