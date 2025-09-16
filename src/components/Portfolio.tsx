@@ -194,13 +194,7 @@ export default function Portfolio() {
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-thin text-white leading-tight mb-6">
               Business Challenges We've{' '}
               <span 
-                className="font-extralight italic"
-                style={{
-                  background: 'linear-gradient(135deg, #ef4444 0%, #f59e0b 50%, #10b981 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}
+                className="font-extralight italic text-red-400"
               >
                 Transformed
               </span>{' '}
@@ -215,16 +209,16 @@ export default function Portfolio() {
             {/* Metrics Bar */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
-                <div className="text-3xl lg:text-4xl font-bold text-red-400 mb-2">23</div>
-                <div className="text-white/80 font-light">Businesses Transformed</div>
+                <div className="text-3xl lg:text-4xl font-bold text-white mb-2">23</div>
+                <div className="text-white/70 font-light">Businesses Transformed</div>
               </div>
               <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
-                <div className="text-3xl lg:text-4xl font-bold text-amber-400 mb-2">$47M+</div>
-                <div className="text-white/80 font-light">Revenue Unlocked</div>
+                <div className="text-3xl lg:text-4xl font-bold text-white mb-2">$47M+</div>
+                <div className="text-white/70 font-light">Revenue Unlocked</div>
               </div>
               <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
-                <div className="text-3xl lg:text-4xl font-bold text-emerald-400 mb-2">1,247</div>
-                <div className="text-white/80 font-light">Hours Weekly Executive Time Reclaimed</div>
+                <div className="text-3xl lg:text-4xl font-bold text-white mb-2">1,247</div>
+                <div className="text-white/70 font-light">Hours Weekly Executive Time Reclaimed</div>
               </div>
             </div>
           </div>
@@ -239,7 +233,7 @@ export default function Portfolio() {
                   onClick={() => setSelectedCategory(category.id)}
                   className={`flex items-center space-x-2 px-6 py-3 rounded-full border transition-all duration-300 ${
                     selectedCategory === category.id
-                      ? 'bg-red-600/20 border-red-600/50 text-red-400'
+                      ? 'bg-red-600/20 border-red-600/50 text-white'
                       : 'bg-black/30 border-white/10 text-white/70 hover:border-red-600/30 hover:text-white'
                   }`}
                 >
@@ -295,16 +289,16 @@ export default function Portfolio() {
                     {/* Key Metrics */}
                     <div className="flex space-x-6">
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-red-400">{transformation.metrics.primary}</div>
+                        <div className="text-2xl font-bold text-white">{transformation.metrics.primary}</div>
                         <div className="text-xs text-white/60 font-light">Primary Impact</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-amber-400">{transformation.metrics.secondary}</div>
+                        <div className="text-2xl font-bold text-white/90">{transformation.metrics.secondary}</div>
                         <div className="text-xs text-white/60 font-light">Secondary Gain</div>
                       </div>
                       {transformation.metrics.tertiary && (
                         <div className="text-center">
-                          <div className="text-2xl font-bold text-emerald-400">{transformation.metrics.tertiary}</div>
+                          <div className="text-2xl font-bold text-white/80">{transformation.metrics.tertiary}</div>
                           <div className="text-xs text-white/60 font-light">Efficiency</div>
                         </div>
                       )}
@@ -316,14 +310,14 @@ export default function Portfolio() {
                     {/* Left Column - Problem */}
                     <div className="space-y-6">
                       <div>
-                        <h4 className="text-red-400 font-medium mb-3 uppercase tracking-wider text-sm">Business Challenge</h4>
+                        <h4 className="text-white font-medium mb-3 uppercase tracking-wider text-sm">Business Challenge</h4>
                         <p className="text-white/90 font-light leading-relaxed">
                           {transformation.businessChallenge}
                         </p>
                       </div>
                       
                       <div>
-                        <h4 className="text-amber-400 font-medium mb-3 uppercase tracking-wider text-sm">Hidden Opportunity</h4>
+                        <h4 className="text-white/90 font-medium mb-3 uppercase tracking-wider text-sm">Hidden Opportunity</h4>
                         <p className="text-white/90 font-light leading-relaxed">
                           {transformation.hiddenOpportunity}
                         </p>
@@ -333,14 +327,14 @@ export default function Portfolio() {
                     {/* Right Column - Solution */}
                     <div className="space-y-6">
                       <div>
-                        <h4 className="text-emerald-400 font-medium mb-3 uppercase tracking-wider text-sm">Vision Solution</h4>
+                        <h4 className="text-white/90 font-medium mb-3 uppercase tracking-wider text-sm">Vision Solution</h4>
                         <p className="text-white/90 font-light leading-relaxed">
                           {transformation.visionSolution}
                         </p>
                       </div>
                       
                       <div>
-                        <h4 className="text-blue-400 font-medium mb-3 uppercase tracking-wider text-sm">Business Impact</h4>
+                        <h4 className="text-white/90 font-medium mb-3 uppercase tracking-wider text-sm">Business Impact</h4>
                         <p className="text-white/90 font-light leading-relaxed">
                           {transformation.businessImpact}
                         </p>
@@ -350,7 +344,7 @@ export default function Portfolio() {
 
                   {/* Executive Outcome */}
                   <div className="mt-8 pt-6 border-t border-white/10">
-                    <h4 className="text-purple-400 font-medium mb-3 uppercase tracking-wider text-sm">Executive Outcome</h4>
+                    <h4 className="text-red-400 font-medium mb-3 uppercase tracking-wider text-sm">Executive Outcome</h4>
                     <p className="text-white font-light leading-relaxed text-lg">
                       {transformation.executiveOutcome}
                     </p>
@@ -375,13 +369,7 @@ export default function Portfolio() {
               <h3 className="text-3xl lg:text-4xl font-light text-white mb-6">
                 Ready to Transform Your{' '}
                 <span 
-                  className="font-extralight italic"
-                  style={{
-                    background: 'linear-gradient(135deg, #ef4444 0%, #f59e0b 50%, #10b981 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text'
-                  }}
+                  className="font-extralight italic text-red-400"
                 >
                   Business Vision
                 </span>?
