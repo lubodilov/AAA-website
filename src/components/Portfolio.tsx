@@ -345,6 +345,11 @@ export default function Portfolio() {
 
                   {/* Executive Outcome */}
                   <div className="mt-8 pt-6 border-t border-white/10">
+                    <h4 className="text-white/90 font-medium mb-3 uppercase tracking-wider text-sm">Executive Outcome</h4>
+                    <p className="text-white/90 font-light leading-relaxed">
+                      {transformation.executiveOutcome}
+                    </p>
+                  </div>
 
                   {/* Hover Effect Overlay */}
                   <div 
