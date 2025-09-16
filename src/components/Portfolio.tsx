@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Filter, TrendingUp, Clock, Target } from 'lucide-react';
+import Header from './Header';
 
 interface Transformation {
   id: string;
@@ -159,6 +160,8 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-black relative">
+      <Header />
+      
       {/* Fixed Video Background */}
       <div className="fixed inset-0 z-0">
         <video
