@@ -16,6 +16,8 @@ export default {
       animation: {
         'pulse': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'ping': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'infinite-scroll-right': 'infinite-scroll-right 30s linear infinite',
+        'infinite-scroll-left': 'infinite-scroll-left 35s linear infinite',
         'move-across': 'move-across 12s linear infinite',
         'move-across-reverse': 'move-across-reverse 15s linear infinite',
         'move-across-slow': 'move-across-slow 20s linear infinite',
