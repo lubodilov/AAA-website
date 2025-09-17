@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 export default function TransformationProcess() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [animationStates, setAnimationStates] = useState([false, false, false]);
+  const [animationStates, setAnimationStates] = useState([true, false, false]);
   const [sectionVisible, setSectionVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -95,7 +95,7 @@ export default function TransformationProcess() {
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [sectionVisible]);
+  }, [sectionVisible, slides]);
 
   // Update animation states when currentSlide changes
   useEffect(() => {
@@ -105,7 +105,7 @@ export default function TransformationProcess() {
       newStates[currentSlide] = true;
       setAnimationStates(newStates);
     }
-  }, [currentSlide, sectionVisible]);
+  }, [currentSlide, sectionVisible, slides]);
 
   // Animated SVG Icons
   const EyeIcon = ({ isAnimated }: { isAnimated: boolean }) => (
