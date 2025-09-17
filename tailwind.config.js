@@ -35,12 +35,12 @@ export default {
       },
       keyframes: {
         'move-across': {
-          '0%': { transform: 'translateX(-100px)' },
-          '100%': { transform: 'translateX(calc(100vw + 100px))' }
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-33.333%)' }
         },
         'move-across-reverse': {
-          '0%': { transform: 'translateX(calc(100vw + 100px))' },
-          '100%': { transform: 'translateX(-100px)' }
+          '0%': { transform: 'translateX(-33.333%)' },
+          '100%': { transform: 'translateX(0)' }
         },
         'move-across-slow': {
           '0%': { transform: 'translateX(-100px)' },

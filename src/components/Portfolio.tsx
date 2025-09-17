@@ -211,7 +211,7 @@ export default function Portfolio() {
           <div className="relative overflow-hidden">
             {/* First Row - Moving Right */}
             <div className="flex space-x-6 mb-8 animate-move-across">
-              {transformations.concat(transformations).map((transformation, index) => (
+              {transformations.concat(transformations).concat(transformations).map((transformation, index) => (
                 <div
                   key={`right-${transformation.id}-${index}`}
                   className="flex-shrink-0 w-80 bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-red-600/30 transition-all duration-300 group cursor-pointer"
@@ -263,7 +263,7 @@ export default function Portfolio() {
 
             {/* Second Row - Moving Left */}
             <div className="flex space-x-6 animate-move-across-reverse">
-              {transformations.slice().reverse().concat(transformations.slice().reverse()).map((transformation, index) => (
+              {transformations.slice().reverse().concat(transformations.slice().reverse()).concat(transformations.slice().reverse()).map((transformation, index) => (
                 <div
                   key={`left-${transformation.id}-${index}`}
                   className="flex-shrink-0 w-80 bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-red-600/30 transition-all duration-300 group cursor-pointer"
