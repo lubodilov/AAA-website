@@ -210,7 +210,7 @@ export default function Portfolio() {
           {/* Moving Cards Section */}
           <div className="relative overflow-hidden">
             {/* First Row - Moving Right */}
-            <div className="flex space-x-6 mb-8" style={{ animation: 'infinite-scroll-right 30s linear infinite' }}>
+            <div className="flex space-x-6 mb-8 animate-infinite-scroll-right">
               {[...Array(3)].flatMap((_, setIndex) => 
                 transformations.map((transformation, cardIndex) => (
                 <div
@@ -264,7 +264,7 @@ export default function Portfolio() {
             </div>
 
             {/* Second Row - Moving Left */}
-            <div className="flex space-x-6" style={{ animation: 'infinite-scroll-left 35s linear infinite' }}>
+            <div className="flex space-x-6 animate-infinite-scroll-left">
               {[...Array(3)].flatMap((_, setIndex) => 
                 transformations.slice().reverse().map((transformation, cardIndex) => (
                 <div
