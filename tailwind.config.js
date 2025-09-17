@@ -21,12 +21,12 @@ export default {
       },
       keyframes: {
         'infinite-scroll-right': {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-33.333%)' }
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' }
         },
         'infinite-scroll-left': {
-          '0%': { transform: 'translateX(-33.333%)' },
-          '100%': { transform: 'translateX(0)' }
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0%)' }
         },
       },
     },
