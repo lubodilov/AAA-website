@@ -34,11 +34,11 @@ export default {
         'particle-flow': 'particle-flow 6s linear infinite',
       },
       keyframes: {
-        'move-across': {
+        'infinite-scroll-right': {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-33.333%)' }
         },
-        'move-across-reverse': {
+        'infinite-scroll-left': {
           '0%': { transform: 'translateX(-33.333%)' },
           '100%': { transform: 'translateX(0)' }
         },
