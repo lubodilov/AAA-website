@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 export default function TransformationProcess() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [animationStates, setAnimationStates] = useState([false, false, false]);
+  const [animationStates, setAnimationStates] = useState([true, false, false]);
   const [sectionVisible, setSectionVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -52,20 +52,7 @@ export default function TransformationProcess() {
     return () => observer.disconnect();
   }, []);
 
-  // Initial animation when section becomes visible
-  useEffect(() => {
-    if (sectionVisible) {
-      // Trigger animation for first slide immediately
-      setTimeout(() => {
-        const newStates = [false, false, false];
-        newStates[0] = true;
-        setAnimationStates(newStates);
-        console.log('Initial animation triggered for slide 0: ANALYZE');
-      }, 200);
-    }
-  }, [sectionVisible]);
-
-  // Slide detection and animation trigger
+  // Slide detection and animation trigger - removed currentSlide from dependencies
   useEffect(() => {
     if (!sectionVisible) return;
 
@@ -92,20 +79,13 @@ export default function TransformationProcess() {
         }
       });
       
-      if (closestSlide !== currentSlide) {
-        console.log(`🎯 Switching from slide ${currentSlide} to slide ${closestSlide}: ${slides[closestSlide].phase}`);
-        setCurrentSlide(closestSlide);
-        
-        // Reset all animations first, then trigger the new one
-        setAnimationStates([false, false, false]);
-        
-        setTimeout(() => {
-          const newStates = [false, false, false];
-          newStates[closestSlide] = true;
-          setAnimationStates(newStates);
-          console.log(`✨ Animation triggered for slide ${closestSlide}: ${slides[closestSlide].phase}`);
-        }, 100);
-      }
+      setCurrentSlide(prevCurrentSlide => {
+        if (closestSlide !== prevCurrentSlide) {
+          console.log(`🎯 Switching from slide ${prevCurrentSlide} to slide ${closestSlide}: ${slides[closestSlide].phase}`);
+          return closestSlide;
+        }
+        return prevCurrentSlide;
+      });
     };
 
     // Add scroll listener
@@ -115,6 +95,16 @@ export default function TransformationProcess() {
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
+  }, [sectionVisible, slides]);
+
+  // Update animation states when currentSlide changes
+  useEffect(() => {
+    if (sectionVisible) {
+      console.log(`✨ Animation triggered for slide ${currentSlide}: ${slides[currentSlide].phase}`);
+      const newStates = [false, false, false];
+      newStates[currentSlide] = true;
+      setAnimationStates(newStates);
+    }
   }, [currentSlide, sectionVisible, slides]);
 
   // Animated SVG Icons
