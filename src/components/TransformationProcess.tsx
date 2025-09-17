@@ -91,8 +91,6 @@ export default function TransformationProcess() {
     // Add scroll listener
     window.addEventListener('scroll', handleScroll);
     
-    // Initial check
-    handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [sectionVisible]);
@@ -473,8 +471,7 @@ export default function TransformationProcess() {
                     style={{
                       opacity: animationStates[index] ? 1 : 0,
                       transform: animationStates[index] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.98)',
-                      transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-                      transitionDelay: '1.0s'
+                      transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)'
                     }}
                   >
                     <h3 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white mb-4 leading-tight">
@@ -503,8 +500,7 @@ export default function TransformationProcess() {
                     style={{
                       opacity: animationStates[index] ? 1 : 0,
                       transform: animationStates[index] ? 'scale(1) rotate(0deg)' : 'scale(0.85) rotate(-5deg)',
-                      transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
-                      transitionDelay: '1.1s'
+                      transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)'
                     }}
                   >
                     <div className="text-red-400 w-full h-full flex items-center justify-center">
