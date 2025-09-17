@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Filter, TrendingUp, Clock, Target, Star, Award, Zap, Building2, Code, Heart, DollarSign, Users, Briefcase } from 'lucide-react';
+import { ArrowRight, Filter, TrendingUp, Clock, Target, Star, Award, Zap, Building2, Code, Heart, DollarSign, Users, Briefcase, Eye, ChevronDown } from 'lucide-react';
 import Header from './Header';
 
 interface Transformation {
@@ -409,6 +409,7 @@ export default function Portfolio() {
   const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [showCTA, setShowCTA] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const ctaRef = useRef<HTMLDivElement>(null);
 
@@ -461,32 +462,35 @@ export default function Portfolio() {
       case 'flagship':
         return {
           size: 'scale-110 lg:scale-125',
-          border: 'border-red-600/60 shadow-red-600/25',
-          glow: 'shadow-2xl',
+          border: 'border-red-500/80 shadow-red-500/40',
+          glow: 'shadow-2xl shadow-red-500/25',
           badge: 'FLAGSHIP RESULT',
-          badgeColor: 'bg-red-600',
+          badgeColor: 'bg-gradient-to-r from-red-600 to-red-700',
           icon: Star,
-          cardClass: 'flagship-card'
+          cardClass: 'flagship-card',
+          glowEffect: true
         };
       case 'authority':
         return {
           size: 'scale-100',
-          border: 'border-white/20 shadow-black/25',
+          border: 'border-amber-500/60 shadow-amber-500/20',
           glow: 'shadow-lg',
           badge: 'AUTHORITY PROOF',
-          badgeColor: 'bg-amber-600',
+          badgeColor: 'bg-gradient-to-r from-amber-600 to-amber-700',
           icon: Award,
-          cardClass: 'authority-card'
+          cardClass: 'authority-card',
+          glowEffect: false
         };
       case 'proof':
         return {
           size: 'scale-95',
-          border: 'border-white/10 shadow-black/20',
+          border: 'border-emerald-500/60 shadow-emerald-500/20',
           glow: 'shadow-md',
           badge: 'SPEED WIN',
-          badgeColor: 'bg-emerald-600',
+          badgeColor: 'bg-gradient-to-r from-emerald-600 to-emerald-700',
           icon: Zap,
-          cardClass: 'proof-card'
+          cardClass: 'proof-card',
+          glowEffect: false
         };
       default:
         return {
@@ -496,7 +500,8 @@ export default function Portfolio() {
           badge: 'TRANSFORMATION',
           badgeColor: 'bg-gray-600',
           icon: Target,
-          cardClass: 'default-card'
+          cardClass: 'default-card',
+          glowEffect: false
         };
     }
   };
@@ -520,53 +525,58 @@ export default function Portfolio() {
           <source src="/hero_animation.mp4" type="video/mp4" />
           <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
         </video>
-        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="absolute inset-0 bg-black/70"></div>
       </div>
 
       {/* Content */}
       <div className="relative z-10 pt-24 pb-16">
         <div className="max-w-7xl mx-auto px-6">
-          {/* Hero Section */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center space-x-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 mb-8">
-              <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-              <span className="text-white/80 text-sm font-light tracking-wider uppercase">Impossible Results Made Routine</span>
-              <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+          {/* Elite Hero Section */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center space-x-3 bg-black/60 backdrop-blur-md border border-red-500/30 rounded-full px-8 py-4 mb-8 shadow-2xl shadow-red-500/10">
+              <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+              <span className="text-white/90 text-sm font-medium tracking-wider uppercase">Impossible Results Made Routine</span>
+              <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
             </div>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-tight mb-8">
               Business Challenges We've{' '}
-              <span className="font-extralight italic text-red-400">
+              <span className="font-light italic bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">
                 Transformed
               </span>{' '}
               Into Market Dominance
             </h1>
             
-            <p className="text-xl font-extralight text-white/80 max-w-4xl mx-auto leading-relaxed mb-8">
+            <p className="text-xl lg:text-2xl font-light text-white/90 max-w-4xl mx-auto leading-relaxed mb-12">
               15 unique transformations. $127M+ in revealed opportunities. 
               Proof that your "impossible" challenge has been solved before.
             </p>
 
-            {/* Industry Filter Tabs */}
-            <div className="flex flex-wrap justify-center gap-3 mb-8">
+            {/* Elite Industry Filter Tabs */}
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
               {categories.map((category) => {
                 const IconComponent = category.icon;
                 return (
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
-                    className={`group flex items-center space-x-2 px-4 py-2 rounded-full border transition-all duration-300 ${
+                    className={`group relative flex items-center space-x-3 px-6 py-4 rounded-2xl border transition-all duration-500 overflow-hidden ${
                       selectedCategory === category.id
-                        ? 'bg-red-600 border-red-600 text-white'
-                        : 'bg-black/40 border-white/20 text-white/80 hover:border-red-600/50 hover:bg-red-600/10'
+                        ? 'bg-gradient-to-r from-red-600 to-red-700 border-red-500 text-white shadow-2xl shadow-red-500/25'
+                        : 'bg-black/40 border-white/20 text-white/80 hover:border-red-500/50 hover:bg-red-600/10 hover:shadow-xl hover:shadow-red-500/10'
                     }`}
                   >
-                    <IconComponent className="w-4 h-4" />
-                    <span className="text-sm font-light">{category.name}</span>
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${
+                    {/* Background glow effect */}
+                    <div className={`absolute inset-0 bg-gradient-to-r from-red-600/20 via-red-500/10 to-red-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                      selectedCategory === category.id ? 'opacity-100' : ''
+                    }`} />
+                    
+                    <IconComponent className="w-5 h-5 relative z-10" />
+                    <span className="text-sm font-medium relative z-10">{category.name}</span>
+                    <span className={`text-xs px-3 py-1 rounded-full relative z-10 ${
                       selectedCategory === category.id
-                        ? 'bg-white/20'
-                        : 'bg-white/10'
+                        ? 'bg-white/20 text-white'
+                        : 'bg-white/10 text-white/70'
                     }`}>
                       {category.count}
                     </span>
@@ -576,253 +586,430 @@ export default function Portfolio() {
             </div>
           </div>
 
-          {/* Transformations Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
-            {filteredTransformations.map((transformation) => {
-              const tierConfig = getTierConfig(transformation.tier);
-              const IconComponent = tierConfig.icon;
-              const isVisible = visibleCards.has(transformation.id);
+          {/* Elite Transformations Grid */}
+          <div className="space-y-12 mb-20">
+            {/* FLAGSHIP RESULTS - Hero Treatment */}
+            <div className="space-y-8">
+              <div className="text-center">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+                  <span className="bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent">FLAGSHIP</span> RESULTS
+                </h2>
+                <p className="text-white/70 text-lg">Most impressive outcomes • Household name industries • Biggest dollar impacts</p>
+              </div>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+                {filteredTransformations.filter(t => t.tier === 'flagship').map((transformation) => {
+                  const tierConfig = getTierConfig(transformation.tier);
+                  const IconComponent = tierConfig.icon;
+                  const isVisible = visibleCards.has(transformation.id);
+                  const isHovered = hoveredCard === transformation.id;
 
-              return (
-                <div
-                  key={transformation.id}
-                  id={transformation.id}
-                  ref={el => cardRefs.current[transformation.id] = el}
-                  className={`relative group cursor-pointer transition-all duration-500 ${tierConfig.size} ${
-                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                  } ${tierConfig.cardClass}`}
-                  style={{
-                    transitionDelay: `${Math.random() * 0.3}s`
-                  }}
-                >
-                  {/* Flagship Glow Effect */}
-                  {transformation.tier === 'flagship' && (
-                    <div className="absolute -inset-4 bg-gradient-to-r from-red-600/20 via-red-600/10 to-red-600/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  )}
+                  return (
+                    <div
+                      key={transformation.id}
+                      id={transformation.id}
+                      ref={el => cardRefs.current[transformation.id] = el}
+                      onMouseEnter={() => setHoveredCard(transformation.id)}
+                      onMouseLeave={() => setHoveredCard(null)}
+                      className={`relative group cursor-pointer transition-all duration-700 ${tierConfig.size} ${
+                        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                      }`}
+                      style={{
+                        transitionDelay: `${Math.random() * 0.3}s`
+                      }}
+                    >
+                      {/* Elite Flagship Glow Effect */}
+                      <div className={`absolute -inset-6 bg-gradient-to-r from-red-600/30 via-red-500/20 to-red-600/30 rounded-3xl blur-2xl transition-opacity duration-700 ${
+                        isHovered ? 'opacity-100' : 'opacity-60'
+                      }`} />
 
-                  {/* Card Container */}
-                  <div className={`relative bg-black/40 backdrop-blur-sm border ${tierConfig.border} ${tierConfig.glow} rounded-2xl p-6 hover:border-red-600/40 transition-all duration-300 h-full`}>
-                    {/* Tier Badge */}
-                    <div className={`inline-flex items-center space-x-2 ${tierConfig.badgeColor} text-white text-xs font-medium px-3 py-1 rounded-full mb-4`}>
-                      <IconComponent className="w-3 h-3" />
-                      <span>{tierConfig.badge}</span>
-                    </div>
-
-                    {/* Social Proof Indicators */}
-                    {transformation.relevanceScore && (
-                      <div className="flex items-center justify-between mb-3 text-xs">
-                        <div className="flex items-center space-x-2 text-emerald-400">
-                          <Users className="w-3 h-3" />
-                          <span>{transformation.viewCount} CEOs viewed this month</span>
+                      {/* Main Card Container */}
+                      <div className={`relative bg-gradient-to-br from-black/80 via-black/60 to-black/80 backdrop-blur-xl border-2 ${tierConfig.border} ${tierConfig.glow} rounded-3xl p-8 transition-all duration-500 h-full overflow-hidden`}>
+                        {/* Animated background pattern */}
+                        <div className="absolute inset-0 opacity-5">
+                          <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-transparent to-red-600/20"></div>
                         </div>
-                        <div className="text-amber-400">
-                          {transformation.relevanceScore}% relevant to you
+
+                        {/* Elite Tier Badge */}
+                        <div className={`inline-flex items-center space-x-2 ${tierConfig.badgeColor} text-white text-xs font-bold px-4 py-2 rounded-full mb-6 shadow-lg`}>
+                          <IconComponent className="w-4 h-4" />
+                          <span>{tierConfig.badge}</span>
+                          <Star className="w-3 h-3" />
                         </div>
-                      </div>
-                    )}
 
-                    {/* Header */}
-                    <div className="mb-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="bg-red-600/20 text-red-400 text-xs font-medium px-2 py-1 rounded-full">
-                          {transformation.industry}
-                        </span>
-                        <span className="text-white/60 text-xs font-light">
-                          {transformation.timeline}
-                        </span>
-                      </div>
-                      <h3 className={`font-bold text-white group-hover:text-red-400 transition-colors duration-300 mb-1 leading-tight ${
-                        transformation.tier === 'flagship' ? 'text-xl lg:text-2xl' : 'text-lg'
-                      }`}>
-                        {transformation.title}
-                      </h3>
-                      <p className="text-sm text-white/70 font-light">
-                        {transformation.company}
-                      </p>
-                    </div>
-
-                    {/* Enhanced Metrics - Visual Impact */}
-                    <div className={`mb-4 bg-black/20 rounded-lg p-4 ${
-                      transformation.tier === 'flagship' ? 'border border-red-600/20' : ''
-                    }`}>
-                      {/* Before/After Comparison for Flagship */}
-                      {transformation.tier === 'flagship' ? (
-                        <div className="space-y-3">
-                          <div className="flex items-center justify-between">
-                            <div className="text-center flex-1">
-                              <div className="text-red-400 text-xs font-semibold uppercase mb-1">FROM</div>
-                              <div className="text-red-300 text-sm font-medium">{transformation.metrics.before}</div>
-                            </div>
-                            <div className="mx-4">
-                              <ArrowRight className="w-6 h-6 text-white/60" />
-                            </div>
-                            <div className="text-center flex-1">
-                              <div className="text-emerald-400 text-xs font-semibold uppercase mb-1">TO</div>
-                              <div className="text-emerald-300 text-sm font-medium">{transformation.metrics.after}</div>
-                            </div>
+                        {/* Social Proof Indicators */}
+                        <div className="flex items-center justify-between mb-4 text-xs">
+                          <div className="flex items-center space-x-2 text-emerald-400">
+                            <Eye className="w-3 h-3" />
+                            <span className="font-medium">{transformation.viewCount} CEOs viewed this month</span>
                           </div>
-                          <div className="text-center pt-2 border-t border-white/10">
-                            <div className="text-white text-xs font-semibold uppercase mb-1">RESULT</div>
-                            <div className="text-2xl font-bold text-red-600">{transformation.metrics.result}</div>
+                          <div className="text-amber-400 font-bold">
+                            {transformation.relevanceScore}% relevant to you
                           </div>
                         </div>
-                      ) : (
-                        // Standard metrics for other tiers
-                        <div className="flex justify-between">
-                          <div className="text-center">
-                            <div className="text-lg font-bold text-red-600">{transformation.metrics.primary}</div>
-                            <div className="text-xs text-white/60 font-light">Impact</div>
+
+                        {/* Header */}
+                        <div className="mb-6">
+                          <div className="flex items-center justify-between mb-3">
+                            <span className="bg-red-600/20 text-red-400 text-xs font-bold px-3 py-1 rounded-full border border-red-500/30">
+                              {transformation.industry}
+                            </span>
+                            <span className="text-white/60 text-sm font-medium bg-white/10 px-3 py-1 rounded-full">
+                              {transformation.timeline}
+                            </span>
                           </div>
-                          <div className="text-center">
-                            <div className="text-lg font-bold text-red-600">{transformation.metrics.secondary}</div>
-                            <div className="text-xs text-white/60 font-light">Growth</div>
-                          </div>
-                          {transformation.metrics.tertiary && (
+                          <h3 className="text-2xl lg:text-3xl font-bold text-white group-hover:text-red-400 transition-colors duration-300 mb-2 leading-tight">
+                            {transformation.title}
+                          </h3>
+                          <p className="text-base text-white/80 font-medium">
+                            {transformation.company}
+                          </p>
+                        </div>
+
+                        {/* MASSIVE VISUAL METRICS - Before/After Treatment */}
+                        <div className="mb-6 bg-gradient-to-r from-black/40 via-black/60 to-black/40 rounded-2xl p-6 border border-red-500/20">
+                          <div className="space-y-4">
+                            {/* FROM Section */}
                             <div className="text-center">
-                              <div className="text-lg font-bold text-red-600">{transformation.metrics.tertiary}</div>
-                              <div className="text-xs text-white/60 font-light">Before</div>
+                              <div className="text-red-400 text-xs font-bold uppercase mb-2 tracking-wider">🚨 FROM</div>
+                              <div className="text-red-300 text-lg font-bold">{transformation.metrics.before}</div>
+                            </div>
+                            
+                            {/* Arrow */}
+                            <div className="flex justify-center">
+                              <div className="flex items-center space-x-2">
+                                <div className="w-8 h-0.5 bg-gradient-to-r from-red-500 to-emerald-500"></div>
+                                <ArrowRight className="w-6 h-6 text-white/60" />
+                                <div className="w-8 h-0.5 bg-gradient-to-r from-red-500 to-emerald-500"></div>
+                              </div>
+                            </div>
+                            
+                            {/* TO Section */}
+                            <div className="text-center">
+                              <div className="text-emerald-400 text-xs font-bold uppercase mb-2 tracking-wider">✅ TO</div>
+                              <div className="text-emerald-300 text-lg font-bold">{transformation.metrics.after}</div>
+                            </div>
+                            
+                            {/* RESULT - MASSIVE */}
+                            <div className="text-center pt-4 border-t border-white/10">
+                              <div className="text-white text-xs font-bold uppercase mb-2 tracking-wider">🏆 RESULT</div>
+                              <div className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">
+                                {transformation.metrics.result}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Story Structure - Color Coded */}
+                        <div className="space-y-4 mb-6">
+                          <div className="bg-gradient-to-r from-red-600/20 to-red-600/10 border-l-4 border-red-500 pl-4 py-3 rounded-r-lg">
+                            <span className="text-red-400 text-xs font-bold uppercase tracking-wide">🚨 THE CRISIS:</span>
+                            <p className="text-sm text-white/90 font-medium leading-relaxed mt-1">{transformation.crisis}</p>
+                          </div>
+                          
+                          <div className="bg-gradient-to-r from-black/40 to-black/20 border-l-4 border-amber-500 pl-4 py-3 rounded-r-lg">
+                            <span className="text-amber-400 text-xs font-bold uppercase tracking-wide">⚡ THE BREAKTHROUGH:</span>
+                            <p className="text-sm text-white/90 font-medium leading-relaxed mt-1">{transformation.breakthrough}</p>
+                          </div>
+                          
+                          <div className="bg-gradient-to-r from-emerald-600/20 to-emerald-600/10 border-l-4 border-emerald-500 pl-4 py-3 rounded-r-lg">
+                            <span className="text-emerald-400 text-xs font-bold uppercase tracking-wide">👑 THE DOMINATION:</span>
+                            <p className="text-sm text-white/90 font-medium leading-relaxed mt-1">{transformation.domination}</p>
+                          </div>
+                        </div>
+
+                        {/* What This Means For You */}
+                        <div className="bg-gradient-to-r from-red-600/15 via-red-600/10 to-red-600/15 border border-red-500/30 rounded-xl p-4 mb-6">
+                          <span className="text-red-400 text-xs font-bold uppercase tracking-wide">💡 WHAT THIS MEANS FOR YOU:</span>
+                          <p className="text-sm text-white/95 font-medium leading-relaxed mt-2">{transformation.meaningForYou}</p>
+                        </div>
+
+                        {/* Elite Psychological Triggers */}
+                        <div className="space-y-3 text-xs">
+                          {transformation.scarcity && (
+                            <div className="flex items-start space-x-2 text-amber-400">
+                              <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                              <span className="font-medium italic">{transformation.scarcity}</span>
+                            </div>
+                          )}
+                          {transformation.authority && (
+                            <div className="flex items-start space-x-2 text-emerald-400">
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                              <span className="font-medium italic">"{transformation.authority}"</span>
+                            </div>
+                          )}
+                          {transformation.socialProof && (
+                            <div className="flex items-start space-x-2 text-blue-400">
+                              <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                              <span className="font-medium italic">{transformation.socialProof}</span>
                             </div>
                           )}
                         </div>
-                      )}
-                    </div>
 
-                    {/* Story Structure */}
-                    <div className="space-y-3 mb-4">
-                      <div className="bg-red-600/10 border-l-2 border-red-600/50 pl-3 py-2">
-                        <span className="text-red-400 text-xs font-semibold uppercase tracking-wide">🚨 THE CRISIS:</span>
-                        <p className="text-sm text-white/80 font-light leading-relaxed mt-1">{transformation.crisis}</p>
-                      </div>
-                      
-                      <div className="bg-black/20 border-l-2 border-amber-600/50 pl-3 py-2">
-                        <span className="text-amber-400 text-xs font-semibold uppercase tracking-wide">⚡ THE BREAKTHROUGH:</span>
-                        <p className="text-sm text-white/80 font-light leading-relaxed mt-1">{transformation.breakthrough}</p>
-                      </div>
-                      
-                      <div className="bg-emerald-600/10 border-l-2 border-emerald-600/50 pl-3 py-2">
-                        <span className="text-emerald-400 text-xs font-semibold uppercase tracking-wide">👑 THE DOMINATION:</span>
-                        <p className="text-sm text-white/80 font-light leading-relaxed mt-1">{transformation.domination}</p>
+                        {/* Elite Corner Accents */}
+                        <div className="absolute top-6 left-6 w-8 h-8 border-l-2 border-t-2 border-red-500/40 group-hover:border-red-400 transition-colors duration-300" />
+                        <div className="absolute top-6 right-6 w-8 h-8 border-r-2 border-t-2 border-red-500/40 group-hover:border-red-400 transition-colors duration-300" />
+                        <div className="absolute bottom-6 left-6 w-8 h-8 border-l-2 border-b-2 border-red-500/40 group-hover:border-red-400 transition-colors duration-300" />
+                        <div className="absolute bottom-6 right-6 w-8 h-8 border-r-2 border-b-2 border-red-500/40 group-hover:border-red-400 transition-colors duration-300" />
                       </div>
                     </div>
+                  );
+                })}
+              </div>
+            </div>
 
-                    {/* What This Means For You */}
-                    <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-3 mb-4">
-                      <span className="text-red-400 text-xs font-semibold uppercase tracking-wide">WHAT THIS MEANS FOR YOU:</span>
-                      <p className="text-sm text-white/90 font-light leading-relaxed mt-1">{transformation.meaningForYou}</p>
-                    </div>
+            {/* AUTHORITY PROOF - Standard Treatment */}
+            <div className="space-y-8">
+              <div className="text-center">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+                  <span className="bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">AUTHORITY</span> PROOF
+                </h2>
+                <p className="text-white/70 text-lg">Major verticals • Specific business challenges • Clear ROI demonstration</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredTransformations.filter(t => t.tier === 'authority').map((transformation) => {
+                  const tierConfig = getTierConfig(transformation.tier);
+                  const IconComponent = tierConfig.icon;
+                  const isVisible = visibleCards.has(transformation.id);
 
-                    {/* Psychological Triggers (for flagship cards) */}
-                    {transformation.tier === 'flagship' && (
-                      <div className="space-y-2 text-xs">
-                        {transformation.scarcity && (
-                          <div className="flex items-center space-x-2 text-amber-400">
-                            <div className="w-1 h-1 bg-amber-400 rounded-full"></div>
-                            <span className="font-light italic">{transformation.scarcity}</span>
+                  return (
+                    <div
+                      key={transformation.id}
+                      id={transformation.id}
+                      ref={el => cardRefs.current[transformation.id] = el}
+                      className={`relative group cursor-pointer transition-all duration-500 ${tierConfig.size} ${
+                        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                      }`}
+                    >
+                      <div className={`relative bg-black/50 backdrop-blur-sm border ${tierConfig.border} ${tierConfig.glow} rounded-2xl p-6 hover:border-amber-500/60 transition-all duration-300 h-full`}>
+                        {/* Tier Badge */}
+                        <div className={`inline-flex items-center space-x-2 ${tierConfig.badgeColor} text-white text-xs font-medium px-3 py-1 rounded-full mb-4`}>
+                          <IconComponent className="w-3 h-3" />
+                          <span>{tierConfig.badge}</span>
+                        </div>
+
+                        {/* Header */}
+                        <div className="mb-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="bg-amber-600/20 text-amber-400 text-xs font-medium px-2 py-1 rounded-full">
+                              {transformation.industry}
+                            </span>
+                            <span className="text-white/60 text-xs font-light">
+                              {transformation.timeline}
+                            </span>
                           </div>
-                        )}
+                          <h3 className="text-lg font-bold text-white group-hover:text-amber-400 transition-colors duration-300 mb-1 leading-tight">
+                            {transformation.title}
+                          </h3>
+                          <p className="text-sm text-white/70 font-light">
+                            {transformation.company}
+                          </p>
+                        </div>
+
+                        {/* Metrics */}
+                        <div className="mb-4 bg-black/20 rounded-lg p-4">
+                          <div className="flex justify-between">
+                            <div className="text-center">
+                              <div className="text-lg font-bold text-amber-600">{transformation.metrics.primary}</div>
+                              <div className="text-xs text-white/60 font-light">Impact</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-lg font-bold text-amber-600">{transformation.metrics.secondary}</div>
+                              <div className="text-xs text-white/60 font-light">Growth</div>
+                            </div>
+                            {transformation.metrics.tertiary && (
+                              <div className="text-center">
+                                <div className="text-lg font-bold text-amber-600">{transformation.metrics.tertiary}</div>
+                                <div className="text-xs text-white/60 font-light">Before</div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Story Structure */}
+                        <div className="space-y-3 mb-4">
+                          <div className="bg-red-600/10 border-l-2 border-red-600/50 pl-3 py-2">
+                            <span className="text-red-400 text-xs font-semibold uppercase tracking-wide">🚨 CRISIS:</span>
+                            <p className="text-sm text-white/80 font-light leading-relaxed mt-1">{transformation.crisis}</p>
+                          </div>
+                          
+                          <div className="bg-black/20 border-l-2 border-amber-600/50 pl-3 py-2">
+                            <span className="text-amber-400 text-xs font-semibold uppercase tracking-wide">⚡ BREAKTHROUGH:</span>
+                            <p className="text-sm text-white/80 font-light leading-relaxed mt-1">{transformation.breakthrough}</p>
+                          </div>
+                          
+                          <div className="bg-emerald-600/10 border-l-2 border-emerald-600/50 pl-3 py-2">
+                            <span className="text-emerald-400 text-xs font-semibold uppercase tracking-wide">👑 DOMINATION:</span>
+                            <p className="text-sm text-white/80 font-light leading-relaxed mt-1">{transformation.domination}</p>
+                          </div>
+                        </div>
+
+                        {/* What This Means For You */}
+                        <div className="bg-amber-600/10 border border-amber-600/20 rounded-lg p-3 mb-4">
+                          <span className="text-amber-400 text-xs font-semibold uppercase tracking-wide">WHAT THIS MEANS FOR YOU:</span>
+                          <p className="text-sm text-white/90 font-light leading-relaxed mt-1">{transformation.meaningForYou}</p>
+                        </div>
+
+                        {/* Authority Quote */}
                         {transformation.authority && (
-                          <div className="flex items-center space-x-2 text-emerald-400">
-                            <div className="w-1 h-1 bg-emerald-400 rounded-full"></div>
-                            <span className="font-light italic">"{transformation.authority}"</span>
-                          </div>
-                        )}
-                        {transformation.socialProof && (
-                          <div className="flex items-center space-x-2 text-blue-400">
-                            <div className="w-1 h-1 bg-blue-400 rounded-full"></div>
-                            <span className="font-light italic">{transformation.socialProof}</span>
+                          <div className="border-l-2 border-amber-600/30 pl-3 text-xs text-white/70 italic">
+                            "{transformation.authority}"
                           </div>
                         )}
                       </div>
-                    )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
 
-                    {/* Authority Quote (for authority cards) */}
-                    {transformation.tier === 'authority' && transformation.authority && (
-                      <div className="border-l-2 border-amber-600/30 pl-3 text-xs text-white/70 italic">
-                        "{transformation.authority}"
+            {/* SPEED WINS - Compact Treatment */}
+            <div className="space-y-8">
+              <div className="text-center">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+                  <span className="bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">SPEED</span> WINS
+                </h2>
+                <p className="text-white/70 text-lg">Fastest implementations • Quick turnarounds • Immediate impact stories</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredTransformations.filter(t => t.tier === 'proof').map((transformation) => {
+                  const tierConfig = getTierConfig(transformation.tier);
+                  const IconComponent = tierConfig.icon;
+                  const isVisible = visibleCards.has(transformation.id);
+
+                  return (
+                    <div
+                      key={transformation.id}
+                      id={transformation.id}
+                      ref={el => cardRefs.current[transformation.id] = el}
+                      className={`relative group cursor-pointer transition-all duration-500 ${tierConfig.size} ${
+                        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                      }`}
+                    >
+                      <div className={`relative bg-black/40 backdrop-blur-sm border ${tierConfig.border} ${tierConfig.glow} rounded-xl p-5 hover:border-emerald-500/60 transition-all duration-300 h-full`}>
+                        {/* Tier Badge */}
+                        <div className={`inline-flex items-center space-x-2 ${tierConfig.badgeColor} text-white text-xs font-medium px-3 py-1 rounded-full mb-3`}>
+                          <IconComponent className="w-3 h-3" />
+                          <span>{tierConfig.badge}</span>
+                        </div>
+
+                        {/* Header */}
+                        <div className="mb-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="bg-emerald-600/20 text-emerald-400 text-xs font-medium px-2 py-1 rounded-full">
+                              {transformation.industry}
+                            </span>
+                            <span className="text-white/60 text-xs font-light bg-emerald-600/10 px-2 py-1 rounded-full">
+                              {transformation.timeline}
+                            </span>
+                          </div>
+                          <h3 className="text-base font-bold text-white group-hover:text-emerald-400 transition-colors duration-300 mb-1 leading-tight">
+                            {transformation.title}
+                          </h3>
+                          <p className="text-sm text-white/70 font-light">
+                            {transformation.company}
+                          </p>
+                        </div>
+
+                        {/* Compact Metrics */}
+                        <div className="mb-3 bg-black/20 rounded-lg p-3">
+                          <div className="text-center">
+                            <div className="text-2xl font-bold text-emerald-600">{transformation.metrics.primary}</div>
+                            <div className="text-xs text-white/60 font-light">Speed Improvement</div>
+                          </div>
+                        </div>
+
+                        {/* Compact Story */}
+                        <div className="space-y-2 mb-3">
+                          <div className="text-xs">
+                            <span className="text-red-400 font-semibold">CRISIS:</span>
+                            <span className="text-white/80 ml-1">{transformation.crisis.substring(0, 60)}...</span>
+                          </div>
+                          <div className="text-xs">
+                            <span className="text-emerald-400 font-semibold">RESULT:</span>
+                            <span className="text-white/80 ml-1">{transformation.domination.substring(0, 60)}...</span>
+                          </div>
+                        </div>
+
+                        {/* Urgency */}
+                        <div className="bg-emerald-600/10 border border-emerald-600/20 rounded-lg p-2 text-xs text-emerald-400">
+                          <Clock className="w-3 h-3 inline mr-1" />
+                          Similar transformation available - 2 Q1 spots remaining
+                        </div>
                       </div>
-                    )}
-
-                    {/* Urgency for Speed Wins */}
-                    {transformation.tier === 'proof' && (
-                      <div className="bg-emerald-600/10 border border-emerald-600/20 rounded-lg p-2 text-xs text-emerald-400">
-                        <Clock className="w-3 h-3 inline mr-1" />
-                        Similar transformation available - 2 Q1 spots remaining
-                      </div>
-                    )}
-
-                    {/* Hover Effect */}
-                    <div 
-                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                      style={{
-                        background: `radial-gradient(circle at center, rgba(239, 68, 68, 0.05) 0%, transparent 70%)`,
-                        filter: 'blur(15px)'
-                      }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           {/* Progressive CTA Strategy */}
-          <div className="text-center mb-8">
-            <button className="group bg-black/40 backdrop-blur-sm border border-red-600/30 text-red-400 px-8 py-3 rounded-full font-light hover:bg-red-600/10 transition-all duration-300 flex items-center space-x-2 mx-auto">
-              <span>Which Result Interests You Most?</span>
-              <TrendingUp className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+          <div className="text-center mb-12">
+            <button className="group bg-black/60 backdrop-blur-sm border border-red-600/40 text-red-400 px-10 py-4 rounded-full font-medium hover:bg-red-600/10 transition-all duration-300 flex items-center space-x-3 mx-auto shadow-xl">
+              <span className="text-lg">Which Result Interests You Most?</span>
+              <TrendingUp className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
             </button>
           </div>
 
-          {/* Hormozi Power CTA */}
-          <div ref={ctaRef} className="mt-20 text-center">
-            <div className="bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-3xl p-8 lg:p-12 max-w-5xl mx-auto relative overflow-hidden">
-              {/* Background Pattern */}
-              <div className="absolute inset-0 opacity-5">
-                <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-transparent to-red-600/20"></div>
+          {/* Elite Hormozi Power CTA */}
+          <div ref={ctaRef} className="mt-24">
+            <div className="bg-gradient-to-br from-black/80 via-black/60 to-black/80 backdrop-blur-xl border-2 border-red-500/40 rounded-3xl p-12 lg:p-16 max-w-6xl mx-auto relative overflow-hidden shadow-2xl shadow-red-500/20">
+              {/* Elite Background Pattern */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute inset-0 bg-gradient-to-br from-red-600/30 via-transparent to-red-600/30"></div>
+                <div className="absolute inset-0" style={{
+                  backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(239, 68, 68, 0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(239, 68, 68, 0.1) 0%, transparent 50%)'
+                }}></div>
               </div>
               
-              <div className="relative z-10">
+              <div className="relative z-10 text-center">
                 {/* Power Headline */}
-                <h2 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                <h2 className="text-5xl lg:text-7xl font-black text-white mb-8 leading-tight">
                   STOP LEAVING{' '}
-                  <span className="text-red-400">$MILLIONS</span>{' '}
+                  <span className="bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">$MILLIONS</span>{' '}
                   ON THE TABLE
                 </h2>
                 
                 {/* Social Proof */}
-                <div className="bg-red-600/20 border border-red-600/30 rounded-xl p-6 mb-8">
-                  <p className="text-xl font-light text-white mb-4">
+                <div className="bg-gradient-to-r from-red-600/20 via-red-600/30 to-red-600/20 border border-red-500/40 rounded-2xl p-8 mb-10 shadow-xl">
+                  <p className="text-2xl lg:text-3xl font-medium text-white mb-4">
                     In the past 18 months, these transformations revealed{' '}
-                    <span className="font-bold text-red-400">$127M+</span> in missed opportunities.
+                    <span className="font-black text-red-400">$127M+</span> in missed opportunities.
                   </p>
-                  <p className="text-lg font-extralight text-white/80">
+                  <p className="text-xl font-light text-white/90">
                     Your competitors are making the same mistakes these companies were.
                   </p>
                 </div>
                 
                 {/* Value Proposition */}
-                <p className="text-xl font-light text-white mb-8 leading-relaxed">
+                <p className="text-2xl lg:text-3xl font-light text-white mb-10 leading-relaxed">
                   Get your <span className="font-bold text-red-400">FREE Vision Gap Analysis</span> and discover what you're missing:
                 </p>
                 
-                {/* CTA Button */}
-                <button className="group bg-gradient-to-r from-red-600 to-red-700 text-white px-12 py-6 rounded-full font-bold text-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center space-x-4 mx-auto mb-6 shadow-2xl shadow-red-600/25">
-                  <span>REVEAL MY HIDDEN OPPORTUNITIES</span>
-                  <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
+                {/* Elite CTA Button */}
+                <button className="group relative bg-gradient-to-r from-red-600 via-red-700 to-red-800 text-white px-16 py-8 rounded-2xl font-black text-2xl lg:text-3xl transition-all duration-500 flex items-center space-x-4 mx-auto mb-8 shadow-2xl shadow-red-600/40 hover:shadow-red-600/60 hover:scale-105 overflow-hidden">
+                  {/* Button glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-red-600 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <span className="relative z-10">REVEAL MY HIDDEN OPPORTUNITIES</span>
+                  <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform duration-300 relative z-10" />
                 </button>
                 
                 {/* Subtext */}
-                <p className="text-sm font-light text-white/70 mb-8">
+                <p className="text-lg font-medium text-white/80 mb-10">
                   "Takes 90 seconds. Shows 7-8 figure potential."
                 </p>
                 
                 {/* Urgency & Risk Reversal */}
-                <div className="space-y-4 text-sm font-light text-white/80">
-                  <div className="flex items-center justify-center space-x-2">
-                    <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div>
+                <div className="space-y-4 text-base font-medium text-white/90">
+                  <div className="flex items-center justify-center space-x-3">
+                    <div className="w-3 h-3 bg-amber-500 rounded-full animate-pulse"></div>
                     <span className="italic">We only accept 3 new Vision Elevation clients per quarter. Current spots filling for Q1 2026.</span>
                   </div>
-                  <div className="flex items-center justify-center space-x-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                  <div className="flex items-center justify-center space-x-3">
+                    <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
                     <span className="italic">If we don't identify at least $500K in new opportunities, the analysis is free.</span>
                   </div>
                 </div>
@@ -836,8 +1023,8 @@ export default function Portfolio() {
       <div className={`fixed bottom-0 left-0 right-0 z-50 md:hidden transition-transform duration-300 ${
         showCTA ? 'translate-y-full' : 'translate-y-0'
       }`}>
-        <div className="bg-black/90 backdrop-blur-sm border-t border-red-600/30 p-4">
-          <button className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 rounded-full font-bold text-lg flex items-center justify-center space-x-2">
+        <div className="bg-black/95 backdrop-blur-xl border-t border-red-600/40 p-4 shadow-2xl">
+          <button className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-5 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 shadow-xl">
             <span>REVEAL MY OPPORTUNITIES</span>
             <ArrowRight className="w-5 h-5" />
           </button>
