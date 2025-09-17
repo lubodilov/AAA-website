@@ -5,6 +5,7 @@ export default function TransformationProcess() {
   const [animationStates, setAnimationStates] = useState([false, false, false]);
   const [sectionVisible, setSectionVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const internalScrollRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Check for reduced motion preference
@@ -57,18 +58,23 @@ export default function TransformationProcess() {
     if (!sectionVisible) return;
 
     const handleScroll = () => {
-      const viewportCenter = window.innerHeight / 2;
+      if (!internalScrollRef.current) return;
+      
+      const containerRect = internalScrollRef.current.getBoundingClientRect();
+      const viewportCenter = internalScrollRef.current.clientHeight / 2;
       let closestSlide = 0;
       let minDistance = Infinity;
       
       slideRefs.current.forEach((slideRef, index) => {
         if (slideRef) {
           const rect = slideRef.getBoundingClientRect();
-          const slideCenter = rect.top + rect.height / 2;
+          const slideTopRelativeToContainer = rect.top - containerRect.top;
+          const slideCenter = slideTopRelativeToContainer + rect.height / 2;
           const distance = Math.abs(slideCenter - viewportCenter);
           
           // Only consider slides that are at least partially visible
-          const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+          const isVisible = slideTopRelativeToContainer < internalScrollRef.current!.clientHeight && 
+                           slideTopRelativeToContainer + rect.height > 0;
           
           console.log(`Slide ${index} (${slides[index].phase}): center=${slideCenter.toFixed(0)}, distance=${distance.toFixed(0)}, visible=${isVisible}`);
           
@@ -89,12 +95,18 @@ export default function TransformationProcess() {
     };
 
     // Add scroll listener
-    window.addEventListener('scroll', handleScroll);
+    if (internalScrollRef.current) {
+      internalScrollRef.current.addEventListener('scroll', handleScroll);
+    }
     
     // Initial check
     handleScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      if (internalScrollRef.current) {
+        internalScrollRef.current.removeEventListener('scroll', handleScroll);
+      }
+    };
   }, [sectionVisible, slides]);
 
   // Trigger animation for current slide if it hasn't animated yet
@@ -356,7 +368,7 @@ export default function TransformationProcess() {
   return (
     <section ref={containerRef} className="relative">
       {/* Process Slides Container with Snap */}
-      <div className="snap-y snap-mandatory overflow-y-auto h-screen">
+      <div ref={internalScrollRef} className="snap-y snap-mandatory overflow-y-auto h-screen">
         {slides.map((slide, index) => (
           <div
             key={index}
