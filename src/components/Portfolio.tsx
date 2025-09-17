@@ -205,163 +205,113 @@ export default function Portfolio() {
               See how we've elevated business vision for companies facing acquisition bottlenecks, 
               operational inefficiencies, and growth constraints.
             </p>
-
-            {/* Metrics Bar */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
-                <div className="text-3xl lg:text-4xl font-bold text-red-600 mb-2">23</div>
-                <div className="text-white/70 font-light">Businesses Transformed</div>
-              </div>
-              <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
-                <div className="text-3xl lg:text-4xl font-bold text-red-600 mb-2">$47M+</div>
-                <div className="text-white/70 font-light">Revenue Unlocked</div>
-              </div>
-              <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
-                <div className="text-3xl lg:text-4xl font-bold text-red-600 mb-2">1,247</div>
-                <div className="text-white/70 font-light">Hours Weekly Executive Time Reclaimed</div>
-              </div>
-            </div>
           </div>
 
-          {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {categories.map((category) => {
-              const Icon = category.icon;
-              return (
-                <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`flex items-center space-x-2 px-6 py-3 rounded-full border transition-all duration-300 ${
-                    selectedCategory === category.id
-                      ? 'bg-red-600/20 border-red-600/50 text-white'
-                      : 'bg-black/30 border-white/10 text-white/70 hover:border-red-600/30 hover:text-white'
-                  }`}
+          {/* Moving Cards Section */}
+          <div className="relative overflow-hidden">
+            {/* First Row - Moving Right */}
+            <div className="flex space-x-6 mb-8 animate-move-across">
+              {transformations.concat(transformations).map((transformation, index) => (
+                <div
+                  key={`right-${transformation.id}-${index}`}
+                  className="flex-shrink-0 w-80 bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-red-600/30 transition-all duration-300 group cursor-pointer"
+                  onClick={() => setHoveredCard(transformation.id)}
                 >
-                  <Icon className="w-4 h-4" />
-                  <span className="font-light">{category.name}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Category Title */}
-          <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-light text-white mb-4">
-              Problem Category: "{getCategoryTitle(selectedCategory)}"
-            </h2>
-          </div>
-
-          {/* Transformations Grid */}
-          <div className="space-y-8">
-            {filteredTransformations.map((transformation, index) => (
-              <div
-                key={transformation.id}
-                id={transformation.id}
-                ref={el => cardRefs.current[transformation.id] = el}
-                className="group relative"
-                onMouseEnter={() => setHoveredCard(transformation.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-                style={{
-                  opacity: visibleCards.has(transformation.id) ? 1 : 0,
-                  transform: visibleCards.has(transformation.id) ? 'translateY(0)' : 'translateY(40px)',
-                  transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                  transitionDelay: `${index * 0.1}s`
-                }}
-              >
-                {/* Transformation Card */}
-                <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-3xl p-8 lg:p-12 hover:border-red-600/30 transition-all duration-500 group-hover:bg-black/40">
-                  {/* Header */}
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8">
-                    <div className="mb-4 lg:mb-0">
-                      <div className="flex items-center space-x-4 mb-3">
-                        <span className="bg-red-600/20 text-red-400 text-sm font-medium px-3 py-1 rounded-full">
-                          TRANSFORMATION {index + 1}
-                        </span>
-                        <span className="text-white/60 text-sm font-light">
-                          {transformation.industry} • {transformation.timeline}
-                        </span>
-                      </div>
-                      <h3 className="text-2xl lg:text-3xl font-light text-white group-hover:text-red-400 transition-colors duration-300">
-                        {transformation.title}
-                      </h3>
+                  {/* Card Header */}
+                  <div className="mb-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="bg-red-600/20 text-red-400 text-xs font-medium px-2 py-1 rounded-full">
+                        {transformation.industry}
+                      </span>
+                      <span className="text-white/60 text-xs font-light">
+                        {transformation.timeline}
+                      </span>
                     </div>
-                    
-                    {/* Key Metrics */}
-                    <div className="flex space-x-6">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-red-600">{transformation.metrics.primary}</div>
-                        <div className="text-xs text-white/60 font-light">Primary Impact</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-red-600">{transformation.metrics.secondary}</div>
-                        <div className="text-xs text-white/60 font-light">Secondary Gain</div>
-                      </div>
-                      {transformation.metrics.tertiary && (
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-red-600">{transformation.metrics.tertiary}</div>
-                          <div className="text-xs text-white/60 font-light">Efficiency</div>
-                        </div>
-                      )}
+                    <h3 className="text-lg font-light text-white group-hover:text-red-400 transition-colors duration-300 mb-2">
+                      {transformation.title}
+                    </h3>
+                  </div>
+
+                  {/* Key Metrics */}
+                  <div className="flex justify-between mb-4">
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-red-600">{transformation.metrics.primary}</div>
+                      <div className="text-xs text-white/60 font-light">Impact</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-red-600">{transformation.metrics.secondary}</div>
+                      <div className="text-xs text-white/60 font-light">Growth</div>
                     </div>
                   </div>
 
-                  {/* Problem-Solution Flow */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Left Column - Problem */}
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="text-white font-medium mb-3 uppercase tracking-wider text-sm">Business Challenge</h4>
-                        <p className="text-white/90 font-light leading-relaxed">
-                          {transformation.businessChallenge}
-                        </p>
-                      </div>
-                      
-                      <div>
-                        <h4 className="text-white/90 font-medium mb-3 uppercase tracking-wider text-sm">Hidden Opportunity</h4>
-                        <p className="text-white/90 font-light leading-relaxed">
-                          {transformation.hiddenOpportunity}
-                        </p>
-                      </div>
-                    </div>
+                  {/* Brief Description */}
+                  <p className="text-sm text-white/80 font-light leading-relaxed line-clamp-3">
+                    {transformation.businessImpact}
+                  </p>
 
-                    {/* Right Column - Solution */}
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="text-white/90 font-medium mb-3 uppercase tracking-wider text-sm">Vision Solution</h4>
-                        <p className="text-white/90 font-light leading-relaxed">
-                          {transformation.visionSolution}
-                        </p>
-                      </div>
-                      
-                      <div>
-                        <h4 className="text-white/90 font-medium mb-3 uppercase tracking-wider text-sm">Business Impact</h4>
-                        <p className="text-white/90 font-light leading-relaxed">
-                          <span className="text-red-600 font-medium">{transformation.businessImpact.split(',')[0]}</span>
-                          {transformation.businessImpact.includes(',') ? ',' + transformation.businessImpact.split(',').slice(1).join(',') : ''}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Executive Outcome */}
-                  <div className="mt-8 pt-6 border-t border-white/10">
-                    <h4 className="text-white/90 font-medium mb-3 uppercase tracking-wider text-sm">Executive Outcome</h4>
-                    <p className="text-white/90 font-light leading-relaxed">
-                      {transformation.executiveOutcome}
-                    </p>
-                  </div>
-
-                  {/* Hover Effect Overlay */}
+                  {/* Hover Effect */}
                   <div 
-                    className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                     style={{
                       background: `radial-gradient(circle at center, rgba(239, 68, 68, 0.05) 0%, transparent 70%)`,
-                      filter: 'blur(20px)'
+                      filter: 'blur(15px)'
                     }}
                   />
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            {/* Second Row - Moving Left */}
+            <div className="flex space-x-6 animate-move-across-reverse">
+              {transformations.slice().reverse().concat(transformations.slice().reverse()).map((transformation, index) => (
+                <div
+                  key={`left-${transformation.id}-${index}`}
+                  className="flex-shrink-0 w-80 bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-red-600/30 transition-all duration-300 group cursor-pointer"
+                  onClick={() => setHoveredCard(transformation.id)}
+                >
+                  {/* Card Header */}
+                  <div className="mb-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="bg-red-600/20 text-red-400 text-xs font-medium px-2 py-1 rounded-full">
+                        {transformation.industry}
+                      </span>
+                      <span className="text-white/60 text-xs font-light">
+                        {transformation.timeline}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-light text-white group-hover:text-red-400 transition-colors duration-300 mb-2">
+                      {transformation.title}
+                    </h3>
+                  </div>
+
+                  {/* Key Metrics */}
+                  <div className="flex justify-between mb-4">
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-red-600">{transformation.metrics.primary}</div>
+                      <div className="text-xs text-white/60 font-light">Impact</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-red-600">{transformation.metrics.secondary}</div>
+                      <div className="text-xs text-white/60 font-light">Growth</div>
+                    </div>
+                  </div>
+
+                  {/* Brief Description */}
+                  <p className="text-sm text-white/80 font-light leading-relaxed line-clamp-3">
+                    {transformation.businessImpact}
+                  </p>
+
+                  {/* Hover Effect */}
+                  <div 
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    style={{
+                      background: `radial-gradient(circle at center, rgba(239, 68, 68, 0.05) 0%, transparent 70%)`,
+                      filter: 'blur(15px)'
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Strategic CTA */}
