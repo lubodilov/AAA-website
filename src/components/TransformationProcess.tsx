@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 
 export default function TransformationProcess() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [animationStates, setAnimationStates] = useState([true, false, false]);
+  const [animationStates, setAnimationStates] = useState([true, true, true]);
+  const [hasAnimated, setHasAnimated] = useState([false, false, false]);
   const [sectionVisible, setSectionVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -99,13 +100,34 @@ export default function TransformationProcess() {
 
   // Update animation states when currentSlide changes
   useEffect(() => {
-    if (sectionVisible) {
-      console.log(`✨ Animation triggered for slide ${currentSlide}: ${slides[currentSlide].phase}`);
-      const newStates = [false, false, false];
-      newStates[currentSlide] = true;
-      setAnimationStates(newStates);
+    if (sectionVisible && !hasAnimated[currentSlide]) {
+      console.log(`✨ First-time animation triggered for slide ${currentSlide}: ${slides[currentSlide].phase}`);
+      
+      // Mark this slide as having been animated
+      setHasAnimated(prev => {
+        const newHasAnimated = [...prev];
+        newHasAnimated[currentSlide] = true;
+        return newHasAnimated;
+      });
+      
+      // Trigger animation for current slide
+      setAnimationStates(prev => {
+        const newStates = [...prev];
+        newStates[currentSlide] = false; // Start animation (false = start, true = end)
+        
+        // After animation completes, set to true (animated state)
+        setTimeout(() => {
+          setAnimationStates(current => {
+            const finalStates = [...current];
+            finalStates[currentSlide] = true;
+            return finalStates;
+          });
+        }, 100); // Small delay to ensure animation starts
+        
+        return newStates;
+      });
     }
-  }, [currentSlide, sectionVisible, slides]);
+  }, [currentSlide, sectionVisible, hasAnimated]);
 
   // Animated SVG Icons
   const EyeIcon = ({ isAnimated }: { isAnimated: boolean }) => (
@@ -471,10 +493,9 @@ export default function TransformationProcess() {
                 <div className="md:col-span-2 space-y-6">
                   <div
                     style={{
-                      opacity: animationStates[index] ? 1 : 0,
-                      transform: animationStates[index] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.98)',
+                      opacity: hasAnimated[index] ? 1 : 0,
+                      transform: hasAnimated[index] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.98)',
                       transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-                      transitionDelay: '1.0s'
                     }}
                   >
                     <h3 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white mb-4 leading-tight">
@@ -501,14 +522,13 @@ export default function TransformationProcess() {
                   <div 
                     className="w-48 h-48 flex items-center justify-center"
                     style={{
-                      opacity: animationStates[index] ? 1 : 0,
-                      transform: animationStates[index] ? 'scale(1) rotate(0deg)' : 'scale(0.85) rotate(-5deg)',
+                      opacity: hasAnimated[index] ? 1 : 0,
+                      transform: hasAnimated[index] ? 'scale(1) rotate(0deg)' : 'scale(0.85) rotate(-5deg)',
                       transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
-                      transitionDelay: '1.1s'
                     }}
                   >
                     <div className="text-red-400 w-full h-full flex items-center justify-center">
-                      {getIcon(slide.icon, animationStates[index])}
+                      {getIcon(slide.icon, hasAnimated[index])}
                     </div>
                   </div>
                 </div>
