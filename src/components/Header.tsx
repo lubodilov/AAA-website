@@ -1,15 +1,17 @@
+// src/components/Header.tsx
 import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Menu, X, HelpCircle } from 'lucide-react';
 
-export default function Header() {
+type HeaderProps = {
+  onOpenContact: () => void; // NEW
+};
+
+export default function Header({ onOpenContact }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -18,14 +20,25 @@ export default function Header() {
     { name: 'Services', href: '#services' },
     { name: 'About', href: '#about' },
     { name: 'Case Studies', href: '#cases' },
-    { name: 'Contact', href: '#contact' }
+    // Keep "Contact" for mobile list, but we'll intercept click to open popup:
+    { name: 'Contact', href: '#contact', isContact: true as const }
   ];
 
+  const handleMobileNavClick = (item: typeof navItems[number]) => (
+    e: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    if (item.isContact) {
+      e.preventDefault();
+      onOpenContact();
+    }
+    setIsMobileMenuOpen(false);
+  };
+
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled 
-          ? 'bg-black/90 backdrop-blur-md border-b border-red-600/20 shadow-lg shadow-red-600/5' 
+        isScrolled
+          ? 'bg-black/90 backdrop-blur-md border-b border-red-600/20 shadow-lg shadow-red-600/5'
           : 'bg-transparent'
       }`}
     >
@@ -44,11 +57,22 @@ export default function Header() {
               <span className="text-red-400 text-xs font-extralight tracking-wider uppercase">AI Solutions</span>
             </div>
           </div>
-          
-          {/* CTA Button */}
+
+          {/* Desktop CTAs */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* NEW: “?” contact icon button */}
+            <button
+              onClick={onOpenContact}
+              aria-label="Contact"
+              title="Contact"
+              className="h-10 w-10 rounded-full border border-white/20 bg-white/5 text-white flex items-center justify-center hover:bg-white/10 transition"
+            >
+              <HelpCircle className="w-5 h-5" />
+            </button>
+
+            {/* Existing “Get Started” */}
             <button className="group relative bg-transparent border border-gray-600 text-white px-6 py-2.5 rounded-full hover:border-red-600 transition-all duration-300 flex items-center space-x-2 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/10 to-red-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/10 to-red-600/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
               <span className="relative z-10 font-light">Get Started</span>
               <ArrowUpRight className="relative z-10 w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
             </button>
@@ -58,27 +82,43 @@ export default function Header() {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden text-white p-2 hover:bg-red-600/10 rounded-lg transition-colors duration-300"
+            aria-label="Menu"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
         {/* Mobile Menu */}
-        <div className={`md:hidden transition-all duration-300 overflow-hidden ${
-          isMobileMenuOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
-        }`}>
+        <div
+          className={`md:hidden transition-all duration-300 overflow-hidden ${
+            isMobileMenuOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
+          }`}
+        >
           <div className="bg-black/80 backdrop-blur-md rounded-xl border border-red-600/20 p-6 space-y-4">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 className="block text-gray-300 hover:text-white font-light py-2 transition-colors duration-300"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={handleMobileNavClick(item)}
               >
                 {item.name}
               </a>
             ))}
-            <button className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full font-light hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center justify-center space-x-2 mt-4">
+
+            {/* Mobile “?” contact button */}
+            <button
+              onClick={() => {
+                onOpenContact();
+                setIsMobileMenuOpen(false);
+              }}
+              className="w-full flex items-center justify-center gap-2 bg-white/5 border border-white/20 text-white px-6 py-3 rounded-full font-light hover:bg-white/10 transition-all duration-300"
+            >
+              <HelpCircle className="w-4 h-4" />
+              Contact
+            </button>
+
+            <button className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full font-light hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center justify-center space-x-2 mt-2">
               <span>Get Started</span>
               <ArrowUpRight className="w-4 h-4" />
             </button>

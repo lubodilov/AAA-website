@@ -5,189 +5,216 @@ import OpportunityStatement from './components/StrategicPositioning';
 import TransformationProcess from './components/TransformationProcess';
 import ProofOfDominance from './components/ProofOfDominance';
 import VisionAssessment from './components/VisionAssessment';
+import PortfolioProjects from './components/PortfolioProjects';
+import ContactForm from './components/ContactForm';
 
 function App() {
   const [currentSection, setCurrentSection] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [lastScrollTime, setLastScrollTime] = useState(0);
   const [scrollAccumulator, setScrollAccumulator] = useState(0);
+  const [contactOpen, setContactOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement | null>(null);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Check for reduced motion preference
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedMotion =
+    typeof window !== 'undefined' && 'matchMedia' in window
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false;
 
-  const sections = ['hero', 'strategic', 'transformation', 'proof', 'assessment'];
+  // Handle modal lock + ESC
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setContactOpen(false);
+    if (contactOpen) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', onKey);
+      setTimeout(() => panelRef.current?.focus(), 0);
+    } else {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    }
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [contactOpen]);
 
-  // Navigate to specific section
+  const sections = ['hero', 'strategic', 'transformation', 'proof', 'portfolio', 'assessment'];
+
   const navigateToSection = (targetSection: number) => {
     if (targetSection >= 0 && targetSection < sections.length && !isTransitioning) {
       setIsTransitioning(true);
       setLastScrollTime(Date.now());
       setCurrentSection(targetSection);
-      
+
       sectionRefs.current[targetSection]?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'start',
       });
 
-      // Reset transition lock
-      setTimeout(() => {
-        setIsTransitioning(false);
-      }, 1200);
+      setTimeout(() => setIsTransitioning(false), 1200);
     }
   };
 
-  // Section visibility observers
+  // Section observers
   useEffect(() => {
-    const observers = sectionRefs.current.map((sectionRef, index) => {
-      if (!sectionRef) return null;
-      
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-            setCurrentSection(index);
-          }
-        },
+    const observers = sectionRefs.current.map((ref, i) => {
+      if (!ref) return null;
+      const obs = new IntersectionObserver(
+        ([entry]) => entry.isIntersecting && entry.intersectionRatio > 0.6 && setCurrentSection(i),
         { threshold: 0.6 }
       );
-      
-      observer.observe(sectionRef);
-      return observer;
+      obs.observe(ref);
+      return obs;
     });
-
-    return () => {
-      observers.forEach(observer => observer?.disconnect());
-    };
+    return () => observers.forEach((o) => o?.disconnect());
   }, []);
 
-  // Global wheel navigation
+  // Scroll handler
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
+      if (contactOpen) return;
+
       const now = Date.now();
-      
-      // Ignore rapid scroll events
-      if (now - lastScrollTime < 150) {
+      if (now - lastScrollTime < 150 || isTransitioning || now - lastScrollTime < 300) {
         e.preventDefault();
         return;
       }
-      
-      // Don't handle if already transitioning
-      if (isTransitioning || now - lastScrollTime < 300) {
-        e.preventDefault();
-        return;
-      }
-      
-      // Check if we're in the transformation section (which has its own scroll handling)
+
       const transformationSection = sectionRefs.current[2];
       if (transformationSection) {
         const rect = transformationSection.getBoundingClientRect();
-        const isInTransformationSection = rect.top <= 100 && rect.bottom >= window.innerHeight - 100;
-        
-        // If we're in the transformation section, let it handle its own scrolling
-        if (isInTransformationSection && currentSection === 2) {
-          return;
-        }
+        const inTransformation =
+          rect.top <= 100 && rect.bottom >= window.innerHeight - 100;
+        if (inTransformation && currentSection === 2) return;
       }
-      
-      // Prevent default scroll behavior for section navigation
+
       e.preventDefault();
-      
-      // Accumulate scroll delta
-      const newAccumulator = scrollAccumulator + Math.abs(e.deltaY);
-      setScrollAccumulator(newAccumulator);
-      
-      // Require moderate scroll distance before navigating
-      const scrollThreshold = 30;
-      
-      if (newAccumulator < scrollThreshold) {
+      const newAcc = scrollAccumulator + Math.abs(e.deltaY);
+      setScrollAccumulator(newAcc);
+
+      if (newAcc < 30) {
         setLastScrollTime(now);
         return;
       }
-      
-      // Reset accumulator after successful navigation
       setScrollAccumulator(0);
-      
-      const direction = e.deltaY > 0 ? 1 : -1;
-      const targetSection = currentSection + direction;
-      
-      // Navigate to next/previous section if within bounds
-      if (targetSection >= 0 && targetSection < sections.length) {
+
+      const dir = e.deltaY > 0 ? 1 : -1;
+      const target = currentSection + dir;
+      if (target >= 0 && target < sections.length) {
         setLastScrollTime(now);
-        navigateToSection(targetSection);
+        navigateToSection(target);
       }
     };
 
-    // Reset scroll accumulator when not scrolling
-    const resetAccumulator = () => {
+    const reset = () => {
       const now = Date.now();
-      if (now - lastScrollTime > 400) {
-        setScrollAccumulator(0);
-      }
+      if (now - lastScrollTime > 400) setScrollAccumulator(0);
     };
 
-    const resetInterval = setInterval(resetAccumulator, 200);
+    const interval = setInterval(reset, 200);
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => {
       window.removeEventListener('wheel', handleWheel);
-      clearInterval(resetInterval);
+      clearInterval(interval);
     };
-  }, [currentSection, isTransitioning, lastScrollTime, scrollAccumulator]);
+  }, [currentSection, isTransitioning, lastScrollTime, scrollAccumulator, contactOpen]);
+
+  const onBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) setContactOpen(false);
+  };
 
   return (
     <div className="bg-black min-h-screen overflow-hidden smooth-scroll">
-      {/* Fixed Video Background */}
+      {/* Video Background */}
       <div className="fixed inset-0 z-0">
         <video
           autoPlay
           loop
           muted
           playsInline
+          poster="/hero_poster.jpg"
           className="absolute inset-0 w-full h-full object-cover"
-          preload="auto"
+          preload="metadata"
           disablePictureInPicture
           controlsList="nodownload nofullscreen noremoteplayback"
         >
           <source src="/hero_animation.mp4" type="video/mp4" />
-          <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
         </video>
+        <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-black via-gray-900/80 to-black" />
       </div>
-      
-      <Header />
-      
-      <div 
-        ref={el => sectionRefs.current[0] = el}
-        className="snap-start"
-      >
+
+      <Header onOpenContact={() => setContactOpen(true)} />
+
+      <div ref={(el) => (sectionRefs.current[0] = el)} className="snap-start">
         <Hero />
       </div>
-      
-      <div 
-        ref={el => sectionRefs.current[1] = el}
-        className="snap-start"
-      >
+      <div ref={(el) => (sectionRefs.current[1] = el)} className="snap-start">
         <OpportunityStatement />
       </div>
-      
-      <div 
-        ref={el => sectionRefs.current[2] = el}
-        className="snap-start"
-      >
+      <div ref={(el) => (sectionRefs.current[2] = el)} className="snap-start">
         <TransformationProcess />
       </div>
-      
-      <div 
-        ref={el => sectionRefs.current[3] = el}
-        className="snap-start"
-      >
+      <div ref={(el) => (sectionRefs.current[3] = el)} className="snap-start">
         <ProofOfDominance />
       </div>
-      
-      <div 
-        ref={el => sectionRefs.current[4] = el}
-        className="snap-start"
-      >
+      <div ref={(el) => (sectionRefs.current[4] = el)} className="snap-start">
+        <PortfolioProjects />
+      </div>
+      <div ref={(el) => (sectionRefs.current[5] = el)} className="snap-start">
         <VisionAssessment />
       </div>
+
+      {/* Contact Popup */}
+   {contactOpen && (
+  <div
+    onMouseDown={onBackdrop}
+    className="fixed inset-0 z-[100] backdrop-blur-[6px] flex items-center justify-center p-4"
+    aria-modal="true"
+    role="dialog"
+    aria-label="Contact"
+  >
+    {/* Spotlight / vignette layer */}
+    <div
+      className="absolute inset-0 pointer-events-none animate-spotlight"
+      style={{
+        // Tune the gradient stops & opacities here (see notes below)
+        background:
+          'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.0) 22%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.88) 100%)'
+      }}
+    />
+
+    {/* Optional base dim (lighter than before because vignette does the heavy lifting) */}
+    <div className="absolute inset-0 bg-black/40" />
+
+    <div
+      ref={panelRef}
+      tabIndex={-1}
+      className="relative w-full max-w-2xl max-h-[90vh] outline-none flex flex-col animate-panel"
+    >
+      <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col flex-1 overflow-hidden">
+        {/* Header bar */}
+        <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
+          <h3 className="text-white text-lg font-light">Contact</h3>
+          <button
+            onClick={() => setContactOpen(false)}
+            className="text-white/70 hover:text-white transition"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+
+        {/* Scrollable body */}
+        <div className="p-6 overflow-y-auto">
+          <ContactForm />
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+
     </div>
   );
 }
