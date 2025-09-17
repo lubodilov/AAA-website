@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 export default function TransformationProcess() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [animationStates, setAnimationStates] = useState([true, false, false]);
+  const [animationStates, setAnimationStates] = useState([false, false, false]);
   const [sectionVisible, setSectionVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -97,15 +97,17 @@ export default function TransformationProcess() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [sectionVisible, slides]);
 
-  // Update animation states when currentSlide changes
+  // Trigger animation for current slide if it hasn't animated yet
   useEffect(() => {
-    if (sectionVisible) {
+    if (sectionVisible && !animationStates[currentSlide]) {
       console.log(`✨ Animation triggered for slide ${currentSlide}: ${slides[currentSlide].phase}`);
-      const newStates = [false, false, false];
-      newStates[currentSlide] = true;
-      setAnimationStates(newStates);
+      setAnimationStates(prev => {
+        const newStates = [...prev];
+        newStates[currentSlide] = true;
+        return newStates;
+      });
     }
-  }, [currentSlide, sectionVisible, slides]);
+  }, [currentSlide, sectionVisible, animationStates, slides]);
 
   // Animated SVG Icons
   const EyeIcon = ({ isAnimated }: { isAnimated: boolean }) => (
