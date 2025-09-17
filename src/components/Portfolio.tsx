@@ -108,6 +108,94 @@ const transformations: Transformation[] = [
   }
 ];
 
+const secondLineTransformations: Transformation[] = [
+  {
+    id: 'fintech-onboarding',
+    category: 'acquisition',
+    title: 'FinTech Customer Acquisition Crisis',
+    businessChallenge: '14-day onboarding process, 45% customer abandonment',
+    hiddenOpportunity: 'Intelligent onboarding could reduce to 2 hours',
+    visionSolution: 'AI-powered customer journey optimization',
+    businessImpact: '520% acquisition velocity increase, $18M ARR boost',
+    executiveOutcome: 'CEO focus shifted to market expansion strategy',
+    metrics: {
+      primary: '520%',
+      secondary: '$18M',
+      tertiary: '45%'
+    },
+    timeline: '3 months',
+    industry: 'FinTech'
+  },
+  {
+    id: 'logistics-optimization',
+    category: 'operations',
+    title: 'Logistics Network Intelligence Gap',
+    businessChallenge: 'Route optimization consuming 6 hours daily',
+    hiddenOpportunity: 'Real-time AI could automate 90% of decisions',
+    visionSolution: 'Intelligent logistics orchestration system',
+    businessImpact: '340% delivery efficiency, $5.2M operational savings',
+    executiveOutcome: 'Operations team freed for strategic initiatives',
+    metrics: {
+      primary: '340%',
+      secondary: '$5.2M',
+      tertiary: '6hrs'
+    },
+    timeline: '4 months',
+    industry: 'Logistics'
+  },
+  {
+    id: 'saas-retention',
+    category: 'operations',
+    title: 'SaaS Customer Retention Challenge',
+    businessChallenge: '28% monthly churn rate destroying growth',
+    hiddenOpportunity: 'Predictive analytics could identify at-risk customers 60 days early',
+    visionSolution: 'Customer success intelligence platform',
+    businessImpact: '85% churn reduction, $12M revenue recovery',
+    executiveOutcome: 'Leadership bandwidth redirected to product innovation',
+    metrics: {
+      primary: '85%',
+      secondary: '$12M',
+      tertiary: '28%'
+    },
+    timeline: '5 months',
+    industry: 'SaaS'
+  },
+  {
+    id: 'realestate-intelligence',
+    category: 'expansion',
+    title: 'Real Estate Investment Bottleneck',
+    businessChallenge: '3 weeks per property evaluation limiting portfolio growth',
+    hiddenOpportunity: 'AI market analysis could reduce to 24 hours',
+    visionSolution: 'Investment intelligence automation',
+    businessImpact: '15x faster investment decisions, $25M portfolio expansion',
+    executiveOutcome: 'Executive team positioned for institutional partnerships',
+    metrics: {
+      primary: '15x',
+      secondary: '$25M',
+      tertiary: '3wks'
+    },
+    timeline: '6 months',
+    industry: 'Real Estate'
+  },
+  {
+    id: 'ecommerce-personalization',
+    category: 'acquisition',
+    title: 'E-commerce Conversion Plateau',
+    businessChallenge: '2.1% conversion rate stagnation despite traffic growth',
+    hiddenOpportunity: 'Hyper-personalization could triple conversion rates',
+    visionSolution: 'AI-driven customer journey personalization',
+    businessImpact: '290% conversion increase, $8.7M revenue boost',
+    executiveOutcome: 'Marketing leadership freed for brand expansion',
+    metrics: {
+      primary: '290%',
+      secondary: '$8.7M',
+      tertiary: '2.1%'
+    },
+    timeline: '4 months',
+    industry: 'E-commerce'
+  }
+];
+
 const categories = [
   { id: 'all', name: 'All Transformations', icon: Target },
   { id: 'acquisition', name: 'Acquisition Acceleration', icon: TrendingUp },
