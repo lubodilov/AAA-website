@@ -389,16 +389,16 @@ export default function Portfolio() {
 
       {/* Content */}
       <div className="relative z-10 pt-24 pb-16">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-6">
           {/* Hero Section */}
-          <div className="text-center mb-20 lg:mb-24">
+          <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 mb-8">
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
               <span className="text-white/80 text-sm font-light tracking-wider uppercase">Impossible Results Made Routine</span>
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white leading-tight mb-8">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-thin text-white leading-tight mb-6">
               Business Challenges We've{' '}
               <span className="font-extralight italic text-red-400">
                 Transformed
@@ -406,14 +406,14 @@ export default function Portfolio() {
               Into Market Dominance
             </h1>
             
-            <p className="text-lg lg:text-xl font-extralight text-white/80 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl font-extralight text-white/80 max-w-4xl mx-auto leading-relaxed mb-12">
               15 unique transformations. $127M+ in revealed opportunities. 
               Proof that your "impossible" challenge has been solved before.
             </p>
           </div>
 
           {/* Transformations Grid */}
-          <div className="space-y-12 lg:space-y-16 mb-20 lg:mb-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
             {transformations.map((transformation) => {
               const tierConfig = getTierConfig(transformation.tier);
               const IconComponent = tierConfig.icon;
@@ -424,7 +424,7 @@ export default function Portfolio() {
                   key={transformation.id}
                   id={transformation.id}
                   ref={el => cardRefs.current[transformation.id] = el}
-                  className={`relative group cursor-pointer transition-all duration-500 max-w-5xl mx-auto ${
+                  className={`relative group cursor-pointer transition-all duration-500 ${tierConfig.size} ${
                     isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                   }`}
                   style={{
@@ -432,97 +432,90 @@ export default function Portfolio() {
                   }}
                 >
                   {/* Card Container */}
-                  <div className={`relative bg-black/30 backdrop-blur-sm border ${tierConfig.border} rounded-2xl ${
-                    transformation.tier === 'flagship' ? 'p-8 lg:p-10' : 'p-6 lg:p-8'
-                  } hover:border-red-600/40 transition-all duration-300`}>
-                    
+                  <div className={`relative bg-black/40 backdrop-blur-sm border ${tierConfig.border} rounded-2xl p-6 hover:border-red-600/40 transition-all duration-300 h-full`}>
                     {/* Tier Badge */}
-                    <div className={`inline-flex items-center space-x-2 ${tierConfig.badgeColor} text-white text-xs font-medium px-4 py-2 rounded-full mb-6`}>
+                    <div className={`inline-flex items-center space-x-2 ${tierConfig.badgeColor} text-white text-xs font-medium px-3 py-1 rounded-full mb-4`}>
                       <IconComponent className="w-3 h-3" />
                       <span>{tierConfig.badge}</span>
                     </div>
 
                     {/* Header */}
-                    <div className="mb-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="bg-red-600/20 text-red-400 text-sm font-medium px-3 py-1 rounded-full">
+                    <div className="mb-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="bg-red-600/20 text-red-400 text-xs font-medium px-2 py-1 rounded-full">
                           {transformation.industry}
                         </span>
-                        <span className="text-white/60 text-sm font-light">
+                        <span className="text-white/60 text-xs font-light">
                           {transformation.timeline}
                         </span>
                       </div>
-                      <h3 className={`${
-                        transformation.tier === 'flagship' ? 'text-xl lg:text-2xl' : 'text-lg lg:text-xl'
-                      } font-bold text-white group-hover:text-red-400 transition-colors duration-300 mb-3 leading-tight`}>
+                      <h3 className="text-lg font-bold text-white group-hover:text-red-400 transition-colors duration-300 mb-1 leading-tight">
                         {transformation.title}
                       </h3>
-                      <p className="text-white/70 font-light">
+                      <p className="text-sm text-white/70 font-light">
                         {transformation.company}
                       </p>
                     </div>
 
                     {/* Key Metrics */}
-                    <div className="mb-8 bg-black/20 rounded-xl p-6">
-                      <div className="flex justify-between">
-                        <div className="text-center">
-                          <div className="text-3xl lg:text-4xl font-bold text-red-600 mb-2">{transformation.metrics.primary}</div>
-                          <div className="text-sm text-white/60 font-light">Impact</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-3xl lg:text-4xl font-bold text-red-600 mb-2">{transformation.metrics.secondary}</div>
-                          <div className="text-sm text-white/60 font-light">Growth</div>
-                        </div>
-                        {transformation.metrics.tertiary && (
-                          <div className="text-center">
-                            <div className="text-3xl lg:text-4xl font-bold text-red-600 mb-2">{transformation.metrics.tertiary}</div>
-                            <div className="text-sm text-white/60 font-light">Before</div>
-                          </div>
-                        )}
+                    <div className="flex justify-between mb-4 bg-black/20 rounded-lg p-3">
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-red-600">{transformation.metrics.primary}</div>
+                        <div className="text-xs text-white/60 font-light">Impact</div>
                       </div>
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-red-600">{transformation.metrics.secondary}</div>
+                        <div className="text-xs text-white/60 font-light">Growth</div>
+                      </div>
+                      {transformation.metrics.tertiary && (
+                        <div className="text-center">
+                          <div className="text-lg font-bold text-red-600">{transformation.metrics.tertiary}</div>
+                          <div className="text-xs text-white/60 font-light">Before</div>
+                        </div>
+                      )}
                     </div>
 
                     {/* Story Structure */}
-                    <div className="space-y-4 mb-6">
+                    <div className="space-y-3 mb-4">
                       <div>
-                        <span className="text-red-400 text-sm font-semibold uppercase tracking-wide">THE CRISIS:</span>
-                        <p className="text-white/80 font-light leading-relaxed mt-2">{transformation.crisis}</p>
+                        <span className="text-red-400 text-xs font-semibold uppercase tracking-wide">THE CRISIS:</span>
+                        <p className="text-sm text-white/80 font-light leading-relaxed mt-1">{transformation.crisis}</p>
                       </div>
                       
                       <div>
-                        <span className="text-amber-400 text-sm font-semibold uppercase tracking-wide">THE BREAKTHROUGH:</span>
-                        <p className="text-white/80 font-light leading-relaxed mt-2">{transformation.breakthrough}</p>
+                        <span className="text-amber-400 text-xs font-semibold uppercase tracking-wide">THE BREAKTHROUGH:</span>
+                        <p className="text-sm text-white/80 font-light leading-relaxed mt-1">{transformation.breakthrough}</p>
                       </div>
                       
                       <div>
-                        <span className="text-emerald-400 text-sm font-semibold uppercase tracking-wide">THE DOMINATION:</span>
-                        <p className="text-white/80 font-light leading-relaxed mt-2">{transformation.domination}</p>
+                        <span className="text-emerald-400 text-xs font-semibold uppercase tracking-wide">THE DOMINATION:</span>
+                        <p className="text-sm text-white/80 font-light leading-relaxed mt-1">{transformation.domination}</p>
                       </div>
                     </div>
 
                     {/* What This Means For You */}
-                    <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4 mb-6">
-                      <span className="text-red-400 text-sm font-semibold uppercase tracking-wide">WHAT THIS MEANS FOR YOU:</span>
-                      <p className="text-white/80 font-extralight leading-relaxed mt-2">{transformation.meaningForYou}</p>
+                    <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-3 mb-4">
+                      <span className="text-red-400 text-xs font-semibold uppercase tracking-wide">WHAT THIS MEANS FOR YOU:</span>
+                      <p className="text-sm text-white/90 font-light leading-relaxed mt-1">{transformation.meaningForYou}</p>
                     </div>
 
-                    {/* Social Proof Elements */}
-                    {(transformation.scarcity || transformation.authority || transformation.socialProof) && (
+                    {/* Psychological Triggers (for flagship cards) */}
+                    {transformation.tier === 'flagship' && (
                       <div className="space-y-2 text-xs">
                         {transformation.scarcity && (
-                          <div className="flex items-center space-x-2 text-white/60">
-                            <div className="w-1 h-1 bg-red-400 rounded-full"></div>
+                          <div className="flex items-center space-x-2 text-amber-400">
+                            <div className="w-1 h-1 bg-amber-400 rounded-full"></div>
                             <span className="font-light italic">{transformation.scarcity}</span>
                           </div>
                         )}
                         {transformation.authority && (
-                          <div className="flex items-center space-x-2 text-white/60">
+                          <div className="flex items-center space-x-2 text-emerald-400">
                             <div className="w-1 h-1 bg-emerald-400 rounded-full"></div>
                             <span className="font-light italic">"{transformation.authority}"</span>
                           </div>
                         )}
                         {transformation.socialProof && (
-                          <div className="flex items-center space-x-2 text-white/60">
+                          <div className="flex items-center space-x-2 text-blue-400">
                             <div className="w-1 h-1 bg-blue-400 rounded-full"></div>
                             <span className="font-light italic">{transformation.socialProof}</span>
                           </div>
@@ -536,6 +529,15 @@ export default function Portfolio() {
                         "{transformation.authority}"
                       </div>
                     )}
+
+                    {/* Hover Effect */}
+                    <div 
+                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      style={{
+                        background: `radial-gradient(circle at center, rgba(239, 68, 68, 0.05) 0%, transparent 70%)`,
+                        filter: 'blur(15px)'
+                      }}
+                    />
                   </div>
                 </div>
               );
@@ -543,16 +545,16 @@ export default function Portfolio() {
           </div>
 
           {/* Hormozi Power CTA */}
-          <div className="text-center">
-            <div className="bg-black/40 backdrop-blur-sm border border-red-600/30 rounded-3xl p-10 lg:p-16 max-w-4xl mx-auto relative overflow-hidden">
-              {/* Background Effect */}
+          <div className="mt-20 text-center">
+            <div className="bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-3xl p-8 lg:p-12 max-w-5xl mx-auto relative overflow-hidden">
+              {/* Background Pattern */}
               <div className="absolute inset-0 opacity-5">
                 <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-transparent to-red-600/20"></div>
               </div>
               
-              {/* Content */}
               <div className="relative z-10">
-                <h2 className="text-3xl lg:text-5xl font-bold text-white mb-8 leading-tight">
+                {/* Power Headline */}
+                <h2 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
                   STOP LEAVING{' '}
                   <span className="text-red-400">$MILLIONS</span>{' '}
                   ON THE TABLE
@@ -562,8 +564,7 @@ export default function Portfolio() {
                 <div className="bg-red-600/20 border border-red-600/30 rounded-xl p-6 mb-8">
                   <p className="text-xl font-light text-white mb-4">
                     In the past 18 months, these transformations revealed{' '}
-                    <span className="font-bold text-red-400">$127M+</span>{' '}
-                    in missed opportunities.
+                    <span className="font-bold text-red-400">$127M+</span> in missed opportunities.
                   </p>
                   <p className="text-lg font-extralight text-white/80">
                     Your competitors are making the same mistakes these companies were.
@@ -582,14 +583,20 @@ export default function Portfolio() {
                 </button>
                 
                 {/* Subtext */}
-                <p className="text-white/70 font-light mb-10">
+                <p className="text-sm font-light text-white/70 mb-8">
                   "Takes 90 seconds. Shows 7-8 figure potential."
                 </p>
                 
                 {/* Urgency & Risk Reversal */}
-                <div className="space-y-4 font-light text-white/80">
-                  <p>We only accept 3 new Vision Elevation clients per quarter. Current spots filling for Q1 2026.</p>
-                  <p>If we don't identify at least $500K in new opportunities, the analysis is free.</p>
+                <div className="space-y-4 text-sm font-light text-white/80">
+                  <div className="flex items-center justify-center space-x-2">
+                    <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div>
+                    <span className="italic">We only accept 3 new Vision Elevation clients per quarter. Current spots filling for Q1 2026.</span>
+                  </div>
+                  <div className="flex items-center justify-center space-x-2">
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <span className="italic">If we don't identify at least $500K in new opportunities, the analysis is free.</span>
+                  </div>
                 </div>
               </div>
             </div>
