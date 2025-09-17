@@ -519,20 +519,20 @@ export default function Portfolio() {
                   }`}
                   style={{ transitionDelay: `${index * 0.2}s` }}
                 >
-                  {/* Red Border Glow */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-red-600/50 via-red-500/50 to-red-600/50 rounded-3xl blur opacity-75 group-hover:opacity-100 transition duration-300"></div>
+                  {/* Red Border Glow - Reduced */}
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600/20 via-red-500/20 to-red-600/20 rounded-3xl blur opacity-40 group-hover:opacity-60 transition duration-300"></div>
                   
-                  <div className="relative bg-black/40 backdrop-blur-sm border-2 border-red-600/50 rounded-2xl p-8 hover:border-red-500/70 transition-all duration-300">
+                  <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8 hover:border-red-500/50 transition-all duration-300">
                     
                     {/* Flagship Badge */}
-                    <div className="inline-flex items-center space-x-2 bg-red-600 text-white text-sm font-bold px-4 py-2 rounded-full mb-6">
+                    <div className="inline-flex items-center space-x-2 bg-red-600/90 text-white text-sm font-semibold px-4 py-2 rounded-full mb-6">
                       <Star className="w-4 h-4" />
                       <span>FLAGSHIP RESULT</span>
                     </div>
 
                     {/* Industry & Timeline */}
                     <div className="flex items-center justify-between mb-4">
-                      <span className="bg-red-600/20 text-red-400 text-sm font-medium px-3 py-1 rounded-full">
+                      <span className="bg-red-600/15 text-red-300 text-sm font-medium px-3 py-1 rounded-full border border-red-600/20">
                         {transformation.industry}
                       </span>
                       <span className="text-white/60 text-sm font-light">
@@ -542,10 +542,10 @@ export default function Portfolio() {
 
                     {/* MASSIVE Metrics */}
                     <div className="text-center mb-6">
-                      <div className="text-6xl lg:text-7xl font-bold text-red-500 mb-2">
+                      <div className="text-6xl lg:text-7xl font-bold text-red-400 mb-2">
                         {transformation.metrics.primary}
                       </div>
-                      <div className="text-2xl font-bold text-white mb-1">
+                      <div className="text-2xl font-semibold text-white mb-1">
                         {transformation.metrics.secondary} IMPACT
                       </div>
                       <div className="text-lg text-white/70">
@@ -556,17 +556,17 @@ export default function Portfolio() {
                     {/* Crisis & Result */}
                     <div className="space-y-3 mb-6">
                       <div className="text-center">
-                        <div className="text-red-400 text-sm font-semibold mb-1">Crisis:</div>
+                        <div className="text-red-300 text-sm font-semibold mb-1">Crisis:</div>
                         <div className="text-white/80 text-sm">{transformation.shortCrisis}</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-emerald-400 text-sm font-semibold mb-1">Result:</div>
+                        <div className="text-emerald-300 text-sm font-semibold mb-1">Result:</div>
                         <div className="text-white/80 text-sm">{transformation.shortResult}</div>
                       </div>
                     </div>
 
                     {/* CTA Button */}
-                    <button className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full font-bold hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center justify-center space-x-2">
+                    <button className="w-full bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600/30">
                       <span>VIEW FULL STORY</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
@@ -660,10 +660,10 @@ export default function Portfolio() {
                     }`}
                     style={{ transitionDelay: `${index * 0.1}s` }}
                   >
-                    <div className="bg-black/30 backdrop-blur-sm border border-white/20 rounded-xl p-6 hover:border-amber-600/40 transition-all duration-300 h-full">
+                    <div className="bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:border-amber-500/30 transition-all duration-300 h-full">
                       
                       {/* Authority Badge */}
-                      <div className="inline-flex items-center space-x-2 bg-amber-600 text-white text-xs font-medium px-3 py-1 rounded-full mb-4">
+                      <div className="inline-flex items-center space-x-2 bg-amber-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-amber-600/30">
                         <Award className="w-3 h-3" />
                         <span>AUTHORITY PROOF</span>
                       </div>
@@ -676,11 +676,11 @@ export default function Portfolio() {
                       {/* Key Metrics */}
                       <div className="flex justify-between items-center mb-4">
                         <div className="text-center">
-                          <div className="text-2xl font-bold text-amber-500">{transformation.metrics.primary}</div>
+                          <div className="text-2xl font-bold text-amber-400">{transformation.metrics.primary}</div>
                           <div className="text-xs text-white/60">Impact</div>
                         </div>
                         <div className="text-center">
-                          <div className="text-2xl font-bold text-amber-500">{transformation.metrics.secondary}</div>
+                          <div className="text-2xl font-bold text-amber-400">{transformation.metrics.secondary}</div>
                           <div className="text-xs text-white/60">Growth</div>
                         </div>
                       </div>
@@ -698,7 +698,7 @@ export default function Portfolio() {
                       </div>
 
                       {/* Learn More Button */}
-                      <button className="w-full bg-amber-600/20 border border-amber-600/40 text-amber-400 px-4 py-2 rounded-full text-sm font-medium hover:bg-amber-600/30 transition-all duration-300 flex items-center justify-center space-x-2">
+                      <button className="w-full bg-amber-600/15 border border-amber-600/25 text-amber-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-amber-600/20 hover:border-amber-600/35 transition-all duration-300 flex items-center justify-center space-x-2">
                         <span>LEARN MORE</span>
                         <ArrowRight className="w-3 h-3" />
                       </button>
@@ -740,10 +740,10 @@ export default function Portfolio() {
               {/* Desktop: Show 3 cards */}
               <div className="hidden md:grid md:grid-cols-3 gap-6">
                 {speedWins.slice(currentSpeedWinIndex, currentSpeedWinIndex + 3).map((transformation, index) => (
-                  <div key={transformation.id} className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:border-emerald-600/40 transition-all duration-300">
+                  <div key={transformation.id} className="bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:border-emerald-500/30 transition-all duration-300">
                     
                     {/* Speed Badge */}
-                    <div className="inline-flex items-center space-x-2 bg-emerald-600 text-white text-xs font-medium px-3 py-1 rounded-full mb-4">
+                    <div className="inline-flex items-center space-x-2 bg-emerald-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-emerald-600/30">
                       <Zap className="w-3 h-3" />
                       <span>SPEED WIN</span>
                     </div>
@@ -761,7 +761,7 @@ export default function Portfolio() {
                       {transformation.shortCrisis} → {transformation.shortResult}
                     </div>
 
-                    <button className="w-full bg-emerald-600/20 border border-emerald-600/40 text-emerald-400 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/30 transition-all duration-300">
+                    <button className="w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/20 hover:border-emerald-600/35 transition-all duration-300">
                       QUICK VIEW →
                     </button>
                   </div>
@@ -770,8 +770,8 @@ export default function Portfolio() {
 
               {/* Mobile: Show 1 card */}
               <div className="md:hidden">
-                <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-                  <div className="inline-flex items-center space-x-2 bg-emerald-600 text-white text-xs font-medium px-3 py-1 rounded-full mb-4">
+                <div className="bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6">
+                  <div className="inline-flex items-center space-x-2 bg-emerald-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-emerald-600/30">
                     <Zap className="w-3 h-3" />
                     <span>SPEED WIN</span>
                   </div>
@@ -788,7 +788,7 @@ export default function Portfolio() {
                     {speedWins[currentSpeedWinIndex].shortCrisis} → {speedWins[currentSpeedWinIndex].shortResult}
                   </div>
 
-                  <button className="w-full bg-emerald-600/20 border border-emerald-600/40 text-emerald-400 px-4 py-2 rounded-full text-sm font-medium">
+                  <button className="w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium">
                     QUICK VIEW →
                   </button>
                 </div>
@@ -826,10 +826,10 @@ export default function Portfolio() {
 
           {/* HORMOZI POWER CTA */}
           <div className="text-center">
-            <div className="bg-black/40 backdrop-blur-sm border border-red-600/30 rounded-3xl p-10 lg:p-16 max-w-4xl mx-auto relative overflow-hidden">
+            <div className="bg-black/60 backdrop-blur-sm border border-red-600/20 rounded-3xl p-10 lg:p-16 max-w-4xl mx-auto relative overflow-hidden">
               {/* Background Effect */}
               <div className="absolute inset-0 opacity-5">
-                <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-transparent to-red-600/20"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 via-transparent to-red-600/10"></div>
               </div>
               
               {/* Content */}
@@ -841,7 +841,7 @@ export default function Portfolio() {
                 </h2>
                 
                 {/* Social Proof */}
-                <div className="bg-red-600/20 border border-red-600/30 rounded-xl p-6 mb-8">
+                <div className="bg-red-600/10 border border-red-600/20 rounded-xl p-6 mb-8">
                   <p className="text-xl font-light text-white mb-4">
                     In the past 18 months, these transformations revealed{' '}
                     <span className="font-bold text-red-400">$127M+</span>{' '}
@@ -858,7 +858,7 @@ export default function Portfolio() {
                 </p>
                 
                 {/* CTA Button */}
-                <button className="group bg-gradient-to-r from-red-600 to-red-700 text-white px-12 py-6 rounded-full font-bold text-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center space-x-4 mx-auto mb-6 shadow-2xl shadow-red-600/25 hover:scale-105">
+                <button className="group bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-12 py-6 rounded-full font-bold text-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center space-x-4 mx-auto mb-6 shadow-xl shadow-red-600/15 hover:scale-102 border border-red-600/30">
                   <span>REVEAL MY HIDDEN OPPORTUNITIES</span>
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
