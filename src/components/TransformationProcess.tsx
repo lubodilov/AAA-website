@@ -107,7 +107,7 @@ export default function TransformationProcess() {
         return newStates;
       });
     }
-  }, [currentSlide, sectionVisible, animationStates, slides]);
+  }, [currentSlide, sectionVisible, slides]);
 
   // Animated SVG Icons
   const EyeIcon = ({ isAnimated }: { isAnimated: boolean }) => (
