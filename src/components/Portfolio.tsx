@@ -266,7 +266,7 @@ export default function Portfolio() {
             {/* Second Row - Moving Left */}
             <div className="flex space-x-6 animate-infinite-scroll-left" style={{ width: '200%' }}>
               {[...Array(6)].flatMap((_, setIndex) => 
-                transformations.slice().reverse().map((transformation, cardIndex) => (
+                secondLineTransformations.map((transformation, cardIndex) => (
                 <div
                   key={`left-${transformation.id}-${setIndex}-${cardIndex}`}
                   className="flex-shrink-0 w-80 bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-red-600/30 transition-all duration-300 group cursor-pointer"
