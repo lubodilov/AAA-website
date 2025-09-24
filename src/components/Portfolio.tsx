@@ -561,10 +561,10 @@ export default function Portfolio() {
                   <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8 overflow-hidden">
                     
                     {/* Pale Grid Background */}
-                    <div className="absolute inset-0 opacity-30 rounded-2xl overflow-hidden">
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-30 rounded-2xl overflow-hidden transition-opacity duration-500">
                       <svg width="100%" height="100%" className="absolute inset-0">
                         <defs>
-                          <pattern id={`grid-${transformation.id}`} width="20" height="20" patternUnits="userSpaceOnUse">
+                          <pattern id={`grid-${transformation.id}`} width="40" height="40" patternUnits="userSpaceOnUse">
                             <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#ef4444" strokeWidth="0.5"/>
                           </pattern>
                         </defs>
@@ -716,10 +716,10 @@ export default function Portfolio() {
                     <div className="relative bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 group-hover:border-amber-500/70 group-hover:bg-black/65 group-hover:shadow-lg group-hover:shadow-amber-500/15 transition-all duration-500 group-hover:scale-[1.005] group-hover:-translate-y-0.5 h-full">
                       
                       {/* Pale Grid Background */}
-                      <div className="absolute inset-0 opacity-25 rounded-xl overflow-hidden">
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-25 rounded-xl overflow-hidden transition-opacity duration-500">
                         <svg width="100%" height="100%" className="absolute inset-0">
                           <defs>
-                            <pattern id={`grid-authority-${transformation.id}`} width="20" height="20" patternUnits="userSpaceOnUse">
+                            <pattern id={`grid-authority-${transformation.id}`} width="40" height="40" patternUnits="userSpaceOnUse">
                               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f59e0b" strokeWidth="0.5"/>
                             </pattern>
                           </defs>
@@ -818,10 +818,10 @@ export default function Portfolio() {
                     <div className="relative bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 group-hover:border-emerald-500/70 group-hover:bg-black/65 group-hover:shadow-lg group-hover:shadow-emerald-500/15 transition-all duration-500 group-hover:scale-[1.005] group-hover:-translate-y-0.5">
                     
                       {/* Pale Grid Background */}
-                      <div className="absolute inset-0 opacity-25 rounded-xl overflow-hidden">
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-25 rounded-xl overflow-hidden transition-opacity duration-500">
                         <svg width="100%" height="100%" className="absolute inset-0">
                           <defs>
-                            <pattern id={`grid-speed-mobile-${transformation.id}`} width="20" height="20" patternUnits="userSpaceOnUse">
+                            <pattern id={`grid-speed-mobile-${transformation.id}`} width="40" height="40" patternUnits="userSpaceOnUse">
                               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#10b981" strokeWidth="0.5"/>
                             </pattern>
                           </defs>
@@ -830,10 +830,10 @@ export default function Portfolio() {
                       </div>
                       
                       {/* Pale Grid Background */}
-                      <div className="absolute inset-0 opacity-25 rounded-xl overflow-hidden">
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-25 rounded-xl overflow-hidden transition-opacity duration-500">
                         <svg width="100%" height="100%" className="absolute inset-0">
                           <defs>
-                            <pattern id={`grid-speed-${transformation.id}-${index}`} width="20" height="20" patternUnits="userSpaceOnUse">
+                            <pattern id={`grid-speed-${transformation.id}-${index}`} width="40" height="40" patternUnits="userSpaceOnUse">
                               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#10b981" strokeWidth="0.5"/>
                             </pattern>
                           </defs>
