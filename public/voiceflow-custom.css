@@ -103,7 +103,25 @@ the scrolbar does not scrol, only when pressed
   color: red;
 } */
 
-
+/* margin for the start new chat button when a chat ends, so that the btton is not right at the botot m of the widget window */
 .c-bXTvXv-lckiv-type-info{
   margin-bottom: 20px;
 }
+/* background of the end chat  */
+.c-ealvbK-hMxnbF-withPrompt-true .c-koXsWI {
+    background-color: #000000;
+}
+/* end chat button  */
+.c-bXTvXv-XJvOL-type-warn {
+    background-color: #991923;
+}
+.c-bXTvXv-XJvOL-type-warn:hover {
+    color: #000000;
+}
+/* cancel button  */
+.c-bXTvXv-igaDqE-type-subtle {
+    color: rgba(255, 255, 255, 0.9);
+    background-color: #5c0f15;}
+
+.c-bXTvXv-igaDqE-type-subtle:hover {
+    background-color: #7a141c;}
