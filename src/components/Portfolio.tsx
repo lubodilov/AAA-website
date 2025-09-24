@@ -28,13 +28,13 @@ const CursorGlow = ({ color, isVisible }: { color: string; isVisible: boolean })
       ref={glowRef}
       className="fixed pointer-events-none z-50 transition-opacity duration-300"
       style={{
-        left: position.x - 50,
-        top: position.y - 50,
-        width: '100px',
-        height: '100px',
-        background: `radial-gradient(circle, ${color}40 0%, ${color}20 30%, transparent 70%)`,
+        left: position.x - 75,
+        top: position.y - 75,
+        width: '150px',
+        height: '150px',
+        background: `radial-gradient(circle, ${color}60 0%, ${color}35 25%, ${color}15 50%, transparent 75%)`,
         borderRadius: '50%',
-        filter: 'blur(20px)',
+        filter: 'blur(25px)',
         opacity: isVisible ? 1 : 0,
       }}
     />
@@ -558,10 +558,22 @@ export default function Portfolio() {
                   onMouseEnter={() => setCursorGlow({ color: '#ef4444', isVisible: true })}
                   onMouseLeave={() => setCursorGlow({ color: '', isVisible: false })}
                 >
-                  <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8">
+                  <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8 overflow-hidden">
+                    
+                    {/* Pale Grid Background */}
+                    <div className="absolute inset-0 opacity-5">
+                      <svg width="100%" height="100%" className="absolute inset-0">
+                        <defs>
+                          <pattern id={`grid-${transformation.id}`} width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#ef4444" strokeWidth="0.5"/>
+                          </pattern>
+                        </defs>
+                        <rect width="100%" height="100%" fill={`url(#grid-${transformation.id})`} />
+                      </svg>
+                    </div>
                     
                     {/* Flagship Badge */}
-                    <div className="inline-flex items-center space-x-2 bg-red-600/90 text-white text-sm font-semibold px-4 py-2 rounded-full mb-6">
+                    <div className="relative inline-flex items-center space-x-2 bg-red-600/90 text-white text-sm font-semibold px-4 py-2 rounded-full mb-6">
                       <Star className="w-4 h-4" />
                       <span>FLAGSHIP RESULT</span>
                     </div>
