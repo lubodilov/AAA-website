@@ -490,12 +490,6 @@ export default function Portfolio() {
           
           {/* STEP 1A: FLAGSHIP RESULTS SECTION (TOP) */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 mb-8">
-              <Star className="w-4 h-4 text-red-500" />
-              <span className="text-white/80 text-sm font-light tracking-wider uppercase">Flagship Results</span>
-              <Star className="w-4 h-4 text-red-500" />
-            </div>
-            
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white leading-tight mb-8">
               Impossible Challenges We've{' '}
               <span className="font-extralight italic text-red-400">
