@@ -561,11 +561,11 @@ export default function Portfolio() {
                   <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8 overflow-hidden">
                     
                     {/* Pale Grid Background */}
-                    <div className="absolute inset-0 opacity-5">
+                    <div className="absolute inset-0 opacity-15">
                       <svg width="100%" height="100%" className="absolute inset-0">
                         <defs>
                           <pattern id={`grid-${transformation.id}`} width="20" height="20" patternUnits="userSpaceOnUse">
-                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#ef4444" strokeWidth="0.5"/>
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#ef4444" strokeWidth="0.3"/>
                           </pattern>
                         </defs>
                         <rect width="100%" height="100%" fill={`url(#grid-${transformation.id})`} />
@@ -715,6 +715,18 @@ export default function Portfolio() {
                     
                     <div className="relative bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 group-hover:border-amber-500/70 group-hover:bg-black/65 group-hover:shadow-lg group-hover:shadow-amber-500/15 transition-all duration-500 group-hover:scale-[1.005] group-hover:-translate-y-0.5 h-full">
                       
+                      {/* Pale Grid Background */}
+                      <div className="absolute inset-0 opacity-10 rounded-xl overflow-hidden">
+                        <svg width="100%" height="100%" className="absolute inset-0">
+                          <defs>
+                            <pattern id={`grid-authority-${transformation.id}`} width="20" height="20" patternUnits="userSpaceOnUse">
+                              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f59e0b" strokeWidth="0.3"/>
+                            </pattern>
+                          </defs>
+                          <rect width="100%" height="100%" fill={`url(#grid-authority-${transformation.id})`} />
+                        </svg>
+                      </div>
+                      
                       {/* Authority Badge */}
                       <div className="inline-flex items-center space-x-2 bg-amber-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-amber-600/30">
                         <Award className="w-3 h-3" />
@@ -805,6 +817,30 @@ export default function Portfolio() {
                     
                     <div className="relative bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 group-hover:border-emerald-500/70 group-hover:bg-black/65 group-hover:shadow-lg group-hover:shadow-emerald-500/15 transition-all duration-500 group-hover:scale-[1.005] group-hover:-translate-y-0.5">
                     
+                      {/* Pale Grid Background */}
+                      <div className="absolute inset-0 opacity-10 rounded-xl overflow-hidden">
+                        <svg width="100%" height="100%" className="absolute inset-0">
+                          <defs>
+                            <pattern id={`grid-speed-mobile-${transformation.id}`} width="20" height="20" patternUnits="userSpaceOnUse">
+                              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#10b981" strokeWidth="0.3"/>
+                            </pattern>
+                          </defs>
+                          <rect width="100%" height="100%" fill={`url(#grid-speed-mobile-${transformation.id})`} />
+                        </svg>
+                      </div>
+                      
+                      {/* Pale Grid Background */}
+                      <div className="absolute inset-0 opacity-10 rounded-xl overflow-hidden">
+                        <svg width="100%" height="100%" className="absolute inset-0">
+                          <defs>
+                            <pattern id={`grid-speed-${transformation.id}-${index}`} width="20" height="20" patternUnits="userSpaceOnUse">
+                              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#10b981" strokeWidth="0.3"/>
+                            </pattern>
+                          </defs>
+                          <rect width="100%" height="100%" fill={`url(#grid-speed-${transformation.id}-${index})`} />
+                        </svg>
+                      </div>
+                      
                       {/* Speed Badge */}
                       <div className="inline-flex items-center space-x-2 bg-emerald-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-emerald-600/30">
                         <Zap className="w-3 h-3" />
