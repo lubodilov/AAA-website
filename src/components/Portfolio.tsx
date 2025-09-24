@@ -565,7 +565,7 @@ export default function Portfolio() {
                       <svg width="100%" height="100%" className="absolute inset-0">
                         <defs>
                           <pattern id={`grid-${transformation.id}`} width="40" height="40" patternUnits="userSpaceOnUse">
-                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#ef4444" strokeWidth="0.5"/>
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ef4444" strokeWidth="0.5"/>
                           </pattern>
                         </defs>
                         <rect width="100%" height="100%" fill={`url(#grid-${transformation.id})`} />
@@ -720,7 +720,7 @@ export default function Portfolio() {
                         <svg width="100%" height="100%" className="absolute inset-0">
                           <defs>
                             <pattern id={`grid-authority-${transformation.id}`} width="40" height="40" patternUnits="userSpaceOnUse">
-                              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f59e0b" strokeWidth="0.5"/>
+                              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#f59e0b" strokeWidth="0.5"/>
                             </pattern>
                           </defs>
                           <rect width="100%" height="100%" fill={`url(#grid-authority-${transformation.id})`} />
@@ -834,7 +834,7 @@ export default function Portfolio() {
                         <svg width="100%" height="100%" className="absolute inset-0">
                           <defs>
                             <pattern id={`grid-speed-${transformation.id}-${index}`} width="40" height="40" patternUnits="userSpaceOnUse">
-                              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#10b981" strokeWidth="0.5"/>
+                              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#10b981" strokeWidth="0.5"/>
                             </pattern>
                           </defs>
                           <rect width="100%" height="100%" fill={`url(#grid-speed-${transformation.id}-${index})`} />
