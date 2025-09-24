@@ -514,9 +514,9 @@ export default function Portfolio() {
                   style={{ transitionDelay: `${index * 0.2}s` }}
                 >
                   {/* Red Border Glow - Reduced */}
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600/20 via-red-500/20 to-red-600/20 rounded-3xl blur opacity-40 group-hover:opacity-60 transition duration-300"></div>
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600/10 via-red-500/15 to-red-600/10 rounded-3xl blur opacity-0 group-hover:opacity-40 transition-all duration-500"></div>
                   
-                  <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8 hover:border-red-500/50 transition-all duration-300">
+                  <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8 hover:border-red-500/60 hover:bg-black/70 hover:shadow-2xl hover:shadow-red-500/10 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1">
                     
                     {/* Flagship Badge */}
                     <div className="inline-flex items-center space-x-2 bg-red-600/90 text-white text-sm font-semibold px-4 py-2 rounded-full mb-6">
@@ -561,6 +561,7 @@ export default function Portfolio() {
 
                     {/* CTA Button */}
                     <button className="w-full bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600/30">
+                      <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-400/20 to-red-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       <span>VIEW FULL STORY</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
@@ -654,7 +655,7 @@ export default function Portfolio() {
                     }`}
                     style={{ transitionDelay: `${index * 0.1}s` }}
                   >
-                    <div className="bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:border-amber-500/30 transition-all duration-300 h-full">
+                    <div className="bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:border-amber-500/50 hover:bg-black/60 hover:shadow-xl hover:shadow-amber-500/5 transition-all duration-500 hover:scale-[1.01] hover:-translate-y-0.5 h-full group">
                       
                       {/* Authority Badge */}
                       <div className="inline-flex items-center space-x-2 bg-amber-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-amber-600/30">
@@ -692,9 +693,10 @@ export default function Portfolio() {
                       </div>
 
                       {/* Learn More Button */}
-                      <button className="w-full bg-amber-600/15 border border-amber-600/25 text-amber-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-amber-600/20 hover:border-amber-600/35 transition-all duration-300 flex items-center justify-center space-x-2">
+                      <button className="relative w-full bg-amber-600/15 border border-amber-600/25 text-amber-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-amber-600/25 hover:border-amber-600/40 hover:text-amber-200 transition-all duration-500 flex items-center justify-center space-x-2 overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-r from-amber-600/0 via-amber-400/10 to-amber-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <span>LEARN MORE</span>
-                        <ArrowRight className="w-3 h-3" />
+                        <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform duration-300" />
                       </button>
                     </div>
                   </div>
@@ -734,7 +736,7 @@ export default function Portfolio() {
               {/* Desktop: Show 3 cards */}
               <div className="hidden md:grid md:grid-cols-3 gap-6">
                 {speedWins.slice(currentSpeedWinIndex, currentSpeedWinIndex + 3).map((transformation, index) => (
-                  <div key={transformation.id} className="bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:border-emerald-500/30 transition-all duration-300">
+                  <div key={transformation.id} className="bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:border-emerald-500/50 hover:bg-black/60 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-500 hover:scale-[1.01] hover:-translate-y-0.5 group">
                     
                     {/* Speed Badge */}
                     <div className="inline-flex items-center space-x-2 bg-emerald-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-emerald-600/30">
@@ -755,8 +757,10 @@ export default function Portfolio() {
                       {transformation.shortCrisis} → {transformation.shortResult}
                     </div>
 
-                    <button className="w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/20 hover:border-emerald-600/35 transition-all duration-300">
-                      QUICK VIEW →
+                    <button className="relative w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 hover:border-emerald-600/40 hover:text-emerald-200 transition-all duration-500 overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/0 via-emerald-400/10 to-emerald-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <span className="relative">QUICK VIEW</span>
+                      <ArrowRight className="inline w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform duration-300" />
                     </button>
                   </div>
                 ))}
@@ -764,7 +768,7 @@ export default function Portfolio() {
 
               {/* Mobile: Show 1 card */}
               <div className="md:hidden">
-                <div className="bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6">
+                <div className="bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:border-emerald-500/50 hover:bg-black/60 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-500 group">
                   <div className="inline-flex items-center space-x-2 bg-emerald-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-emerald-600/30">
                     <Zap className="w-3 h-3" />
                     <span>SPEED WIN</span>
@@ -782,8 +786,10 @@ export default function Portfolio() {
                     {speedWins[currentSpeedWinIndex].shortCrisis} → {speedWins[currentSpeedWinIndex].shortResult}
                   </div>
 
-                  <button className="w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium">
-                    QUICK VIEW →
+                  <button className="relative w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 hover:border-emerald-600/40 hover:text-emerald-200 transition-all duration-500 overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/0 via-emerald-400/10 to-emerald-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <span className="relative">QUICK VIEW</span>
+                    <ArrowRight className="inline w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform duration-300" />
                   </button>
                 </div>
               </div>
