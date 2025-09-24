@@ -558,10 +558,7 @@ export default function Portfolio() {
                   onMouseEnter={() => setCursorGlow({ color: '#ef4444', isVisible: true })}
                   onMouseLeave={() => setCursorGlow({ color: '', isVisible: false })}
                 >
-                  {/* Elite Card Frame */}
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600/5 via-red-500/8 to-red-600/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                  
-                  <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8 group-hover:border-red-500/80 group-hover:bg-black/75 group-hover:shadow-xl group-hover:shadow-red-500/20 transition-all duration-500 group-hover:scale-[1.01] group-hover:-translate-y-0.5">
+                  <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8">
                     
                     {/* Flagship Badge */}
                     <div className="inline-flex items-center space-x-2 bg-red-600/90 text-white text-sm font-semibold px-4 py-2 rounded-full mb-6">
@@ -606,9 +603,8 @@ export default function Portfolio() {
 
                     {/* CTA Button */}
                     <button className="w-full bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600/30">
-                      <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-400/15 to-red-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       <span>VIEW FULL STORY</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
+                      <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
