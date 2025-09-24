@@ -519,9 +519,8 @@ export default function Portfolio() {
                   <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8 hover:border-red-500/50 transition-all duration-300">
                     
                     {/* Flagship Badge */}
-                    <div className="inline-flex items-center space-x-2 bg-red-600/90 text-white text-sm font-semibold px-4 py-2 rounded-full mb-6">
-                      <Star className="w-4 h-4" />
-                      <span>FLAGSHIP RESULT</span>
+                    <div className="inline-block bg-white/5 border border-white/20 text-white text-xs font-medium px-3 py-1 rounded mb-6 tracking-wide">
+                      FLAGSHIP
                     </div>
 
                     {/* Industry & Timeline */}
