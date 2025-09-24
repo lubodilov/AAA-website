@@ -2,6 +2,45 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Filter, TrendingUp, Clock, Target, Star, Award, Zap, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import Header from './Header';
 
+// Cursor glow component
+const CursorGlow = ({ color, isVisible }: { color: string; isVisible: boolean }) => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setPosition({ x: e.clientX, y: e.clientY });
+    };
+
+    if (isVisible) {
+      document.addEventListener('mousemove', handleMouseMove);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [isVisible]);
+
+  if (!isVisible) return null;
+
+  return (
+    <div
+      ref={glowRef}
+      className="fixed pointer-events-none z-50 transition-opacity duration-300"
+      style={{
+        left: position.x - 50,
+        top: position.y - 50,
+        width: '100px',
+        height: '100px',
+        background: `radial-gradient(circle, ${color}40 0%, ${color}20 30%, transparent 70%)`,
+        borderRadius: '50%',
+        filter: 'blur(20px)',
+        opacity: isVisible ? 1 : 0,
+      }}
+    />
+  );
+};
+
 interface Transformation {
   id: string;
   tier: 'flagship' | 'authority' | 'proof';
@@ -402,6 +441,7 @@ export default function Portfolio() {
   const [selectedChallengeType, setSelectedChallengeType] = useState('all');
   const [currentSpeedWinIndex, setCurrentSpeedWinIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
+  const [cursorGlow, setCursorGlow] = useState({ color: '', isVisible: false });
   const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   // Get flagship transformations (top 3)
@@ -466,6 +506,9 @@ export default function Portfolio() {
     <div className="min-h-screen bg-black relative">
       <Header />
       
+      {/* Elite Cursor Glow */}
+      <CursorGlow color={cursorGlow.color} isVisible={cursorGlow.isVisible} />
+      
       {/* Fixed Video Background */}
       <div className="fixed inset-0 z-0">
         <video
@@ -512,11 +555,13 @@ export default function Portfolio() {
                     isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                   }`}
                   style={{ transitionDelay: `${index * 0.2}s` }}
+                  onMouseEnter={() => setCursorGlow({ color: '#ef4444', isVisible: true })}
+                  onMouseLeave={() => setCursorGlow({ color: '', isVisible: false })}
                 >
-                  {/* Red Border Glow - Reduced */}
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600/10 via-red-500/15 to-red-600/10 rounded-3xl blur opacity-0 group-hover:opacity-40 transition-all duration-500"></div>
+                  {/* Elite Card Frame */}
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600/5 via-red-500/8 to-red-600/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                   
-                  <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8 hover:border-red-500/60 hover:bg-black/70 hover:shadow-2xl hover:shadow-red-500/10 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1">
+                  <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8 group-hover:border-red-500/80 group-hover:bg-black/75 group-hover:shadow-xl group-hover:shadow-red-500/20 transition-all duration-500 group-hover:scale-[1.01] group-hover:-translate-y-0.5">
                     
                     {/* Flagship Badge */}
                     <div className="inline-flex items-center space-x-2 bg-red-600/90 text-white text-sm font-semibold px-4 py-2 rounded-full mb-6">
@@ -561,9 +606,9 @@ export default function Portfolio() {
 
                     {/* CTA Button */}
                     <button className="w-full bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600/30">
-                      <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-400/20 to-red-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-400/15 to-red-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       <span>VIEW FULL STORY</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
                     </button>
                   </div>
                 </div>
@@ -654,8 +699,13 @@ export default function Portfolio() {
                       isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                     }`}
                     style={{ transitionDelay: `${index * 0.1}s` }}
+                    onMouseEnter={() => setCursorGlow({ color: '#f59e0b', isVisible: true })}
+                    onMouseLeave={() => setCursorGlow({ color: '', isVisible: false })}
                   >
-                    <div className="bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:border-amber-500/50 hover:bg-black/60 hover:shadow-xl hover:shadow-amber-500/5 transition-all duration-500 hover:scale-[1.01] hover:-translate-y-0.5 h-full group">
+                    {/* Elite Authority Frame */}
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-600/5 via-amber-500/8 to-amber-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                    
+                    <div className="relative bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 group-hover:border-amber-500/70 group-hover:bg-black/65 group-hover:shadow-lg group-hover:shadow-amber-500/15 transition-all duration-500 group-hover:scale-[1.005] group-hover:-translate-y-0.5 h-full">
                       
                       {/* Authority Badge */}
                       <div className="inline-flex items-center space-x-2 bg-amber-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-amber-600/30">
@@ -694,7 +744,7 @@ export default function Portfolio() {
 
                       {/* Learn More Button */}
                       <button className="relative w-full bg-amber-600/15 border border-amber-600/25 text-amber-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-amber-600/25 hover:border-amber-600/40 hover:text-amber-200 transition-all duration-500 flex items-center justify-center space-x-2 overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-r from-amber-600/0 via-amber-400/10 to-amber-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-amber-600/0 via-amber-400/8 to-amber-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <span>LEARN MORE</span>
                         <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform duration-300" />
                       </button>
@@ -736,61 +786,80 @@ export default function Portfolio() {
               {/* Desktop: Show 3 cards */}
               <div className="hidden md:grid md:grid-cols-3 gap-6">
                 {speedWins.slice(currentSpeedWinIndex, currentSpeedWinIndex + 3).map((transformation, index) => (
-                  <div key={transformation.id} className="bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:border-emerald-500/50 hover:bg-black/60 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-500 hover:scale-[1.01] hover:-translate-y-0.5 group">
+                  <div 
+                    key={transformation.id} 
+                    className="relative group cursor-pointer transition-all duration-500"
+                    onMouseEnter={() => setCursorGlow({ color: '#10b981', isVisible: true })}
+                    onMouseLeave={() => setCursorGlow({ color: '', isVisible: false })}
+                  >
+                    {/* Elite Speed Frame */}
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600/5 via-emerald-500/8 to-emerald-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                     
-                    {/* Speed Badge */}
-                    <div className="inline-flex items-center space-x-2 bg-emerald-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-emerald-600/30">
-                      <Zap className="w-3 h-3" />
-                      <span>SPEED WIN</span>
-                    </div>
+                    <div className="relative bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 group-hover:border-emerald-500/70 group-hover:bg-black/65 group-hover:shadow-lg group-hover:shadow-emerald-500/15 transition-all duration-500 group-hover:scale-[1.005] group-hover:-translate-y-0.5">
+                    
+                      {/* Speed Badge */}
+                      <div className="inline-flex items-center space-x-2 bg-emerald-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-emerald-600/30">
+                        <Zap className="w-3 h-3" />
+                        <span>SPEED WIN</span>
+                      </div>
 
-                    {/* Ultra-Compact Format */}
-                    <h3 className="text-lg font-bold text-white mb-2">
-                      {transformation.metrics.primary} FASTER
-                    </h3>
-                    
-                    <div className="text-sm text-white/70 mb-2">
-                      {transformation.industry} | {transformation.timeline}
-                    </div>
-                    
-                    <div className="text-sm text-white/80 mb-4">
-                      {transformation.shortCrisis} → {transformation.shortResult}
-                    </div>
+                      {/* Ultra-Compact Format */}
+                      <h3 className="text-lg font-bold text-white mb-2">
+                        {transformation.metrics.primary} FASTER
+                      </h3>
+                      
+                      <div className="text-sm text-white/70 mb-2">
+                        {transformation.industry} | {transformation.timeline}
+                      </div>
+                      
+                      <div className="text-sm text-white/80 mb-4">
+                        {transformation.shortCrisis} → {transformation.shortResult}
+                      </div>
 
-                    <button className="relative w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 hover:border-emerald-600/40 hover:text-emerald-200 transition-all duration-500 overflow-hidden group">
-                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/0 via-emerald-400/10 to-emerald-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      <span className="relative">QUICK VIEW</span>
-                      <ArrowRight className="inline w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform duration-300" />
-                    </button>
+                      <button className="relative w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 hover:border-emerald-600/40 hover:text-emerald-200 transition-all duration-500 overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/0 via-emerald-400/8 to-emerald-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <span className="relative">QUICK VIEW</span>
+                        <ArrowRight className="inline w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform duration-300" />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
 
               {/* Mobile: Show 1 card */}
               <div className="md:hidden">
-                <div className="bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:border-emerald-500/50 hover:bg-black/60 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-500 group">
-                  <div className="inline-flex items-center space-x-2 bg-emerald-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-emerald-600/30">
-                    <Zap className="w-3 h-3" />
-                    <span>SPEED WIN</span>
-                  </div>
-
-                  <h3 className="text-lg font-bold text-white mb-2">
-                    {speedWins[currentSpeedWinIndex].metrics.primary} FASTER
-                  </h3>
+                <div 
+                  className="relative group cursor-pointer transition-all duration-500"
+                  onMouseEnter={() => setCursorGlow({ color: '#10b981', isVisible: true })}
+                  onMouseLeave={() => setCursorGlow({ color: '', isVisible: false })}
+                >
+                  {/* Elite Speed Frame */}
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600/5 via-emerald-500/8 to-emerald-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                   
-                  <div className="text-sm text-white/70 mb-2">
-                    {speedWins[currentSpeedWinIndex].industry} | {speedWins[currentSpeedWinIndex].timeline}
-                  </div>
-                  
-                  <div className="text-sm text-white/80 mb-4">
-                    {speedWins[currentSpeedWinIndex].shortCrisis} → {speedWins[currentSpeedWinIndex].shortResult}
-                  </div>
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 group-hover:border-emerald-500/70 group-hover:bg-black/65 group-hover:shadow-lg group-hover:shadow-emerald-500/15 transition-all duration-500 group-hover:scale-[1.005] group-hover:-translate-y-0.5">
+                    <div className="inline-flex items-center space-x-2 bg-emerald-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-emerald-600/30">
+                      <Zap className="w-3 h-3" />
+                      <span>SPEED WIN</span>
+                    </div>
 
-                  <button className="relative w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 hover:border-emerald-600/40 hover:text-emerald-200 transition-all duration-500 overflow-hidden group">
-                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/0 via-emerald-400/10 to-emerald-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <span className="relative">QUICK VIEW</span>
-                    <ArrowRight className="inline w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform duration-300" />
-                  </button>
+                    <h3 className="text-lg font-bold text-white mb-2">
+                      {speedWins[currentSpeedWinIndex].metrics.primary} FASTER
+                    </h3>
+                    
+                    <div className="text-sm text-white/70 mb-2">
+                      {speedWins[currentSpeedWinIndex].industry} | {speedWins[currentSpeedWinIndex].timeline}
+                    </div>
+                    
+                    <div className="text-sm text-white/80 mb-4">
+                      {speedWins[currentSpeedWinIndex].shortCrisis} → {speedWins[currentSpeedWinIndex].shortResult}
+                    </div>
+
+                    <button className="relative w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 hover:border-emerald-600/40 hover:text-emerald-200 transition-all duration-500 overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/0 via-emerald-400/8 to-emerald-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <span className="relative">QUICK VIEW</span>
+                      <ArrowRight className="inline w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform duration-300" />
+                    </button>
+                  </div>
                 </div>
               </div>
 
