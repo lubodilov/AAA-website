@@ -1,3 +1,4 @@
+// src/App.tsx
 import React, { useState, useEffect, useRef } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -7,14 +8,25 @@ import ProofOfDominance from './components/ProofOfDominance';
 import VisionAssessment from './components/VisionAssessment';
 import PortfolioProjects from './components/PortfolioProjects';
 import ContactForm from './components/ContactForm';
+import ScheduleCall from './components/ScheduleCall';
+import VoiceflowWidget from './components/VoiceflowWidget';
 
 function App() {
   const [currentSection, setCurrentSection] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [lastScrollTime, setLastScrollTime] = useState(0);
   const [scrollAccumulator, setScrollAccumulator] = useState(0);
+
+  // Popups
   const [contactOpen, setContactOpen] = useState(false);
-  const panelRef = useRef<HTMLDivElement | null>(null);
+  const [scheduleOpen, setScheduleOpen] = useState(false);
+
+  // Calendly kept mounted (warm) from app start
+  const [hasOpenedSchedule] = useState(true);
+
+  const contactRef = useRef<HTMLDivElement | null>(null);
+  const scheduleRef = useRef<HTMLDivElement | null>(null);
+
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const prefersReducedMotion =
@@ -22,13 +34,22 @@ function App() {
       ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
       : false;
 
-  // Handle modal lock + ESC
+  // Modal lock + ESC for both
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setContactOpen(false);
-    if (contactOpen) {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      if (scheduleOpen) setScheduleOpen(false);
+      else if (contactOpen) setContactOpen(false);
+    };
+
+    const anyOpen = contactOpen || scheduleOpen;
+    if (anyOpen) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', onKey);
-      setTimeout(() => panelRef.current?.focus(), 0);
+      setTimeout(() => {
+        if (contactOpen) contactRef.current?.focus();
+        if (scheduleOpen) scheduleRef.current?.focus();
+      }, 0);
     } else {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', onKey);
@@ -37,7 +58,7 @@ function App() {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', onKey);
     };
-  }, [contactOpen]);
+  }, [contactOpen, scheduleOpen]);
 
   const sections = ['hero', 'strategic', 'transformation', 'proof', 'portfolio', 'assessment'];
 
@@ -70,10 +91,10 @@ function App() {
     return () => observers.forEach((o) => o?.disconnect());
   }, []);
 
-  // Scroll handler
+  // Scroll handler (blocked when any modal is open)
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (contactOpen) return;
+      if (contactOpen || scheduleOpen) return;
 
       const now = Date.now();
       if (now - lastScrollTime < 150 || isTransitioning || now - lastScrollTime < 300) {
@@ -84,8 +105,7 @@ function App() {
       const transformationSection = sectionRefs.current[2];
       if (transformationSection) {
         const rect = transformationSection.getBoundingClientRect();
-        const inTransformation =
-          rect.top <= 100 && rect.bottom >= window.innerHeight - 100;
+        const inTransformation = rect.top <= 100 && rect.bottom >= window.innerHeight - 100;
         if (inTransformation && currentSection === 2) return;
       }
 
@@ -118,15 +138,17 @@ function App() {
       window.removeEventListener('wheel', handleWheel);
       clearInterval(interval);
     };
-  }, [currentSection, isTransitioning, lastScrollTime, scrollAccumulator, contactOpen]);
+  }, [currentSection, isTransitioning, lastScrollTime, scrollAccumulator, contactOpen, scheduleOpen]);
 
   const onBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) setContactOpen(false);
+    if (e.target !== e.currentTarget) return;
+    if (scheduleOpen) setScheduleOpen(false);
+    else if (contactOpen) setContactOpen(false);
   };
 
   return (
     <div className="bg-black min-h-screen overflow-hidden smooth-scroll">
-      {/* Video Background */}
+      {/* Fixed video background */}
       <div className="fixed inset-0 z-0">
         <video
           autoPlay
@@ -144,8 +166,12 @@ function App() {
         <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-black via-gray-900/80 to-black" />
       </div>
 
-      <Header onOpenContact={() => setContactOpen(true)} />
+      <Header
+        onOpenContact={() => setContactOpen(true)}
+        onOpenSchedule={() => setScheduleOpen(true)}
+      />
 
+      {/* Sections */}
       <div ref={(el) => (sectionRefs.current[0] = el)} className="snap-start">
         <Hero />
       </div>
@@ -165,56 +191,100 @@ function App() {
         <VisionAssessment />
       </div>
 
-      {/* Contact Popup */}
-   {contactOpen && (
-  <div
-    onMouseDown={onBackdrop}
-    className="fixed inset-0 z-[100] backdrop-blur-[6px] flex items-center justify-center p-4"
-    aria-modal="true"
-    role="dialog"
-    aria-label="Contact"
-  >
-    {/* Spotlight / vignette layer */}
-    <div
-      className="absolute inset-0 pointer-events-none animate-spotlight"
-      style={{
-        // Tune the gradient stops & opacities here (see notes below)
-        background:
-          'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.0) 22%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.88) 100%)'
-      }}
-    />
+      {/* CONTACT POPUP (only when open) */}
+      {contactOpen && (
+        <div
+          onMouseDown={onBackdrop}
+          className="fixed inset-0 z-[100] backdrop-blur-[6px] flex items-center justify-center p-4"
+          aria-modal="true"
+          role="dialog"
+          aria-label="Contact"
+        >
+          {/* Spotlight / vignette */}
+          <div
+            className="absolute inset-0 pointer-events-none animate-spotlight"
+            style={{
+              background:
+                'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.0) 22%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.88) 100%)'
+            }}
+          />
+          {/* Base dim */}
+          <div className="absolute inset-0 bg-black/40" />
 
-    {/* Optional base dim (lighter than before because vignette does the heavy lifting) */}
-    <div className="absolute inset-0 bg-black/40" />
-
-    <div
-      ref={panelRef}
-      tabIndex={-1}
-      className="relative w-full max-w-2xl max-h-[90vh] outline-none flex flex-col animate-panel"
-    >
-      <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col flex-1 overflow-hidden">
-        {/* Header bar */}
-        <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-          <h3 className="text-white text-lg font-light">Contact</h3>
-          <button
-            onClick={() => setContactOpen(false)}
-            className="text-white/70 hover:text-white transition"
-            aria-label="Close"
+          <div
+            ref={contactRef}
+            tabIndex={-1}
+            className="relative w-full max-w-2xl max-h-[90vh] outline-none flex flex-col animate-panel"
           >
-            ×
-          </button>
+            <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col flex-1 overflow-hidden">
+              <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
+                <h3 className="text-white text-lg font-light">Contact</h3>
+                <button
+                  onClick={() => setContactOpen(false)}
+                  className="text-white/70 hover:text-white transition"
+                  aria-label="Close"
+                >
+                  ×
+                </button>
+              </div>
+              <div className="p-6 overflow-y-auto">
+                <ContactForm />
+              </div>
+            </div>
+          </div>
         </div>
+      )}
 
-        {/* Scrollable body */}
-        <div className="p-6 overflow-y-auto">
-          <ContactForm />
+      {/* SCHEDULE A CALL POPUP (PERSISTENT + PRELOADED) */}
+      {hasOpenedSchedule && (
+        <div
+          onMouseDown={onBackdrop}
+          className={`fixed inset-0 z-[100] backdrop-blur-[6px] flex items-center justify-center p-4
+            ${scheduleOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'}
+            transition-opacity duration-300`}
+          aria-modal="true"
+          role="dialog"
+          aria-label="Schedule a Call"
+          aria-hidden={scheduleOpen ? 'false' : 'true'}
+        >
+          {/* Spotlight / vignette */}
+          <div
+            className="absolute inset-0 pointer-events-none animate-spotlight"
+            style={{
+              background:
+                'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.0) 22%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.88) 100%)'
+            }}
+          />
+          {/* Base dim */}
+          <div className="absolute inset-0 bg-black/40" />
+
+          <div
+            ref={scheduleRef}
+            tabIndex={-1}
+            className={`relative w-full max-w-2xl max-h-[90vh] outline-none flex flex-col ${scheduleOpen ? 'animate-panel' : ''}`}
+          >
+            <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col flex-1 overflow-hidden">
+              <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
+                <h3 className="text-white text-lg font-light">Schedule a Call</h3>
+                <button
+                  onClick={() => setScheduleOpen(false)}
+                  className="text-white/70 hover:text-white transition"
+                  aria-label="Close"
+                >
+                  ×
+                </button>
+              </div>
+              <div className="p-6 overflow-y-auto">
+                {/* Keep Calendly mounted always; just show/hide via parent */}
+                <ScheduleCall isOpen={scheduleOpen} />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-)}
+      )}
 
-
+      {/* Voiceflow chat widget (bottom-right) */}
+      <VoiceflowWidget projectID="68d052aa5682320b1b1bc769" />
     </div>
   );
 }

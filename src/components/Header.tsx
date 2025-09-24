@@ -1,12 +1,13 @@
 // src/components/Header.tsx
 import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Menu, X, HelpCircle } from 'lucide-react';
+import { ArrowUpRight, Menu, X, HelpCircle, CalendarClock } from 'lucide-react';
 
 type HeaderProps = {
-  onOpenContact: () => void; // NEW
+  onOpenContact: () => void;
+  onOpenSchedule: () => void; // NEW
 };
 
-export default function Header({ onOpenContact }: HeaderProps) {
+export default function Header({ onOpenContact, onOpenSchedule }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -20,7 +21,7 @@ export default function Header({ onOpenContact }: HeaderProps) {
     { name: 'Services', href: '#services' },
     { name: 'About', href: '#about' },
     { name: 'Case Studies', href: '#cases' },
-    // Keep "Contact" for mobile list, but we'll intercept click to open popup:
+    // Keep "Contact" for mobile; we'll intercept click
     { name: 'Contact', href: '#contact', isContact: true as const }
   ];
 
@@ -59,8 +60,18 @@ export default function Header({ onOpenContact }: HeaderProps) {
           </div>
 
           {/* Desktop CTAs */}
-          <div className="hidden md:flex items-center space-x-4">
-            {/* NEW: “?” contact icon button */}
+          <div className="hidden md:flex items-center space-x-3">
+            {/* NEW: Schedule a Call */}
+            <button
+              onClick={onOpenSchedule}
+              className="group relative bg-white/5 border border-white/20 text-white px-4 py-2.5 rounded-full hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
+              title="Schedule a call"
+            >
+              <CalendarClock className="w-4 h-4" />
+              <span className="font-light">Schedule a Call</span>
+            </button>
+
+            {/* Contact “?” */}
             <button
               onClick={onOpenContact}
               aria-label="Contact"
@@ -106,12 +117,18 @@ export default function Header({ onOpenContact }: HeaderProps) {
               </a>
             ))}
 
+            {/* NEW: Schedule a Call (mobile) */}
+            <button
+              onClick={() => { onOpenSchedule(); setIsMobileMenuOpen(false); }}
+              className="w-full flex items-center justify-center gap-2 bg-white/5 border border-white/20 text-white px-6 py-3 rounded-full font-light hover:bg:white/10 hover:bg-white/10 transition-all duration-300"
+            >
+              <CalendarClock className="w-4 h-4" />
+              Schedule a Call
+            </button>
+
             {/* Mobile “?” contact button */}
             <button
-              onClick={() => {
-                onOpenContact();
-                setIsMobileMenuOpen(false);
-              }}
+              onClick={() => { onOpenContact(); setIsMobileMenuOpen(false); }}
               className="w-full flex items-center justify-center gap-2 bg-white/5 border border-white/20 text-white px-6 py-3 rounded-full font-light hover:bg-white/10 transition-all duration-300"
             >
               <HelpCircle className="w-4 h-4" />

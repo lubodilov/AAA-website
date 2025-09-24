@@ -1,0 +1,104 @@
+/* problems
+the scrolbar does not scrol, only when pressed
+
+ */
+
+
+/* Set entire widget background */
+.vfrc-chat {
+  /* background-color: #101010	 !important;  */
+    background-image: url('/whatsappBackground.jpg');
+     background-repeat: repeat;         /* repeats the pattern */
+  background-size: contain;          /* or 'auto' if image is already small */
+  background-position: center center;
+}
+
+/* If you're embedding rather than overlay, also target this... */
+/* .vfrc-chat--overlay {
+  background-color: #348634 !important;
+} */
+.vfrc-header{
+  background-color: #991923;
+}
+/* image of the logo 476 x 476 */
+.c-kIbiaN-ihwEvnK-css {
+    background-image: url('/wolf-head-logo.jpg');
+}
+/* text at the top of a new chat */
+.c-cXYoYW {
+    color: azure;
+}
+.c-eLmjZC{
+    color: #999999;
+}
+
+
+.vfrc-message{
+  background-color: #383838	;
+}
+/* messages from system */
+.c-PJLV-jueArD-from-system {
+    color: rgba(255, 255, 255, 0.9);
+}
+/* messages from user */
+.c-PJLV-gJqBfM-from-user{
+      background-color: #991923;
+
+}
+/* input bckgrd */
+.c-kFHWlv .c-fYYkXN,
+.c-kFHWlv .c-iGGXrm{
+      background-color: #1f0507;
+      color:aliceblue;
+}
+.c-kFHWlv .c-fYYkXN::placeholder {
+      color: #991923;
+}
+
+
+.vfrc-chat-input{
+  /* background-color: rgb(12, 86, 26); */
+  margin: 20px;
+  
+}
+.vfrc-footer--watermark{
+  display: none;
+  
+}
+/* icon */
+.t-bDyeiy {
+    --colors-primary: #991923;
+    --colors-darkPrimary: #7a141c;
+    --colors-fadedPrimary: #a33039;
+}
+
+/* Scrollbar */
+.vfrc-chat--dialog.c-Mmsau {
+  scrollbar-width: thin;              /* Firefox */
+  scrollbar-color: #444 #1a1a1a;      /* Firefox */
+}
+/* Chrome, Edge, Safari */
+.vfrc-chat--dialog.c-Mmsau::-webkit-scrollbar {
+  width: 8px;                         /* scrollbar width */
+}
+.vfrc-chat--dialog.c-Mmsau::-webkit-scrollbar-track {
+  background: #1a1a1a;                 /* track background */
+}
+.vfrc-chat--dialog.c-Mmsau::-webkit-scrollbar-thumb {
+  background-color: #444;              /* scrollbar thumb */
+  border-radius: 10px;                 /* rounded edges */
+  border: 2px solid #1a1a1a;           /* padding effect */
+}
+.vfrc-chat--dialog.c-Mmsau::-webkit-scrollbar-thumb:hover {
+  background-color: #666;              /* lighter on hover */
+}
+
+
+/* .vfrc-header--title c-kfyIxT::after{
+    font-size: 0;
+}
+.vfrc-header--title c-kfyIxT::after{
+    content: "Your new text here";
+  font-size: 16px;
+  color: red;
+} */
