@@ -498,7 +498,7 @@ export default function TransformationProcess() {
                     <p 
                       className="text-xl md:text-2xl font-extralight italic text-red-400 mb-6"
                       style={{
-                        fontFamily: 'Inter, sans-serif'
+                        fontFamily: 'Inter, system-ui, sans-serif'
                       }}
                     >
                       {slide.outcome}

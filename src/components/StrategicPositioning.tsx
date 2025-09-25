@@ -249,7 +249,7 @@ export default function OpportunityStatement() {
                   className="relative text-5xl font-bold transition-all duration-700"
                   style={{
                     color: '#ef4444',
-                    fontFamily: 'Inter, sans-serif',
+                    fontFamily: 'Inter, system-ui, sans-serif',
                     letterSpacing: '-0.02em',
                     fontWeight: '700'
                   }}

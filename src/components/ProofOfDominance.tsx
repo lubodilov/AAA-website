@@ -232,7 +232,7 @@ export default function ProofOfDominance() {
                       className="text-4xl lg:text-5xl font-bold mb-2"
                       style={{ 
                         color: metric.color,
-                        fontFamily: 'Inter, sans-serif',
+                        fontFamily: 'Inter, system-ui, sans-serif',
                         letterSpacing: '-0.02em'
                       }}
                     >

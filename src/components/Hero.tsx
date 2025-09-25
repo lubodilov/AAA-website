@@ -85,7 +85,7 @@ export default function Hero() {
       
       <div className="relative text-center max-w-6xl mx-auto z-10">
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-extralight text-white leading-tight mb-8 min-h-[300px] md:min-h-[400px] lg:min-h-[500px] flex flex-col justify-center">
-          <div className="font-mono font-thin">
+          <div className="font-thin" style={{ fontFamily: 'Inter, sans-serif' }}>
             <div>
               {displayText.line1}
               {isTyping && displayText.line1.length > 0 && !displayText.highlight && !displayText.line2 && (

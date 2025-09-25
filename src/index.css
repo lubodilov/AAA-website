@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Apply Inter font globally */
+* {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
 /* CSS Scroll Snap Configuration */
 html {
   scroll-behavior: smooth;
