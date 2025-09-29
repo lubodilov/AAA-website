@@ -1,0 +1,145 @@
+/* Voiceflow Widget Custom Styling */
+
+/* Main widget container */
+[data-testid="vf-chat"],
+.vfrc-widget,
+.vfrc-container {
+  --uv-accent: #ef4444 !important;
+  --uv-primary: #ef4444 !important;
+  --uv-background: #0a0a0a !important;
+  --uv-surface: #1a1a1a !important;
+  --uv-text: #ffffff !important;
+  --uv-text-secondary: #a1a1aa !important;
+  --uv-border: #374151 !important;
+  z-index: 60 !important;
+}
+
+/* Chat bubble button */
+.vfrc-launcher,
+.vfrc-widget-launcher {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  border: 2px solid rgba(239, 68, 68, 0.3) !important;
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.vfrc-launcher:hover,
+.vfrc-widget-launcher:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 25px rgba(239, 68, 68, 0.4) !important;
+}
+
+/* Chat window */
+.vfrc-chat,
+.vfrc-widget-chat {
+  background: rgba(10, 10, 10, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Chat header */
+.vfrc-header,
+.vfrc-widget-header {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  border-bottom: 1px solid rgba(239, 68, 68, 0.3) !important;
+  color: white !important;
+}
+
+/* Messages */
+.vfrc-message,
+.vfrc-widget-message {
+  color: #ffffff !important;
+}
+
+.vfrc-message--user,
+.vfrc-widget-message--user {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  color: white !important;
+}
+
+.vfrc-message--system,
+.vfrc-widget-message--system {
+  background: rgba(26, 26, 26, 0.8) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Input field */
+.vfrc-input,
+.vfrc-widget-input {
+  background: rgba(26, 26, 26, 0.8) !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  color: #ffffff !important;
+  border-radius: 12px !important;
+}
+
+.vfrc-input:focus,
+.vfrc-widget-input:focus {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+}
+
+/* Send button */
+.vfrc-send-button,
+.vfrc-widget-send-button {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  color: white !important;
+  border-radius: 8px !important;
+}
+
+.vfrc-send-button:hover,
+.vfrc-widget-send-button:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+}
+
+/* Scrollbar */
+.vfrc-chat-messages::-webkit-scrollbar,
+.vfrc-widget-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.vfrc-chat-messages::-webkit-scrollbar-track,
+.vfrc-widget-messages::-webkit-scrollbar-track {
+  background: rgba(26, 26, 26, 0.5);
+  border-radius: 3px;
+}
+
+.vfrc-chat-messages::-webkit-scrollbar-thumb,
+.vfrc-widget-messages::-webkit-scrollbar-thumb {
+  background: rgba(239, 68, 68, 0.5);
+  border-radius: 3px;
+}
+
+.vfrc-chat-messages::-webkit-scrollbar-thumb:hover,
+.vfrc-widget-messages::-webkit-scrollbar-thumb:hover {
+  background: rgba(239, 68, 68, 0.7);
+}
+
+/* Animation improvements */
+.vfrc-widget,
+.vfrc-chat {
+  animation: slideInUp 0.3s ease-out !important;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .vfrc-chat,
+  .vfrc-widget-chat {
+    width: calc(100vw - 32px) !important;
+    height: calc(100vh - 100px) !important;
+    max-height: 600px !important;
+  }
+}

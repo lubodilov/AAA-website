@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Menu, X, Calendar } from 'lucide-react';
 
-export default function Header() {
+interface HeaderProps {
+  onOpenContact?: () => void;
+  onOpenSchedule?: () => void;
+}
+
+export default function Header({ onOpenContact, onOpenSchedule }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -60,7 +65,16 @@ export default function Header() {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
+            <button 
+              onClick={onOpenSchedule}
+              className="group relative bg-transparent border border-gray-600 text-white px-6 py-2.5 rounded-full hover:border-amber-600 transition-all duration-300 flex items-center space-x-2 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-600/0 via-amber-600/10 to-amber-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+              <Calendar className="relative z-10 w-4 h-4" />
+              <span className="relative z-10 font-light">Book a Call</span>
+            </button>
             <button className="group relative bg-transparent border border-gray-600 text-white px-6 py-2.5 rounded-full hover:border-red-600 transition-all duration-300 flex items-center space-x-2 overflow-hidden">
+              onClick={onOpenContact}
               <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/10 to-red-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
               <span className="relative z-10 font-light">Get Started</span>
               <ArrowUpRight className="relative z-10 w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
@@ -95,7 +109,23 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
-            <button className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full font-light hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center justify-center space-x-2 mt-4">
+            <button 
+              onClick={() => {
+                onOpenSchedule?.();
+                setIsMobileMenuOpen(false);
+              }}
+              className="w-full bg-gradient-to-r from-amber-600 to-amber-700 text-white px-6 py-3 rounded-full font-light hover:from-amber-700 hover:to-amber-800 transition-all duration-300 flex items-center justify-center space-x-2 mt-4"
+            >
+              <Calendar className="w-4 h-4" />
+              <span>Book a Call</span>
+            </button>
+            <button 
+              onClick={() => {
+                onOpenContact?.();
+                setIsMobileMenuOpen(false);
+              }}
+              className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full font-light hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center justify-center space-x-2 mt-2"
+            >
               <span>Get Started</span>
               <ArrowUpRight className="w-4 h-4" />
             </button>
