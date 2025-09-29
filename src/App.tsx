@@ -10,6 +10,9 @@ import PortfolioProjects from './components/PortfolioProjects';
 import ContactForm from './components/ContactForm';
 import ScheduleCall from './components/ScheduleCall';
 import VoiceflowWidget from './components/VoiceflowWidget';
+import type { AppProps } from 'next/app';
+import Script from 'next/script';
+
 
 function App() {
   const [currentSection, setCurrentSection] = useState(0);
@@ -20,6 +23,9 @@ function App() {
   // Popups
   const [contactOpen, setContactOpen] = useState(false);
   const [scheduleOpen, setScheduleOpen] = useState(false);
+
+  // Pulse attention for FAQ button (only for Contact popup)
+  const [faqPulseContact, setFaqPulseContact] = useState(false);
 
   // Calendly kept mounted (warm) from app start
   const [hasOpenedSchedule] = useState(true);
@@ -33,6 +39,15 @@ function App() {
     typeof window !== 'undefined' && 'matchMedia' in window
       ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
       : false;
+
+  // Trigger FAQ pulse when Contact modal opens
+  useEffect(() => {
+    if (contactOpen) {
+      setFaqPulseContact(true);
+      const t = setTimeout(() => setFaqPulseContact(false), 5500); // ~5.5s; change as you like
+      return () => clearTimeout(t);
+    }
+  }, [contactOpen]);
 
   // Modal lock + ESC for both
   useEffect(() => {
@@ -73,7 +88,7 @@ function App() {
         block: 'start',
       });
 
-      setTimeout(() => setIsTransitioning(false), 1200);
+      setTimeout(() => setIsTransitioning(false), 2800);
     }
   };
 
@@ -148,6 +163,18 @@ function App() {
 
   return (
     <div className="bg-black min-h-screen overflow-hidden smooth-scroll">
+      {/* Keyframes for the rainbow ring */}
+   <style>{`
+  /* Single left→right pass over 4s with a built-in fade out at the end */
+  @keyframes uv-rainbow-ring-once {
+    0%   { background-position: 0% 50%;   opacity: 1; }
+    92%  { background-position: 100% 50%; opacity: 1; }  /* finish sweep */
+    100% { background-position: 100% 50%; opacity: 0; }  /* fade away */
+  }
+`}</style>
+
+
+
       {/* Fixed video background */}
       <div className="fixed inset-0 z-0">
         <video
@@ -217,16 +244,47 @@ function App() {
             className="relative w-full max-w-2xl max-h-[90vh] outline-none flex flex-col animate-panel"
           >
             <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col flex-1 overflow-hidden">
+              {/* Header with FAQ + Close (FAQ ONLY HERE) */}
               <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
                 <h3 className="text-white text-lg font-light">Contact</h3>
-                <button
-                  onClick={() => setContactOpen(false)}
-                  className="text-white/70 hover:text-white transition"
-                  aria-label="Close"
-                >
-                  ×
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => (window.location.href = '/faq')}
+                    className="relative overflow-hidden text-white/80 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg text-sm font-light transition"
+                    title="See answers to common questions"
+                  >
+                    {/* Rainbow ring only while pulsing */}
+               {faqPulseContact && !prefersReducedMotion && (
+  <span
+    className="absolute -inset-0.5 rounded-lg p-[2px] pointer-events-none"
+    style={{
+      background:
+        'linear-gradient(90deg, red 0%, orange 16%, yellow 33%, green 50%, blue 66%, indigo 83%, violet 100%)',
+      backgroundSize: '300% 300%',
+      animation: 'uv-rainbow-ring-once 4s linear 1 forwards', // holds final (opacity:0)
+      borderRadius: '0.5rem',
+      willChange: 'background-position, opacity',
+    }}
+    onAnimationEnd={() => setFaqPulseContact(false)} // remove after it’s invisible
+  >
+    <span className="block w-full h-full rounded-md bg-black/40" />
+  </span>
+)}
+
+
+                    <span className="relative z-10">Frequently asked questions</span>
+                  </button>
+                  <button
+                    onClick={() => setContactOpen(false)}
+                    className="text-white/70 hover:text-white transition text-xl leading-none px-2"
+                    aria-label="Close"
+                    title="Close"
+                  >
+                    ×
+                  </button>
+                </div>
               </div>
+              {/* Body */}
               <div className="p-6 overflow-y-auto">
                 <ContactForm />
               </div>
@@ -264,16 +322,21 @@ function App() {
             className={`relative w-full max-w-2xl max-h-[90vh] outline-none flex flex-col ${scheduleOpen ? 'animate-panel' : ''}`}
           >
             <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col flex-1 overflow-hidden">
+              {/* Header (CLOSE ONLY) */}
               <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
                 <h3 className="text-white text-lg font-light">Schedule a Call</h3>
-                <button
-                  onClick={() => setScheduleOpen(false)}
-                  className="text-white/70 hover:text-white transition"
-                  aria-label="Close"
-                >
-                  ×
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setScheduleOpen(false)}
+                    className="text-white/70 hover:text-white transition text-xl leading-none px-2"
+                    aria-label="Close"
+                    title="Close"
+                  >
+                    ×
+                  </button>
+                </div>
               </div>
+              {/* Body */}
               <div className="p-6 overflow-y-auto">
                 {/* Keep Calendly mounted always; just show/hide via parent */}
                 <ScheduleCall isOpen={scheduleOpen} />
@@ -287,6 +350,10 @@ function App() {
       <VoiceflowWidget projectID="68d052aa5682320b1b1bc769" />
     </div>
   );
+
+
+
+
 }
 
 export default App;
