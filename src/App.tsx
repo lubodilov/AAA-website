@@ -5,7 +5,6 @@ import Hero from './components/Hero';
 import OpportunityStatement from './components/StrategicPositioning';
 import TransformationProcess from './components/TransformationProcess';
 import ProofOfDominance from './components/ProofOfDominance';
-import VisionAssessment from './components/VisionAssessment';
 import PortfolioProjects from './components/PortfolioProjects';
 import ContactForm from './components/ContactForm';
 import ScheduleCall from './components/ScheduleCall';
