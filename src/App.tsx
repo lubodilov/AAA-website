@@ -249,10 +249,6 @@ function HomePage() {
             }}
           />
           <div className="absolute inset-0 bg-black/40" />
-    </div>
-  );
-}
-
           <div
             ref={scheduleRef}
             tabIndex={-1}
@@ -279,4 +275,7 @@ function HomePage() {
       
       {/* Voiceflow AI Chatbot Widget */}
       <VoiceflowWidget projectID="68d052aa5682320b1b1bc769" />
+    </div>
+  );
+}
 export default App;
