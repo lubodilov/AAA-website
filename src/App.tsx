@@ -252,7 +252,7 @@ function HomePage() {
           <div
             ref={scheduleRef}
             tabIndex={-1}
-            className={`relative w-full max-w-4xl max-h-[90vh] outline-none flex flex-col ${
+            className={`relative w-full max-w-3xl max-h-[90vh] outline-none flex flex-col ${
               scheduleOpen ? 'animate-in fade-in-0 zoom-in-95 duration-300' : ''
             }`}
           >
