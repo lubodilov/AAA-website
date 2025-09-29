@@ -232,9 +232,9 @@ function HomePage() {
       {hasOpenedSchedule && (
         <div
           onMouseDown={onBackdrop}
-          className={`fixed inset-0 z-[100] backdrop-blur-[6px] flex items-center justify-center p-4
-            ${scheduleOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'}
-            transition-opacity duration-300`}
+          className={`fixed inset-0 z-[100] backdrop-blur-[6px] flex items-center justify-center p-4 ${
+            scheduleOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'
+          } transition-opacity duration-300`}
           aria-modal="true"
           role="dialog"
           aria-label="Schedule a Call"
@@ -252,7 +252,9 @@ function HomePage() {
           <div
             ref={scheduleRef}
             tabIndex={-1}
-            className={`relative w-full max-w-4xl max-h-[90vh] outline-none flex flex-col ${scheduleOpen ? 'animate-in fade-in-0 zoom-in-95 duration-300' : ''}`}
+            className={`relative w-full max-w-4xl max-h-[90vh] outline-none flex flex-col ${
+              scheduleOpen ? 'animate-in fade-in-0 zoom-in-95 duration-300' : ''
+            }`}
           >
             <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col flex-1 overflow-hidden">
               <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">

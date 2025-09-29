@@ -73,8 +73,10 @@ export default function Header({ onOpenContact, onOpenSchedule }: HeaderProps) {
               <Calendar className="relative z-10 w-4 h-4" />
               <span className="relative z-10 font-light">Book a Call</span>
             </button>
-            <button className="group relative bg-transparent border border-gray-600 text-white px-6 py-2.5 rounded-full hover:border-red-600 transition-all duration-300 flex items-center space-x-2 overflow-hidden">
+            <button 
               onClick={onOpenContact}
+              className="group relative bg-transparent border border-gray-600 text-white px-6 py-2.5 rounded-full hover:border-red-600 transition-all duration-300 flex items-center space-x-2 overflow-hidden"
+            >
               <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/10 to-red-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
               <span className="relative z-10 font-light">Get Started</span>
               <ArrowUpRight className="relative z-10 w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
