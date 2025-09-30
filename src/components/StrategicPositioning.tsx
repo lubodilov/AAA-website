@@ -290,8 +290,6 @@ export default function OpportunityStatement() {
                       fontWeight: '700',
                       textShadow: counterFinished ? '0 0 20px rgba(239, 68, 68, 0.5)' : 'none',
                       filter: counterFinished ? 'drop-shadow(0 0 8px rgba(239, 68, 68, 0.3))' : 'none'
-                      textShadow: counterFinished ? '0 0 30px rgba(239, 68, 68, 0.5)' : 'none',
-                      filter: counterFinished ? 'drop-shadow(0 0 10px rgba(239, 68, 68, 0.3))' : 'none'
                     }}
                   >
                     {counterValue}%
@@ -306,9 +304,6 @@ export default function OpportunityStatement() {
                         ? 'linear-gradient(90deg, transparent, #ef4444, transparent)'
                         : 'transparent',
                       boxShadow: counterFinished ? '0 0 15px rgba(239, 68, 68, 0.5)' : 'none'
-                        ? 'linear-gradient(90deg, transparent, #ef4444, transparent)'
-                        : 'transparent',
-                      boxShadow: counterFinished ? '0 0 20px rgba(239, 68, 68, 0.5)' : 'none'
                     }}
                   />
                   
@@ -405,8 +400,8 @@ export default function OpportunityStatement() {
             <div className="relative mb-4">
               {/* Clean circular frame for mobile */}
               <div className="relative w-48 h-48 mx-auto flex items-center justify-center">
-                {/* Circular border */}
-                <div 
+                {/* Animated circular progress ring for mobile */}
+                <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                   className="absolute inset-0 rounded-full border transition-all duration-1000"
                   style={{
                     borderColor: counterFinished ? '#ef4444' : 'rgba(239, 68, 68, 0.2)',
@@ -455,6 +450,7 @@ export default function OpportunityStatement() {
         </div>
       </div>
     </section>
-  )
+  );
+}
   );
 }
