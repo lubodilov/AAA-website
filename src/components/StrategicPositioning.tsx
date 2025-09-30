@@ -455,5 +455,6 @@ export default function OpportunityStatement() {
         </div>
       </div>
     </section>
+  )
   );
 }
