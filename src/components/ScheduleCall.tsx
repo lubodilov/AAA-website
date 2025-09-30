@@ -15,7 +15,7 @@ export default function ScheduleCall({ isOpen }: { isOpen: boolean }) {
         <InlineWidget
           url={CALENDLY_URL}
           styles={{
-            height: window.innerWidth < 768 ? '60vh' : '70vh',
+            height: '70vh',
             width: '100%',
           }}
           pageSettings={{

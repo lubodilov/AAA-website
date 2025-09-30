@@ -84,13 +84,13 @@ export default function Hero() {
       <div className="absolute inset-0 bg-black/10 z-0"></div>
       
       <div className="relative text-center max-w-6xl mx-auto z-10">
-        <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight text-white leading-tight mb-8 min-h-[250px] sm:min-h-[300px] md:min-h-[400px] lg:min-h-[500px] flex flex-col justify-center px-4">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-extralight text-white leading-tight mb-8 min-h-[300px] md:min-h-[400px] lg:min-h-[500px] flex flex-col justify-center">
           <div className="font-thin" style={{ fontFamily: 'Inter, sans-serif' }}>
             <div>
               {displayText.line1}
               {isTyping && displayText.line1.length > 0 && !displayText.highlight && !displayText.line2 && (
                 <span 
-                  className={`inline-block w-0.5 sm:w-1 bg-white ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
+                  className={`inline-block w-1 bg-white ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
                   style={{ height: '0.8em', animation: 'none' }}
                 >
                   |
@@ -106,7 +106,7 @@ export default function Hero() {
               </span>
               {isTyping && displayText.highlight.length > 0 && !displayText.line2 && (
                 <span 
-                  className={`inline-block w-0.5 sm:w-1 ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
+                  className={`inline-block w-1 ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
                   style={{ height: '0.8em', animation: 'none', backgroundColor: '#991923' }}
                 >
                   |
@@ -117,7 +117,7 @@ export default function Hero() {
               {displayText.line2}
               {isTyping && displayText.line2.length > 0 && (
                 <span 
-                  className={`inline-block w-0.5 sm:w-1 bg-white ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
+                  className={`inline-block w-1 bg-white ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
                   style={{ height: '0.8em', animation: 'none' }}
                 >
                   |
@@ -125,7 +125,7 @@ export default function Hero() {
               )}
               {!isTyping && (
                 <span 
-                  className={`inline-block w-0.5 sm:w-1 bg-white ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
+                  className={`inline-block w-1 bg-white ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
                   style={{ height: '0.8em', animation: 'none' }}
                 >
                   |
