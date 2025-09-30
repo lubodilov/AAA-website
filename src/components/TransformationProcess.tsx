@@ -512,19 +512,6 @@ export default function TransformationProcess() {
 
                 {/* Right Content - 1/3 */}
                 <div className="flex justify-center md:justify-start">
-                  <div 
-                    className="w-48 h-48 flex items-center justify-center"
-                    style={{
-                      opacity: animationStates[index] ? 1 : 0,
-                      transform: animationStates[index] ? 'scale(1) rotate(0deg)' : 'scale(0.85) rotate(-5deg)',
-                      transition: prefersReducedMotion ? 'opacity 0.3s ease-out' : 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
-                      transitionDelay: '1.1s'
-                    }}
-                  >
-                    <div className="text-red-400 w-full h-full flex items-center justify-center">
-                      {getIcon(slide.icon, animationStates[index])}
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
