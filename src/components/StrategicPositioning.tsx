@@ -133,36 +133,206 @@ export default function OpportunityStatement() {
               <div className="relative mb-4">
                 {/* Clean circular frame */}
                 <div className="relative w-64 h-64 mx-auto flex items-center justify-center">
-                  {/* Circular border */}
+                  {/* Animated circular progress ring */}
+                  <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                    <defs>
+                      <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#ef4444" />
+                        <stop offset="50%" stopColor="#dc2626" />
+                        <stop offset="100%" stopColor="#b91c1c" />
+                      </linearGradient>
+                      <filter id="glow">
+                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                        <feMerge> 
+                          <feMergeNode in="coloredBlur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+                    
+                    {/* Background circle */}
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="rgba(239, 68, 68, 0.1)"
+                      strokeWidth="2"
+                    />
+                    
+                    {/* Animated progress circle */}
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="url(#progressGradient)"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      filter="url(#glow)"
+                      strokeDasharray="283"
+                      strokeDashoffset={counterFinished ? "0" : "283"}
+                      style={{
+                        transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                        transitionDelay: '0.5s'
+                      }}
+                    />
+                    
+                    {/* Pulsing dots around the circle */}
+                    {[0, 60, 120, 180, 240, 300].map((angle, i) => {
+                      const x = 50 + 45 * Math.cos((angle * Math.PI) / 180);
+                      const y = 50 + 45 * Math.sin((angle * Math.PI) / 180);
+                      return (
+                        <circle
+                          key={i}
+                          cx={x}
+                          cy={y}
+                          r="1.5"
+                          fill="#ef4444"
+                          opacity={counterFinished ? "0.8" : "0"}
+                          style={{
+                            transition: prefersReducedMotion ? 'none' : 'opacity 0.5s ease-out',
+                            transitionDelay: `${1 + i * 0.1}s`,
+                            animation: !prefersReducedMotion && counterFinished ? `pulse 2s ease-in-out infinite ${i * 0.2}s` : 'none'
+                          }}
+                        />
+                      );
+                    })}
+                  </svg>
+                  
+                  {/* Inner glow effect */}
                   <div 
-                    className="absolute inset-0 rounded-full border transition-all duration-1000"
+                  {/* Animated circular progress ring for mobile */}
+                  <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                    <defs>
+                      <linearGradient id="progressGradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#ef4444" />
+                        <stop offset="50%" stopColor="#dc2626" />
+                        <stop offset="100%" stopColor="#b91c1c" />
+                      </linearGradient>
+                      <filter id="glowMobile">
+                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                        <feMerge> 
+                          <feMergeNode in="coloredBlur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+                    
+                    {/* Background circle */}
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="rgba(239, 68, 68, 0.1)"
+                      strokeWidth="2"
+                    />
+                    
+                    {/* Animated progress circle */}
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="url(#progressGradientMobile)"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      filter="url(#glowMobile)"
+                      strokeDasharray="283"
+                      strokeDashoffset={counterFinished ? "0" : "283"}
+                      style={{
+                        transition: prefersReducedMotion ? 'none' : 'stroke-dashoffset 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                        transitionDelay: '0.5s'
+                      }}
+                    />
+                    
+                    {/* Pulsing dots around the circle */}
+                    {[0, 90, 180, 270].map((angle, i) => {
+                      const x = 50 + 45 * Math.cos((angle * Math.PI) / 180);
+                      const y = 50 + 45 * Math.sin((angle * Math.PI) / 180);
+                      return (
+                        <circle
+                          key={i}
+                          cx={x}
+                          cy={y}
+                          r="1.5"
+                          fill="#ef4444"
+                          opacity={counterFinished ? "0.8" : "0"}
+                          style={{
+                            transition: prefersReducedMotion ? 'none' : 'opacity 0.5s ease-out',
+                            transitionDelay: `${1 + i * 0.15}s`,
+                            animation: !prefersReducedMotion && counterFinished ? `pulse 2s ease-in-out infinite ${i * 0.3}s` : 'none'
+                          }}
+                        />
+                      );
+                    })}
+                  </svg>
+                  
+                  {/* Inner glow effect */}
+                  <div 
+                    className="absolute inset-3 rounded-full transition-all duration-1000"
                     style={{
-                      borderColor: counterFinished ? '#ef4444' : 'rgba(239, 68, 68, 0.2)',
-                      borderWidth: '2px'
+                      background: counterFinished 
+                        ? 'radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, transparent 70%)'
+                        : 'transparent',
+                      filter: 'blur(15px)'
                     }}
                   />
                 
                   {/* Main counter */}
                   <div 
-                    className="relative text-7xl lg:text-8xl font-bold transition-all duration-700"
+                    className="relative text-5xl font-bold transition-all duration-700 z-10"
                     style={{
                       color: '#ef4444',
                       fontFamily: 'Inter, sans-serif',
                       letterSpacing: '-0.02em',
-                      fontWeight: '700'
+                      fontWeight: '700',
+                      textShadow: counterFinished ? '0 0 20px rgba(239, 68, 68, 0.5)' : 'none',
+                      filter: counterFinished ? 'drop-shadow(0 0 8px rgba(239, 68, 68, 0.3))' : 'none'
+                      textShadow: counterFinished ? '0 0 30px rgba(239, 68, 68, 0.5)' : 'none',
+                      filter: counterFinished ? 'drop-shadow(0 0 10px rgba(239, 68, 68, 0.3))' : 'none'
                     }}
                   >
                     {counterValue}%
                   </div>
                 
-                  {/* Horizontal line */}
+                  {/* Enhanced horizontal accent line */}
                   <div 
-                    className="absolute bottom-16 left-1/2 transform -translate-x-1/2 h-0.5 transition-all duration-1000"
+                    className="absolute bottom-12 left-1/2 transform -translate-x-1/2 h-1 rounded-full transition-all duration-1000"
                     style={{
                       width: counterFinished ? '100px' : '0px',
-                      backgroundColor: '#ef4444'
+                      background: counterFinished 
+                        ? 'linear-gradient(90deg, transparent, #ef4444, transparent)'
+                        : 'transparent',
+                      boxShadow: counterFinished ? '0 0 15px rgba(239, 68, 68, 0.5)' : 'none'
+                        ? 'linear-gradient(90deg, transparent, #ef4444, transparent)'
+                        : 'transparent',
+                      boxShadow: counterFinished ? '0 0 20px rgba(239, 68, 68, 0.5)' : 'none'
                     }}
                   />
+                  
+                  {/* Floating accent elements */}
+                  {counterFinished && [
+                    { top: '20%', left: '15%', delay: '1.5s' },
+                    { top: '25%', right: '20%', delay: '1.8s' },
+                    { bottom: '30%', left: '10%', delay: '2.1s' },
+                    { bottom: '25%', right: '15%', delay: '2.4s' }
+                  ].map((pos, i) => (
+                    <div
+                      key={i}
+                      className="absolute w-2 h-2 bg-red-400 rounded-full"
+                      style={{
+                        ...pos,
+                        opacity: counterFinished ? 0.6 : 0,
+                        transition: prefersReducedMotion ? 'none' : 'opacity 0.5s ease-out',
+                        transitionDelay: pos.delay,
+                        animation: !prefersReducedMotion && counterFinished 
+                          ? `pulse 3s ease-in-out infinite ${parseFloat(pos.delay)}` 
+                          : 'none'
+                      }}
+                    />
+                  ))}
                 </div>
               </div>
               
