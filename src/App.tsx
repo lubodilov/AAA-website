@@ -207,20 +207,20 @@ function HomePage() {
           <div
             ref={contactRef}
             tabIndex={-1}
-            className="relative w-full max-w-2xl max-h-[90vh] outline-none flex flex-col animate-in fade-in-0 zoom-in-95 duration-300"
+            className="relative w-full max-w-sm sm:max-w-lg lg:max-w-2xl max-h-[90vh] outline-none flex flex-col animate-in fade-in-0 zoom-in-95 duration-300"
           >
             <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col flex-1 overflow-hidden">
-              <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-                <h3 className="text-white text-lg font-light">Get Started</h3>
+              <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-white/10 flex items-center justify-between">
+                <h3 className="text-white text-base sm:text-lg font-light">Get Started</h3>
                 <button
                   onClick={() => setContactOpen(false)}
-                  className="text-white/70 hover:text-white transition text-2xl leading-none"
+                  className="text-white/70 hover:text-white transition text-xl sm:text-2xl leading-none"
                   aria-label="Close"
                 >
                   ×
                 </button>
               </div>
-              <div className="p-6 overflow-y-auto">
+              <div className="p-4 sm:p-6 overflow-y-auto">
                 <ContactForm />
               </div>
             </div>
@@ -252,22 +252,22 @@ function HomePage() {
           <div
             ref={scheduleRef}
             tabIndex={-1}
-            className={`relative w-full max-w-4xl max-h-[90vh] outline-none flex flex-col ${
+            className={`relative w-full max-w-sm sm:max-w-2xl lg:max-w-4xl max-h-[90vh] outline-none flex flex-col ${
               scheduleOpen ? 'animate-in fade-in-0 zoom-in-95 duration-300' : ''
             }`}
           >
             <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col flex-1 overflow-hidden">
-              <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-                <h3 className="text-white text-lg font-light">Schedule a Call</h3>
+              <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-white/10 flex items-center justify-between">
+                <h3 className="text-white text-base sm:text-lg font-light">Schedule a Call</h3>
                 <button
                   onClick={() => setScheduleOpen(false)}
-                  className="text-white/70 hover:text-white transition text-2xl leading-none"
+                  className="text-white/70 hover:text-white transition text-xl sm:text-2xl leading-none"
                   aria-label="Close"
                 >
                   ×
                 </button>
               </div>
-              <div className="p-6 overflow-y-auto">
+              <div className="p-4 sm:p-6 overflow-y-auto">
                 <ScheduleCall isOpen={scheduleOpen} />
               </div>
             </div>

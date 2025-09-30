@@ -176,13 +176,13 @@ export default function ProofOfDominance() {
             }}
           >
             {/* Elite badge */}
-            <div className="inline-flex items-center space-x-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-4 py-2 mb-4">
+            <div className="inline-flex items-center space-x-2 sm:space-x-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 mb-3 sm:mb-4">
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-              <span className="text-white/80 text-xs font-light tracking-wider uppercase">Proof of Dominance</span>
+              <span className="text-white/80 text-xs sm:text-sm font-light tracking-wider uppercase">Proof of Dominance</span>
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
             </div>
             
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-thin text-white leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-thin text-white leading-tight px-4">
               The Vision{' '}
               <span 
                 className="font-extralight italic"
@@ -201,7 +201,7 @@ export default function ProofOfDominance() {
         </div>
 
         {/* Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8 px-4">
           {metrics.map((metric, index) => (
             <div
               key={index}
@@ -214,10 +214,10 @@ export default function ProofOfDominance() {
               }}
             >
               {/* Card Background */}
-              <div className="relative bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/20 transition-all duration-500 group-hover:bg-black/40">
+              <div className="relative bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:border-white/20 transition-all duration-500 group-hover:bg-black/40">
                 {/* Glow effect */}
                 <div 
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute inset-0 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
                     background: `radial-gradient(circle at center, ${metric.color}15 0%, transparent 70%)`,
                     filter: 'blur(20px)'
@@ -227,9 +227,9 @@ export default function ProofOfDominance() {
                 {/* Content */}
                 <div className="relative z-10 text-center">
                   {/* Main Metric */}
-                  <div className="mb-3">
+                  <div className="mb-2 sm:mb-3">
                     <div 
-                      className="text-4xl lg:text-5xl font-bold mb-2"
+                      className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 sm:mb-2"
                       style={{ 
                         color: metric.color,
                         fontFamily: 'Inter, system-ui, sans-serif',
@@ -243,28 +243,28 @@ export default function ProofOfDominance() {
                     <div 
                       className="h-0.5 mx-auto transition-all duration-1000"
                       style={{
-                        width: metricsAnimated[index] ? '60px' : '0px',
+                        width: metricsAnimated[index] ? '40px' : '0px',
                         backgroundColor: metric.color
                       }}
                     />
                   </div>
                   
                   {/* Labels */}
-                  <div className="space-y-1">
-                    <div className="text-white font-light text-base">
+                  <div className="space-y-0.5 sm:space-y-1">
+                    <div className="text-white font-light text-sm sm:text-base">
                       {metric.label}
                     </div>
-                    <div className="text-white/70 font-extralight text-sm">
+                    <div className="text-white/70 font-extralight text-xs sm:text-sm">
                       {metric.sublabel}
                     </div>
                   </div>
                 </div>
 
                 {/* Corner accents */}
-                <div className="absolute top-4 left-4 w-6 h-6 border-l-2 border-t-2 border-white/20 group-hover:border-white/40 transition-colors duration-300" />
-                <div className="absolute top-4 right-4 w-6 h-6 border-r-2 border-t-2 border-white/20 group-hover:border-white/40 transition-colors duration-300" />
-                <div className="absolute bottom-4 left-4 w-6 h-6 border-l-2 border-b-2 border-white/20 group-hover:border-white/40 transition-colors duration-300" />
-                <div className="absolute bottom-4 right-4 w-6 h-6 border-r-2 border-b-2 border-white/20 group-hover:border-white/40 transition-colors duration-300" />
+                <div className="absolute top-2 sm:top-4 left-2 sm:left-4 w-4 sm:w-6 h-4 sm:h-6 border-l-2 border-t-2 border-white/20 group-hover:border-white/40 transition-colors duration-300" />
+                <div className="absolute top-2 sm:top-4 right-2 sm:right-4 w-4 sm:w-6 h-4 sm:h-6 border-r-2 border-t-2 border-white/20 group-hover:border-white/40 transition-colors duration-300" />
+                <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 w-4 sm:w-6 h-4 sm:h-6 border-l-2 border-b-2 border-white/20 group-hover:border-white/40 transition-colors duration-300" />
+                <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4 w-4 sm:w-6 h-4 sm:h-6 border-r-2 border-b-2 border-white/20 group-hover:border-white/40 transition-colors duration-300" />
               </div>
             </div>
           ))}
@@ -272,7 +272,7 @@ export default function ProofOfDominance() {
 
         {/* Bottom Statement */}
         <div 
-          className="text-center max-w-3xl mx-auto"
+          className="text-center max-w-3xl mx-auto px-4"
           style={{
             opacity: descriptionVisible ? 1 : 0,
             transform: descriptionVisible ? 'translateY(0)' : 'translateY(30px)',
@@ -281,9 +281,9 @@ export default function ProofOfDominance() {
         >
           <div className="relative">
             {/* Elite frame */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent rounded-2xl" />
-            <div className="relative bg-black/20 backdrop-blur-sm border border-white/10 rounded-2xl p-6 lg:p-8">
-              <p className="text-lg lg:text-xl font-extralight text-white leading-relaxed">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent rounded-xl sm:rounded-2xl" />
+            <div className="relative bg-black/20 backdrop-blur-sm border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8">
+              <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-extralight text-white leading-relaxed">
                 Within <span className="text-red-400 font-light">6 months</span>, our clients shift from{' '}
                 <span className="text-white/90">managing operations</span> to{' '}
                 <span 
@@ -300,19 +300,19 @@ export default function ProofOfDominance() {
               </p>
               
               {/* Decorative elements */}
-              <div className="absolute top-4 left-4 w-6 h-6">
+              <div className="absolute top-2 sm:top-4 left-2 sm:left-4 w-4 sm:w-6 h-4 sm:h-6">
                 <div className="w-full h-full border border-white/20 rounded-full flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
+                  <div className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-red-500 rounded-full animate-pulse" />
                 </div>
               </div>
-              <div className="absolute top-4 right-4 w-6 h-6">
+              <div className="absolute top-2 sm:top-4 right-2 sm:right-4 w-4 sm:w-6 h-4 sm:h-6">
                 <div className="w-full h-full border border-white/20 rounded-full flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+                  <div className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-amber-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
                 </div>
               </div>
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-6 h-6">
+              <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 w-4 sm:w-6 h-4 sm:h-6">
                 <div className="w-full h-full border border-white/20 rounded-full flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+                  <div className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-emerald-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
                 </div>
               </div>
             </div>

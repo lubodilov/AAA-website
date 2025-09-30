@@ -480,9 +480,9 @@ export default function TransformationProcess() {
 
             {/* Content Container */}
             <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+              <div className="flex flex-col items-center text-center">
                 {/* Left Content - 2/3 */}
-                <div className="md:col-span-2 space-y-6">
+                <div className="space-y-4 sm:space-y-6 max-w-4xl">
                   <div
                     style={{
                       opacity: animationStates[index] ? 1 : 0,
@@ -491,12 +491,12 @@ export default function TransformationProcess() {
                       transitionDelay: '1.0s'
                     }}
                   >
-                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white mb-4 leading-tight">
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-thin text-white mb-3 sm:mb-4 leading-tight px-4">
                       {slide.title}
                     </h3>
                     
                     <p 
-                      className="text-xl md:text-2xl font-extralight italic text-red-400 mb-6"
+                      className="text-base sm:text-lg md:text-xl lg:text-2xl font-extralight italic text-red-400 mb-4 sm:mb-6 px-4"
                       style={{
                         fontFamily: 'Inter, system-ui, sans-serif'
                       }}
@@ -504,14 +504,10 @@ export default function TransformationProcess() {
                       {slide.outcome}
                     </p>
                     
-                    <p className="text-lg font-extralight text-white/90 leading-relaxed max-w-2xl">
+                    <p className="text-sm sm:text-base md:text-lg font-extralight text-white/90 leading-relaxed max-w-2xl mx-auto px-4">
                       {slide.description}
                     </p>
                   </div>
-                </div>
-
-                {/* Right Content - 1/3 */}
-                <div className="flex justify-center md:justify-start">
                 </div>
               </div>
             </div>

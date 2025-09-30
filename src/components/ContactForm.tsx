@@ -18,95 +18,95 @@ export default function ContactForm() {
 
   if (isSubmitted) {
     return (
-      <div className="text-center bg-white/5 border border-green-600/30 rounded-xl p-8">
-        <div className="w-16 h-16 bg-green-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
-          <CheckCircle className="w-8 h-8 text-green-600" />
+      <div className="text-center bg-white/5 border border-green-600/30 rounded-xl p-4 sm:p-6 lg:p-8">
+        <div className="w-12 sm:w-16 h-12 sm:h-16 bg-green-600/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+          <CheckCircle className="w-6 sm:w-8 h-6 sm:h-8 text-green-600" />
         </div>
-        <h3 className="text-white text-2xl font-light mb-2">Message Sent!</h3>
-        <p className="text-white/70">We’ll get back with a tailored plan.</p>
+        <h3 className="text-white text-lg sm:text-xl lg:text-2xl font-light mb-2">Message Sent!</h3>
+        <p className="text-white/70 text-sm sm:text-base">We'll get back with a tailored plan.</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <div>
-          <label className="block text-white/80 text-sm font-light mb-2">Name *</label>
+          <label className="block text-white/80 text-xs sm:text-sm font-light mb-1.5 sm:mb-2">Name *</label>
           <input
             required
             value={formData.name}
             onChange={(e) => handleChange('name', e.target.value)}
-            className="w-full p-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:border-red-600 outline-none"
+            className="w-full p-3 sm:p-4 bg-white/5 border border-white/20 rounded-lg sm:rounded-xl text-white text-sm sm:text-base placeholder-white/40 focus:border-red-600 outline-none"
             placeholder="Your full name"
           />
         </div>
         <div>
-          <label className="block text-white/80 text-sm font-light mb-2">Company *</label>
+          <label className="block text-white/80 text-xs sm:text-sm font-light mb-1.5 sm:mb-2">Company *</label>
           <input
             required
             value={formData.company}
             onChange={(e) => handleChange('company', e.target.value)}
-            className="w-full p-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:border-red-600 outline-none"
+            className="w-full p-3 sm:p-4 bg-white/5 border border-white/20 rounded-lg sm:rounded-xl text-white text-sm sm:text-base placeholder-white/40 focus:border-red-600 outline-none"
             placeholder="Company name"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-white/80 text-sm font-light mb-2">Title *</label>
+        <label className="block text-white/80 text-xs sm:text-sm font-light mb-1.5 sm:mb-2">Title *</label>
         <input
           required
           value={formData.title}
           onChange={(e) => handleChange('title', e.target.value)}
-          className="w-full p-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:border-red-600 outline-none"
+          className="w-full p-3 sm:p-4 bg-white/5 border border-white/20 rounded-lg sm:rounded-xl text-white text-sm sm:text-base placeholder-white/40 focus:border-red-600 outline-none"
           placeholder="Your job title"
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <div>
-          <label className="block text-white/80 text-sm font-light mb-2">Email *</label>
+          <label className="block text-white/80 text-xs sm:text-sm font-light mb-1.5 sm:mb-2">Email *</label>
           <input
             type="email"
             required
             value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
-            className="w-full p-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:border-red-600 outline-none"
+            className="w-full p-3 sm:p-4 bg-white/5 border border-white/20 rounded-lg sm:rounded-xl text-white text-sm sm:text-base placeholder-white/40 focus:border-red-600 outline-none"
             placeholder="your@email.com"
           />
         </div>
         <div>
-          <label className="block text-white/80 text-sm font-light mb-2">Phone *</label>
+          <label className="block text-white/80 text-xs sm:text-sm font-light mb-1.5 sm:mb-2">Phone *</label>
           <input
             type="tel"
             required
             value={formData.phone}
             onChange={(e) => handleChange('phone', e.target.value)}
-            className="w-full p-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:border-red-600 outline-none"
+            className="w-full p-3 sm:p-4 bg-white/5 border border-white/20 rounded-lg sm:rounded-xl text-white text-sm sm:text-base placeholder-white/40 focus:border-red-600 outline-none"
             placeholder="(555) 123-4567"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-white/80 text-sm font-light mb-2">Message *</label>
+        <label className="block text-white/80 text-xs sm:text-sm font-light mb-1.5 sm:mb-2">Message *</label>
         <textarea
           required
-          rows={5}
+          rows={4}
           value={formData.message}
           onChange={(e) => handleChange('message', e.target.value)}
-          className="w-full p-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:border-red-600 outline-none resize-none"
+          className="w-full p-3 sm:p-4 bg-white/5 border border-white/20 rounded-lg sm:rounded-xl text-white text-sm sm:text-base placeholder-white/40 focus:border-red-600 outline-none resize-none"
           placeholder="Tell us about goals, timeline, success definition."
         />
       </div>
 
       <button
         type="submit"
-        className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 px-8 rounded-xl font-light text-lg hover:from-red-700 hover:to-red-800 transition flex items-center justify-center gap-2 group"
+        className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 sm:py-4 px-6 sm:px-8 rounded-lg sm:rounded-xl font-light text-base sm:text-lg hover:from-red-700 hover:to-red-800 transition flex items-center justify-center gap-2 group"
       >
         <span>Send Message</span>
-        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+        <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 group-hover:translate-x-1 transition-transform" />
       </button>
     </form>
   );

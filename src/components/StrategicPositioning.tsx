@@ -73,14 +73,14 @@ export default function OpportunityStatement() {
       className="min-h-screen flex items-center relative overflow-hidden"
     >
       <div className="w-full max-w-none">
-        {/* Desktop & Tablet Layout (≥768px) */}
-        <div className="hidden md:flex min-h-screen">
+        {/* Desktop & Tablet Layout (≥1024px) */}
+        <div className="hidden lg:flex min-h-screen">
           {/* Left Column - 60% */}
-          <div className="w-[55%] flex items-center px-20 lg:px-24 relative z-10">
+          <div className="w-[55%] flex items-center px-12 xl:px-20 relative z-10">
             <div className="max-w-2xl">
               {/* Headline */}
               <h2 
-                className={`text-3xl lg:text-5xl font-thin text-white leading-tight mb-8 transition-all duration-400 ${
+                className={`text-2xl xl:text-4xl font-thin text-white leading-tight mb-6 xl:mb-8 transition-all duration-400 ${
                   prefersReducedMotion ? 'ease-linear' : 'cubic-bezier(0.4,0,0.2,1)'
                 }`}
                 style={{
@@ -104,17 +104,17 @@ export default function OpportunityStatement() {
               
               {/* Supporting Copy */}
               <div 
-                className={`space-y-6 transition-opacity duration-400 delay-75`}
+                className={`space-y-4 xl:space-y-6 transition-opacity duration-400 delay-75`}
                 style={{
                   opacity: copyVisible ? 0.8 : 0
                 }}
               >
-                <p className="text-base lg:text-lg font-extralight text-white leading-relaxed">
+                <p className="text-sm xl:text-base font-extralight text-white leading-relaxed">
                   Most AI companies help you work faster. We help you{' '}
                   <span className="text-red-400 font-light">grow exponentially</span>.
                 </p>
                 
-                <p className="text-base lg:text-lg font-extralight text-white leading-relaxed">
+                <p className="text-sm xl:text-base font-extralight text-white leading-relaxed">
                   The difference? We focus on{' '}
                   <span className="text-white font-light">acquisition acceleration</span>, not operational efficiency. 
                   While competitors optimize customer service, we architect intelligent systems that{' '}
@@ -128,11 +128,11 @@ export default function OpportunityStatement() {
           <div 
             className="w-[45%] flex items-center justify-center relative overflow-hidden z-10"
           >
-            <div className="text-center ml-8 relative z-10">
+            <div className="text-center ml-4 xl:ml-8 relative z-10">
               {/* Counter */}
               <div className="relative mb-4">
                 {/* Clean circular frame */}
-                <div className="relative w-64 h-64 mx-auto flex items-center justify-center">
+                <div className="relative w-48 xl:w-64 h-48 xl:h-64 mx-auto flex items-center justify-center">
                   {/* Animated circular progress ring */}
                   <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                     <defs>
@@ -213,7 +213,7 @@ export default function OpportunityStatement() {
                 
                   {/* Main counter */}
                   <div 
-                    className="relative text-5xl font-bold transition-all duration-700 z-10"
+                    className="relative text-3xl xl:text-5xl font-bold transition-all duration-700 z-10"
                     style={{
                       color: '#ef4444',
                       fontFamily: 'Inter, sans-serif',
@@ -264,7 +264,7 @@ export default function OpportunityStatement() {
               
               {/* Supporting Label */}
               <div 
-                className={`text-sm font-normal leading-relaxed transition-all duration-500`}
+                className={`text-xs xl:text-sm font-normal leading-relaxed transition-all duration-500`}
                 style={{
                   opacity: counterFinished ? 0.9 : 0,
                   transform: counterFinished ? 'translateY(0)' : 'translateY(15px)',
@@ -279,11 +279,11 @@ export default function OpportunityStatement() {
           </div>
         </div>
         
-        {/* Mobile Layout (<768px) */}
-        <div className="md:hidden min-h-screen flex flex-col justify-center px-6 py-20 relative z-10">
+        {/* Mobile & Tablet Layout (<1024px) */}
+        <div className="lg:hidden min-h-screen flex flex-col justify-center px-4 sm:px-6 py-16 sm:py-20 relative z-10">
           {/* Headline */}
           <h2 
-            className={`text-2xl font-thin text-white leading-tight mb-6 transition-all duration-400 ${
+            className={`text-xl sm:text-2xl md:text-3xl font-thin text-white leading-tight mb-4 sm:mb-6 transition-all duration-400 ${
               prefersReducedMotion ? 'ease-linear' : 'cubic-bezier(0.4,0,0.2,1)'
             }`}
             style={{
@@ -307,17 +307,17 @@ export default function OpportunityStatement() {
           
           {/* Supporting Copy */}
           <div 
-            className={`space-y-4 mb-8 transition-opacity duration-400 delay-75`}
+            className={`space-y-3 sm:space-y-4 mb-6 sm:mb-8 transition-opacity duration-400 delay-75`}
             style={{
               opacity: copyVisible ? 0.8 : 0
             }}
           >
-            <p className="text-sm font-extralight text-white leading-relaxed">
+            <p className="text-xs sm:text-sm font-extralight text-white leading-relaxed">
               Most AI companies help you work faster. We help you{' '}
               <span className="text-red-400 font-light">grow exponentially</span>.
             </p>
             
-            <p className="text-sm font-extralight text-white leading-relaxed">
+            <p className="text-xs sm:text-sm font-extralight text-white leading-relaxed">
               The difference? We focus on{' '}
               <span className="text-white font-light">acquisition acceleration</span>, not operational efficiency.
             </p>
@@ -325,12 +325,12 @@ export default function OpportunityStatement() {
           
           {/* Inline Visualization */}
           <div 
-            className="p-8 rounded-2xl text-center bg-black/30 backdrop-blur-sm border border-red-600/20"
+            className="p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl text-center bg-black/30 backdrop-blur-sm border border-red-600/20"
           >
             {/* Counter */}
             <div className="relative mb-4">
               {/* Clean circular frame for mobile */}
-              <div className="relative w-48 h-48 mx-auto flex items-center justify-center">
+              <div className="relative w-32 sm:w-40 md:w-48 h-32 sm:h-40 md:h-48 mx-auto flex items-center justify-center">
                 {/* Animated circular progress ring for mobile */}
                 <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                   <defs>
@@ -411,7 +411,7 @@ export default function OpportunityStatement() {
               
                 {/* Main counter */}
                 <div 
-                  className="relative text-5xl font-bold transition-all duration-700 z-10"
+                  className="relative text-2xl sm:text-3xl md:text-4xl font-bold transition-all duration-700 z-10"
                   style={{
                     color: '#ef4444',
                     fontFamily: 'Inter, sans-serif',
@@ -462,7 +462,7 @@ export default function OpportunityStatement() {
             
             {/* Supporting Label */}
             <div 
-              className={`text-sm lg:text-base font-normal max-w-xs mx-auto leading-relaxed transition-all duration-500`}
+              className={`text-xs sm:text-sm font-normal max-w-xs mx-auto leading-relaxed transition-all duration-500`}
               style={{
                 opacity: counterFinished ? 0.9 : 0,
                 transform: counterFinished ? 'translateY(0)' : 'translateY(15px)',
