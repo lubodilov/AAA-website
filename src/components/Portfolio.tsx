@@ -436,6 +436,7 @@ const challengeTypes = [
 ];
 
 export default function Portfolio() {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState('all');
   const [selectedCompanySize, setSelectedCompanySize] = useState('all');
   const [selectedChallengeType, setSelectedChallengeType] = useState('all');
@@ -443,6 +444,15 @@ export default function Portfolio() {
   const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
   const [cursorGlow, setCursorGlow] = useState({ color: '', isVisible: false });
   const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Get flagship transformations (top 3)
   const flagshipTransformations = transformations.filter(t => t.tier === 'flagship');
@@ -504,7 +514,7 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-black relative">
-      <Header />
+      <Header isScrolled={isScrolled} />
       
       {/* Elite Cursor Glow */}
       <CursorGlow color={cursorGlow.color} isVisible={cursorGlow.isVisible} />

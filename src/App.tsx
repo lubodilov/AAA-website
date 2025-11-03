@@ -24,6 +24,7 @@ function App() {
 
 function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   
@@ -81,7 +82,12 @@ function HomePage() {
   // Track current slide based on scroll position
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      if (!containerRef.current) return;
+
+      // Update header scroll state
+      setIsScrolled(containerRef.current.scrollTop > 50);
+
+      const scrollPosition = containerRef.current.scrollTop + window.innerHeight / 2;
       
       slideRefs.current.forEach((slideRef, index) => {
         if (slideRef) {
@@ -108,10 +114,17 @@ function HomePage() {
       }
     };
 
-    window.addEventListener('scroll', throttledScroll);
-    handleScroll(); // Initial call
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('scroll', throttledScroll);
+      handleScroll(); // Initial call
+    }
 
-    return () => window.removeEventListener('scroll', throttledScroll);
+    return () => {
+      if (container) {
+        container.removeEventListener('scroll', throttledScroll);
+      }
+    };
   }, []);
   
   const onBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -139,9 +152,10 @@ function HomePage() {
         </video>
       </div>
       
-      <Header 
+      <Header
         onOpenContact={() => setContactOpen(true)}
         onOpenSchedule={() => setScheduleOpen(true)}
+        isScrolled={isScrolled}
       />
       
       {/* Main Scroll Container with Snap */}
