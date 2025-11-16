@@ -15,10 +15,10 @@ export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
   ];
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/10 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full">
+      <div className="relative max-w-7xl mx-auto z-10 w-full max-h-full overflow-y-auto">
         {/* Heading */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-4">

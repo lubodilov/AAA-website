@@ -59,10 +59,10 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/10 z-0"></div>
 
-      <div className="relative max-w-6xl mx-auto z-10 w-full">
+      <div className="relative max-w-7xl mx-auto z-10 w-full max-h-full overflow-y-auto">
         {/* Trusted By Section */}
         <div className="text-center mb-16">
           <p className="text-gray-400 text-sm font-light uppercase tracking-wider mb-8">Trusted by</p>
