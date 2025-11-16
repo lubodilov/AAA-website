@@ -82,10 +82,10 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/10 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full max-h-full overflow-y-auto">
+      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
         {/* Heading */}
-        <div className="text-center mb-8">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-4">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
             Real Results,{' '}
             <span
               className="font-normal"
@@ -105,18 +105,18 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
         </div>
 
         {/* Case Tiles */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
           {cases.map((caseStudy) => {
             const colors = getColorClasses(caseStudy.color);
 
             return (
               <div
                 key={caseStudy.id}
-                className={`p-6 rounded-xl bg-black/30 backdrop-blur-sm border ${colors.border} hover:border-opacity-60 transition-all duration-300`}
+                className={`p-4 rounded-xl bg-black/30 backdrop-blur-sm border ${colors.border} hover:border-opacity-60 transition-all duration-300`}
               >
                 {/* Header */}
                 <div className="mb-4">
-                  <h3 className={`text-2xl font-light ${colors.text} mb-1`}>{caseStudy.title}</h3>
+                  <h3 className={`text-xl font-light ${colors.text} mb-1`}>{caseStudy.title}</h3>
                   <p className="text-gray-500 text-sm font-extralight">{caseStudy.subtitle}</p>
                 </div>
 

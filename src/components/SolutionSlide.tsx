@@ -33,10 +33,10 @@ export default function SolutionSlide({ onScrollToSystems }: SolutionSlideProps)
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/10 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full max-h-full overflow-y-auto">
+      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
         {/* Heading */}
-        <div className="text-center mb-8">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-6">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-6">
             Systems that turn{' '}
             <span className="text-gray-400 font-normal">activity</span>
             {' '}into{' '}
@@ -55,17 +55,17 @@ export default function SolutionSlide({ onScrollToSystems }: SolutionSlideProps)
         </div>
 
         {/* Solutions Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {solutions.map((solution, index) => {
             const Icon = solution.icon;
             return (
               <div
                 key={index}
-                className="group p-6 rounded-xl bg-black/30 backdrop-blur-sm border border-green-900/20 hover:border-green-600/40 transition-all duration-300"
+                className="group p-4 rounded-xl bg-black/30 backdrop-blur-sm border border-green-900/20 hover:border-green-600/40 transition-all duration-300"
               >
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-green-600/20 to-green-700/20 flex items-center justify-center group-hover:from-green-600/30 group-hover:to-green-700/30 transition-all duration-300">
-                    <Icon className="w-6 h-6 text-green-400" />
+                <div className="flex items-start space-x-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-green-600/20 to-green-700/20 flex items-center justify-center group-hover:from-green-600/30 group-hover:to-green-700/30 transition-all duration-300">
+                    <Icon className="w-5 h-5 text-green-400" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-white font-light text-lg mb-2">{solution.title}</h3>

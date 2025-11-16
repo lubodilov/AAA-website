@@ -62,12 +62,12 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/10 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full max-h-full overflow-y-auto">
+      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
         {/* Trusted By Section */}
-        <div className="text-center mb-16">
-          <p className="text-gray-400 text-sm font-light uppercase tracking-wider mb-8">Trusted by</p>
+        <div className="text-center mb-8">
+          <p className="text-gray-400 text-sm font-light uppercase tracking-wider mb-4">Trusted by</p>
 
-          <div className="flex flex-wrap items-center justify-center gap-12 opacity-60">
+          <div className="flex flex-wrap items-center justify-center gap-4 opacity-60">
             {/* Placeholder logos - replace with real client logos */}
             <div className="text-white/50 text-lg font-light px-6 py-3 border border-white/10 rounded-lg">
               Client Logo 1
@@ -86,9 +86,9 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
 
         {/* Testimonial Carousel */}
         <div className="relative max-w-4xl mx-auto">
-          <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12">
+          <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-6">
             {/* Quote */}
-            <blockquote className="text-xl md:text-3xl font-light text-white leading-relaxed mb-8 text-center">
+            <blockquote className="text-base md:text-xl font-light text-white leading-relaxed mb-6 text-center">
               "{currentTestimonial.quote}"
             </blockquote>
 

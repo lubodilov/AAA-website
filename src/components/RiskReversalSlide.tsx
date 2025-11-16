@@ -43,10 +43,10 @@ export default function RiskReversalSlide() {
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/10 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full max-h-full overflow-y-auto">
+      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
         {/* Heading */}
-        <div className="text-center mb-8">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-4">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
             <span
               className="font-normal"
               style={{
@@ -68,8 +68,8 @@ export default function RiskReversalSlide() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* No-Risk Rules */}
           <div>
-            <h3 className="text-2xl font-light text-white mb-6 flex items-center space-x-3">
-              <Shield className="w-6 h-6 text-green-400" />
+            <h3 className="text-xl font-light text-white mb-6 flex items-center space-x-3">
+              <Shield className="w-5 h-5 text-green-400" />
               <span>No-risk rules</span>
             </h3>
 
@@ -79,9 +79,9 @@ export default function RiskReversalSlide() {
                 return (
                   <div
                     key={index}
-                    className="p-6 rounded-xl bg-black/30 backdrop-blur-sm border border-green-900/20 hover:border-green-600/40 transition-all duration-300"
+                    className="p-4 rounded-xl bg-black/30 backdrop-blur-sm border border-green-900/20 hover:border-green-600/40 transition-all duration-300"
                   >
-                    <div className="flex items-start space-x-4">
+                    <div className="flex items-start space-x-3">
                       <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-green-600/20 to-green-700/20 flex items-center justify-center">
                         <Icon className="w-5 h-5 text-green-400" />
                       </div>
@@ -100,17 +100,17 @@ export default function RiskReversalSlide() {
 
           {/* Security Stance */}
           <div>
-            <h3 className="text-2xl font-light text-white mb-6 flex items-center space-x-3">
-              <Lock className="w-6 h-6 text-blue-400" />
+            <h3 className="text-xl font-light text-white mb-6 flex items-center space-x-3">
+              <Lock className="w-5 h-5 text-blue-400" />
               <span>Security stance</span>
             </h3>
 
             <div className="p-8 rounded-xl bg-black/30 backdrop-blur-sm border border-blue-900/20">
-              <div className="grid grid-cols-1 gap-6 mb-8">
+              <div className="grid grid-cols-1 gap-4 mb-6">
                 {securityPoints.map((point, index) => {
                   const Icon = point.icon;
                   return (
-                    <div key={index} className="flex items-center space-x-4">
+                    <div key={index} className="flex items-center space-x-3">
                       <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600/20 to-blue-700/20 flex items-center justify-center">
                         <Icon className="w-5 h-5 text-blue-400" />
                       </div>

@@ -18,10 +18,10 @@ export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/10 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full max-h-full overflow-y-auto">
+      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
         {/* Heading */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-4">
+        <div className="text-center mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-3">
             See where your revenue is leaking
             {' '}—in{' '}
             <span
@@ -36,20 +36,20 @@ export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
               20 minutes
             </span>
           </h2>
-          <p className="text-gray-400 font-extralight text-lg">
+          <p className="text-gray-400 font-extralight text-base">
             No pitch. No fluff. Just a clear action plan.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Left: Benefits */}
-          <div className="flex flex-col justify-center space-y-6">
-            <h3 className="text-2xl font-light text-white mb-4">What you'll get:</h3>
+          <div className="flex flex-col justify-center space-y-4">
+            <h3 className="text-lg font-light text-white mb-3">What you'll get:</h3>
 
             {benefits.map((benefit, index) => {
               const Icon = benefit.icon;
               return (
-                <div key={index} className="flex items-start space-x-4">
+                <div key={index} className="flex items-start space-x-3">
                   <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-red-600/20 to-red-700/20 flex items-center justify-center">
                     <Icon className="w-5 h-5 text-red-400" />
                   </div>

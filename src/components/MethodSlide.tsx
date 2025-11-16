@@ -77,10 +77,10 @@ export default function MethodSlide() {
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/10 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full max-h-full overflow-y-auto">
+      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
         {/* Heading */}
-        <div className="text-center mb-8">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-4">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
             3 steps.{' '}
             <span
               className="font-normal"
@@ -112,15 +112,15 @@ export default function MethodSlide() {
                   <div className="hidden md:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-white/20 to-transparent z-0" style={{ width: 'calc(100% - 3rem)' }} />
                 )}
 
-                <div className={`relative p-6 rounded-xl bg-black/30 backdrop-blur-sm border ${colors.border} hover:border-opacity-60 transition-all duration-300 h-full`}>
+                <div className={`relative p-4 rounded-xl bg-black/30 backdrop-blur-sm border ${colors.border} hover:border-opacity-60 transition-all duration-300 h-full`}>
                   {/* Icon & Title */}
-                  <div className="flex items-center space-x-4 mb-4">
-                    <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${colors.bg} flex items-center justify-center`}>
-                      <Icon className={`w-6 h-6 ${colors.text}`} />
+                  <div className="flex items-center space-x-3 mb-4">
+                    <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${colors.bg} flex items-center justify-center`}>
+                      <Icon className={`w-5 h-5 ${colors.text}`} />
                     </div>
                     <div>
                       <p className="text-gray-500 text-xs font-light uppercase tracking-wider">{step.week}</p>
-                      <h3 className={`text-2xl font-light ${colors.text}`}>{step.title}</h3>
+                      <h3 className={`text-xl font-light ${colors.text}`}>{step.title}</h3>
                     </div>
                   </div>
 
@@ -159,9 +159,9 @@ export default function MethodSlide() {
         </div>
 
         {/* Side Note */}
-        <div className="bg-gradient-to-r from-red-600/10 via-red-600/20 to-red-600/10 border border-red-500/30 rounded-xl p-6 text-center">
+        <div className="bg-gradient-to-r from-red-600/10 via-red-600/20 to-red-600/10 border border-red-500/30 rounded-xl p-4 text-center">
           <div className="flex items-center justify-center space-x-3">
-            <AlertCircle className="w-6 h-6 text-red-400" />
+            <AlertCircle className="w-5 h-5 text-red-400" />
             <p className="text-white font-light text-lg">
               <span className="font-normal text-red-400">No vanity AI:</span> if it won't move pipeline or time saved, we don't sell it.
             </p>

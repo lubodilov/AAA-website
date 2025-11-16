@@ -52,10 +52,10 @@ export default function OfferPricingSlide({ onOpenSchedule }: OfferPricingSlideP
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/10 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full max-h-full overflow-y-auto">
+      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
         {/* Heading */}
-        <div className="text-center mb-8">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-4">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
             Start with an{' '}
             <span
               className="font-normal"
@@ -70,15 +70,15 @@ export default function OfferPricingSlide({ onOpenSchedule }: OfferPricingSlideP
             </span>
             {' '}& Roadmap
           </h2>
-          <p className="text-gray-400 font-extralight text-lg">
+          <p className="text-gray-400 font-extralight text-base">
             Clear pricing. No surprises. Pay for outcomes.
           </p>
         </div>
 
         {/* What You Get */}
-        <div className="mb-12">
-          <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-8">
-            <h3 className="text-2xl font-light text-white mb-6 text-center">
+        <div className="mb-6">
+          <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-4">
+            <h3 className="text-lg font-light text-white mb-4 text-center">
               What you get <span className="text-gray-500">(inside 7–10 business days)</span>
             </h3>
 
@@ -101,24 +101,24 @@ export default function OfferPricingSlide({ onOpenSchedule }: OfferPricingSlideP
         </div>
 
         {/* Pricing Tiers */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           {pricingTiers.map((tier, index) => (
             <div
               key={index}
-              className={`p-6 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
+              className={`p-4 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
                 tier.highlight
                   ? 'bg-black/40 border-red-500/50 scale-105 shadow-lg shadow-red-600/20'
                   : 'bg-black/30 border-white/10 hover:border-white/20'
               }`}
             >
-              <div className="text-center mb-6">
-                <h3 className={`text-xl font-light mb-2 ${tier.highlight ? 'text-red-400' : 'text-white'}`}>
+              <div className="text-center mb-4">
+                <h3 className={`text-lg font-light mb-2 ${tier.highlight ? 'text-red-400' : 'text-white'}`}>
                   {tier.title}
                 </h3>
                 <p className="text-gray-500 text-xs font-extralight mb-4">{tier.description}</p>
                 <div className="flex items-center justify-center space-x-2">
                   <DollarSign className={`w-5 h-5 ${tier.highlight ? 'text-red-400' : 'text-gray-400'}`} />
-                  <p className={`text-2xl font-light ${tier.highlight ? 'text-red-400' : 'text-white'}`}>
+                  <p className={`text-xl font-light ${tier.highlight ? 'text-red-400' : 'text-white'}`}>
                     {tier.price}
                   </p>
                 </div>
@@ -140,11 +140,11 @@ export default function OfferPricingSlide({ onOpenSchedule }: OfferPricingSlideP
         <div className="text-center space-y-4">
           <button
             onClick={onOpenSchedule}
-            className="group inline-flex items-center space-x-3 bg-gradient-to-r from-red-600 to-red-700 text-white px-10 py-5 rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg shadow-red-600/25 hover:shadow-red-600/40 hover:scale-105"
+            className="group inline-flex items-center space-x-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg shadow-red-600/25 hover:shadow-red-600/40 hover:scale-105"
           >
-            <Calendar className="w-6 h-6" />
-            <span className="font-light text-xl">Book the 20-min Audit</span>
-            <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
+            <Calendar className="w-4 h-4" />
+            <span className="font-light text-sm">Book the 20-min Audit</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
           </button>
 
           <p className="text-gray-400 text-sm font-extralight">
