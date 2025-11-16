@@ -226,13 +226,6 @@ function HomePage() {
         </div>
       </div>
 
-      {/* Sticky CTA Bar */}
-      <StickyCTABar
-        currentSlide={currentSlide}
-        totalSlides={slides.length}
-        onOpenSchedule={() => setScheduleOpen(true)}
-        isVisible={!scheduleOpen && !contactOpen}
-      />
 
       {/* CONTACT POPUP */}
       {contactOpen && (
