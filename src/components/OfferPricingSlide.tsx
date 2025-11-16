@@ -54,23 +54,11 @@ export default function OfferPricingSlide({ onOpenSchedule }: OfferPricingSlideP
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-6">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
-            Start with an{' '}
-            <span
-              className="font-normal"
-              style={{
-                background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}
-            >
-              Acquisition Audit
-            </span>
-            {' '}& Roadmap
+        <div className="text-center mb-16">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mb-6">
+            Start with an <span className="text-red-600">Acquisition Audit</span> & Roadmap
           </h2>
-          <p className="text-gray-400 font-extralight text-base">
+          <p className="text-gray-400 text-xl font-light">
             Clear pricing. No surprises. Pay for outcomes.
           </p>
         </div>

@@ -33,24 +33,11 @@ export default function FAQSlide() {
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-4">
-            Objections{' '}
-            <span className="text-gray-500">→</span>
-            {' '}
-            <span
-              className="font-normal"
-              style={{
-                background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}
-            >
-              Answers
-            </span>
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mb-6">
+            Objections <span className="text-gray-500">→</span> <span className="text-red-600">Answers</span>
           </h2>
-          <p className="text-gray-400 font-extralight text-lg">
+          <p className="text-gray-400 text-xl font-light">
             The 5 questions every serious buyer asks
           </p>
         </div>
@@ -74,9 +61,9 @@ export default function FAQSlide() {
                       <HelpCircle className="w-4 h-4 text-red-400" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-white font-light text-lg mb-1">{faq.question}</h3>
+                      <h3 className="text-white font-normal text-xl mb-1">{faq.question}</h3>
                       {isOpen && (
-                        <p className="text-gray-400 font-extralight text-sm leading-relaxed mt-4">
+                        <p className="text-gray-400 font-light text-lg leading-relaxed mt-4">
                           {faq.answer}
                         </p>
                       )}

@@ -98,22 +98,11 @@ export default function SystemsSlide({ onOpenSchedule }: SystemsSlideProps) {
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-10">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-4">
-            3 Systems,{' '}
-            <span
-              className="font-normal"
-              style={{
-                background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}
-            >
-              KPI-Tied
-            </span>
+        <div className="text-center mb-16">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mb-6">
+            3 Systems, <span className="text-red-600">KPI-Tied</span>
           </h2>
-          <p className="text-gray-400 font-extralight text-base">
+          <p className="text-gray-400 text-xl font-light">
             No vanity AI. Only systems that move the revenue needle.
           </p>
         </div>

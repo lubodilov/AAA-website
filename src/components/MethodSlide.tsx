@@ -79,22 +79,11 @@ export default function MethodSlide() {
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-6">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
-            3 steps.{' '}
-            <span
-              className="font-normal"
-              style={{
-                background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}
-            >
-              Measured weekly
-            </span>
+        <div className="text-center mb-16">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mb-6">
+            3 steps. <span className="text-red-600">Measured weekly</span>
           </h2>
-          <p className="text-gray-400 font-extralight text-lg">
+          <p className="text-gray-400 text-xl font-light">
             Time-boxed, de-risked, and tied to your KPIs
           </p>
         </div>
@@ -159,13 +148,10 @@ export default function MethodSlide() {
         </div>
 
         {/* Side Note */}
-        <div className="bg-gradient-to-r from-red-600/10 via-red-600/20 to-red-600/10 border border-red-500/30 rounded-2xl p-4 text-center">
-          <div className="flex items-center justify-center space-x-3">
-            <AlertCircle className="w-5 h-5 text-red-400" />
-            <p className="text-white font-light text-lg">
-              <span className="font-normal text-red-400">No vanity AI:</span> if it won't move pipeline or time saved, we don't sell it.
-            </p>
-          </div>
+        <div className="text-center mt-8">
+          <p className="text-2xl md:text-3xl text-white font-light">
+            <span className="text-red-600 font-normal">No vanity AI:</span> if it won't move pipeline or time saved, we don't sell it.
+          </p>
         </div>
       </div>
     </section>

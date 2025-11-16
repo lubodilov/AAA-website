@@ -35,45 +35,26 @@ export default function SolutionSlide({ onScrollToSystems }: SolutionSlideProps)
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-6">
-            Systems that turn{' '}
-            <span className="text-gray-400 font-normal">activity</span>
-            {' '}into{' '}
-            <span
-              className="font-normal"
-              style={{
-                background: 'linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}
-            >
-              revenue
-            </span>
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight">
+            Systems that turn <span className="text-gray-500">activity</span>
+            <br />into <span className="text-green-600">revenue</span>
           </h2>
         </div>
 
         {/* Solutions Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12 mb-16">
           {solutions.map((solution, index) => {
             const Icon = solution.icon;
             return (
-              <div
-                key={index}
-                className="group relative"
-              >
-                <div className="flex items-start space-x-5">
-                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-black/40 backdrop-blur-sm flex items-center justify-center border border-green-500/10 group-hover:border-green-500/30 transition-all duration-300">
-                    <Icon className="w-7 h-7 text-green-400" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-white font-light text-xl mb-3">{solution.title}</h3>
-                    <p className="text-gray-400 font-extralight text-base leading-relaxed">
-                      {solution.description}
-                    </p>
-                  </div>
+              <div key={index} className="group">
+                <div className="mb-4">
+                  <Icon className="w-12 h-12 text-green-500" />
                 </div>
+                <h3 className="text-white text-2xl font-normal mb-3">{solution.title}</h3>
+                <p className="text-gray-400 text-lg font-light leading-relaxed">
+                  {solution.description}
+                </p>
               </div>
             );
           })}

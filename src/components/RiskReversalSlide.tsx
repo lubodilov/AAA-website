@@ -45,22 +45,11 @@ export default function RiskReversalSlide() {
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
-            <span
-              className="font-normal"
-              style={{
-                background: 'linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}
-            >
-              Zero risk.
-            </span>
-            {' '}Maximum security.
+        <div className="text-center mb-16">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mb-6">
+            <span className="text-green-600">Zero risk.</span> Maximum security.
           </h2>
-          <p className="text-gray-400 font-extralight text-lg">
+          <p className="text-gray-400 text-xl font-light">
             We protect your business like it's our own
           </p>
         </div>
@@ -68,10 +57,7 @@ export default function RiskReversalSlide() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* No-Risk Rules */}
           <div>
-            <h3 className="text-xl font-light text-white mb-6 flex items-center space-x-3">
-              <Shield className="w-5 h-5 text-green-400" />
-              <span>No-risk rules</span>
-            </h3>
+            <h3 className="text-2xl font-normal text-white mb-8">No-risk rules</h3>
 
             <div className="space-y-6">
               {noRiskRules.map((rule, index) => {
@@ -86,8 +72,8 @@ export default function RiskReversalSlide() {
                         <Icon className="w-6 h-6 text-green-400" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-white font-light text-xl mb-2">{rule.title}</h4>
-                        <p className="text-gray-400 font-extralight text-base leading-relaxed">
+                        <h4 className="text-white font-normal text-xl mb-2">{rule.title}</h4>
+                        <p className="text-gray-400 font-light text-lg leading-relaxed">
                           {rule.description}
                         </p>
                       </div>
@@ -100,10 +86,7 @@ export default function RiskReversalSlide() {
 
           {/* Security Stance */}
           <div>
-            <h3 className="text-xl font-light text-white mb-6 flex items-center space-x-3">
-              <Lock className="w-5 h-5 text-blue-400" />
-              <span>Security stance</span>
-            </h3>
+            <h3 className="text-2xl font-normal text-white mb-8">Security stance</h3>
 
             <div className="py-6">
               <div className="grid grid-cols-1 gap-5 mb-8">
