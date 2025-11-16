@@ -59,10 +59,10 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
-      <div className="relative max-w-6xl mx-auto z-10 w-full flex flex-col justify-center">
+      <div className="relative max-w-5xl mx-auto z-10 w-full">
         <div className="text-center mb-12">
           <p className="text-gray-400 text-xs font-light uppercase tracking-widest mb-8 opacity-70">Trusted by</p>
 
@@ -83,21 +83,21 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
         </div>
 
         <div className="relative max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border border-white/5 rounded-3xl p-12 shadow-2xl">
-            <blockquote className="text-2xl md:text-3xl font-light text-white leading-relaxed mb-10 text-center">
+          <div className="py-12">
+            <blockquote className="text-3xl md:text-4xl font-light text-white leading-relaxed mb-10 text-center">
               "{currentTestimonial.quote}"
             </blockquote>
 
             <div className="flex flex-col items-center space-y-4">
               <div className="text-center">
-                <p className="text-white font-normal text-xl mb-1">{currentTestimonial.name}</p>
-                <p className="text-gray-400 font-light text-sm tracking-wide">
+                <p className="text-white font-light text-xl mb-1">{currentTestimonial.name}</p>
+                <p className="text-gray-400 font-extralight text-base tracking-wide">
                   {currentTestimonial.role}, {currentTestimonial.company}
                 </p>
               </div>
 
-              <div className="inline-block bg-gradient-to-r from-red-600/10 to-red-700/10 border border-red-500/20 rounded-full px-8 py-3 mt-2">
-                <span className="text-red-400 font-light text-base tracking-wide">{currentTestimonial.metric}</span>
+              <div className="inline-block bg-gradient-to-r from-red-600/0 via-red-600/10 to-red-600/0 border-y border-red-500/20 px-8 py-3 mt-2">
+                <span className="text-red-400 font-light text-lg tracking-wide">{currentTestimonial.metric}</span>
               </div>
             </div>
 

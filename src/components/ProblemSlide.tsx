@@ -26,11 +26,11 @@ export default function ProblemSlide() {
   ];
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
-      <div className="relative max-w-6xl mx-auto z-10 w-full flex flex-col justify-center">
-        <div className="text-center mb-12">
+      <div className="relative max-w-5xl mx-auto z-10 w-full">
+        <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-6">
             Why your acquisition feels{' '}
             <span className="font-normal text-gray-400">busy</span>
@@ -49,21 +49,21 @@ export default function ProblemSlide() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {problems.map((problem, index) => {
             const Icon = problem.icon;
             return (
               <div
                 key={index}
-                className="group p-6 rounded-2xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border border-white/5 hover:border-red-500/20 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-red-500/10"
+                className="group relative"
               >
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-red-600/10 to-red-700/10 flex items-center justify-center group-hover:from-red-600/20 group-hover:to-red-700/20 transition-all duration-300 border border-red-500/10">
-                    <Icon className="w-6 h-6 text-red-400" />
+                <div className="flex items-start space-x-5">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-black/40 backdrop-blur-sm flex items-center justify-center border border-red-500/10 group-hover:border-red-500/30 transition-all duration-300">
+                    <Icon className="w-7 h-7 text-red-400" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-white font-light text-lg mb-2 tracking-wide">{problem.title}</h3>
-                    <p className="text-gray-400 font-extralight text-sm leading-relaxed">
+                    <h3 className="text-white font-light text-xl mb-3 tracking-wide">{problem.title}</h3>
+                    <p className="text-gray-400 font-extralight text-base leading-relaxed">
                       {problem.description}
                     </p>
                   </div>
@@ -73,8 +73,8 @@ export default function ProblemSlide() {
           })}
         </div>
 
-        <div className="relative">
-          <div className="bg-gradient-to-r from-red-600/5 via-red-600/10 to-red-600/5 border border-red-500/20 rounded-2xl p-6 text-center backdrop-blur-sm shadow-xl">
+        <div className="relative max-w-3xl mx-auto">
+          <div className="bg-gradient-to-r from-red-600/0 via-red-600/10 to-red-600/0 border-y border-red-500/20 py-6 text-center backdrop-blur-sm">
             <div className="flex items-center justify-center space-x-3">
               <AlertTriangle className="w-6 h-6 text-red-400" />
               <p className="text-white font-light text-xl tracking-wide">

@@ -28,10 +28,10 @@ export default function FAQSlide() {
   ];
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
-      <div className="relative max-w-6xl mx-auto z-10 w-full flex flex-col justify-center">
+      <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-4">
@@ -63,7 +63,7 @@ export default function FAQSlide() {
             return (
               <div
                 key={index}
-                className="rounded-2xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border border-white/5 hover:border-red-600/30 transition-all duration-300 overflow-hidden"
+                className="rounded-xl border-b border-white/5 hover:border-red-600/20 transition-all duration-300 overflow-hidden pb-2"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
