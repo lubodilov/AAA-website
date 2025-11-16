@@ -2,13 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import OpportunityStatement from './components/StrategicPositioning';
-import TransformationProcess from './components/TransformationProcess';
-import ProofOfDominance from './components/ProofOfDominance';
-import SlideNavigation from './components/SlideNavigation';
+import CredibilitySlide from './components/CredibilitySlide';
+import ProblemSlide from './components/ProblemSlide';
+import SolutionSlide from './components/SolutionSlide';
+import SystemsSlide from './components/SystemsSlide';
+import ResultsSlide from './components/ResultsSlide';
+import MethodSlide from './components/MethodSlide';
+import OfferPricingSlide from './components/OfferPricingSlide';
+import RiskReversalSlide from './components/RiskReversalSlide';
+import FAQSlide from './components/FAQSlide';
+import BookAuditSlide from './components/BookAuditSlide';
 import Portfolio from './components/Portfolio';
 import ContactForm from './components/ContactForm';
 import ScheduleCall from './components/ScheduleCall';
+import StickyCTABar from './components/StickyCTABar';
 import VoiceflowWidget from './components/VoiceflowWidget';
 
 function App() {
@@ -27,22 +34,29 @@ function HomePage() {
   const [isScrolled, setIsScrolled] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
-  
+
   // Modal states
   const [contactOpen, setContactOpen] = useState(false);
   const [scheduleOpen, setScheduleOpen] = useState(false);
-  const [hasOpenedSchedule] = useState(true); // Keep Calendly warm
-  
+  const [hasOpenedSchedule] = useState(true);
+
   const contactRef = useRef<HTMLDivElement | null>(null);
   const scheduleRef = useRef<HTMLDivElement | null>(null);
 
   const slides = [
     { id: 'hero', name: 'Hero' },
-    { id: 'strategic', name: 'Strategic' },
-    { id: 'transformation', name: 'Process' },
-    { id: 'proof', name: 'Results' }
+    { id: 'credibility', name: 'Credibility' },
+    { id: 'problem', name: 'Problem' },
+    { id: 'solution', name: 'Solution' },
+    { id: 'systems', name: 'Systems' },
+    { id: 'results', name: 'Results' },
+    { id: 'method', name: 'Method' },
+    { id: 'pricing', name: 'Pricing' },
+    { id: 'risk', name: 'Risk Reversal' },
+    { id: 'faq', name: 'FAQ' },
+    { id: 'book', name: 'Book Audit' }
   ];
-  
+
   // Modal management with ESC key support
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -88,13 +102,13 @@ function HomePage() {
       setIsScrolled(containerRef.current.scrollTop > 50);
 
       const scrollPosition = containerRef.current.scrollTop + window.innerHeight / 2;
-      
+
       slideRefs.current.forEach((slideRef, index) => {
         if (slideRef) {
           const rect = slideRef.getBoundingClientRect();
-          const slideTop = window.scrollY + rect.top;
+          const slideTop = containerRef.current!.scrollTop + rect.top;
           const slideBottom = slideTop + rect.height;
-          
+
           if (scrollPosition >= slideTop && scrollPosition < slideBottom) {
             setCurrentSlide(index);
           }
@@ -117,7 +131,7 @@ function HomePage() {
     const container = containerRef.current;
     if (container) {
       container.addEventListener('scroll', throttledScroll);
-      handleScroll(); // Initial call
+      handleScroll();
     }
 
     return () => {
@@ -126,7 +140,7 @@ function HomePage() {
       }
     };
   }, []);
-  
+
   const onBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target !== e.currentTarget) return;
     if (scheduleOpen) setScheduleOpen(false);
@@ -151,54 +165,75 @@ function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
         </video>
       </div>
-      
+
       <Header
         onOpenContact={() => setContactOpen(true)}
         onOpenSchedule={() => setScheduleOpen(true)}
         isScrolled={isScrolled}
       />
-      
+
       {/* Main Scroll Container with Snap */}
-      <div 
+      <div
         ref={containerRef}
         className="relative z-10 snap-y snap-mandatory overflow-y-auto h-screen"
       >
-        <div 
-          ref={el => slideRefs.current[0] = el}
-          className="snap-start snap-always"
-        >
-          <Hero />
+        <div ref={el => slideRefs.current[0] = el} className="snap-start snap-always">
+          <Hero
+            onOpenContact={() => setContactOpen(true)}
+            onOpenSchedule={() => setScheduleOpen(true)}
+            onScrollToResults={() => scrollToSlide(5)}
+          />
         </div>
-        
-        <div 
-          ref={el => slideRefs.current[1] = el}
-          className="snap-start snap-always"
-        >
-          <OpportunityStatement />
+
+        <div ref={el => slideRefs.current[1] = el} className="snap-start snap-always">
+          <CredibilitySlide onScrollToCases={() => scrollToSlide(5)} />
         </div>
-        
-        <div 
-          ref={el => slideRefs.current[2] = el}
-          className="snap-start snap-always"
-        >
-          <TransformationProcess />
+
+        <div ref={el => slideRefs.current[2] = el} className="snap-start snap-always">
+          <ProblemSlide />
         </div>
-        
-        <div 
-          ref={el => slideRefs.current[3] = el}
-          className="snap-start snap-always"
-        >
-          <ProofOfDominance />
+
+        <div ref={el => slideRefs.current[3] = el} className="snap-start snap-always">
+          <SolutionSlide onScrollToSystems={() => scrollToSlide(4)} />
+        </div>
+
+        <div ref={el => slideRefs.current[4] = el} className="snap-start snap-always">
+          <SystemsSlide onOpenSchedule={() => setScheduleOpen(true)} />
+        </div>
+
+        <div ref={el => slideRefs.current[5] = el} className="snap-start snap-always">
+          <ResultsSlide onOpenSchedule={() => setScheduleOpen(true)} />
+        </div>
+
+        <div ref={el => slideRefs.current[6] = el} className="snap-start snap-always">
+          <MethodSlide />
+        </div>
+
+        <div ref={el => slideRefs.current[7] = el} className="snap-start snap-always">
+          <OfferPricingSlide onOpenSchedule={() => setScheduleOpen(true)} />
+        </div>
+
+        <div ref={el => slideRefs.current[8] = el} className="snap-start snap-always">
+          <RiskReversalSlide />
+        </div>
+
+        <div ref={el => slideRefs.current[9] = el} className="snap-start snap-always">
+          <FAQSlide />
+        </div>
+
+        <div ref={el => slideRefs.current[10] = el} className="snap-start snap-always">
+          <BookAuditSlide isOpen={true} />
         </div>
       </div>
 
-      {/* Slide Navigation */}
-      <SlideNavigation 
-        slides={slides}
+      {/* Sticky CTA Bar */}
+      <StickyCTABar
         currentSlide={currentSlide}
-        onSlideChange={scrollToSlide}
+        totalSlides={slides.length}
+        onOpenSchedule={() => setScheduleOpen(true)}
+        isVisible={!scheduleOpen && !contactOpen}
       />
-      
+
       {/* CONTACT POPUP */}
       {contactOpen && (
         <div
@@ -208,7 +243,6 @@ function HomePage() {
           role="dialog"
           aria-label="Contact"
         >
-          {/* Spotlight effect */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -254,7 +288,6 @@ function HomePage() {
           aria-label="Schedule a Call"
           aria-hidden={scheduleOpen ? 'false' : 'true'}
         >
-          {/* Spotlight effect */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -272,7 +305,7 @@ function HomePage() {
           >
             <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col flex-1 overflow-hidden">
               <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-                <h3 className="text-white text-lg font-light">Schedule a Call</h3>
+                <h3 className="text-white text-lg font-light">Book Your Acquisition Audit</h3>
                 <button
                   onClick={() => setScheduleOpen(false)}
                   className="text-white/70 hover:text-white transition text-2xl leading-none"
@@ -288,10 +321,11 @@ function HomePage() {
           </div>
         </div>
       )}
-      
+
       {/* Voiceflow AI Chatbot Widget */}
       <VoiceflowWidget projectID="68d052aa5682320b1b1bc769" />
     </div>
   );
 }
+
 export default App;
