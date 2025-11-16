@@ -50,9 +50,9 @@ export default function OfferPricingSlide({ onOpenSchedule }: OfferPricingSlideP
 
   return (
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
-      <div className="absolute inset-0 bg-black/10 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
+      <div className="relative max-w-6xl mx-auto z-10 w-full flex flex-col justify-center">
         {/* Heading */}
         <div className="text-center mb-6">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
@@ -77,7 +77,7 @@ export default function OfferPricingSlide({ onOpenSchedule }: OfferPricingSlideP
 
         {/* What You Get */}
         <div className="mb-6">
-          <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-4">
+          <div className="bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border border-white/5 rounded-2xl p-4">
             <h3 className="text-lg font-light text-white mb-4 text-center">
               What you get <span className="text-gray-500">(inside 7–10 business days)</span>
             </h3>
@@ -105,10 +105,10 @@ export default function OfferPricingSlide({ onOpenSchedule }: OfferPricingSlideP
           {pricingTiers.map((tier, index) => (
             <div
               key={index}
-              className={`p-4 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
+              className={`p-4 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${
                 tier.highlight
                   ? 'bg-black/40 border-red-500/50 scale-105 shadow-lg shadow-red-600/20'
-                  : 'bg-black/30 border-white/10 hover:border-white/20'
+                  : 'bg-black/30 border-white/5 hover:border-white/20'
               }`}
             >
               <div className="text-center mb-4">

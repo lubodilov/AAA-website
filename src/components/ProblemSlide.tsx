@@ -27,12 +27,11 @@ export default function ProblemSlide() {
 
   return (
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
-      <div className="absolute inset-0 bg-black/10 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
-        {/* Heading */}
-        <div className="text-center mb-6">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
+      <div className="relative max-w-6xl mx-auto z-10 w-full flex flex-col justify-center">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-6">
             Why your acquisition feels{' '}
             <span className="font-normal text-gray-400">busy</span>
             —but not{' '}
@@ -50,22 +49,21 @@ export default function ProblemSlide() {
           </h2>
         </div>
 
-        {/* Problem Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
           {problems.map((problem, index) => {
             const Icon = problem.icon;
             return (
               <div
                 key={index}
-                className="group p-4 rounded-xl bg-black/30 backdrop-blur-sm border border-red-900/20 hover:border-red-600/40 transition-all duration-300"
+                className="group p-6 rounded-2xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border border-white/5 hover:border-red-500/20 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-red-500/10"
               >
-                <div className="flex items-start space-x-3">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-red-600/20 to-red-700/20 flex items-center justify-center group-hover:from-red-600/30 group-hover:to-red-700/30 transition-all duration-300">
-                    <Icon className="w-5 h-5 text-red-400" />
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-red-600/10 to-red-700/10 flex items-center justify-center group-hover:from-red-600/20 group-hover:to-red-700/20 transition-all duration-300 border border-red-500/10">
+                    <Icon className="w-6 h-6 text-red-400" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-white font-light text-base mb-1">{problem.title}</h3>
-                    <p className="text-gray-400 font-extralight text-xs leading-relaxed">
+                    <h3 className="text-white font-light text-lg mb-2 tracking-wide">{problem.title}</h3>
+                    <p className="text-gray-400 font-extralight text-sm leading-relaxed">
                       {problem.description}
                     </p>
                   </div>
@@ -75,12 +73,11 @@ export default function ProblemSlide() {
           })}
         </div>
 
-        {/* Call-out Bar */}
         <div className="relative">
-          <div className="bg-gradient-to-r from-red-600/10 via-red-600/20 to-red-600/10 border border-red-500/30 rounded-xl p-4 text-center">
-            <div className="flex items-center justify-center space-x-2">
-              <AlertTriangle className="w-5 h-5 text-red-400" />
-              <p className="text-white font-light text-base md:text-lg">
+          <div className="bg-gradient-to-r from-red-600/5 via-red-600/10 to-red-600/5 border border-red-500/20 rounded-2xl p-6 text-center backdrop-blur-sm shadow-xl">
+            <div className="flex items-center justify-center space-x-3">
+              <AlertTriangle className="w-6 h-6 text-red-400" />
+              <p className="text-white font-light text-xl tracking-wide">
                 Busy work ≠ pipeline.{' '}
                 <span className="text-red-400 font-normal">Let's change that.</span>
               </p>

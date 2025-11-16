@@ -80,9 +80,9 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
 
   return (
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
-      <div className="absolute inset-0 bg-black/10 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
+      <div className="relative max-w-6xl mx-auto z-10 w-full flex flex-col justify-center">
         {/* Heading */}
         <div className="text-center mb-6">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
@@ -112,7 +112,7 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
             return (
               <div
                 key={caseStudy.id}
-                className={`p-4 rounded-xl bg-black/30 backdrop-blur-sm border ${colors.border} hover:border-opacity-60 transition-all duration-300`}
+                className={`p-4 rounded-2xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border ${colors.border} hover:border-opacity-60 transition-all duration-300`}
               >
                 {/* Header */}
                 <div className="mb-4">
@@ -152,7 +152,7 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
                 </div>
 
                 {/* Stack */}
-                <div className="pt-4 border-t border-white/10">
+                <div className="pt-4 border-t border-white/5">
                   <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-2">Stack</p>
                   <p className="text-gray-400 text-xs font-extralight">{caseStudy.stack}</p>
                 </div>

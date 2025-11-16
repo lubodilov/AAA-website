@@ -41,9 +41,9 @@ export default function RiskReversalSlide() {
 
   return (
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
-      <div className="absolute inset-0 bg-black/10 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
+      <div className="relative max-w-6xl mx-auto z-10 w-full flex flex-col justify-center">
         {/* Heading */}
         <div className="text-center mb-6">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
@@ -79,7 +79,7 @@ export default function RiskReversalSlide() {
                 return (
                   <div
                     key={index}
-                    className="p-4 rounded-xl bg-black/30 backdrop-blur-sm border border-green-900/20 hover:border-green-600/40 transition-all duration-300"
+                    className="p-4 rounded-2xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border border-green-900/20 hover:border-green-600/40 transition-all duration-300"
                   >
                     <div className="flex items-start space-x-3">
                       <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-green-600/20 to-green-700/20 flex items-center justify-center">
@@ -105,7 +105,7 @@ export default function RiskReversalSlide() {
               <span>Security stance</span>
             </h3>
 
-            <div className="p-8 rounded-xl bg-black/30 backdrop-blur-sm border border-blue-900/20">
+            <div className="p-8 rounded-2xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border border-blue-900/20">
               <div className="grid grid-cols-1 gap-4 mb-6">
                 {securityPoints.map((point, index) => {
                   const Icon = point.icon;
@@ -120,7 +120,7 @@ export default function RiskReversalSlide() {
                 })}
               </div>
 
-              <div className="pt-6 border-t border-white/10">
+              <div className="pt-6 border-t border-white/5">
                 <p className="text-gray-400 font-extralight text-sm leading-relaxed">
                   <span className="text-white font-light">Pentest specialists</span> review critical flows on request.
                   We maintain SOC 2 Type II equivalent controls.
@@ -129,7 +129,7 @@ export default function RiskReversalSlide() {
             </div>
 
             {/* Additional Security Note */}
-            <div className="mt-6 p-4 rounded-xl bg-gradient-to-r from-blue-600/10 via-blue-600/20 to-blue-600/10 border border-blue-500/30">
+            <div className="mt-6 p-4 rounded-2xl bg-gradient-to-r from-blue-600/10 via-blue-600/20 to-blue-600/10 border border-blue-500/30">
               <p className="text-blue-300 font-extralight text-sm text-center">
                 <Shield className="w-4 h-4 inline mr-2" />
                 Your data never trains our models. Ever.

@@ -19,9 +19,9 @@ export default function Header({ onOpenContact, onOpenSchedule, isScrolled = fal
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-black/80 backdrop-blur-md shadow-lg shadow-black/20'
+          ? 'bg-black/90 backdrop-blur-xl shadow-2xl shadow-black/30 border-b border-white/5'
           : 'bg-transparent'
       }`}
     >

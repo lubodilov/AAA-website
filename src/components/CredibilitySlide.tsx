@@ -60,71 +60,63 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
 
   return (
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
-      <div className="absolute inset-0 bg-black/10 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
-        {/* Trusted By Section */}
-        <div className="text-center mb-8">
-          <p className="text-gray-400 text-sm font-light uppercase tracking-wider mb-4">Trusted by</p>
+      <div className="relative max-w-6xl mx-auto z-10 w-full flex flex-col justify-center">
+        <div className="text-center mb-12">
+          <p className="text-gray-400 text-xs font-light uppercase tracking-widest mb-8 opacity-70">Trusted by</p>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 opacity-60">
-            {/* Placeholder logos - replace with real client logos */}
-            <div className="text-white/50 text-lg font-light px-6 py-3 border border-white/10 rounded-lg">
+          <div className="flex flex-wrap items-center justify-center gap-6 opacity-50">
+            <div className="text-white/40 text-sm font-light px-8 py-3 border border-white/5 rounded-lg backdrop-blur-sm bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300">
               Client Logo 1
             </div>
-            <div className="text-white/50 text-lg font-light px-6 py-3 border border-white/10 rounded-lg">
+            <div className="text-white/40 text-sm font-light px-8 py-3 border border-white/5 rounded-lg backdrop-blur-sm bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300">
               Client Logo 2
             </div>
-            <div className="text-white/50 text-lg font-light px-6 py-3 border border-white/10 rounded-lg">
+            <div className="text-white/40 text-sm font-light px-8 py-3 border border-white/5 rounded-lg backdrop-blur-sm bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300">
               Client Logo 3
             </div>
-            <div className="text-white/50 text-lg font-light px-6 py-3 border border-white/10 rounded-lg">
+            <div className="text-white/40 text-sm font-light px-8 py-3 border border-white/5 rounded-lg backdrop-blur-sm bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300">
               Client Logo 4
             </div>
           </div>
         </div>
 
-        {/* Testimonial Carousel */}
         <div className="relative max-w-4xl mx-auto">
-          <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-6">
-            {/* Quote */}
-            <blockquote className="text-base md:text-xl font-light text-white leading-relaxed mb-6 text-center">
+          <div className="bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border border-white/5 rounded-3xl p-12 shadow-2xl">
+            <blockquote className="text-2xl md:text-3xl font-light text-white leading-relaxed mb-10 text-center">
               "{currentTestimonial.quote}"
             </blockquote>
 
-            {/* Attribution */}
-            <div className="flex flex-col items-center space-y-2">
+            <div className="flex flex-col items-center space-y-4">
               <div className="text-center">
-                <p className="text-white font-medium text-lg">{currentTestimonial.name}</p>
-                <p className="text-gray-400 font-light text-sm">
+                <p className="text-white font-normal text-xl mb-1">{currentTestimonial.name}</p>
+                <p className="text-gray-400 font-light text-sm tracking-wide">
                   {currentTestimonial.role}, {currentTestimonial.company}
                 </p>
               </div>
 
-              {/* Metric Badge */}
-              <div className="inline-block bg-gradient-to-r from-red-600/20 to-red-700/20 border border-red-500/30 rounded-full px-6 py-2 mt-4">
-                <span className="text-red-400 font-medium text-sm">{currentTestimonial.metric}</span>
+              <div className="inline-block bg-gradient-to-r from-red-600/10 to-red-700/10 border border-red-500/20 rounded-full px-8 py-3 mt-2">
+                <span className="text-red-400 font-light text-base tracking-wide">{currentTestimonial.metric}</span>
               </div>
             </div>
 
-            {/* Navigation */}
-            <div className="flex items-center justify-center space-x-4 mt-8">
+            <div className="flex items-center justify-center space-x-6 mt-10">
               <button
                 onClick={prevTestimonial}
-                className="p-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300"
+                className="p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110"
                 aria-label="Previous testimonial"
               >
                 <ChevronLeft className="w-5 h-5 text-white" />
               </button>
 
-              {/* Dots */}
-              <div className="flex space-x-2">
+              <div className="flex space-x-3">
                 {testimonials.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentIndex ? 'bg-red-500 w-8' : 'bg-white/30'
+                    className={`h-2 rounded-full transition-all duration-500 ${
+                      index === currentIndex ? 'bg-red-500 w-10' : 'bg-white/20 w-2 hover:bg-white/30'
                     }`}
                     aria-label={`Go to testimonial ${index + 1}`}
                   />
@@ -133,7 +125,7 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
 
               <button
                 onClick={nextTestimonial}
-                className="p-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300"
+                className="p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110"
                 aria-label="Next testimonial"
               >
                 <ChevronRight className="w-5 h-5 text-white" />
@@ -142,13 +134,12 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
           </div>
         </div>
 
-        {/* CTA Link */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-16">
           <button
             onClick={onScrollToCases}
-            className="group inline-flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300"
+            className="group inline-flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-300"
           >
-            <span className="font-light text-sm underline decoration-gray-600 group-hover:decoration-white">
+            <span className="font-light text-sm tracking-wide">
               Read the 3 quick case tiles
             </span>
             <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform duration-300" />

@@ -16,9 +16,9 @@ export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
 
   return (
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
-      <div className="absolute inset-0 bg-black/10 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
+      <div className="relative max-w-6xl mx-auto z-10 w-full flex flex-col justify-center">
         {/* Heading */}
         <div className="text-center mb-4">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-3">
@@ -59,7 +59,7 @@ export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
             })}
 
             {/* Micro-assurance */}
-            <div className="mt-8 p-4 rounded-xl bg-gradient-to-r from-green-600/10 via-green-600/20 to-green-600/10 border border-green-500/30">
+            <div className="mt-8 p-4 rounded-2xl bg-gradient-to-r from-green-600/10 via-green-600/20 to-green-600/10 border border-green-500/30">
               <p className="text-green-300 font-extralight text-sm">
                 <CheckCircle2 className="w-4 h-4 inline mr-2" />
                 We reply within 24 business hours. Kickoff in 7–10 days after contract.
@@ -68,7 +68,7 @@ export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
           </div>
 
           {/* Right: Calendly Embed */}
-          <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-2 overflow-hidden">
+          <div className="bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border border-white/5 rounded-2xl p-2 overflow-hidden">
             <div className="h-[600px] overflow-y-auto rounded-lg">
               {isOpen && (
                 <InlineWidget

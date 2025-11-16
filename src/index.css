@@ -5,6 +5,19 @@
 /* Apply Inter font globally */
 * {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Premium backdrop blur support */
+@supports (backdrop-filter: blur(20px)) {
+  .backdrop-blur-md {
+    backdrop-filter: blur(16px);
+  }
+
+  .backdrop-blur-sm {
+    backdrop-filter: blur(8px);
+  }
 }
 
 /* CSS Scroll Snap Configuration */

@@ -31,9 +31,9 @@ export default function SolutionSlide({ onScrollToSystems }: SolutionSlideProps)
 
   return (
     <section className="h-screen flex items-center justify-center px-6 py-8 relative overflow-hidden">
-      <div className="absolute inset-0 bg-black/10 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto z-10 w-full h-full overflow-y-auto px-2 py-4">
+      <div className="relative max-w-6xl mx-auto z-10 w-full flex flex-col justify-center">
         {/* Heading */}
         <div className="text-center mb-6">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-6">
@@ -61,7 +61,7 @@ export default function SolutionSlide({ onScrollToSystems }: SolutionSlideProps)
             return (
               <div
                 key={index}
-                className="group p-4 rounded-xl bg-black/30 backdrop-blur-sm border border-green-900/20 hover:border-green-600/40 transition-all duration-300"
+                className="group p-4 rounded-2xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border border-green-900/20 hover:border-green-600/40 transition-all duration-300"
               >
                 <div className="flex items-start space-x-3">
                   <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-green-600/20 to-green-700/20 flex items-center justify-center group-hover:from-green-600/30 group-hover:to-green-700/30 transition-all duration-300">
