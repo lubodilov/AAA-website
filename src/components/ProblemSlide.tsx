@@ -26,28 +26,28 @@ export default function ProblemSlide() {
   ];
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
-        <div className="text-center mb-20">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight">
+        <div className="text-center mb-10">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal text-white leading-tight">
             Why acquisition feels <span className="text-gray-500">busy</span>
             <br />
             —but not <span className="text-red-600">compounding</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 mb-8">
           {problems.map((problem, index) => {
             const Icon = problem.icon;
             return (
               <div key={index} className="group">
-                <div className="mb-4">
-                  <Icon className="w-12 h-12 text-red-500" />
+                <div className="mb-3">
+                  <Icon className="w-10 h-10 text-red-500" />
                 </div>
-                <h3 className="text-white text-2xl font-normal mb-3">{problem.title}</h3>
-                <p className="text-gray-400 text-lg font-light leading-relaxed">
+                <h3 className="text-white text-xl font-normal mb-2">{problem.title}</h3>
+                <p className="text-gray-400 text-base font-light leading-relaxed">
                   {problem.description}
                 </p>
               </div>
@@ -55,8 +55,8 @@ export default function ProblemSlide() {
           })}
         </div>
 
-        <div className="text-center mt-8">
-          <p className="text-2xl md:text-3xl text-white font-light">
+        <div className="text-center mt-6">
+          <p className="text-xl md:text-2xl text-white font-light">
             Busy work ≠ pipeline. <span className="text-red-600 font-normal">Let's change that.</span>
           </p>
         </div>

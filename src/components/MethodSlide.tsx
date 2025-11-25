@@ -74,22 +74,22 @@ export default function MethodSlide() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
-      <div className="relative max-w-5xl mx-auto z-10 w-full">
+      <div className="relative max-w-6xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mb-6">
+        <div className="text-center mb-8">
+          <h2 className="text-4xl md:text-5xl font-normal text-white leading-tight mb-3">
             3 steps. <span className="text-red-600">Measured weekly</span>
           </h2>
-          <p className="text-gray-400 text-xl font-light">
+          <p className="text-gray-400 text-base font-light">
             Time-boxed, de-risked, and tied to your KPIs
           </p>
         </div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           {steps.map((step, index) => {
             const Icon = step.icon;
             const colors = getColorClasses(step.color);
@@ -101,27 +101,27 @@ export default function MethodSlide() {
                   <div className="hidden md:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-white/20 to-transparent z-0" style={{ width: 'calc(100% - 3rem)' }} />
                 )}
 
-                <div className={`relative p-4 rounded-2xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border ${colors.border} hover:border-opacity-60 transition-all duration-300 h-full`}>
+                <div className={`relative p-3 rounded-xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border ${colors.border} hover:border-opacity-60 transition-all duration-300 h-full`}>
                   {/* Icon & Title */}
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${colors.bg} flex items-center justify-center`}>
-                      <Icon className={`w-5 h-5 ${colors.text}`} />
+                  <div className="flex items-center space-x-2 mb-3">
+                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${colors.bg} flex items-center justify-center`}>
+                      <Icon className={`w-4 h-4 ${colors.text}`} />
                     </div>
                     <div>
                       <p className="text-gray-500 text-xs font-light uppercase tracking-wider">{step.week}</p>
-                      <h3 className={`text-xl font-light ${colors.text}`}>{step.title}</h3>
+                      <h3 className={`text-lg font-light ${colors.text}`}>{step.title}</h3>
                     </div>
                   </div>
 
                   {/* Deliverables */}
-                  <div className="mb-4">
-                    <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-3">Deliverables</p>
-                    <ul className="space-y-2">
+                  <div className="mb-3">
+                    <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-2">Deliverables</p>
+                    <ul className="space-y-1.5">
                       {step.deliverables.map((deliverable, idx) => {
                         const DeliverableIcon = deliverable.icon;
                         return (
-                          <li key={idx} className="flex items-start space-x-2 text-sm text-gray-300 font-extralight">
-                            <DeliverableIcon className={`w-4 h-4 ${colors.text} mt-0.5 flex-shrink-0`} />
+                          <li key={idx} className="flex items-start space-x-2 text-xs text-gray-300 font-extralight">
+                            <DeliverableIcon className={`w-3.5 h-3.5 ${colors.text} mt-0.5 flex-shrink-0`} />
                             <span>{deliverable.text}</span>
                           </li>
                         );
@@ -130,12 +130,12 @@ export default function MethodSlide() {
                   </div>
 
                   {/* You Provide */}
-                  <div className="pt-4 border-t border-white/5">
-                    <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-3">You provide</p>
-                    <ul className="space-y-2">
+                  <div className="pt-3 border-t border-white/5">
+                    <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-2">You provide</p>
+                    <ul className="space-y-1.5">
                       {step.youProvide.map((item, idx) => (
-                        <li key={idx} className="flex items-start space-x-2 text-sm text-gray-400 font-extralight">
-                          <span className={`${colors.text} mt-1`}>•</span>
+                        <li key={idx} className="flex items-start space-x-2 text-xs text-gray-400 font-extralight">
+                          <span className={`${colors.text} mt-0.5`}>•</span>
                           <span>{item}</span>
                         </li>
                       ))}
@@ -148,8 +148,8 @@ export default function MethodSlide() {
         </div>
 
         {/* Side Note */}
-        <div className="text-center mt-8">
-          <p className="text-2xl md:text-3xl text-white font-light">
+        <div className="text-center mt-4">
+          <p className="text-lg md:text-xl text-white font-light">
             <span className="text-red-600 font-normal">No vanity AI:</span> if it won't move pipeline or time saved, we don't sell it.
           </p>
         </div>

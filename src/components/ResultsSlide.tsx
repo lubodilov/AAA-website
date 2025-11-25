@@ -79,61 +79,61 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
-      <div className="relative max-w-5xl mx-auto z-10 w-full">
+      <div className="relative max-w-6xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mb-6">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal text-white leading-tight mb-3">
             Real Results, <span className="text-red-600">Real Timelines</span>
           </h2>
-          <p className="text-gray-400 text-xl font-light">
+          <p className="text-gray-400 text-base font-light">
             3 client transformations, measured weekly
           </p>
         </div>
 
         {/* Case Tiles */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
           {cases.map((caseStudy) => {
             const colors = getColorClasses(caseStudy.color);
 
             return (
               <div
                 key={caseStudy.id}
-                className={`p-4 rounded-2xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border ${colors.border} hover:border-opacity-60 transition-all duration-300`}
+                className={`p-3 rounded-xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border ${colors.border} hover:border-opacity-60 transition-all duration-300`}
               >
                 {/* Header */}
-                <div className="mb-4">
-                  <h3 className={`text-xl font-light ${colors.text} mb-1`}>{caseStudy.title}</h3>
-                  <p className="text-gray-500 text-sm font-extralight">{caseStudy.subtitle}</p>
+                <div className="mb-2">
+                  <h3 className={`text-base font-light ${colors.text} mb-0.5`}>{caseStudy.title}</h3>
+                  <p className="text-gray-500 text-xs font-extralight">{caseStudy.subtitle}</p>
                 </div>
 
                 {/* Problem */}
-                <div className="mb-4">
-                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-2">Problem</p>
-                  <p className="text-gray-300 text-sm font-extralight leading-relaxed">{caseStudy.problem}</p>
+                <div className="mb-2">
+                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-1">Problem</p>
+                  <p className="text-gray-300 text-xs font-extralight leading-relaxed">{caseStudy.problem}</p>
                 </div>
 
                 {/* Intervention */}
-                <div className="mb-4">
-                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-2">Intervention</p>
-                  <p className="text-gray-300 text-sm font-extralight leading-relaxed">{caseStudy.intervention}</p>
+                <div className="mb-2">
+                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-1">Intervention</p>
+                  <p className="text-gray-300 text-xs font-extralight leading-relaxed">{caseStudy.intervention}</p>
                 </div>
 
                 {/* Impact */}
-                <div className="mb-4">
-                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-3">Impact ({caseStudy.timeline})</p>
-                  <div className="space-y-3">
+                <div className="mb-2">
+                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-2">Impact ({caseStudy.timeline})</p>
+                  <div className="space-y-1.5">
                     {caseStudy.impact.map((metric, index) => {
                       const Icon = metric.icon;
                       return (
                         <div key={index} className="flex items-center justify-between">
-                          <div className="flex items-center space-x-2">
-                            <Icon className={`w-4 h-4 ${colors.text}`} />
+                          <div className="flex items-center space-x-1.5">
+                            <Icon className={`w-3.5 h-3.5 ${colors.text}`} />
                             <span className="text-gray-400 text-xs font-extralight">{metric.label}</span>
                           </div>
-                          <span className={`text-lg font-medium ${colors.text}`}>{metric.value}</span>
+                          <span className={`text-sm font-medium ${colors.text}`}>{metric.value}</span>
                         </div>
                       );
                     })}
@@ -141,8 +141,8 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
                 </div>
 
                 {/* Stack */}
-                <div className="pt-4 border-t border-white/5">
-                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-2">Stack</p>
+                <div className="pt-2 border-t border-white/5">
+                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-1">Stack</p>
                   <p className="text-gray-400 text-xs font-extralight">{caseStudy.stack}</p>
                 </div>
               </div>
@@ -151,20 +151,20 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
         </div>
 
         {/* Footnote & CTA */}
-        <div className="text-center space-y-6">
+        <div className="text-center space-y-3">
           <p className="text-gray-500 text-xs font-extralight max-w-2xl mx-auto">
             Ranges vary by size & baseline. Full references on request.
           </p>
 
           <button
             onClick={onOpenSchedule}
-            className="group inline-flex items-center space-x-3 bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-4 rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg shadow-red-600/25 hover:shadow-red-600/40 hover:scale-105"
+            className="group inline-flex items-center space-x-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg shadow-red-600/25 hover:shadow-red-600/40 hover:scale-105"
           >
-            <span className="font-light">See if your numbers are possible</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+            <span className="font-light text-sm">See if your numbers are possible</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
           </button>
 
-          <p className="text-gray-400 text-sm font-extralight">
+          <p className="text-gray-400 text-xs font-extralight">
             Book the 20-min Audit
           </p>
         </div>

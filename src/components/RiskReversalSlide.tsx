@@ -40,26 +40,26 @@ export default function RiskReversalSlide() {
   ];
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mb-6">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal text-white leading-tight mb-3">
             <span className="text-green-600">Zero risk.</span> Maximum security.
           </h2>
-          <p className="text-gray-400 text-xl font-light">
+          <p className="text-gray-400 text-base font-light">
             We protect your business like it's our own
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* No-Risk Rules */}
           <div>
-            <h3 className="text-2xl font-normal text-white mb-8">No-risk rules</h3>
+            <h3 className="text-xl font-normal text-white mb-4">No-risk rules</h3>
 
-            <div className="space-y-6">
+            <div className="space-y-4">
               {noRiskRules.map((rule, index) => {
                 const Icon = rule.icon;
                 return (
@@ -67,13 +67,13 @@ export default function RiskReversalSlide() {
                     key={index}
                     className="group"
                   >
-                    <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-black/40 backdrop-blur-sm flex items-center justify-center border border-green-500/10 group-hover:border-green-500/30 transition-all duration-300">
-                        <Icon className="w-6 h-6 text-green-400" />
+                    <div className="flex items-start space-x-3">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-black/40 backdrop-blur-sm flex items-center justify-center border border-green-500/10 group-hover:border-green-500/30 transition-all duration-300">
+                        <Icon className="w-5 h-5 text-green-400" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-white font-normal text-xl mb-2">{rule.title}</h4>
-                        <p className="text-gray-400 font-light text-lg leading-relaxed">
+                        <h4 className="text-white font-normal text-base mb-1">{rule.title}</h4>
+                        <p className="text-gray-400 font-light text-sm leading-relaxed">
                           {rule.description}
                         </p>
                       </div>
@@ -86,32 +86,32 @@ export default function RiskReversalSlide() {
 
           {/* Security Stance */}
           <div>
-            <h3 className="text-2xl font-normal text-white mb-8">Security stance</h3>
+            <h3 className="text-xl font-normal text-white mb-4">Security stance</h3>
 
-            <div className="py-6">
-              <div className="grid grid-cols-1 gap-5 mb-8">
+            <div className="py-3">
+              <div className="grid grid-cols-1 gap-3 mb-4">
                 {securityPoints.map((point, index) => {
                   const Icon = point.icon;
                   return (
-                    <div key={index} className="flex items-center space-x-4">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-black/40 backdrop-blur-sm flex items-center justify-center border border-blue-500/10">
-                        <Icon className="w-6 h-6 text-blue-400" />
+                    <div key={index} className="flex items-center space-x-3">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-black/40 backdrop-blur-sm flex items-center justify-center border border-blue-500/10">
+                        <Icon className="w-5 h-5 text-blue-400" />
                       </div>
-                      <p className="text-gray-300 font-light text-lg">{point.text}</p>
+                      <p className="text-gray-300 font-light text-sm">{point.text}</p>
                     </div>
                   );
                 })}
               </div>
 
-              <div className="py-6 border-t border-white/5">
-                <p className="text-gray-400 font-extralight text-base leading-relaxed mb-6">
+              <div className="py-3 border-t border-white/5">
+                <p className="text-gray-400 font-extralight text-sm leading-relaxed mb-3">
                   <span className="text-white font-light">Pentest specialists</span> review critical flows on request.
                   We maintain SOC 2 Type II equivalent controls.
                 </p>
 
-                <div className="bg-gradient-to-r from-blue-600/0 via-blue-600/10 to-blue-600/0 border-y border-blue-500/20 py-4 text-center">
-                  <p className="text-blue-300 font-extralight text-base">
-                    <Shield className="w-5 h-5 inline mr-2" />
+                <div className="bg-gradient-to-r from-blue-600/0 via-blue-600/10 to-blue-600/0 border-y border-blue-500/20 py-3 text-center">
+                  <p className="text-blue-300 font-extralight text-sm">
+                    <Shield className="w-4 h-4 inline mr-2" />
                     Your data never trains our models. Ever.
                   </p>
                 </div>
