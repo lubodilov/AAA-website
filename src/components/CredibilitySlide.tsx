@@ -59,11 +59,11 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <p className="text-gray-400 text-xs font-light uppercase tracking-widest mb-8 opacity-70">Trusted by</p>
 
           <div className="flex flex-wrap items-center justify-center gap-6 opacity-50">
@@ -84,7 +84,7 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
 
         <div className="relative max-w-4xl mx-auto">
           <div className="py-12">
-            <blockquote className="text-3xl md:text-4xl font-light text-white leading-relaxed mb-10 text-center">
+            <blockquote className="text-2xl md:text-3xl font-light text-white leading-relaxed mb-8 text-center">
               "{currentTestimonial.quote}"
             </blockquote>
 
@@ -134,7 +134,7 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
           </div>
         </div>
 
-        <div className="text-center mt-16">
+        <div className="text-center mt-10">
           <button
             onClick={onScrollToCases}
             className="group inline-flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-300"

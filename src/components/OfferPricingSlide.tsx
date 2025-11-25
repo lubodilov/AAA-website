@@ -49,22 +49,22 @@ export default function OfferPricingSlide({ onOpenSchedule }: OfferPricingSlideP
   ];
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mb-6">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal text-white leading-tight mb-4">
             Start with an <span className="text-red-600">Acquisition Audit</span> & Roadmap
           </h2>
-          <p className="text-gray-400 text-xl font-light">
+          <p className="text-gray-400 text-base font-light">
             Clear pricing. No surprises. Pay for outcomes.
           </p>
         </div>
 
         {/* What You Get */}
-        <div className="mb-6">
+        <div className="mb-4">
           <div className="bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border border-white/5 rounded-2xl p-4">
             <h3 className="text-lg font-light text-white mb-4 text-center">
               What you get <span className="text-gray-500">(inside 7–10 business days)</span>
@@ -89,7 +89,7 @@ export default function OfferPricingSlide({ onOpenSchedule }: OfferPricingSlideP
         </div>
 
         {/* Pricing Tiers */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
           {pricingTiers.map((tier, index) => (
             <div
               key={index}

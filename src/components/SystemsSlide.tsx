@@ -93,22 +93,22 @@ export default function SystemsSlide({ onOpenSchedule }: SystemsSlideProps) {
   };
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mb-6">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal text-white leading-tight mb-4">
             3 Systems, <span className="text-red-600">KPI-Tied</span>
           </h2>
-          <p className="text-gray-400 text-xl font-light">
+          <p className="text-gray-400 text-base font-light">
             No vanity AI. Only systems that move the revenue needle.
           </p>
         </div>
 
         {/* Systems Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
           {systems.map((system) => {
             const Icon = system.icon;
             const colors = getColorClasses(system.color);

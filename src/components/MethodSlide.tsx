@@ -74,13 +74,13 @@ export default function MethodSlide() {
   };
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-6xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-8">
-          <h2 className="text-4xl md:text-5xl font-normal text-white leading-tight mb-3">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl md:text-4xl font-normal text-white leading-tight mb-2">
             3 steps. <span className="text-red-600">Measured weekly</span>
           </h2>
           <p className="text-gray-400 text-base font-light">
@@ -89,7 +89,7 @@ export default function MethodSlide() {
         </div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           {steps.map((step, index) => {
             const Icon = step.icon;
             const colors = getColorClasses(step.color);

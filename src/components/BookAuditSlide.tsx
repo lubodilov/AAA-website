@@ -15,13 +15,13 @@ export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
   ];
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-4">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-3">
+        <div className="text-center mb-3">
+          <h2 className="text-3xl md:text-4xl font-light text-white leading-tight mb-2">
             See where your revenue is leaking
             {' '}—in{' '}
             <span
@@ -41,7 +41,7 @@ export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
           {/* Left: Benefits */}
           <div className="flex flex-col justify-center space-y-4">
             <h3 className="text-lg font-light text-white mb-3">What you'll get:</h3>
