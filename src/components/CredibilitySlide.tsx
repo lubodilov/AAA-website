@@ -91,7 +91,7 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
               {logos.slice(logoSet * 2, logoSet * 2 + 4).map((logo, index) => (
                 <div
                   key={`${logoSet}-${index}`}
-                  className="flex-shrink-0 px-6 py-4 border border-white/10 rounded-lg backdrop-blur-sm bg-white/[0.03] hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 opacity-60 hover:opacity-100"
+                  className="flex-shrink-0 px-8 py-6 border border-white/30 rounded-xl backdrop-blur-sm bg-white/[0.08] hover:bg-white/[0.12] hover:border-white/40 transition-all duration-300"
                   style={{
                     animation: 'fadeIn 0.8s ease-in-out',
                   }}
@@ -99,7 +99,7 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
                   <img
                     src={logo}
                     alt={`Client logo ${index + 1}`}
-                    className="h-8 w-auto object-contain filter brightness-90 grayscale hover:grayscale-0 hover:brightness-100 transition-all duration-300"
+                    className="h-12 w-auto object-contain filter brightness-110 hover:brightness-125 transition-all duration-300"
                   />
                 </div>
               ))}
@@ -115,7 +115,7 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
                 transform: translateY(10px);
               }
               to {
-                opacity: 0.6;
+                opacity: 1;
                 transform: translateY(0);
               }
             }
