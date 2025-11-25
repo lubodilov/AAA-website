@@ -20,11 +20,13 @@ export default function Header({ onOpenContact, onOpenSchedule, isScrolled = fal
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center group cursor-pointer">
-            <img
-              src="/upgrade_vision_ai.png"
-              alt="Upgrade Vision AI Solutions"
-              className="h-12 w-auto transition-all duration-300 group-hover:scale-105 drop-shadow-lg group-hover:drop-shadow-xl"
-            />
+            <div className="relative p-3 bg-red-950/30 rounded-full border border-red-900/40 transition-all duration-300 group-hover:bg-red-950/40 group-hover:border-red-800/50 group-hover:shadow-lg group-hover:shadow-red-600/20">
+              <img
+                src="/upgrade_vision_ai.png"
+                alt="Upgrade Vision AI Solutions"
+                className="h-16 w-auto transition-all duration-300 group-hover:scale-105"
+              />
+            </div>
           </Link>
 
           {/* CTA Button and Portfolio Link */}
