@@ -82,7 +82,7 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
   }, []);
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 pt-28 pb-16 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-6 pt-36 pb-16 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/20 z-0"></div>
 
       <div className="relative text-center max-w-6xl mx-auto z-10">
