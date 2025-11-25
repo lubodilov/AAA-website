@@ -19,12 +19,15 @@ export default function Header({ onOpenContact, onOpenSchedule, isScrolled = fal
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link to="/" className="flex items-center justify-center group cursor-pointer">
+          <Link to="/" className="flex items-center space-x-3 group cursor-pointer">
             <img
               src="/upgrade_vision_ai.png"
               alt="Upgrade Vision AI Solutions"
               className="h-12 w-12 object-contain transition-all duration-300 group-hover:scale-105"
             />
+            <span className="text-white font-light text-xl tracking-wide hidden sm:block">
+              Upgrade Vision AI
+            </span>
           </Link>
 
           {/* CTA Button and Portfolio Link */}
