@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowUpRight, Menu, X, Calendar } from 'lucide-react';
+import { ArrowUpRight, Menu, X, Calendar, Briefcase } from 'lucide-react';
 
 interface HeaderProps {
   onOpenContact?: () => void;
@@ -12,18 +12,9 @@ export default function Header({ onOpenContact, onOpenSchedule, isScrolled = fal
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'Portfolio', href: '/portfolio' },
-  ];
-
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? 'bg-black/90 backdrop-blur-xl shadow-2xl shadow-black/30 border-b border-white/5'
-          : 'bg-transparent'
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent"
     >
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
@@ -40,26 +31,16 @@ export default function Header({ onOpenContact, onOpenSchedule, isScrolled = fal
               <span className="text-red-400 text-xs font-extralight tracking-wider uppercase">AI Solutions</span>
             </div>
           </Link>
-          
-          {/* Navigation - Desktop */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`font-light transition-colors duration-300 ${
-                  location.pathname === item.href 
-                    ? 'text-red-400' 
-                    : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
 
-          {/* CTA Button */}
+          {/* CTA Button and Portfolio Link */}
           <div className="hidden md:flex items-center space-x-4">
+            <Link
+              to="/portfolio"
+              className="group relative text-white/70 hover:text-white px-4 py-2 rounded-full transition-all duration-300 flex items-center space-x-2"
+            >
+              <Briefcase className="w-4 h-4" />
+              <span className="font-light text-sm">Case Studies</span>
+            </Link>
             <button
               onClick={onOpenSchedule}
               className="group relative bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-2.5 rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center space-x-2 shadow-lg shadow-red-600/25 hover:shadow-red-600/40"
@@ -83,20 +64,14 @@ export default function Header({ onOpenContact, onOpenSchedule, isScrolled = fal
           isMobileMenuOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
         }`}>
           <div className="bg-black/80 backdrop-blur-md rounded-xl border border-red-600/20 p-6 space-y-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`block font-light py-2 transition-colors duration-300 ${
-                  location.pathname === item.href 
-                    ? 'text-red-400' 
-                    : 'text-gray-300 hover:text-white'
-                }`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
+            <Link
+              to="/portfolio"
+              className="block font-light py-2 text-gray-300 hover:text-white transition-colors duration-300 flex items-center space-x-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Briefcase className="w-4 h-4" />
+              <span>Case Studies</span>
+            </Link>
             <button
               onClick={() => {
                 onOpenSchedule?.();
