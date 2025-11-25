@@ -1,30 +1,24 @@
 // src/components/ScheduleCall.tsx
-import React from 'react';
-import { InlineWidget } from 'react-calendly';
+import React, { useEffect } from 'react';
 
 export default function ScheduleCall({ isOpen }: { isOpen: boolean }) {
-  const CALENDLY_URL = 'https://calendly.com/lubo-daniel-dilov/30min'; // your link
+  useEffect(() => {
+    // Load Calendly script if not already loaded
+    if (!document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')) {
+      const script = document.createElement('script');
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
 
   return (
     <div className="relative">
-      {/* Optional: faint loader behind the widget */}
-      <div className="absolute inset-0 bg-white/5 rounded-xl" />
-
-      <div className={`relative ${isOpen ? 'opacity-100' : 'opacity-100'}`}>
-        {/* Keep it mounted at all times */}
-        <InlineWidget
-          url={CALENDLY_URL}
-          styles={{
-            height: '70vh',
-            width: '100%',
-          }}
-          pageSettings={{
-            backgroundColor: '0b0b0b',
-            primaryColor: 'ef4444',
-            textColor: 'ffffff',
-          }}
-        />
-      </div>
+      <div
+        className="calendly-inline-widget"
+        data-url="https://calendly.com/lubo-daniel-dilov/acquisition-audit-20-minute-strategy-call?hide_gdpr_banner=1&primary_color=c40000"
+        style={{ minWidth: '320px', height: '700px' }}
+      />
     </div>
   );
 }

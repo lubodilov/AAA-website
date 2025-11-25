@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Calendar, CheckCircle2, Clock, FileText, Target } from 'lucide-react';
-import { InlineWidget } from 'react-calendly';
 
 interface BookAuditSlideProps {
   isOpen?: boolean;
@@ -13,6 +12,16 @@ export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
     { icon: CheckCircle2, text: "Learn which 1–2 systems pay back fastest" },
     { icon: Clock, text: "Leave with clarity in 20 minutes" }
   ];
+
+  useEffect(() => {
+    // Load Calendly script if not already loaded
+    if (!document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')) {
+      const script = document.createElement('script');
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
 
   return (
     <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
@@ -70,45 +79,12 @@ export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
           {/* Right: Calendly Embed */}
           <div className="bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border border-white/5 rounded-2xl p-2 overflow-hidden">
             <div className="h-[600px] overflow-y-auto rounded-lg">
-              {isOpen && (
-                <InlineWidget
-                  url="https://calendly.com/your-calendly-link"
-                  styles={{
-                    height: '100%',
-                    minWidth: '100%'
-                  }}
-                  pageSettings={{
-                    backgroundColor: '000000',
-                    hideEventTypeDetails: false,
-                    hideLandingPageDetails: false,
-                    primaryColor: 'ef4444',
-                    textColor: 'ffffff'
-                  }}
-                  prefill={{
-                    customAnswers: {
-                      a1: '',
-                      a2: '',
-                      a3: '',
-                      a4: '',
-                      a5: '',
-                      a6: '',
-                      a7: '',
-                      a8: ''
-                    }
-                  }}
-                />
-              )}
+              <div
+                className="calendly-inline-widget"
+                data-url="https://calendly.com/lubo-daniel-dilov/acquisition-audit-20-minute-strategy-call?hide_gdpr_banner=1&primary_color=c40000"
+                style={{ minWidth: '320px', height: '100%' }}
+              />
             </div>
-
-            {/* Fallback for when Calendly isn't loaded */}
-            {!isOpen && (
-              <div className="h-[600px] flex items-center justify-center">
-                <div className="text-center">
-                  <Calendar className="w-16 h-16 text-red-400 mx-auto mb-4" />
-                  <p className="text-gray-400 font-light">Calendar loading...</p>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>
