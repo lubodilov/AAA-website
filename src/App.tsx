@@ -315,8 +315,8 @@ function HomePage() {
               <div className="hidden md:block md:w-80 lg:w-96 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20 z-10"></div>
                 <img
-                  src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600&h=900&dpr=1"
-                  alt="Professional consultant"
+                  src="/lubo_dilov_ai.png"
+                  alt="Lubo Dilov"
                   className="w-full h-full object-cover"
                 />
               </div>
