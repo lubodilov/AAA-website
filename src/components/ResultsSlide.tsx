@@ -84,28 +84,28 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
 
       <div className="relative max-w-6xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-10">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight mb-3">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight tracking-tight">
             <span className="text-red-600 font-normal">Real results.</span>
             <br />
             <span className="text-gray-600">Proof. Not promises.</span>
           </h2>
+        </div>
 
-          {/* Visual Element - Dashboard/Analytics imagery */}
-          <div className="mt-8 max-w-3xl mx-auto">
-            <div className="relative rounded-xl overflow-hidden border border-zinc-800/60 shadow-2xl">
-              <img
-                src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                alt="Analytics dashboard showing growth metrics"
-                className="w-full h-48 object-cover opacity-60"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-            </div>
+        {/* Visual Element - Dashboard/Analytics imagery */}
+        <div className="mb-6 max-w-3xl mx-auto">
+          <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
+            <img
+              src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="Analytics dashboard showing growth metrics"
+              className="w-full h-32 object-cover opacity-50"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
           </div>
         </div>
 
         {/* Case Tiles */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
           {cases.map((caseStudy) => {
             const colors = getColorClasses(caseStudy.color);
 

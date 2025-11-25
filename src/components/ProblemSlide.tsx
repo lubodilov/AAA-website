@@ -30,27 +30,15 @@ export default function ProblemSlide() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight mb-6">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight tracking-tight">
             Why acquisition feels <span className="text-gray-600">busy</span>
             <br />
             —but not <span className="text-red-600 font-normal">compounding</span>
           </h2>
-
-          {/* Visual Element - Frustrated professional/chaos */}
-          <div className="mt-8 max-w-2xl mx-auto">
-            <div className="relative rounded-xl overflow-hidden border border-zinc-800/60 shadow-2xl">
-              <img
-                src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                alt="Professional working with multiple systems"
-                className="w-full h-56 object-cover opacity-50"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-            </div>
-          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {problems.map((problem, index) => {
             const Icon = problem.icon;
             return (
@@ -67,8 +55,20 @@ export default function ProblemSlide() {
           })}
         </div>
 
-        <div className="text-center mt-8">
-          <p className="text-xl md:text-2xl text-gray-400 font-light tracking-tight">
+        {/* Visual Element - Frustrated professional/chaos */}
+        <div className="mb-4 max-w-2xl mx-auto">
+          <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
+            <img
+              src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="Professional working with multiple systems"
+              className="w-full h-32 object-cover opacity-40"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+          </div>
+        </div>
+
+        <div className="text-center">
+          <p className="text-lg md:text-xl text-gray-400 font-light tracking-tight">
             Busy work ≠ pipeline. <span className="text-white font-normal">Let's change that.</span>
           </p>
         </div>

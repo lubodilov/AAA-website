@@ -83,13 +83,13 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
         </div>
 
         <div className="relative max-w-4xl mx-auto">
-          <div className="py-12">
-            <blockquote className="text-3xl md:text-4xl font-light text-gray-400 leading-relaxed mb-10 text-center tracking-tight">
+          <div className="py-8">
+            <blockquote className="text-2xl md:text-3xl font-light text-gray-400 leading-relaxed mb-8 text-center tracking-tight">
               "{currentTestimonial.quote}"
             </blockquote>
 
-            <div className="flex flex-col items-center space-y-4">
-              <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-red-600/30 shadow-lg">
+            <div className="flex flex-col items-center space-y-3">
+              <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-red-600/30 shadow-lg">
                 <img
                   src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Professional testimonial"
@@ -104,7 +104,7 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
               </div>
             </div>
 
-            <div className="flex items-center justify-center space-x-6 mt-10">
+            <div className="flex items-center justify-center space-x-6 mt-8">
               <button
                 onClick={prevTestimonial}
                 className="p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110"
