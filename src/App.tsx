@@ -286,23 +286,39 @@ function HomePage() {
           <div
             ref={scheduleRef}
             tabIndex={-1}
-            className={`relative w-full max-w-4xl max-h-[90vh] outline-none flex flex-col ${
+            className={`relative w-full max-w-6xl max-h-[90vh] outline-none flex flex-col ${
               scheduleOpen ? 'animate-in fade-in-0 zoom-in-95 duration-300' : ''
             }`}
           >
-            <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col flex-1 overflow-hidden">
-              <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-                <h3 className="text-white text-lg font-light">Book Your Acquisition Audit</h3>
-                <button
-                  onClick={() => setScheduleOpen(false)}
-                  className="text-white/70 hover:text-white transition text-2xl leading-none"
-                  aria-label="Close"
-                >
-                  ×
-                </button>
+            <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col md:flex-row flex-1 overflow-hidden">
+              {/* Close Button - Positioned Absolutely */}
+              <button
+                onClick={() => setScheduleOpen(false)}
+                className="absolute top-4 right-4 z-10 text-white/70 hover:text-white transition text-2xl leading-none w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10"
+                aria-label="Close"
+              >
+                ×
+              </button>
+
+              {/* Left Side - Calendly Widget */}
+              <div className="flex-1 flex flex-col overflow-hidden">
+                <div className="px-6 py-4 border-b border-white/10">
+                  <h3 className="text-white text-xl font-light">Book Your Acquisition Audit</h3>
+                  <p className="text-gray-400 text-sm font-light mt-1">Choose a time that works for you</p>
+                </div>
+                <div className="p-6 overflow-y-auto flex-1">
+                  <ScheduleCall isOpen={scheduleOpen} />
+                </div>
               </div>
-              <div className="p-6 overflow-y-auto">
-                <ScheduleCall isOpen={scheduleOpen} />
+
+              {/* Right Side - Portrait Image */}
+              <div className="hidden md:block md:w-80 lg:w-96 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20 z-10"></div>
+                <img
+                  src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600&h=900&dpr=1"
+                  alt="Professional consultant"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
