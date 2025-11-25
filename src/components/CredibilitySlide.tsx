@@ -59,7 +59,7 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-6 pt-24 pb-16 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
@@ -84,7 +84,7 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
 
         <div className="relative max-w-4xl mx-auto">
           <div className="py-12">
-            <blockquote className="text-3xl md:text-4xl font-light text-white leading-relaxed mb-10 text-center">
+            <blockquote className="text-3xl md:text-4xl font-light text-white leading-relaxed mb-10 text-center drop-shadow-lg">
               "{currentTestimonial.quote}"
             </blockquote>
 
