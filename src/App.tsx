@@ -9,7 +9,6 @@ import SystemsSlide from './components/SystemsSlide';
 import ResultsSlide from './components/ResultsSlide';
 import MethodSlide from './components/MethodSlide';
 import OfferPricingSlide from './components/OfferPricingSlide';
-import RiskReversalSlide from './components/RiskReversalSlide';
 import FAQSlide from './components/FAQSlide';
 import BookAuditSlide from './components/BookAuditSlide';
 import Portfolio from './components/Portfolio';
@@ -52,7 +51,6 @@ function HomePage() {
     { id: 'results', name: 'Results' },
     { id: 'method', name: 'Method' },
     { id: 'pricing', name: 'Pricing' },
-    { id: 'risk', name: 'Risk Reversal' },
     { id: 'faq', name: 'FAQ' },
     { id: 'book', name: 'Book Audit' }
   ];
@@ -214,14 +212,10 @@ function HomePage() {
         </div>
 
         <div ref={el => slideRefs.current[8] = el} className="snap-start snap-always">
-          <RiskReversalSlide />
-        </div>
-
-        <div ref={el => slideRefs.current[9] = el} className="snap-start snap-always">
           <FAQSlide />
         </div>
 
-        <div ref={el => slideRefs.current[10] = el} className="snap-start snap-always">
+        <div ref={el => slideRefs.current[9] = el} className="snap-start snap-always">
           <BookAuditSlide isOpen={true} />
         </div>
       </div>
