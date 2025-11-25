@@ -74,10 +74,10 @@ export default function MethodSlide() {
   };
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
-      <div className="relative max-w-6xl mx-auto z-10 w-full pt-20 pb-8">
+      <div className="relative max-w-6xl mx-auto z-10 w-full">
         {/* Heading */}
         <div className="text-center mb-8">
           <h2 className="text-4xl md:text-5xl font-normal text-white leading-tight mb-3">

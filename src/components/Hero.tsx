@@ -82,10 +82,10 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
   }, []);
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/20 z-0"></div>
 
-      <div className="relative text-center max-w-6xl mx-auto z-10 pt-20">
+      <div className="relative text-center max-w-6xl mx-auto z-10">
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-extralight text-white leading-tight mb-12 min-h-[300px] md:min-h-[350px] flex flex-col justify-center">
           <div className="font-thin" style={{ fontFamily: 'Inter, sans-serif' }}>
             <div>
