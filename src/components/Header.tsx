@@ -19,17 +19,12 @@ export default function Header({ onOpenContact, onOpenSchedule, isScrolled = fal
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group cursor-pointer">
-            <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-red-700 rounded-lg flex items-center justify-center shadow-lg shadow-red-600/25 group-hover:shadow-red-600/40 transition-all duration-300 group-hover:scale-105">
-                <span className="text-white font-bold text-lg">UV</span>
-              </div>
-              <div className="absolute -inset-1 bg-gradient-to-br from-red-600/20 to-red-700/20 rounded-lg blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-white font-light text-xl tracking-tight">Upgrade Vision</span>
-              <span className="text-red-400 text-xs font-extralight tracking-wider uppercase">AI Solutions</span>
-            </div>
+          <Link to="/" className="flex items-center group cursor-pointer">
+            <img
+              src="/upgrade_vision_ai.png"
+              alt="Upgrade Vision AI Solutions"
+              className="h-12 w-auto transition-all duration-300 group-hover:scale-105 drop-shadow-lg group-hover:drop-shadow-xl"
+            />
           </Link>
 
           {/* CTA Button and Portfolio Link */}
