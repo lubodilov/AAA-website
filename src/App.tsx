@@ -282,7 +282,7 @@ function HomePage() {
                 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.0) 22%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.88) 100%)'
             }}
           />
-          <div className="absolute inset-0 bg-black/20" />
+          <div className="absolute inset-0 bg-black/40" />
           <div
             ref={scheduleRef}
             tabIndex={-1}
@@ -290,11 +290,11 @@ function HomePage() {
               scheduleOpen ? 'animate-in fade-in-0 zoom-in-95 duration-300' : ''
             }`}
           >
-            <div className="bg-gradient-to-br from-white via-gray-50 to-gray-100 border border-gray-200 rounded-2xl shadow-2xl flex flex-col md:flex-row flex-1 overflow-hidden relative">
+            <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col md:flex-row flex-1 overflow-hidden relative">
               {/* Close Button - Positioned Absolutely */}
               <button
                 onClick={() => setScheduleOpen(false)}
-                className="absolute top-4 right-4 z-20 text-gray-600 hover:text-gray-900 transition text-2xl leading-none w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200"
+                className="absolute top-4 right-4 z-20 text-white/70 hover:text-white transition text-2xl leading-none w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10"
                 aria-label="Close"
               >
                 ×
@@ -302,9 +302,9 @@ function HomePage() {
 
               {/* Left Side - Calendly Widget */}
               <div className="flex-1 flex flex-col overflow-hidden">
-                <div className="px-6 py-4 border-b border-gray-200">
-                  <h3 className="text-gray-900 text-xl font-semibold">Book Your Acquisition Audit</h3>
-                  <p className="text-gray-600 text-sm font-light mt-1">Choose a time that works for you</p>
+                <div className="px-6 py-4 border-b border-white/10">
+                  <h3 className="text-white text-xl font-light">Book Your Acquisition Audit</h3>
+                  <p className="text-gray-400 text-sm font-light mt-1">Choose a time that works for you</p>
                 </div>
                 <div className="p-6 overflow-y-auto flex-1">
                   <ScheduleCall isOpen={scheduleOpen} />
