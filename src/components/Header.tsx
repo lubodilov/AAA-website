@@ -25,7 +25,15 @@ export default function Header({ onOpenContact, onOpenSchedule, isScrolled = fal
               alt="Upgrade Vision AI Solutions"
               className="h-12 w-12 object-contain transition-all duration-300 group-hover:scale-105"
             />
-            <span className="text-white font-light text-xl tracking-wide hidden sm:block">
+            <span
+              className="font-semibold text-xl tracking-wide hidden sm:block"
+              style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #ef4444 60%, #dc2626 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}
+            >
               Upgrade Vision AI
             </span>
           </Link>
