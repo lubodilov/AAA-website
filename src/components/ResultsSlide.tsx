@@ -90,6 +90,18 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
             <br />
             <span className="text-gray-600">Proof. Not promises.</span>
           </h2>
+
+          {/* Visual Element - Dashboard/Analytics imagery */}
+          <div className="mt-8 max-w-3xl mx-auto">
+            <div className="relative rounded-xl overflow-hidden border border-zinc-800/60 shadow-2xl">
+              <img
+                src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                alt="Analytics dashboard showing growth metrics"
+                className="w-full h-48 object-cover opacity-60"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+            </div>
+          </div>
         </div>
 
         {/* Case Tiles */}

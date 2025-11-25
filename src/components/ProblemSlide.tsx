@@ -31,11 +31,23 @@ export default function ProblemSlide() {
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight mb-6">
             Why acquisition feels <span className="text-gray-600">busy</span>
             <br />
             —but not <span className="text-red-600 font-normal">compounding</span>
           </h2>
+
+          {/* Visual Element - Frustrated professional/chaos */}
+          <div className="mt-8 max-w-2xl mx-auto">
+            <div className="relative rounded-xl overflow-hidden border border-zinc-800/60 shadow-2xl">
+              <img
+                src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                alt="Professional working with multiple systems"
+                className="w-full h-56 object-cover opacity-50"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">

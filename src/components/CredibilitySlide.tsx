@@ -88,7 +88,14 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
               "{currentTestimonial.quote}"
             </blockquote>
 
-            <div className="flex flex-col items-center space-y-3">
+            <div className="flex flex-col items-center space-y-4">
+              <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-red-600/30 shadow-lg">
+                <img
+                  src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400"
+                  alt="Professional testimonial"
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div className="text-center">
                 <p className="text-red-600 font-normal text-base mb-1">{currentTestimonial.name}</p>
                 <p className="text-gray-600 font-light text-sm">
