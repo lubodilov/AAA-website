@@ -93,13 +93,13 @@ export default function SystemsSlide({ onOpenSchedule }: SystemsSlideProps) {
   };
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 pt-20 pb-16 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight drop-shadow-lg mb-6">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mb-6">
             3 Systems, <span className="text-red-600">KPI-Tied</span>
           </h2>
           <p className="text-gray-400 text-xl font-light">

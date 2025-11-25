@@ -26,12 +26,12 @@ export default function ProblemSlide() {
   ];
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 pt-20 pb-16 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         <div className="text-center mb-10">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal text-white leading-tight drop-shadow-lg">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal text-white leading-tight">
             Why acquisition feels <span className="text-gray-500">busy</span>
             <br />
             —but not <span className="text-red-600">compounding</span>

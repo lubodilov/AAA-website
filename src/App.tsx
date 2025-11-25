@@ -177,7 +177,7 @@ function HomePage() {
         ref={containerRef}
         className="relative z-10 snap-y snap-mandatory overflow-y-auto h-screen"
       >
-        <div ref={el => slideRefs.current[0] = el} className="snap-start snap-always scroll-mt-20">
+        <div ref={el => slideRefs.current[0] = el} className="snap-start snap-always">
           <Hero
             onOpenContact={() => setContactOpen(true)}
             onOpenSchedule={() => setScheduleOpen(true)}
@@ -185,43 +185,43 @@ function HomePage() {
           />
         </div>
 
-        <div ref={el => slideRefs.current[1] = el} className="snap-start snap-always scroll-mt-20">
+        <div ref={el => slideRefs.current[1] = el} className="snap-start snap-always">
           <CredibilitySlide onScrollToCases={() => scrollToSlide(5)} />
         </div>
 
-        <div ref={el => slideRefs.current[2] = el} className="snap-start snap-always scroll-mt-20">
+        <div ref={el => slideRefs.current[2] = el} className="snap-start snap-always">
           <ProblemSlide />
         </div>
 
-        <div ref={el => slideRefs.current[3] = el} className="snap-start snap-always scroll-mt-20">
+        <div ref={el => slideRefs.current[3] = el} className="snap-start snap-always">
           <SolutionSlide onScrollToSystems={() => scrollToSlide(4)} />
         </div>
 
-        <div ref={el => slideRefs.current[4] = el} className="snap-start snap-always scroll-mt-20">
+        <div ref={el => slideRefs.current[4] = el} className="snap-start snap-always">
           <SystemsSlide onOpenSchedule={() => setScheduleOpen(true)} />
         </div>
 
-        <div ref={el => slideRefs.current[5] = el} className="snap-start snap-always scroll-mt-20">
+        <div ref={el => slideRefs.current[5] = el} className="snap-start snap-always">
           <ResultsSlide onOpenSchedule={() => setScheduleOpen(true)} />
         </div>
 
-        <div ref={el => slideRefs.current[6] = el} className="snap-start snap-always scroll-mt-20">
+        <div ref={el => slideRefs.current[6] = el} className="snap-start snap-always">
           <MethodSlide />
         </div>
 
-        <div ref={el => slideRefs.current[7] = el} className="snap-start snap-always scroll-mt-20">
+        <div ref={el => slideRefs.current[7] = el} className="snap-start snap-always">
           <OfferPricingSlide onOpenSchedule={() => setScheduleOpen(true)} />
         </div>
 
-        <div ref={el => slideRefs.current[8] = el} className="snap-start snap-always scroll-mt-20">
+        <div ref={el => slideRefs.current[8] = el} className="snap-start snap-always">
           <RiskReversalSlide />
         </div>
 
-        <div ref={el => slideRefs.current[9] = el} className="snap-start snap-always scroll-mt-20">
+        <div ref={el => slideRefs.current[9] = el} className="snap-start snap-always">
           <FAQSlide />
         </div>
 
-        <div ref={el => slideRefs.current[10] = el} className="snap-start snap-always scroll-mt-20">
+        <div ref={el => slideRefs.current[10] = el} className="snap-start snap-always">
           <BookAuditSlide isOpen={true} />
         </div>
       </div>

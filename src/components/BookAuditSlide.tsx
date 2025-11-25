@@ -15,16 +15,24 @@ export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
   ];
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 pt-20 pb-16 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
         <div className="text-center mb-4">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-3 drop-shadow-lg">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-3">
             See where your revenue is leaking
             {' '}—in{' '}
-            <span className="font-normal text-red-600">
+            <span
+              className="font-normal"
+              style={{
+                background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}
+            >
               20 minutes
             </span>
           </h2>
