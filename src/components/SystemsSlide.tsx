@@ -98,17 +98,14 @@ export default function SystemsSlide({ onOpenSchedule }: SystemsSlideProps) {
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal text-white leading-tight mb-4">
-            3 Systems, <span className="text-red-600">KPI-Tied</span>
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight mb-3">
+            3 Systems, <span className="text-red-600 font-normal">KPI-Tied</span>
           </h2>
-          <p className="text-gray-400 text-base font-light">
-            No vanity AI. Only systems that move the revenue needle.
-          </p>
         </div>
 
         {/* Systems Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
           {systems.map((system) => {
             const Icon = system.icon;
             const colors = getColorClasses(system.color);
@@ -117,85 +114,41 @@ export default function SystemsSlide({ onOpenSchedule }: SystemsSlideProps) {
             return (
               <div
                 key={system.id}
-                className={`group p-5 rounded-2xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border ${colors.border} hover:border-opacity-60 transition-all duration-500 shadow-lg`}
+                className="group p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300"
               >
                 {/* Icon & Title */}
-                <div className="flex items-start space-x-3 mb-3">
-                  <div className={`flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br ${colors.bg} group-hover:${colors.bgHover} flex items-center justify-center transition-all duration-300`}>
-                    <Icon className={`w-5 h-5 ${colors.text}`} />
-                  </div>
-                  <h3 className="text-white font-light text-lg flex-1">{system.title}</h3>
+                <div className="mb-4">
+                  <Icon className="w-7 h-7 text-white mb-3" strokeWidth={1.5} />
+                  <h3 className="text-white font-normal text-lg tracking-tight">{system.title}</h3>
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-400 font-extralight text-xs leading-relaxed mb-3">
+                <p className="text-gray-500 font-light text-sm leading-relaxed mb-4">
                   {system.description}
                 </p>
 
-                {/* Primary KPIs */}
-                <div className="mb-3">
-                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-2">Primary KPIs</p>
-                  <div className="flex flex-wrap gap-2">
-                    {system.kpis.map((kpi, index) => (
-                      <span
-                        key={index}
-                        className={`text-xs px-3 py-1 rounded-full bg-gradient-to-r ${colors.bg} border ${colors.border} ${colors.text}`}
-                      >
-                        {kpi}
-                      </span>
-                    ))}
-                  </div>
+                {/* KPIs */}
+                <div className="space-y-2">
+                  {system.kpis.map((kpi, index) => (
+                    <div key={index} className="text-gray-600 text-xs font-light">
+                      {kpi}
+                    </div>
+                  ))}
                 </div>
-
-                {/* Stack */}
-                <div className="mb-3">
-                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-2">Stack</p>
-                  <p className="text-gray-400 text-xs font-extralight">{system.stack}</p>
-                </div>
-
-                {/* How it works button */}
-                <button
-                  onClick={() => setExpandedCard(isExpanded ? null : system.id)}
-                  className={`w-full flex items-center justify-center space-x-2 bg-gradient-to-r ${colors.buttonBg} text-white px-4 py-2 rounded-lg ${colors.buttonHover} transition-all duration-300 text-sm font-light`}
-                >
-                  <Play className="w-4 h-4" />
-                  <span>{isExpanded ? 'Close' : 'How it works in 120s'}</span>
-                </button>
-
-                {/* Expanded Details */}
-                {isExpanded && (
-                  <div className="mt-4 pt-4 border-t border-white/10">
-                    <ul className="space-y-2">
-                      {system.details.map((detail, index) => (
-                        <li key={index} className="flex items-start space-x-2 text-sm text-gray-300 font-extralight">
-                          <span className={`${colors.text} mt-1`}>•</span>
-                          <span>{detail}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
               </div>
             );
           })}
         </div>
 
-        {/* Mini-CTA Bar */}
-        <div className="bg-gradient-to-r from-red-600/10 via-red-600/20 to-red-600/10 border border-red-500/30 rounded-xl p-4 text-center">
-          <p className="text-white font-light text-base mb-3">
-            Not sure where to start?
-          </p>
+        {/* CTA */}
+        <div className="text-center">
           <button
             onClick={onOpenSchedule}
-            className="group inline-flex items-center space-x-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg shadow-red-600/25 hover:shadow-red-600/40 hover:scale-105"
+            className="group inline-flex items-center space-x-2 bg-white text-black px-8 py-3.5 rounded-full hover:bg-gray-100 transition-all duration-300 font-normal text-base tracking-tight"
           >
-            <Calendar className="w-4 h-4" />
-            <span className="font-light text-sm">Book the 20-min Audit</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+            <span>Book the 20-min Audit</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" strokeWidth={2} />
           </button>
-          <p className="text-gray-400 text-xs font-extralight mt-3">
-            We'll pick the 1–2 use cases that pay back fastest.
-          </p>
         </div>
       </div>
     </section>

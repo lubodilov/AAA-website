@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileX, Layers, Cpu, TrendingDown, AlertTriangle } from 'lucide-react';
+import { FileX, Layers, Cpu, TrendingDown } from 'lucide-react';
 
 export default function ProblemSlide() {
   const problems = [
@@ -30,24 +30,24 @@ export default function ProblemSlide() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal text-white leading-tight">
-            Why acquisition feels <span className="text-gray-500">busy</span>
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight">
+            Why acquisition feels <span className="text-gray-600">busy</span>
             <br />
-            —but not <span className="text-red-600">compounding</span>
+            —but not <span className="text-red-600 font-normal">compounding</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           {problems.map((problem, index) => {
             const Icon = problem.icon;
             return (
-              <div key={index} className="group">
-                <div className="mb-3">
-                  <Icon className="w-10 h-10 text-red-500" />
+              <div key={index} className="group p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300">
+                <div className="mb-4">
+                  <Icon className="w-7 h-7 text-red-600" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-white text-xl font-normal mb-2">{problem.title}</h3>
-                <p className="text-gray-400 text-base font-light leading-relaxed">
+                <h3 className="text-white text-lg font-normal mb-3 tracking-tight">{problem.title}</h3>
+                <p className="text-gray-500 text-sm font-light leading-relaxed">
                   {problem.description}
                 </p>
               </div>
@@ -55,9 +55,9 @@ export default function ProblemSlide() {
           })}
         </div>
 
-        <div className="text-center mt-6">
-          <p className="text-xl md:text-2xl text-white font-light">
-            Busy work ≠ pipeline. <span className="text-red-600 font-normal">Let's change that.</span>
+        <div className="text-center mt-8">
+          <p className="text-xl md:text-2xl text-gray-400 font-light tracking-tight">
+            Busy work ≠ pipeline. <span className="text-white font-normal">Let's change that.</span>
           </p>
         </div>
       </div>

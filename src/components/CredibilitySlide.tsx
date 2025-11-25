@@ -84,20 +84,16 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
 
         <div className="relative max-w-4xl mx-auto">
           <div className="py-12">
-            <blockquote className="text-2xl md:text-3xl font-light text-white leading-relaxed mb-8 text-center">
+            <blockquote className="text-3xl md:text-4xl font-light text-gray-400 leading-relaxed mb-10 text-center tracking-tight">
               "{currentTestimonial.quote}"
             </blockquote>
 
-            <div className="flex flex-col items-center space-y-4">
+            <div className="flex flex-col items-center space-y-3">
               <div className="text-center">
-                <p className="text-white font-light text-xl mb-1">{currentTestimonial.name}</p>
-                <p className="text-gray-400 font-extralight text-base tracking-wide">
-                  {currentTestimonial.role}, {currentTestimonial.company}
+                <p className="text-red-600 font-normal text-base mb-1">{currentTestimonial.name}</p>
+                <p className="text-gray-600 font-light text-sm">
+                  {currentTestimonial.role}
                 </p>
-              </div>
-
-              <div className="inline-block bg-gradient-to-r from-red-600/0 via-red-600/10 to-red-600/0 border-y border-red-500/20 px-8 py-3 mt-2">
-                <span className="text-red-400 font-light text-lg tracking-wide">{currentTestimonial.metric}</span>
               </div>
             </div>
 

@@ -79,67 +79,35 @@ export default function MethodSlide() {
 
       <div className="relative max-w-6xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-6">
-          <h2 className="text-3xl md:text-4xl font-normal text-white leading-tight mb-2">
-            3 steps. <span className="text-red-600">Measured weekly</span>
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight mb-3">
+            3 steps. <span className="text-red-600 font-normal">Measured weekly</span>
           </h2>
-          <p className="text-gray-400 text-base font-light">
-            Time-boxed, de-risked, and tied to your KPIs
-          </p>
         </div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {steps.map((step, index) => {
             const Icon = step.icon;
             const colors = getColorClasses(step.color);
 
             return (
               <div key={index} className="relative">
-                {/* Connector Line (desktop only) */}
-                {index < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-white/20 to-transparent z-0" style={{ width: 'calc(100% - 3rem)' }} />
-                )}
-
-                <div className={`relative p-3 rounded-xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border ${colors.border} hover:border-opacity-60 transition-all duration-300 h-full`}>
-                  {/* Icon & Title */}
-                  <div className="flex items-center space-x-2 mb-3">
-                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${colors.bg} flex items-center justify-center`}>
-                      <Icon className={`w-4 h-4 ${colors.text}`} />
-                    </div>
-                    <div>
-                      <p className="text-gray-500 text-xs font-light uppercase tracking-wider">{step.week}</p>
-                      <h3 className={`text-lg font-light ${colors.text}`}>{step.title}</h3>
-                    </div>
+                <div className="relative p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300 h-full">
+                  {/* Title */}
+                  <div className="mb-4">
+                    <Icon className="w-7 h-7 text-white mb-3" strokeWidth={1.5} />
+                    <p className="text-gray-600 text-xs font-light mb-1">{step.week}</p>
+                    <h3 className="text-lg font-normal text-white tracking-tight">{step.title}</h3>
                   </div>
 
                   {/* Deliverables */}
-                  <div className="mb-3">
-                    <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-2">Deliverables</p>
-                    <ul className="space-y-1.5">
-                      {step.deliverables.map((deliverable, idx) => {
-                        const DeliverableIcon = deliverable.icon;
-                        return (
-                          <li key={idx} className="flex items-start space-x-2 text-xs text-gray-300 font-extralight">
-                            <DeliverableIcon className={`w-3.5 h-3.5 ${colors.text} mt-0.5 flex-shrink-0`} />
-                            <span>{deliverable.text}</span>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-
-                  {/* You Provide */}
-                  <div className="pt-3 border-t border-white/5">
-                    <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-2">You provide</p>
-                    <ul className="space-y-1.5">
-                      {step.youProvide.map((item, idx) => (
-                        <li key={idx} className="flex items-start space-x-2 text-xs text-gray-400 font-extralight">
-                          <span className={`${colors.text} mt-0.5`}>•</span>
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="space-y-2">
+                    {step.deliverables.map((deliverable, idx) => (
+                      <div key={idx} className="text-gray-500 text-sm font-light">
+                        {deliverable.text}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -148,9 +116,9 @@ export default function MethodSlide() {
         </div>
 
         {/* Side Note */}
-        <div className="text-center mt-4">
-          <p className="text-lg md:text-xl text-white font-light">
-            <span className="text-red-600 font-normal">No vanity AI:</span> if it won't move pipeline or time saved, we don't sell it.
+        <div className="text-center mt-6">
+          <p className="text-xl md:text-2xl text-gray-400 font-light tracking-tight">
+            <span className="text-white font-normal">No vanity AI.</span> If it won't move pipeline, we don't sell it.
           </p>
         </div>
       </div>

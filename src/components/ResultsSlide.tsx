@@ -84,66 +84,47 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
 
       <div className="relative max-w-6xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-5">
-          <h2 className="text-3xl md:text-4xl font-normal text-white leading-tight mb-2">
-            Real Results, <span className="text-red-600">Real Timelines</span>
+        <div className="text-center mb-10">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight mb-3">
+            <span className="text-red-600 font-normal">Real results.</span>
+            <br />
+            <span className="text-gray-600">Proof. Not promises.</span>
           </h2>
-          <p className="text-gray-400 text-base font-light">
-            3 client transformations, measured weekly
-          </p>
         </div>
 
         {/* Case Tiles */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
           {cases.map((caseStudy) => {
             const colors = getColorClasses(caseStudy.color);
 
             return (
               <div
                 key={caseStudy.id}
-                className={`p-3 rounded-xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border ${colors.border} hover:border-opacity-60 transition-all duration-300`}
+                className="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300"
               >
                 {/* Header */}
-                <div className="mb-2">
-                  <h3 className={`text-base font-light ${colors.text} mb-0.5`}>{caseStudy.title}</h3>
-                  <p className="text-gray-500 text-xs font-extralight">{caseStudy.subtitle}</p>
+                <div className="mb-4">
+                  <h3 className="text-lg font-normal text-white mb-1 tracking-tight">{caseStudy.title}</h3>
+                  <p className="text-gray-600 text-xs font-light">{caseStudy.subtitle}</p>
                 </div>
 
-                {/* Problem */}
-                <div className="mb-2">
-                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-1">Problem</p>
-                  <p className="text-gray-300 text-xs font-extralight leading-relaxed">{caseStudy.problem}</p>
-                </div>
-
-                {/* Intervention */}
-                <div className="mb-2">
-                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-1">Intervention</p>
-                  <p className="text-gray-300 text-xs font-extralight leading-relaxed">{caseStudy.intervention}</p>
+                {/* Quote */}
+                <div className="mb-4">
+                  <p className="text-gray-400 text-base font-light leading-relaxed italic">
+                    "{caseStudy.problem}"
+                  </p>
                 </div>
 
                 {/* Impact */}
-                <div className="mb-2">
-                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-2">Impact ({caseStudy.timeline})</p>
-                  <div className="space-y-1.5">
-                    {caseStudy.impact.map((metric, index) => {
-                      const Icon = metric.icon;
-                      return (
-                        <div key={index} className="flex items-center justify-between">
-                          <div className="flex items-center space-x-1.5">
-                            <Icon className={`w-3.5 h-3.5 ${colors.text}`} />
-                            <span className="text-gray-400 text-xs font-extralight">{metric.label}</span>
-                          </div>
-                          <span className={`text-sm font-medium ${colors.text}`}>{metric.value}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Stack */}
-                <div className="pt-2 border-t border-white/5">
-                  <p className="text-gray-500 text-xs font-light uppercase tracking-wider mb-1">Stack</p>
-                  <p className="text-gray-400 text-xs font-extralight">{caseStudy.stack}</p>
+                <div className="space-y-2.5">
+                  {caseStudy.impact.map((metric, index) => {
+                    return (
+                      <div key={index} className="flex items-baseline justify-between">
+                        <span className="text-gray-500 text-sm font-light">{metric.label}</span>
+                        <span className="text-white text-lg font-normal">{metric.value}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             );
@@ -158,15 +139,11 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
 
           <button
             onClick={onOpenSchedule}
-            className="group inline-flex items-center space-x-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg shadow-red-600/25 hover:shadow-red-600/40 hover:scale-105"
+            className="group inline-flex items-center space-x-2 bg-white text-black px-8 py-3.5 rounded-full hover:bg-gray-100 transition-all duration-300 font-normal text-base tracking-tight"
           >
-            <span className="font-light text-sm">See if your numbers are possible</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+            <span>See if your numbers are possible</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" strokeWidth={2} />
           </button>
-
-          <p className="text-gray-400 text-xs font-extralight">
-            Book the 20-min Audit
-          </p>
         </div>
       </div>
     </section>

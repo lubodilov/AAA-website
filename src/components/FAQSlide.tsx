@@ -33,47 +33,40 @@ export default function FAQSlide() {
 
       <div className="relative max-w-4xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-6">
-          <h2 className="text-3xl md:text-4xl font-normal text-white leading-tight mb-2">
-            Objections <span className="text-gray-500">→</span> <span className="text-red-600">Answers</span>
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight">
+            <span className="text-gray-600">Objections</span> <span className="text-red-600 font-normal">→ Answers</span>
           </h2>
-          <p className="text-gray-400 text-base font-light">
-            The 5 questions every serious buyer asks
-          </p>
         </div>
 
         {/* FAQ Accordion */}
-        <div className="space-y-2">
+        <div className="space-y-3">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
 
             return (
               <div
                 key={index}
-                className="rounded-lg border-b border-white/5 hover:border-red-600/20 transition-all duration-300 overflow-hidden pb-1"
+                className="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full flex items-start justify-between p-4 text-left"
+                  className="w-full flex items-start justify-between text-left"
                 >
-                  <div className="flex items-start space-x-3 flex-1">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-lg bg-gradient-to-br from-red-600/20 to-red-700/20 flex items-center justify-center mt-1">
-                      <HelpCircle className="w-3.5 h-3.5 text-red-400" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-white font-normal text-base mb-1">{faq.question}</h3>
-                      {isOpen && (
-                        <p className="text-gray-400 font-light text-sm leading-relaxed mt-2">
-                          {faq.answer}
-                        </p>
-                      )}
-                    </div>
+                  <div className="flex-1">
+                    <h3 className="text-white font-normal text-lg mb-3 tracking-tight">{faq.question}</h3>
+                    {isOpen && (
+                      <p className="text-gray-500 font-light text-base leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    )}
                   </div>
 
                   <ChevronDown
-                    className={`w-4 h-4 text-gray-400 flex-shrink-0 ml-3 transition-transform duration-300 ${
+                    className={`w-5 h-5 text-gray-600 flex-shrink-0 ml-4 transition-transform duration-300 ${
                       isOpen ? 'rotate-180' : ''
                     }`}
+                    strokeWidth={1.5}
                   />
                 </button>
               </div>
@@ -81,12 +74,6 @@ export default function FAQSlide() {
           })}
         </div>
 
-        {/* Bottom CTA hint */}
-        <div className="text-center mt-6">
-          <p className="text-gray-500 text-xs font-extralight">
-            Still have questions? Let's talk.
-          </p>
-        </div>
       </div>
     </section>
   );

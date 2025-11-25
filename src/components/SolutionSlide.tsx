@@ -35,24 +35,24 @@ export default function SolutionSlide({ onScrollToSystems }: SolutionSlideProps)
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal text-white leading-tight">
-            Systems that turn <span className="text-gray-500">activity</span>
-            <br />into <span className="text-green-600">revenue</span>
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight">
+            Systems that turn <span className="text-gray-600">activity</span>
+            <br />into <span className="text-green-600 font-normal">revenue</span>
           </h2>
         </div>
 
         {/* Solutions Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           {solutions.map((solution, index) => {
             const Icon = solution.icon;
             return (
-              <div key={index} className="group">
-                <div className="mb-3">
-                  <Icon className="w-10 h-10 text-green-500" />
+              <div key={index} className="group p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300">
+                <div className="mb-4">
+                  <Icon className="w-7 h-7 text-green-600" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-white text-xl font-normal mb-2">{solution.title}</h3>
-                <p className="text-gray-400 text-base font-light leading-relaxed">
+                <h3 className="text-white text-lg font-normal mb-3 tracking-tight">{solution.title}</h3>
+                <p className="text-gray-500 text-sm font-light leading-relaxed">
                   {solution.description}
                 </p>
               </div>
@@ -61,13 +61,13 @@ export default function SolutionSlide({ onScrollToSystems }: SolutionSlideProps)
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-6">
+        <div className="text-center mt-8">
           <button
             onClick={onScrollToSystems}
-            className="group inline-flex items-center space-x-3 bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-4 rounded-full hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-lg shadow-green-600/25 hover:shadow-green-600/40 hover:scale-105"
+            className="group inline-flex items-center space-x-2 bg-white text-black px-8 py-3.5 rounded-full hover:bg-gray-100 transition-all duration-300 font-normal text-base tracking-tight"
           >
-            <span className="font-light text-lg">Show me the 3 systems</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+            <span>Show me the 3 systems</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" strokeWidth={2} />
           </button>
         </div>
       </div>
