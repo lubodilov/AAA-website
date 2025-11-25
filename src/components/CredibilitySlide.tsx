@@ -39,11 +39,31 @@ interface CredibilitySlideProps {
 
 export default function CredibilitySlide({ onScrollToCases }: CredibilitySlideProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [logoSet, setLogoSet] = useState(0);
 
+  const logos = [
+    '/logo1.png',
+    '/logo2.png',
+    '/logo3.png',
+    '/logo4.png',
+    '/logo5.png',
+    '/logo6.png'
+  ];
+
+  // Rotate testimonials
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
     }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Rotate logo sets (show 4 at a time)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLogoSet((prev) => (prev + 1) % 2); // 2 sets: 0-3 and 2-5 (overlapping)
+    }, 4000);
 
     return () => clearInterval(interval);
   }, []);
@@ -66,21 +86,41 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
         <div className="text-center mb-8">
           <p className="text-gray-400 text-xs font-light uppercase tracking-widest mb-8 opacity-70">Trusted by</p>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 opacity-50">
-            <div className="text-white/40 text-sm font-light px-8 py-3 border border-white/5 rounded-lg backdrop-blur-sm bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300">
-              Client Logo 1
-            </div>
-            <div className="text-white/40 text-sm font-light px-8 py-3 border border-white/5 rounded-lg backdrop-blur-sm bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300">
-              Client Logo 2
-            </div>
-            <div className="text-white/40 text-sm font-light px-8 py-3 border border-white/5 rounded-lg backdrop-blur-sm bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300">
-              Client Logo 3
-            </div>
-            <div className="text-white/40 text-sm font-light px-8 py-3 border border-white/5 rounded-lg backdrop-blur-sm bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300">
-              Client Logo 4
+          <div className="relative overflow-hidden">
+            <div className="flex items-center justify-center gap-8 transition-all duration-1000 ease-in-out">
+              {logos.slice(logoSet * 2, logoSet * 2 + 4).map((logo, index) => (
+                <div
+                  key={`${logoSet}-${index}`}
+                  className="flex-shrink-0 px-6 py-4 border border-white/10 rounded-lg backdrop-blur-sm bg-white/[0.03] hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 opacity-60 hover:opacity-100"
+                  style={{
+                    animation: 'fadeIn 0.8s ease-in-out',
+                  }}
+                >
+                  <img
+                    src={logo}
+                    alt={`Client logo ${index + 1}`}
+                    className="h-8 w-auto object-contain filter brightness-90 grayscale hover:grayscale-0 hover:brightness-100 transition-all duration-300"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>
+
+        <style>
+          {`
+            @keyframes fadeIn {
+              from {
+                opacity: 0;
+                transform: translateY(10px);
+              }
+              to {
+                opacity: 0.6;
+                transform: translateY(0);
+              }
+            }
+          `}
+        </style>
 
         <div className="relative max-w-4xl mx-auto">
           <div className="py-8">
