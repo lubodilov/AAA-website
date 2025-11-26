@@ -133,7 +133,7 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
                     return (
                       <div key={index} className="flex items-baseline justify-between">
                         <span className="text-gray-300 text-sm font-medium">{metric.label}</span>
-                        <span className="text-red-600 text-xl font-bold">{metric.value}</span>
+                        <span className={`${index === 0 ? 'text-red-600' : 'text-white'} text-xl font-bold`}>{metric.value}</span>
                       </div>
                     );
                   })}
