@@ -713,13 +713,25 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
           {/* Page Title */}
-          <div className="text-center mb-20">
+          <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               Case Studies & Results —{' '}
               <span className="font-semibold italic text-red-400">
                 Proof Over Promises
               </span>
             </h1>
+          </div>
+
+          {/* Visual Element - Success/Growth imagery */}
+          <div className="mb-20 max-w-3xl mx-auto">
+            <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
+              <img
+                src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                alt="Business success and growth"
+                className="w-full h-48 object-cover opacity-40"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+            </div>
           </div>
 
           {/* SECTION 1 — FLAGSHIP RESULTS (TOP 3) */}
@@ -816,6 +828,18 @@ export default function Portfolio() {
             })}
           </div>
 
+
+          {/* Visual Element - Team collaboration */}
+          <div className="mb-16 max-w-2xl mx-auto">
+            <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
+              <img
+                src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                alt="Professional team collaboration"
+                className="w-full h-40 object-cover opacity-35"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+            </div>
+          </div>
 
           {/* SECTION 2 — AUTHORITY PROOF (MIDDLE 6) */}
           <div className="mb-16">
@@ -974,6 +998,18 @@ export default function Portfolio() {
                 </button>
               </div>
             )}
+          </div>
+
+          {/* Visual Element - Speed/Action */}
+          <div className="mb-16 max-w-2xl mx-auto">
+            <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
+              <img
+                src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                alt="Fast-paced business action"
+                className="w-full h-40 object-cover opacity-35"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+            </div>
           </div>
 
           {/* SECTION 3 — SPEED WINS (BOTTOM 6, CAROUSEL) */}
