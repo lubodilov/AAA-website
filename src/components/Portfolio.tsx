@@ -681,7 +681,7 @@ export default function Portfolio() {
                       <div className="text-2xl font-semibold text-gray-700 mb-3">Case Study Video</div>
                       <div className="text-lg text-gray-500">Coming Soon</div>
                       <div className="text-sm text-gray-400 mt-4">
-                        We're preparing an in-depth video walkthrough of this project
+                        We're preparing an in-depth video case study walkthrough of this project
                       </div>
                     </div>
                   </div>
