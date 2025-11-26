@@ -94,8 +94,7 @@ const transformations: Transformation[] = [
     scarcity: 'Gong/Fathom • HubSpot • Custom assistant • Make',
     authority: 'Clear owner, one source of truth, adoption measured weekly',
     socialProof: 'See the 6-week plan →',
-    mediaType: 'video',
-    mediaUrl: '/hero_animation.mp4'
+    mediaType: 'video'
   },
   {
     id: 'ai-receptionist-intake',
@@ -120,8 +119,7 @@ const transformations: Transformation[] = [
     scarcity: 'Web chat + Voiceflow • OpenAI (HIPAA-aware) • Helpdesk/EMR integrations',
     authority: 'Guardrails, human-in-the-loop, clear escalation and handoff',
     socialProof: 'View the intake flow map →',
-    mediaType: 'video',
-    mediaUrl: '/hero_animation.mp4'
+    mediaType: 'video'
   },
   {
     id: 'trademark-lead-engine',
@@ -146,8 +144,7 @@ const transformations: Transformation[] = [
     scarcity: 'Python/APIs • GSheets/DB • Clay/Make',
     authority: 'Clean schema, dedupe rules, clear scoring → instant list usability',
     socialProof: 'See the data schema →',
-    mediaType: 'video',
-    mediaUrl: '/hero_animation.mp4'
+    mediaType: 'video'
   },
 
   // AUTHORITY PROOF (Middle 6)
