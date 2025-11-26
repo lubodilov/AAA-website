@@ -760,7 +760,7 @@ export default function Portfolio() {
                   <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8 overflow-hidden">
                     
                     {/* Pale Grid Background */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-30 rounded-2xl overflow-hidden transition-opacity duration-500">
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-30 rounded-2xl overflow-hidden transition-opacity duration-500 pointer-events-none">
                       <svg width="100%" height="100%" className="absolute inset-0">
                         <defs>
                           <pattern id={`grid-${transformation.id}`} width="40" height="40" patternUnits="userSpaceOnUse">
