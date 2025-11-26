@@ -86,13 +86,23 @@ export default function MethodSlide() {
         </div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 relative">
           {steps.map((step, index) => {
             const Icon = step.icon;
             const colors = getColorClasses(step.color);
 
             return (
               <div key={index} className="relative group">
+                {/* Arrow connector (not on last step) */}
+                {index < steps.length - 1 && (
+                  <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-20">
+                    <div className="flex items-center">
+                      <div className="w-6 h-0.5 bg-gradient-to-r from-red-600 to-red-500"></div>
+                      <div className="w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[8px] border-l-red-500"></div>
+                    </div>
+                  </div>
+                )}
+
                 <div className="relative p-8 rounded-2xl bg-gradient-to-br from-zinc-900/60 to-zinc-900/40 border-2 border-zinc-800/80 hover:border-zinc-700 hover:shadow-2xl hover:shadow-zinc-900/50 transition-all duration-500 h-full">
                   {/* Step Number Badge */}
                   <div className="absolute -top-3 -left-3 w-12 h-12 rounded-full bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center border-4 border-black shadow-lg">
