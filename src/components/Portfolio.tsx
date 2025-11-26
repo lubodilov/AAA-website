@@ -714,9 +714,9 @@ export default function Portfolio() {
 
           {/* Page Title */}
           <div className="text-center mb-20">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white leading-tight mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               Case Studies & Results —{' '}
-              <span className="font-extralight italic text-red-400">
+              <span className="font-semibold italic text-red-400">
                 Proof Over Promises
               </span>
             </h1>
