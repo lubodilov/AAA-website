@@ -11,27 +11,45 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
       id: 1,
       title: "B2B SaaS",
       subtitle: "24 reps",
-      problem: "Late follow-ups and messy notes killed our pipeline.",
-      result: "+31% more meetings",
-      detail: "7.2h saved per rep, every week",
+      problem: "Late follow-ups; messy notes; low meeting→proposal rate.",
+      intervention: "Co-Pilot + CRM updates + weekly KPI email.",
+      impact: [
+        { label: "Meetings", value: "+31%", icon: TrendingUp },
+        { label: "Time saved/rep/week", value: "7.2h", icon: Clock },
+        { label: "Forecast accuracy", value: "+14%", icon: Target }
+      ],
+      timeline: "6 weeks",
+      stack: "Gong • HubSpot • Custom assistant",
       color: "blue"
     },
     {
       id: 2,
       title: "Professional Services",
       subtitle: "12-person sales team",
-      problem: "Leads slipped through cracks in our inbox.",
-      result: "+22% qualified meetings",
-      detail: "17% lower customer acquisition cost",
+      problem: "Leaky lead ops; replies lost in inboxes.",
+      intervention: "Enrichment + sequences + reply parser to CRM.",
+      impact: [
+        { label: "Qualified meetings", value: "+22%", icon: TrendingUp },
+        { label: "CAC reduction", value: "−17%", icon: Target },
+        { label: "Response time", value: "−40%", icon: Clock }
+      ],
+      timeline: "5 weeks",
+      stack: "Clay • Instantly • HubSpot",
       color: "amber"
     },
     {
       id: 3,
       title: "Healthcare Clinic",
       subtitle: "8-location network",
-      problem: "Slow intake process overwhelmed our staff.",
-      result: "43% faster response",
-      detail: "12 hours reclaimed daily across locations",
+      problem: "Slow intake & overloaded staff.",
+      intervention: "AI receptionist + triage + SOPs.",
+      impact: [
+        { label: "First response time", value: "−43%", icon: Clock },
+        { label: "Staff time reclaimed", value: "12h/day", icon: Target },
+        { label: "Patient satisfaction", value: "+26%", icon: TrendingUp }
+      ],
+      timeline: "4–8 weeks",
+      stack: "Custom AI • Twilio • EMR integration",
       color: "green"
     }
   ];
@@ -102,25 +120,23 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
                   <p className="text-gray-500 text-sm font-medium">{caseStudy.subtitle}</p>
                 </div>
 
-                {/* Problem */}
-                <div className="mb-6">
-                  <p className="text-gray-400 text-sm leading-relaxed italic">
+                {/* Quote */}
+                <div className="mb-4">
+                  <p className="text-gray-300 text-base font-normal leading-relaxed italic">
                     "{caseStudy.problem}"
                   </p>
                 </div>
 
-                {/* Result */}
-                <div className="mb-3">
-                  <div className={`text-2xl font-bold ${colors.text}`}>
-                    {caseStudy.result}
-                  </div>
-                </div>
-
-                {/* Detail */}
-                <div>
-                  <p className="text-gray-300 text-sm font-normal">
-                    {caseStudy.detail}
-                  </p>
+                {/* Impact */}
+                <div className="space-y-2.5">
+                  {caseStudy.impact.map((metric, index) => {
+                    return (
+                      <div key={index} className="flex items-baseline justify-between">
+                        <span className="text-gray-300 text-sm font-medium">{metric.label}</span>
+                        <span className="text-white text-xl font-bold">{metric.value}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             );
