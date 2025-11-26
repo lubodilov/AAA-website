@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Filter, TrendingUp, Clock, Target, Star, Award, Zap, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Filter, TrendingUp, Clock, Target, Star, Award, Zap, ChevronDown, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import Header from './Header';
 
 // Cursor glow component
@@ -65,6 +65,8 @@ interface Transformation {
   scarcity?: string;
   authority?: string;
   socialProof?: string;
+  mediaType?: 'image' | 'video';
+  mediaUrl?: string;
 }
 
 const transformations: Transformation[] = [
@@ -443,6 +445,7 @@ export default function Portfolio() {
   const [currentSpeedWinIndex, setCurrentSpeedWinIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
   const [cursorGlow, setCursorGlow] = useState({ color: '', isVisible: false });
+  const [selectedProject, setSelectedProject] = useState<Transformation | null>(null);
   const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   useEffect(() => {
@@ -515,9 +518,136 @@ export default function Portfolio() {
   return (
     <div className="min-h-screen bg-black relative">
       <Header isScrolled={isScrolled} />
-      
+
       {/* Elite Cursor Glow */}
       <CursorGlow color={cursorGlow.color} isVisible={cursorGlow.isVisible} />
+
+      {/* Project Detail Modal */}
+      {selectedProject && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={() => setSelectedProject(null)}>
+          <div className="relative bg-black/95 border border-white/20 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedProject(null)}
+              className="absolute top-4 right-4 z-10 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-all duration-300"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
+              {/* Left: Content */}
+              <div className="p-8 lg:p-12 overflow-y-auto max-h-[90vh]">
+                {/* Badge */}
+                <div className="inline-flex items-center space-x-2 bg-red-600/90 text-white text-xs font-semibold px-4 py-2 rounded-full mb-6">
+                  <Star className="w-4 h-4" />
+                  <span>{selectedProject.tier === 'flagship' ? 'FLAGSHIP RESULT' : selectedProject.tier === 'authority' ? 'AUTHORITY PROOF' : 'SPEED WIN'}</span>
+                </div>
+
+                {/* Title */}
+                <h2 className="text-3xl font-bold text-white mb-6">{selectedProject.title}</h2>
+
+                {/* Client Type & Timeline */}
+                <div className="flex items-center justify-between mb-6 pb-6 border-b border-white/10">
+                  <div>
+                    <div className="text-sm text-white/50">Client Type</div>
+                    <div className="text-white font-medium">{selectedProject.company}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-white/50">Timeline</div>
+                    <div className="text-white font-medium">{selectedProject.timeline}</div>
+                  </div>
+                </div>
+
+                {/* Metrics */}
+                <div className="grid grid-cols-3 gap-4 mb-8">
+                  <div className="bg-red-600/10 border border-red-600/20 rounded-xl p-4 text-center">
+                    <div className="text-3xl font-bold text-red-400">{selectedProject.metrics.primary}</div>
+                    <div className="text-xs text-white/60 mt-1">Primary Impact</div>
+                  </div>
+                  <div className="bg-amber-600/10 border border-amber-600/20 rounded-xl p-4 text-center">
+                    <div className="text-3xl font-bold text-amber-400">{selectedProject.metrics.secondary}</div>
+                    <div className="text-xs text-white/60 mt-1">Secondary</div>
+                  </div>
+                  {selectedProject.metrics.tertiary && (
+                    <div className="bg-emerald-600/10 border border-emerald-600/20 rounded-xl p-4 text-center">
+                      <div className="text-3xl font-bold text-emerald-400">{selectedProject.metrics.tertiary}</div>
+                      <div className="text-xs text-white/60 mt-1">Tertiary</div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Problem */}
+                <div className="mb-6">
+                  <h3 className="text-red-300 text-sm font-semibold mb-2">Problem (baseline):</h3>
+                  <p className="text-white/80">{selectedProject.crisis}</p>
+                </div>
+
+                {/* What we shipped */}
+                <div className="mb-6">
+                  <h3 className="text-emerald-300 text-sm font-semibold mb-2">What we shipped:</h3>
+                  <p className="text-white/80">{selectedProject.breakthrough}</p>
+                </div>
+
+                {/* Impact & timeline */}
+                <div className="mb-6">
+                  <h3 className="text-amber-300 text-sm font-semibold mb-2">Impact & timeline:</h3>
+                  <p className="text-white/80">{selectedProject.domination}</p>
+                </div>
+
+                {/* Stack */}
+                {selectedProject.scarcity && (
+                  <div className="mb-6">
+                    <h3 className="text-blue-300 text-sm font-semibold mb-2">Stack:</h3>
+                    <p className="text-white/80">{selectedProject.scarcity}</p>
+                  </div>
+                )}
+
+                {/* Why it worked */}
+                {selectedProject.authority && (
+                  <div className="mb-6">
+                    <h3 className="text-white/70 text-sm font-semibold mb-2">Why it worked:</h3>
+                    <p className="text-white/80 italic">{selectedProject.authority}</p>
+                  </div>
+                )}
+
+                {/* CTA */}
+                <button className="w-full bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-6 py-4 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600/30 mt-8">
+                  <span>Book a 20-min Audit</span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Right: Media */}
+              <div className="relative bg-gradient-to-br from-red-600/5 to-black hidden lg:flex items-center justify-center p-12">
+                {selectedProject.mediaType === 'video' && selectedProject.mediaUrl ? (
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover rounded-xl"
+                  >
+                    <source src={selectedProject.mediaUrl} type="video/mp4" />
+                  </video>
+                ) : selectedProject.mediaType === 'image' && selectedProject.mediaUrl ? (
+                  <img
+                    src={selectedProject.mediaUrl}
+                    alt={selectedProject.title}
+                    className="w-full h-full object-cover rounded-xl"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center rounded-xl border-2 border-dashed border-white/10">
+                    <div className="text-center">
+                      <div className="text-6xl font-bold text-white/10 mb-4">{selectedProject.metrics.primary}</div>
+                      <div className="text-white/30 text-sm">Project Visual</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Fixed Video Background */}
       <div className="fixed inset-0 z-0">
@@ -618,52 +748,35 @@ export default function Portfolio() {
                       {transformation.title}
                     </h3>
 
-                    {/* Client Type */}
-                    <div className="text-sm text-white/60 mb-4">
-                      <strong>Client type:</strong> {transformation.company}
-                    </div>
-
-                    {/* Problem */}
-                    <div className="mb-4">
-                      <div className="text-red-300 text-sm font-semibold mb-1">Problem (baseline):</div>
-                      <div className="text-white/80 text-sm">{transformation.crisis}</div>
-                    </div>
-
-                    {/* What we shipped */}
-                    <div className="mb-4">
-                      <div className="text-emerald-300 text-sm font-semibold mb-1">What we shipped:</div>
-                      <div className="text-white/80 text-sm">{transformation.breakthrough}</div>
-                    </div>
-
-                    {/* Impact & timeline */}
-                    <div className="mb-4">
-                      <div className="text-amber-300 text-sm font-semibold mb-1">Impact & timeline:</div>
-                      <div className="text-white/80 text-sm">{transformation.domination}</div>
-                    </div>
-
-                    {/* Stack */}
-                    <div className="mb-4">
-                      <div className="text-blue-300 text-sm font-semibold mb-1">Stack:</div>
-                      <div className="text-white/80 text-sm">{transformation.scarcity}</div>
-                    </div>
-
-                    {/* Why it worked */}
-                    <div className="mb-6">
-                      <div className="text-white/70 text-xs italic">
-                        <strong>Why it worked:</strong> {transformation.authority}
+                    {/* Metrics Display */}
+                    <div className="grid grid-cols-3 gap-3 mb-6">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-red-400">{transformation.metrics.primary}</div>
+                        <div className="text-xs text-white/60 mt-1">Impact</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-amber-400">{transformation.metrics.secondary}</div>
+                        <div className="text-xs text-white/60 mt-1">Saved</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-emerald-400">{transformation.metrics.tertiary}</div>
+                        <div className="text-xs text-white/60 mt-1">Extra</div>
                       </div>
                     </div>
 
-                    {/* CTAs */}
-                    <div className="space-y-2">
-                      <button className="w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-white/20 transition-all duration-300">
-                        {transformation.socialProof}
-                      </button>
-                      <button className="w-full bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600/30">
-                        <span>Book a 20-min Audit</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </button>
-                    </div>
+                    {/* Short Result */}
+                    <p className="text-white/80 text-sm mb-6 line-clamp-2">
+                      {transformation.shortResult}
+                    </p>
+
+                    {/* View Details Button */}
+                    <button
+                      onClick={() => setSelectedProject(transformation)}
+                      className="w-full bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600/30"
+                    >
+                      <span>View Full Case Study</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
               );
@@ -790,10 +903,10 @@ export default function Portfolio() {
                       </div>
 
                       {/* Compact Title */}
-                      <h3 className="text-lg font-bold text-white mb-2 leading-tight">
-                        {transformation.title.split(' ').slice(0, 3).join(' ')}
+                      <h3 className="text-lg font-bold text-white mb-4 leading-tight">
+                        {transformation.title}
                       </h3>
-                      
+
                       {/* Key Metrics */}
                       <div className="flex justify-between items-center mb-4">
                         <div className="text-center">
@@ -802,38 +915,22 @@ export default function Portfolio() {
                         </div>
                         <div className="text-center">
                           <div className="text-2xl font-bold text-amber-400">{transformation.metrics.secondary}</div>
-                          <div className="text-xs text-white/60">Growth</div>
+                          <div className="text-xs text-white/60">Result</div>
                         </div>
                       </div>
 
-                      {/* Baseline */}
-                      <div className="mb-3">
-                        <div className="text-xs text-red-300 font-semibold mb-1">Baseline:</div>
-                        <div className="text-sm text-white/80">{transformation.crisis}</div>
-                      </div>
-
-                      {/* Intervention */}
-                      <div className="mb-3">
-                        <div className="text-xs text-emerald-300 font-semibold mb-1">Intervention:</div>
-                        <div className="text-sm text-white/80">{transformation.breakthrough}</div>
-                      </div>
-
-                      {/* Impact */}
-                      <div className="mb-3">
-                        <div className="text-xs text-amber-300 font-semibold mb-1">Impact ({transformation.timeline}):</div>
-                        <div className="text-sm text-white/80">{transformation.domination}</div>
-                      </div>
-
-                      {/* Stack */}
-                      <div className="mb-4">
-                        <div className="text-xs text-blue-300 font-semibold mb-1">Stack:</div>
-                        <div className="text-xs text-white/70">{transformation.meaningForYou}</div>
-                      </div>
+                      {/* Short Description */}
+                      <p className="text-sm text-white/80 mb-4 line-clamp-2">
+                        {transformation.shortResult}
+                      </p>
 
                       {/* CTA */}
-                      <button className="relative w-full bg-amber-600/15 border border-amber-600/25 text-amber-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-amber-600/25 hover:border-amber-600/40 hover:text-amber-200 transition-all duration-500 flex items-center justify-center space-x-2 overflow-hidden">
+                      <button
+                        onClick={() => setSelectedProject(transformation)}
+                        className="relative w-full bg-amber-600/15 border border-amber-600/25 text-amber-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-amber-600/25 hover:border-amber-600/40 hover:text-amber-200 transition-all duration-500 flex items-center justify-center space-x-2 overflow-hidden"
+                      >
                         <div className="absolute inset-0 bg-gradient-to-r from-amber-600/0 via-amber-400/8 to-amber-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <span>{transformation.testimonial || 'See flows →'}</span>
+                        <span>View Details</span>
                         <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform duration-300" />
                       </button>
                     </div>
@@ -920,17 +1017,32 @@ export default function Portfolio() {
                         {transformation.title}
                       </h3>
 
-                      {/* Impact */}
-                      <div className="mb-2">
-                        <div className="text-xs text-emerald-300 font-semibold mb-1">Impact:</div>
-                        <div className="text-sm text-white/80">{transformation.domination}</div>
+                      {/* Metrics */}
+                      <div className="flex justify-between items-center mb-4">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-emerald-400">{transformation.metrics.primary}</div>
+                          <div className="text-xs text-white/60">Impact</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-sm font-medium text-white/70">{transformation.timeline}</div>
+                          <div className="text-xs text-white/60">Timeline</div>
+                        </div>
                       </div>
 
-                      {/* Stack */}
-                      <div className="mb-4">
-                        <div className="text-xs text-blue-300 font-semibold mb-1">Stack:</div>
-                        <div className="text-xs text-white/70">{transformation.meaningForYou}</div>
-                      </div>
+                      {/* Short Result */}
+                      <p className="text-sm text-white/80 mb-4 line-clamp-2">
+                        {transformation.shortResult}
+                      </p>
+
+                      {/* CTA */}
+                      <button
+                        onClick={() => setSelectedProject(transformation)}
+                        className="relative w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 hover:border-emerald-600/40 hover:text-emerald-200 transition-all duration-500 overflow-hidden"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/0 via-emerald-400/8 to-emerald-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <span className="relative">View Details</span>
+                        <ArrowRight className="inline w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform duration-300" />
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -957,17 +1069,32 @@ export default function Portfolio() {
                       {speedWins[currentSpeedWinIndex].title}
                     </h3>
 
-                    {/* Impact */}
-                    <div className="mb-2">
-                      <div className="text-xs text-emerald-300 font-semibold mb-1">Impact:</div>
-                      <div className="text-sm text-white/80">{speedWins[currentSpeedWinIndex].domination}</div>
+                    {/* Metrics */}
+                    <div className="flex justify-between items-center mb-4">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-emerald-400">{speedWins[currentSpeedWinIndex].metrics.primary}</div>
+                        <div className="text-xs text-white/60">Impact</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-sm font-medium text-white/70">{speedWins[currentSpeedWinIndex].timeline}</div>
+                        <div className="text-xs text-white/60">Timeline</div>
+                      </div>
                     </div>
 
-                    {/* Stack */}
-                    <div className="mb-4">
-                      <div className="text-xs text-blue-300 font-semibold mb-1">Stack:</div>
-                      <div className="text-xs text-white/70">{speedWins[currentSpeedWinIndex].meaningForYou}</div>
-                    </div>
+                    {/* Short Result */}
+                    <p className="text-sm text-white/80 mb-4 line-clamp-2">
+                      {speedWins[currentSpeedWinIndex].shortResult}
+                    </p>
+
+                    {/* CTA */}
+                    <button
+                      onClick={() => setSelectedProject(speedWins[currentSpeedWinIndex])}
+                      className="relative w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 hover:border-emerald-600/40 hover:text-emerald-200 transition-all duration-500 overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/0 via-emerald-400/8 to-emerald-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <span className="relative">View Details</span>
+                      <ArrowRight className="inline w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform duration-300" />
+                    </button>
                   </div>
                 </div>
               </div>
