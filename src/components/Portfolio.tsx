@@ -773,7 +773,7 @@ export default function Portfolio() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl font-bold text-white mb-4 leading-tight">
+                    <h3 className="text-xl font-semibold text-white mb-4 tracking-tight">
                       {transformation.title}
                     </h3>
 
@@ -794,7 +794,7 @@ export default function Portfolio() {
                     </div>
 
                     {/* Short Result */}
-                    <p className="text-white/80 text-sm mb-6 line-clamp-2">
+                    <p className="text-gray-300 text-base font-normal leading-relaxed mb-6 line-clamp-2">
                       {transformation.shortResult}
                     </p>
 
@@ -936,7 +936,7 @@ export default function Portfolio() {
                       </div>
 
                       {/* Compact Title */}
-                      <h3 className="text-lg font-bold text-white mb-4 leading-tight">
+                      <h3 className="text-xl font-semibold text-white mb-3 tracking-tight">
                         {transformation.title}
                       </h3>
 
@@ -953,7 +953,7 @@ export default function Portfolio() {
                       </div>
 
                       {/* Short Description */}
-                      <p className="text-sm text-white/80 mb-4 line-clamp-2">
+                      <p className="text-gray-300 text-base font-normal leading-relaxed mb-4 line-clamp-2">
                         {transformation.shortResult}
                       </p>
 
@@ -1046,7 +1046,7 @@ export default function Portfolio() {
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-lg font-bold text-white mb-3">
+                      <h3 className="text-xl font-semibold text-white mb-3 tracking-tight">
                         {transformation.title}
                       </h3>
 
@@ -1063,7 +1063,7 @@ export default function Portfolio() {
                       </div>
 
                       {/* Short Result */}
-                      <p className="text-sm text-white/80 mb-4 line-clamp-2">
+                      <p className="text-gray-300 text-base font-normal leading-relaxed mb-4 line-clamp-2">
                         {transformation.shortResult}
                       </p>
 
@@ -1098,7 +1098,7 @@ export default function Portfolio() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-lg font-bold text-white mb-3">
+                    <h3 className="text-xl font-semibold text-white mb-3 tracking-tight">
                       {speedWins[currentSpeedWinIndex].title}
                     </h3>
 
@@ -1115,7 +1115,7 @@ export default function Portfolio() {
                     </div>
 
                     {/* Short Result */}
-                    <p className="text-sm text-white/80 mb-4 line-clamp-2">
+                    <p className="text-gray-300 text-base font-normal leading-relaxed mb-4 line-clamp-2">
                       {speedWins[currentSpeedWinIndex].shortResult}
                     </p>
 
