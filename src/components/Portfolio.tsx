@@ -540,15 +540,28 @@ export default function Portfolio() {
       {/* Content */}
       <div className="relative z-10 pt-24 pb-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          
+
+          {/* Page Title */}
+          <div className="text-center mb-20">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white leading-tight mb-6">
+              Case Studies & Results —{' '}
+              <span className="font-extralight italic text-red-400">
+                Proof Over Promises
+              </span>
+            </h1>
+            <p className="text-xl text-white/70 max-w-4xl mx-auto">
+              Real projects in plain language: baseline → intervention → KPI delta → timeline. Meetings ↑, cycle time ↓, CAC ↓—most wins in 30–60 days.
+            </p>
+          </div>
+
           {/* SECTION 1 — FLAGSHIP RESULTS (TOP 3) */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white leading-tight mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-thin text-white leading-tight mb-4">
               Flagship Results:{' '}
               <span className="font-extralight italic text-red-400">
                 acquisition wins backed by KPIs
               </span>
-            </h1>
+            </h2>
             <p className="text-lg text-white/70 mt-4">
               Three engagements that show our end-to-end approach—diagnose → pilot → scale.
             </p>
