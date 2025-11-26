@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Filter, TrendingUp, Clock, Target, Star, Award, Zap, ChevronDown, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ArrowRight, Filter, TrendingUp, Clock, Target, Star, Award, Zap, ChevronDown, ChevronLeft, ChevronRight, X, Play } from 'lucide-react';
 import Header from './Header';
 
 // Cursor glow component
@@ -93,7 +93,9 @@ const transformations: Transformation[] = [
     },
     scarcity: 'Gong/Fathom • HubSpot • Custom assistant • Make',
     authority: 'Clear owner, one source of truth, adoption measured weekly',
-    socialProof: 'See the 6-week plan →'
+    socialProof: 'See the 6-week plan →',
+    mediaType: 'video',
+    mediaUrl: '/hero_animation.mp4'
   },
   {
     id: 'ai-receptionist-intake',
@@ -117,7 +119,9 @@ const transformations: Transformation[] = [
     },
     scarcity: 'Web chat + Voiceflow • OpenAI (HIPAA-aware) • Helpdesk/EMR integrations',
     authority: 'Guardrails, human-in-the-loop, clear escalation and handoff',
-    socialProof: 'View the intake flow map →'
+    socialProof: 'View the intake flow map →',
+    mediaType: 'video',
+    mediaUrl: '/hero_animation.mp4'
   },
   {
     id: 'trademark-lead-engine',
@@ -141,7 +145,9 @@ const transformations: Transformation[] = [
     },
     scarcity: 'Python/APIs • GSheets/DB • Clay/Make',
     authority: 'Clean schema, dedupe rules, clear scoring → instant list usability',
-    socialProof: 'See the data schema →'
+    socialProof: 'See the data schema →',
+    mediaType: 'video',
+    mediaUrl: '/hero_animation.mp4'
   },
 
   // AUTHORITY PROOF (Middle 6)
@@ -515,6 +521,29 @@ export default function Portfolio() {
     setCurrentSpeedWinIndex(prev => (prev - 1 + speedWins.length) % speedWins.length);
   };
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedProject]);
+
+  // Close modal on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && selectedProject) {
+        setSelectedProject(null);
+      }
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [selectedProject]);
+
   return (
     <div className="min-h-screen bg-black relative">
       <Header isScrolled={isScrolled} />
@@ -524,8 +553,15 @@ export default function Portfolio() {
 
       {/* Project Detail Modal */}
       {selectedProject && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={() => setSelectedProject(null)}>
-          <div className="relative bg-black/95 border border-white/20 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setSelectedProject(null)}
+          style={{ isolation: 'isolate' }}
+        >
+          <div
+            className="relative bg-black/95 border border-white/20 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Close Button */}
             <button
               onClick={() => setSelectedProject(null)}
@@ -559,7 +595,7 @@ export default function Portfolio() {
                 </div>
 
                 {/* Metrics */}
-                <div className="grid grid-cols-3 gap-4 mb-8">
+                <div className={`grid ${selectedProject.metrics.tertiary ? 'grid-cols-3' : 'grid-cols-2'} gap-4 mb-8`}>
                   <div className="bg-red-600/10 border border-red-600/20 rounded-xl p-4 text-center">
                     <div className="text-3xl font-bold text-red-400">{selectedProject.metrics.primary}</div>
                     <div className="text-xs text-white/60 mt-1">Primary Impact</div>
@@ -636,10 +672,16 @@ export default function Portfolio() {
                     className="w-full h-full object-cover rounded-xl"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center rounded-xl border-2 border-dashed border-white/10">
-                    <div className="text-center">
-                      <div className="text-6xl font-bold text-white/10 mb-4">{selectedProject.metrics.primary}</div>
-                      <div className="text-white/30 text-sm">Project Visual</div>
+                  <div className="w-full h-full flex items-center justify-center rounded-xl border-2 border-dashed border-white/20 bg-gradient-to-br from-white/5 to-transparent">
+                    <div className="text-center px-8">
+                      <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-white/10 border-2 border-white/20 mb-6 hover:bg-white/15 transition-all duration-300 cursor-pointer group">
+                        <Play className="w-12 h-12 text-white/40 group-hover:text-white/60 transition-all duration-300 ml-1" fill="currentColor" />
+                      </div>
+                      <div className="text-2xl font-semibold text-white/60 mb-3">Case Study Video</div>
+                      <div className="text-lg text-white/40">Coming Soon</div>
+                      <div className="text-sm text-white/30 mt-4">
+                        We're preparing an in-depth video walkthrough of this project
+                      </div>
                     </div>
                   </div>
                 )}
