@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, TrendingUp, Clock, Target, ChevronDown, ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
+import { ArrowRight, Filter, TrendingUp, Clock, Target, Star, Award, Zap, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import Header from './Header';
 
+// Cursor glow component
 const CursorGlow = ({ color, isVisible }: { color: string; isVisible: boolean }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const glowRef = useRef<HTMLDivElement>(null);
@@ -40,206 +41,383 @@ const CursorGlow = ({ color, isVisible }: { color: string; isVisible: boolean })
   );
 };
 
-interface FlagshipCase {
+interface Transformation {
   id: string;
+  tier: 'flagship' | 'authority' | 'proof';
   title: string;
-  clientType: string;
-  problem: string;
-  shipped: string;
-  impact: string;
-  stack: string;
-  whyItWorked: string;
+  company: string;
+  timeline: string;
+  crisis: string;
+  breakthrough: string;
+  domination: string;
+  meaningForYou: string;
   industry: string;
-  companySize: string;
-  challengeType: string;
-  kpiType: string;
+  companySize: 'startup' | 'growth' | 'enterprise';
+  challengeType: 'acquisition' | 'retention' | 'operations' | 'scaling';
+  metrics: {
+    primary: string;
+    secondary: string;
+    tertiary?: string;
+  };
+  shortCrisis: string;
+  shortResult: string;
+  testimonial?: string;
+  scarcity?: string;
+  authority?: string;
+  socialProof?: string;
 }
 
-interface AuthorityCase {
-  id: string;
-  title: string;
-  baseline: string;
-  intervention: string;
-  impact: string;
-  stack: string;
-  industry: string;
-  companySize: string;
-  challengeType: string;
-  kpiType: string;
-}
-
-interface SpeedWin {
-  id: string;
-  title: string;
-  impact: string;
-  stack: string;
-}
-
-const flagshipCases: FlagshipCase[] = [
+const transformations: Transformation[] = [
+  // FLAGSHIP RESULTS (Top 3)
   {
-    id: 'flagship-1',
-    title: 'B2B Sales Co-Pilot (DACH, 24 reps)',
-    clientType: 'B2B SaaS (mid-market)',
-    problem: 'Late follow-ups, messy notes, weak meeting→proposal rate; CRM underused.',
-    shipped: 'AI Sales Co-Pilot (notes → tasks → follow-ups → CRM), weekly KPI email, enablement.',
-    impact: '+31% qualified meetings and 7.2h saved/rep/week in 6 weeks; forecast accuracy +14% by week 8.',
-    stack: 'Gong/Fathom • HubSpot • Custom assistant • Make',
-    whyItWorked: 'Clear owner, one source of truth, adoption measured weekly.',
-    industry: 'Technology',
-    companySize: 'growth',
+    id: 'manufacturing-flagship',
+    tier: 'flagship',
+    title: 'MANUFACTURING LEADERSHIP BREAKTHROUGH',
+    company: 'Fortune 500 Company',
+    timeline: '4 Months',
+    crisis: '$50M pipeline stalled - 60% of sales time wasted on unqualified leads',
+    breakthrough: 'AI revealed $12M in ignored high-value prospects hiding in their existing data',
+    domination: '467% qualified pipeline increase → Market leadership achieved in 6 months',
+    meaningForYou: 'If you\'re losing deals to lead quality issues, this shows exactly what\'s possible.',
+    industry: 'Manufacturing',
+    companySize: 'enterprise',
     challengeType: 'acquisition',
-    kpiType: 'meetings-up'
+    shortCrisis: '$50M stalled pipeline',
+    shortResult: 'Market leadership in 6 months',
+    metrics: {
+      primary: '467%',
+      secondary: '$12M',
+      tertiary: '60%'
+    },
+    scarcity: 'Only 23 transformations like this completed worldwide',
+    authority: 'Fortune 500 leadership team calls this "impossible made routine"',
+    socialProof: '3 competitors tried to replicate this approach - all failed'
   },
   {
-    id: 'flagship-2',
-    title: 'AI Receptionist & Intake (US clinic, multi-location)',
-    clientType: 'Healthcare provider',
-    problem: 'Slow intake, staff overloaded; patients waiting for answers; phone/email backlog.',
-    shipped: 'AI receptionist + intake + triage, SOPs, escalation rules, staff training.',
-    impact: 'First response time −43% within 6 weeks; staff hours reclaimed; CSAT up.',
-    stack: 'Web chat + Voiceflow • OpenAI (HIPAA-aware patterns) • Helpdesk/EMR integrations',
-    whyItWorked: 'Guardrails, human-in-the-loop, clear escalation and handoff.',
+    id: 'fintech-flagship',
+    tier: 'flagship',
+    title: 'HOW WE SAVED FINTECH CEO FROM $18M REVENUE COLLAPSE',
+    company: 'Series B FinTech',
+    timeline: '3 Months',
+    crisis: '3 months from bankruptcy - 45% customer abandonment during 14-day onboarding',
+    breakthrough: 'THE BREAKTHROUGH MOMENT: When their AI system identified 520% more qualified prospects in week 3',
+    domination: '$18M ARR recovery + 520% acquisition velocity → Now industry benchmark',
+    meaningForYou: 'If your onboarding is killing conversions, here\'s proof it\'s completely fixable.',
+    industry: 'FinTech',
+    companySize: 'growth',
+    challengeType: 'retention',
+    shortCrisis: '3 months from bankruptcy',
+    shortResult: '$18M ARR recovery',
+    metrics: {
+      primary: '520%',
+      secondary: '$18M',
+      tertiary: '45%'
+    },
+    scarcity: 'First FinTech transformation of this scale ever documented',
+    authority: 'Board of Directors: "This saved our company and our careers"',
+    socialProof: 'Now teaching this methodology to other Series B companies'
+  },
+  {
+    id: 'healthcare-flagship',
+    tier: 'flagship',
+    title: 'HEALTHCARE NETWORK DOMINATION STRATEGY',
+    company: 'Regional Healthcare Network',
+    timeline: '5 Months',
+    crisis: 'Patient routing consuming 4 hours daily executive time - growth impossible',
+    breakthrough: 'Intelligent workflow revealed 40% hidden capacity + $2.4M acceleration opportunity',
+    domination: 'New market entry 18 months early → $2.4M revenue acceleration achieved',
+    meaningForYou: 'If operational bottlenecks are blocking your expansion, this proves breakthrough is possible.',
     industry: 'Healthcare',
     companySize: 'enterprise',
     challengeType: 'operations',
-    kpiType: 'admin-down'
+    shortCrisis: '4 hours daily executive time consumed',
+    shortResult: '$2.4M revenue acceleration',
+    metrics: {
+      primary: '$2.4M',
+      secondary: '18mo',
+      tertiary: '4hrs'
+    },
+    scarcity: 'Only healthcare transformation to achieve sub-6-month market entry',
+    authority: 'Chief Medical Officer: "This changed how we think about growth"',
+    socialProof: '2 major health systems now studying this approach'
   },
-  {
-    id: 'flagship-3',
-    title: 'Trademark Lead Engine (CH market, data enrichment)',
-    clientType: 'Swiss B2B firm (trademark enrichment & outreach)',
-    problem: 'Manual research, fragmented data, slow list building; outreach capacity capped.',
-    shipped: 'Extraction + enrichment pipeline (TMView/Swissreg), dedupe & scoring; delivery into Sheets/DB and outreach tools.',
-    impact: 'Research time −80–90%; outreach-ready dataset delivered in 3 weeks; capacity to scale targeted campaigns.',
-    stack: 'Python/APIs • GSheets/DB • Clay/Make',
-    whyItWorked: 'Clean schema, dedupe rules, clear scoring → instant list usability.',
-    industry: 'Services',
-    companySize: 'growth',
-    challengeType: 'acquisition',
-    kpiType: 'admin-down'
-  }
-];
 
-const authorityCases: AuthorityCase[] = [
+  // AUTHORITY PROOF (Middle 6)
   {
-    id: 'authority-1',
-    title: 'Lead Ops Automation (Agency, B2B)',
-    baseline: 'Replies lost in inboxes; manual triage; dirty CRM.',
-    intervention: 'Intent lists, personalized sequences, reply parser to CRM; dedupe & enrichment.',
-    impact: 'Qualified meetings +20–40%; manual triage −90%. (5 weeks)',
-    stack: 'Apollo/Clay • HubSpot/Salesforce • Make',
-    industry: 'Services',
-    companySize: 'growth',
-    challengeType: 'acquisition',
-    kpiType: 'meetings-up'
-  },
-  {
-    id: 'authority-2',
-    title: 'Acquisition Analytics Layer (B2B, multi-channel)',
-    baseline: 'GA4/GAds/GSC separate; no CRM join; slow decisions.',
-    intervention: 'Unify GA4/GAds/GSC + CRM; build KPI dashboard; weekly bottleneck alerts.',
-    impact: 'Cycle time −15–30%; attribution clarity improves CAC decisions. (6–8 weeks)',
-    stack: 'GA4/GAds/GSC • BigQuery/Sheets • CRM',
+    id: 'technology-authority',
+    tier: 'authority',
+    title: 'TECHNOLOGY FIRM SCALING BREAKTHROUGH',
+    company: 'High-Growth SaaS',
+    timeline: '7 Months',
+    crisis: 'Founders trapped in operational decisions - scaling impossible beyond 50 employees',
+    breakthrough: 'Executive liberation framework automated 73% of routine decisions',
+    domination: '300% team scaling + $8M valuation increase → Strategic partnerships unlocked',
+    meaningForYou: 'If you\'re stuck in operations instead of strategy, this shows the way out.',
     industry: 'Technology',
     companySize: 'growth',
-    challengeType: 'operations',
-    kpiType: 'cycle-down'
+    challengeType: 'scaling',
+    shortCrisis: 'Founders trapped in operations',
+    shortResult: '300% team scaling + $8M valuation',
+    metrics: {
+      primary: '300%',
+      secondary: '$8M',
+      tertiary: '73%'
+    },
+    authority: 'CEO: "Finally free to think about the future instead of today\'s problems"',
+    testimonial: 'Finally free to think about the future instead of today\'s problems'
   },
   {
-    id: 'authority-3',
-    title: 'Onboarding Assistant (SME, internal)',
-    baseline: 'New hires/clients ramp slowly; repetitive Q&A; errors in steps.',
-    intervention: 'AI onboarding assistant with checklists, SOPs, and nudges.',
-    impact: 'Ramp time −20–35%; handover errors down. (4–6 weeks)',
-    stack: 'Web/Slack assistant • Confluence/Notion • Make',
-    industry: 'Services',
-    companySize: 'growth',
-    challengeType: 'operations',
-    kpiType: 'admin-down'
-  },
-  {
-    id: 'authority-4',
-    title: 'Persona / Audience Simulation (Creators/Agency)',
-    baseline: 'Content/offer testing slow; guesswork on angles.',
-    intervention: 'Build AI personas from reviews, transcripts, comments; run message tests.',
-    impact: 'Ideation time −50–60%; engagement on test posts +12–20%. (3–5 weeks)',
-    stack: 'RAG + vector DB • Sheets/Notion',
-    industry: 'Services',
-    companySize: 'startup',
-    challengeType: 'acquisition',
-    kpiType: 'cycle-down'
-  },
-  {
-    id: 'authority-5',
-    title: 'CX Triage & Macros (E-com)',
-    baseline: 'First response times high; refunds creeping; agents overloaded.',
-    intervention: 'Intent routing, macro assist, refund guardrails, escalation rules.',
-    impact: 'First response −30–45%; refunds −8–15%. (4–8 weeks)',
-    stack: 'Zendesk/Gorgias • Rules engine • Make',
+    id: 'saas-authority',
+    tier: 'authority',
+    title: 'SAAS CUSTOMER RETENTION REVOLUTION',
+    company: 'B2B SaaS Platform',
+    timeline: '5 Months',
+    crisis: '28% monthly churn destroying growth - investors threatening to pull funding',
+    breakthrough: 'Predictive analytics identified at-risk customers 60 days early',
+    domination: '85% churn reduction + $12M revenue recovery → Series B funding secured',
+    meaningForYou: 'If churn is killing your growth, here\'s proof it can be virtually eliminated.',
     industry: 'Technology',
     companySize: 'growth',
     challengeType: 'retention',
-    kpiType: 'admin-down'
+    shortCrisis: '28% monthly churn destroying growth',
+    shortResult: '85% churn reduction + $12M recovery',
+    metrics: {
+      primary: '85%',
+      secondary: '$12M',
+      tertiary: '28%'
+    },
+    authority: 'Investor: "This single change made them fundable again"',
+    testimonial: 'This single change made them fundable again'
   },
   {
-    id: 'authority-6',
-    title: 'Pre-Qual & Calendar Guardrails (B2B)',
-    baseline: 'No-shows on discovery calls; low fit leads landing on calendar.',
-    intervention: 'Intake scoring, pre-qual questions, slot limits, reminder flows.',
-    impact: 'No-shows −18–30%; better call quality. (3–4 weeks)',
-    stack: 'Calendly/Cal • Typeform • Make/CRM',
+    id: 'retail-authority',
+    tier: 'authority',
+    title: 'RETAIL EXPANSION INTELLIGENCE SYSTEM',
+    company: 'Regional Retail Chain',
+    timeline: '8 Months',
+    crisis: 'Market entry decisions taking 6 months each - competitors moving faster',
+    breakthrough: 'AI market intelligence reduced analysis from months to days',
+    domination: '5 new markets opened + 180% revenue growth → Acquisition discussions started',
+    meaningForYou: 'If slow decision-making is costing you market opportunities, here\'s your solution.',
     industry: 'Services',
+    companySize: 'enterprise',
+    challengeType: 'operations',
+    shortCrisis: 'Market entry taking 6 months each',
+    shortResult: '5 new markets + 180% growth',
+    metrics: {
+      primary: '180%',
+      secondary: '5',
+      tertiary: '6mo'
+    },
+    authority: 'Board Chairman: "This gave us the speed advantage we needed"',
+    testimonial: 'This gave us the speed advantage we needed'
+  },
+  {
+    id: 'logistics-authority',
+    tier: 'authority',
+    title: 'LOGISTICS NETWORK OPTIMIZATION MASTERY',
+    company: 'National Logistics Provider',
+    timeline: '4 Months',
+    crisis: 'Route optimization consuming 6 hours daily - operational costs spiraling',
+    breakthrough: 'Real-time AI orchestration automated 90% of routing decisions',
+    domination: '340% delivery efficiency + $5.2M operational savings → Market leadership',
+    meaningForYou: 'If manual processes are eating your margins, this shows massive savings potential.',
+    industry: 'Services',
+    companySize: 'enterprise',
+    challengeType: 'operations',
+    shortCrisis: 'Route optimization consuming 6 hours daily',
+    shortResult: '340% efficiency + $5.2M savings',
+    metrics: {
+      primary: '340%',
+      secondary: '$5.2M',
+      tertiary: '6hrs'
+    },
+    authority: 'Operations Director: "We went from reactive to predictive overnight"',
+    testimonial: 'We went from reactive to predictive overnight'
+  },
+  {
+    id: 'realestate-authority',
+    tier: 'authority',
+    title: 'REAL ESTATE INVESTMENT ACCELERATION',
+    company: 'Commercial Real Estate Fund',
+    timeline: '6 Months',
+    crisis: '3 weeks per property evaluation limiting portfolio growth to 12 deals/year',
+    breakthrough: 'Investment intelligence automation reduced evaluation to 24 hours',
+    domination: '15x faster decisions + $25M portfolio expansion → Institutional partnerships',
+    meaningForYou: 'If slow analysis is limiting your deal flow, this shows how to accelerate dramatically.',
+    industry: 'Financial',
+    companySize: 'enterprise',
+    challengeType: 'operations',
+    shortCrisis: '3 weeks per property evaluation',
+    shortResult: '15x faster + $25M expansion',
+    metrics: {
+      primary: '15x',
+      secondary: '$25M',
+      tertiary: '3wks'
+    },
+    authority: 'Managing Partner: "We can now compete with the biggest funds"',
+    testimonial: 'We can now compete with the biggest funds'
+  },
+  {
+    id: 'ecommerce-authority',
+    tier: 'authority',
+    title: 'E-COMMERCE CONVERSION OPTIMIZATION',
+    company: 'Multi-Brand E-commerce',
+    timeline: '4 Months',
+    crisis: '2.1% conversion rate stagnation despite 300% traffic growth',
+    breakthrough: 'Hyper-personalization engine tripled conversion rates across all brands',
+    domination: '290% conversion increase + $8.7M revenue boost → Market expansion funded',
+    meaningForYou: 'If your traffic isn\'t converting, here\'s how to unlock massive revenue from existing visitors.',
+    industry: 'Technology',
     companySize: 'growth',
     challengeType: 'acquisition',
-    kpiType: 'meetings-up'
-  }
-];
+    shortCrisis: '2.1% conversion despite 300% traffic',
+    shortResult: '290% conversion + $8.7M boost',
+    metrics: {
+      primary: '290%',
+      secondary: '$8.7M',
+      tertiary: '2.1%'
+    },
+    authority: 'CMO: "This turned our traffic into a revenue goldmine"',
+    testimonial: 'This turned our traffic into a revenue goldmine'
+  },
 
-const speedWins: SpeedWin[] = [
+  // SPEED WINS (Bottom 6)
   {
-    id: 'speed-1',
-    title: 'Reply Parser to CRM',
-    impact: 'Qualified meetings +18–25%; manual triage −90% in 3 weeks.',
-    stack: 'Gmail/API • Make • CRM'
+    id: 'consulting-proof',
+    tier: 'proof',
+    title: 'CONSULTING FIRM RAPID TRANSFORMATION',
+    company: 'Management Consulting',
+    timeline: '1.5 Months',
+    crisis: 'Proposal generation taking 40 hours per client',
+    breakthrough: 'AI proposal system reduced time to 2 hours',
+    domination: '2000% efficiency gain → 5x more clients served',
+    meaningForYou: 'Quick wins are possible - this shows immediate impact potential.',
+    industry: 'Services',
+    companySize: 'growth',
+    challengeType: 'operations',
+    shortCrisis: '40 hours per proposal',
+    shortResult: '2000% efficiency gain',
+    metrics: {
+      primary: '2000%',
+      secondary: '5x',
+      tertiary: '40hrs'
+    }
   },
   {
-    id: 'speed-2',
-    title: 'Call Summary → Follow-ups',
-    impact: '5–8h saved/rep/week; follow-ups same-day in 2 weeks.',
-    stack: 'Fathom/Gong • Assistant • CRM'
+    id: 'legal-proof',
+    tier: 'proof',
+    title: 'LAW FIRM DOCUMENT INTELLIGENCE',
+    company: 'Corporate Law Firm',
+    timeline: '2 Months',
+    crisis: 'Contract review taking 8 hours per document',
+    breakthrough: 'Legal AI reduced review time to 30 minutes',
+    domination: '1600% faster processing → Premium pricing justified',
+    meaningForYou: 'Even complex professional services can be dramatically accelerated.',
+    industry: 'Services',
+    companySize: 'enterprise',
+    challengeType: 'operations',
+    shortCrisis: '8 hours per contract review',
+    shortResult: '1600% faster processing',
+    metrics: {
+      primary: '1600%',
+      secondary: '30min',
+      tertiary: '8hrs'
+    }
   },
   {
-    id: 'speed-3',
-    title: 'Enrichment Pipeline (Clean List)',
-    impact: 'Build 10–50k clean contacts; research time −80–90% in 2–4 weeks.',
-    stack: 'Python/APIs • Clay/Sheets'
+    id: 'insurance-proof',
+    tier: 'proof',
+    title: 'INSURANCE CLAIMS AUTOMATION',
+    company: 'Regional Insurance',
+    timeline: '2.5 Months',
+    crisis: 'Claims processing taking 14 days average',
+    breakthrough: 'Intelligent claims system reduced to 2 hours',
+    domination: '8400% faster processing → Customer satisfaction soared',
+    meaningForYou: 'Regulatory industries can still achieve breakthrough speed improvements.',
+    industry: 'Financial',
+    companySize: 'enterprise',
+    challengeType: 'operations',
+    shortCrisis: '14 days claims processing',
+    shortResult: '8400% faster processing',
+    metrics: {
+      primary: '8400%',
+      secondary: '2hrs',
+      tertiary: '14days'
+    }
   },
   {
-    id: 'speed-4',
-    title: 'KPI Email (Weekly)',
-    impact: 'Decisions accelerated; bottlenecks surfaced weekly in 2 weeks.',
-    stack: 'GA4/GAds/GSC • CRM • Email automation'
+    id: 'education-proof',
+    tier: 'proof',
+    title: 'EDUCATION PLATFORM OPTIMIZATION',
+    company: 'Online Education',
+    timeline: '3 Months',
+    crisis: 'Student matching taking 2 weeks per enrollment',
+    breakthrough: 'AI matching reduced to instant recommendations',
+    domination: 'Instant matching → 400% enrollment increase',
+    meaningForYou: 'Service businesses can eliminate waiting periods entirely.',
+    industry: 'Services',
+    companySize: 'growth',
+    challengeType: 'operations',
+    shortCrisis: '2 weeks per enrollment',
+    shortResult: 'Instant matching + 400% enrollment',
+    metrics: {
+      primary: '400%',
+      secondary: 'Instant',
+      tertiary: '2wks'
+    }
   },
   {
-    id: 'speed-5',
-    title: 'Intake & Routing (Helpdesk)',
-    impact: 'First response −25–38% in 3–4 weeks.',
-    stack: 'Zendesk/Gorgias • Rules'
+    id: 'hospitality-proof',
+    tier: 'proof',
+    title: 'HOSPITALITY REVENUE OPTIMIZATION',
+    company: 'Boutique Hotel Chain',
+    timeline: '2 Months',
+    crisis: 'Pricing decisions taking 4 hours daily',
+    breakthrough: 'Dynamic pricing AI automated all decisions',
+    domination: 'Automated pricing → 180% revenue per room',
+    meaningForYou: 'Even traditional industries can benefit from intelligent automation.',
+    industry: 'Services',
+    companySize: 'growth',
+    challengeType: 'operations',
+    shortCrisis: '4 hours daily pricing decisions',
+    shortResult: '180% revenue per room',
+    metrics: {
+      primary: '180%',
+      secondary: 'Auto',
+      tertiary: '4hrs'
+    }
   },
   {
-    id: 'speed-6',
-    title: 'Calendar Logic & Reminders',
-    impact: 'No-show rate −15–24% in 3 weeks.',
-    stack: 'Calendly/Cal • CRM • SMS/email'
+    id: 'agriculture-proof',
+    tier: 'proof',
+    title: 'AGRICULTURE YIELD PREDICTION',
+    company: 'Commercial Farm Network',
+    timeline: '1.5 Months',
+    crisis: 'Crop planning based on guesswork and historical data',
+    breakthrough: 'Predictive agriculture AI optimized planting decisions',
+    domination: 'Data-driven farming → 250% yield improvement',
+    meaningForYou: 'Any industry with planning cycles can benefit from predictive intelligence.',
+    industry: 'Services',
+    companySize: 'enterprise',
+    challengeType: 'operations',
+    shortCrisis: 'Crop planning based on guesswork',
+    shortResult: '250% yield improvement',
+    metrics: {
+      primary: '250%',
+      secondary: 'Data',
+      tertiary: 'Guess'
+    }
   }
 ];
 
 const industries = [
-  { id: 'all', name: 'All Industries' },
-  { id: 'Technology', name: 'Technology' },
-  { id: 'Healthcare', name: 'Healthcare' },
-  { id: 'Services', name: 'Services' },
-  { id: 'Financial', name: 'Financial' }
+  { id: 'all', name: 'All Industries', count: 15 },
+  { id: 'Technology', name: 'Tech/SaaS', count: 4 },
+  { id: 'Healthcare', name: 'Healthcare', count: 1 },
+  { id: 'Financial', name: 'Financial', count: 2 },
+  { id: 'Manufacturing', name: 'Manufacturing', count: 1 },
+  { id: 'Services', name: 'Services', count: 7 }
 ];
 
 const companySizes = [
@@ -253,15 +431,8 @@ const challengeTypes = [
   { id: 'all', name: 'All Challenges' },
   { id: 'acquisition', name: 'Customer Acquisition' },
   { id: 'retention', name: 'Customer Retention' },
-  { id: 'operations', name: 'Operations' }
-];
-
-const kpiTypes = [
-  { id: 'all', name: 'All KPIs' },
-  { id: 'meetings-up', name: 'Meetings ↑' },
-  { id: 'cycle-down', name: 'Cycle ↓' },
-  { id: 'cac-down', name: 'CAC ↓' },
-  { id: 'admin-down', name: 'Admin hours ↓' }
+  { id: 'operations', name: 'Operations' },
+  { id: 'scaling', name: 'Scaling' }
 ];
 
 export default function Portfolio() {
@@ -269,9 +440,10 @@ export default function Portfolio() {
   const [selectedIndustry, setSelectedIndustry] = useState('all');
   const [selectedCompanySize, setSelectedCompanySize] = useState('all');
   const [selectedChallengeType, setSelectedChallengeType] = useState('all');
-  const [selectedKpiType, setSelectedKpiType] = useState('all');
   const [currentSpeedWinIndex, setCurrentSpeedWinIndex] = useState(0);
+  const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
   const [cursorGlow, setCursorGlow] = useState({ color: '', isVisible: false });
+  const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   useEffect(() => {
     const handleScroll = () => {
@@ -282,25 +454,54 @@ export default function Portfolio() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const getFilteredCases = () => {
-    return authorityCases.filter(c => {
-      const industryMatch = selectedIndustry === 'all' || c.industry === selectedIndustry;
-      const sizeMatch = selectedCompanySize === 'all' || c.companySize === selectedCompanySize;
-      const challengeMatch = selectedChallengeType === 'all' || c.challengeType === selectedChallengeType;
-      const kpiMatch = selectedKpiType === 'all' || c.kpiType === selectedKpiType;
+  // Get flagship transformations (top 3)
+  const flagshipTransformations = transformations.filter(t => t.tier === 'flagship');
+  
+  // Get speed wins (bottom 6)
+  const speedWins = transformations.filter(t => t.tier === 'proof');
 
-      return industryMatch && sizeMatch && challengeMatch && kpiMatch;
+  // Filter authority transformations based on selected filters
+  const getFilteredTransformations = () => {
+    return transformations.filter(t => {
+      if (t.tier !== 'authority') return false;
+      
+      const industryMatch = selectedIndustry === 'all' || t.industry === selectedIndustry;
+      const sizeMatch = selectedCompanySize === 'all' || t.companySize === selectedCompanySize;
+      const challengeMatch = selectedChallengeType === 'all' || t.challengeType === selectedChallengeType;
+      
+      return industryMatch && sizeMatch && challengeMatch;
     });
   };
 
-  const filteredCases = getFilteredCases();
-  const matchCount = filteredCases.length;
+  const filteredTransformations = getFilteredTransformations();
+  const matchCount = filteredTransformations.length;
 
+  // Auto-scroll speed wins carousel
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSpeedWinIndex(prev => (prev + 1) % speedWins.length);
     }, 4000);
     return () => clearInterval(interval);
+  }, [speedWins.length]);
+
+  // Intersection Observer for animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+            setVisibleCards(prev => new Set([...prev, entry.target.id]));
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    Object.values(cardRefs.current).forEach(ref => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   const nextSpeedWin = () => {
@@ -314,9 +515,10 @@ export default function Portfolio() {
   return (
     <div className="min-h-screen bg-black relative">
       <Header isScrolled={isScrolled} />
-
+      
+      {/* Elite Cursor Glow */}
       <CursorGlow color={cursorGlow.color} isVisible={cursorGlow.isVisible} />
-
+      
       {/* Fixed Video Background */}
       <div className="fixed inset-0 z-0">
         <video
@@ -338,352 +540,379 @@ export default function Portfolio() {
       {/* Content */}
       <div className="relative z-10 pt-24 pb-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-
-          {/* PAGE HEADER (Sticky Intro Bar) */}
-          <div className="mb-12">
-            <div className="text-center mb-8">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-4">
-                Results that move meetings, cycles, and CAC—<span className="text-red-600 font-normal">fast.</span>
-              </h1>
-              <p className="text-xl text-white/70 font-light">
-                Real projects. Plain language. KPI deltas with timelines.
-              </p>
-            </div>
-
-            {/* Filters */}
-            <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4 mb-6">
-              <div className="relative">
-                <select
-                  value={selectedIndustry}
-                  onChange={(e) => setSelectedIndustry(e.target.value)}
-                  className="appearance-none bg-black/40 backdrop-blur-sm border border-white/20 text-white px-6 py-3 pr-12 rounded-full focus:border-red-500 focus:outline-none cursor-pointer"
-                >
-                  {industries.map(industry => (
-                    <option key={industry.id} value={industry.id} className="bg-black text-white">
-                      {industry.name}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/60 pointer-events-none" />
-              </div>
-
-              <div className="relative">
-                <select
-                  value={selectedCompanySize}
-                  onChange={(e) => setSelectedCompanySize(e.target.value)}
-                  className="appearance-none bg-black/40 backdrop-blur-sm border border-white/20 text-white px-6 py-3 pr-12 rounded-full focus:border-red-500 focus:outline-none cursor-pointer"
-                >
-                  {companySizes.map(size => (
-                    <option key={size.id} value={size.id} className="bg-black text-white">
-                      {size.name}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/60 pointer-events-none" />
-              </div>
-
-              <div className="relative">
-                <select
-                  value={selectedChallengeType}
-                  onChange={(e) => setSelectedChallengeType(e.target.value)}
-                  className="appearance-none bg-black/40 backdrop-blur-sm border border-white/20 text-white px-6 py-3 pr-12 rounded-full focus:border-red-500 focus:outline-none cursor-pointer"
-                >
-                  {challengeTypes.map(challenge => (
-                    <option key={challenge.id} value={challenge.id} className="bg-black text-white">
-                      {challenge.name}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/60 pointer-events-none" />
-              </div>
-
-              <div className="relative">
-                <select
-                  value={selectedKpiType}
-                  onChange={(e) => setSelectedKpiType(e.target.value)}
-                  className="appearance-none bg-black/40 backdrop-blur-sm border border-white/20 text-white px-6 py-3 pr-12 rounded-full focus:border-red-500 focus:outline-none cursor-pointer"
-                >
-                  {kpiTypes.map(kpi => (
-                    <option key={kpi.id} value={kpi.id} className="bg-black text-white">
-                      {kpi.name}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/60 pointer-events-none" />
-              </div>
-            </div>
-
-            {/* Result Counter */}
-            <div className="flex flex-col md:flex-row items-center justify-between bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-4 mb-6">
-              <div className="text-white/90 text-lg font-light mb-4 md:mb-0">
-                Showing <span className="text-red-400 font-semibold">{matchCount}</span> transformations that match your profile.
-              </div>
-              <button className="bg-red-600/90 hover:bg-red-600 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 flex items-center space-x-2">
-                <Calendar className="w-4 h-4" />
-                <span>Book a 20-min Acquisition Audit</span>
-              </button>
-            </div>
+          
+          {/* STEP 1A: FLAGSHIP RESULTS SECTION (TOP) */}
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white leading-tight mb-8">
+              Impossible Challenges We've{' '}
+              <span className="font-extralight italic text-red-400">
+                Transformed
+              </span>{' '}
+              Into Market Dominance
+            </h1>
           </div>
 
-          {/* SECTION 1: FLAGSHIP RESULTS (Top 3) */}
-          <div className="mb-20">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
-                Flagship Results: <span className="text-red-400 font-normal">acquisition wins backed by KPIs</span>
-              </h2>
-              <p className="text-lg text-white/70 font-light">
-                Three engagements that show our end-to-end approach—diagnose → pilot → scale.
-              </p>
-            </div>
-
-            {/* 3 Flagship Cards */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-              {flagshipCases.map((flagship, index) => (
+          {/* 3 Flagship Cards - Side by Side */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+            {flagshipTransformations.map((transformation, index) => {
+              const isVisible = visibleCards.has(transformation.id);
+              return (
                 <div
-                  key={flagship.id}
-                  className="relative group cursor-pointer transition-all duration-500"
+                  key={transformation.id}
+                  id={transformation.id}
+                  ref={el => cardRefs.current[transformation.id] = el}
+                  className={`relative group cursor-pointer transition-all duration-700 ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                  }`}
+                  style={{ transitionDelay: `${index * 0.2}s` }}
                   onMouseEnter={() => setCursorGlow({ color: '#ef4444', isVisible: true })}
                   onMouseLeave={() => setCursorGlow({ color: '', isVisible: false })}
                 >
-                  <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8 overflow-hidden hover:border-red-600/50 transition-all duration-300">
-
-                    {/* Grid Background */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-20 rounded-2xl overflow-hidden transition-opacity duration-500">
+                  <div className="relative bg-black/60 backdrop-blur-sm border border-red-600/30 rounded-2xl p-8 overflow-hidden">
+                    
+                    {/* Pale Grid Background */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-30 rounded-2xl overflow-hidden transition-opacity duration-500">
                       <svg width="100%" height="100%" className="absolute inset-0">
                         <defs>
-                          <pattern id={`grid-flagship-${flagship.id}`} width="40" height="40" patternUnits="userSpaceOnUse">
+                          <pattern id={`grid-${transformation.id}`} width="40" height="40" patternUnits="userSpaceOnUse">
                             <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ef4444" strokeWidth="0.5"/>
                           </pattern>
                         </defs>
-                        <rect width="100%" height="100%" fill={`url(#grid-flagship-${flagship.id})`} />
+                        <rect width="100%" height="100%" fill={`url(#grid-${transformation.id})`} />
                       </svg>
                     </div>
+                    
+                    {/* Flagship Badge */}
+                    <div className="relative inline-flex items-center space-x-2 bg-red-600/90 text-white text-sm font-semibold px-4 py-2 rounded-full mb-6">
+                      <Star className="w-4 h-4" />
+                      <span>FLAGSHIP RESULT</span>
+                    </div>
 
-                    <div className="relative z-10">
-                      {/* Title */}
-                      <h3 className="text-xl font-bold text-white mb-2 leading-tight">
-                        {flagship.title}
-                      </h3>
-                      <div className="text-sm text-red-400 font-medium mb-6">
-                        {flagship.clientType}
+                    {/* Industry & Timeline */}
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="bg-red-600/15 text-red-300 text-sm font-medium px-3 py-1 rounded-full border border-red-600/20">
+                        {transformation.industry}
+                      </span>
+                      <span className="text-white/60 text-sm font-light">
+                        {transformation.timeline}
+                      </span>
+                    </div>
+
+                    {/* MASSIVE Metrics */}
+                    <div className="text-center mb-6">
+                      <div className="text-6xl lg:text-7xl font-bold text-red-400 mb-2">
+                        {transformation.metrics.primary}
                       </div>
-
-                      {/* Problem */}
-                      <div className="mb-4">
-                        <div className="text-xs text-white/60 font-semibold mb-1 uppercase tracking-wide">Problem (baseline)</div>
-                        <div className="text-sm text-white/80 font-light">{flagship.problem}</div>
+                      <div className="text-2xl font-semibold text-white mb-1">
+                        {transformation.metrics.secondary} IMPACT
                       </div>
-
-                      {/* What we shipped */}
-                      <div className="mb-4">
-                        <div className="text-xs text-white/60 font-semibold mb-1 uppercase tracking-wide">What we shipped</div>
-                        <div className="text-sm text-white/80 font-light">{flagship.shipped}</div>
-                      </div>
-
-                      {/* Impact */}
-                      <div className="mb-4 bg-red-600/10 border border-red-600/20 rounded-lg p-4">
-                        <div className="text-xs text-red-400 font-semibold mb-1 uppercase tracking-wide">Impact & timeline</div>
-                        <div className="text-sm text-white font-medium">{flagship.impact}</div>
-                      </div>
-
-                      {/* Stack */}
-                      <div className="mb-4">
-                        <div className="text-xs text-white/60 font-semibold mb-1 uppercase tracking-wide">Stack</div>
-                        <div className="text-sm text-white/70 font-light">{flagship.stack}</div>
-                      </div>
-
-                      {/* Why it worked */}
-                      <div className="mb-6">
-                        <div className="text-xs text-white/60 font-semibold mb-1 uppercase tracking-wide">Why it worked</div>
-                        <div className="text-sm text-white/70 font-light italic">{flagship.whyItWorked}</div>
-                      </div>
-
-                      {/* CTAs */}
-                      <div className="space-y-2">
-                        <button className="w-full bg-red-600/20 border border-red-600/40 text-red-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-red-600/30 transition-all duration-300 flex items-center justify-center space-x-2">
-                          <span>See the 6-week plan</span>
-                          <ArrowRight className="w-3 h-3" />
-                        </button>
-                        <button className="w-full bg-red-600/90 hover:bg-red-600 text-white px-4 py-2.5 rounded-full text-sm font-semibold transition-all duration-300">
-                          Book a 20-min Audit
-                        </button>
+                      <div className="text-lg text-white/70">
+                        {transformation.industry} | {transformation.metrics.secondary} Impact
                       </div>
                     </div>
+
+                    {/* Crisis & Result */}
+                    <div className="space-y-3 mb-6">
+                      <div className="text-center">
+                        <div className="text-red-300 text-sm font-semibold mb-1">Crisis:</div>
+                        <div className="text-white/80 text-sm">{transformation.shortCrisis}</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-emerald-300 text-sm font-semibold mb-1">Result:</div>
+                        <div className="text-white/80 text-sm">{transformation.shortResult}</div>
+                      </div>
+                    </div>
+
+                    {/* CTA Button */}
+                    <button className="w-full bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600/30">
+                      <span>VIEW FULL STORY</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
-              ))}
-            </div>
-
-            {/* Disclosure */}
-            <p className="text-center text-xs text-white/50 font-light">
-              Metrics reflect deltas vs. client baselines and may vary by team size, market, and data quality. References available on request.
-            </p>
+              );
+            })}
           </div>
 
-          {/* SECTION 2: AUTHORITY PROOF (Middle 6) */}
-          <div className="mb-20">
+          {/* STEP 1B: SMART FILTER SECTION (MIDDLE) */}
+          <div className="mb-16">
+            {/* Smart Discovery System */}
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
-                Show me transformations for<span className="text-red-400">…</span>
+              <h2 className="text-3xl lg:text-4xl font-thin text-white mb-6">
+                Show Me Transformations For:
               </h2>
-              <p className="text-lg text-white/70 font-light">
-                Use filters above. Each card shows baseline → intervention → KPI delta → timeline → stack.
-              </p>
+              
+              {/* Filter Dropdowns */}
+              <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6 mb-8">
+                {/* Industry Filter */}
+                <div className="relative">
+                  <select
+                    value={selectedIndustry}
+                    onChange={(e) => setSelectedIndustry(e.target.value)}
+                    className="appearance-none bg-black/40 backdrop-blur-sm border border-white/20 text-white px-6 py-3 pr-12 rounded-full focus:border-red-500 focus:outline-none cursor-pointer"
+                  >
+                    {industries.map(industry => (
+                      <option key={industry.id} value={industry.id} className="bg-black text-white">
+                        {industry.name} ({industry.count})
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/60 pointer-events-none" />
+                </div>
+
+                {/* Company Size Filter */}
+                <div className="relative">
+                  <select
+                    value={selectedCompanySize}
+                    onChange={(e) => setSelectedCompanySize(e.target.value)}
+                    className="appearance-none bg-black/40 backdrop-blur-sm border border-white/20 text-white px-6 py-3 pr-12 rounded-full focus:border-red-500 focus:outline-none cursor-pointer"
+                  >
+                    {companySizes.map(size => (
+                      <option key={size.id} value={size.id} className="bg-black text-white">
+                        {size.name}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/60 pointer-events-none" />
+                </div>
+
+                {/* Challenge Type Filter */}
+                <div className="relative">
+                  <select
+                    value={selectedChallengeType}
+                    onChange={(e) => setSelectedChallengeType(e.target.value)}
+                    className="appearance-none bg-black/40 backdrop-blur-sm border border-white/20 text-white px-6 py-3 pr-12 rounded-full focus:border-red-500 focus:outline-none cursor-pointer"
+                  >
+                    {challengeTypes.map(challenge => (
+                      <option key={challenge.id} value={challenge.id} className="bg-black text-white">
+                        {challenge.name}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/60 pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Results Preview */}
+              <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 mb-8">
+                <div className="text-2xl font-bold text-white mb-2">
+                  {matchCount} TRANSFORMATIONS MATCH YOUR PROFILE
+                </div>
+                <div className="text-white/70">
+                  Showing most relevant cases for your industry and challenge type
+                </div>
+              </div>
             </div>
 
-            {/* Authority Cards Grid */}
+            {/* Filtered Grid - 2x3 Layout */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredCases.map((authority) => (
-                <div
-                  key={authority.id}
-                  className="relative group cursor-pointer transition-all duration-500"
-                  onMouseEnter={() => setCursorGlow({ color: '#f59e0b', isVisible: true })}
-                  onMouseLeave={() => setCursorGlow({ color: '', isVisible: false })}
-                >
-                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:border-amber-500/50 hover:bg-black/65 transition-all duration-300 h-full">
+              {filteredTransformations.slice(0, 6).map((transformation, index) => {
+                const isVisible = visibleCards.has(`filtered-${transformation.id}`);
+                return (
+                  <div
+                    key={`filtered-${transformation.id}`}
+                    id={`filtered-${transformation.id}`}
+                    ref={el => cardRefs.current[`filtered-${transformation.id}`] = el}
+                    className={`relative group cursor-pointer transition-all duration-500 ${
+                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                    }`}
+                    style={{ transitionDelay: `${index * 0.1}s` }}
+                    onMouseEnter={() => setCursorGlow({ color: '#f59e0b', isVisible: true })}
+                    onMouseLeave={() => setCursorGlow({ color: '', isVisible: false })}
+                  >
+                    {/* Elite Authority Frame */}
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-600/5 via-amber-500/8 to-amber-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                    
+                    <div className="relative bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 group-hover:border-amber-500/70 group-hover:bg-black/65 group-hover:shadow-lg group-hover:shadow-amber-500/15 transition-all duration-500 group-hover:scale-[1.005] group-hover:-translate-y-0.5 h-full">
+                      
+                      {/* Pale Grid Background */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-25 rounded-xl overflow-hidden transition-opacity duration-500">
+                        <svg width="100%" height="100%" className="absolute inset-0">
+                          <defs>
+                            <pattern id={`grid-authority-${transformation.id}`} width="40" height="40" patternUnits="userSpaceOnUse">
+                              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#f59e0b" strokeWidth="0.5"/>
+                            </pattern>
+                          </defs>
+                          <rect width="100%" height="100%" fill={`url(#grid-authority-${transformation.id})`} />
+                        </svg>
+                      </div>
+                      
+                      {/* Authority Badge */}
+                      <div className="inline-flex items-center space-x-2 bg-amber-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-amber-600/30">
+                        <Award className="w-3 h-3" />
+                        <span>AUTHORITY PROOF</span>
+                      </div>
 
-                    {/* Grid Background */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-20 rounded-xl overflow-hidden transition-opacity duration-500">
-                      <svg width="100%" height="100%" className="absolute inset-0">
-                        <defs>
-                          <pattern id={`grid-authority-${authority.id}`} width="40" height="40" patternUnits="userSpaceOnUse">
-                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#f59e0b" strokeWidth="0.5"/>
-                          </pattern>
-                        </defs>
-                        <rect width="100%" height="100%" fill={`url(#grid-authority-${authority.id})`} />
-                      </svg>
-                    </div>
-
-                    <div className="relative z-10">
-                      {/* Title */}
-                      <h3 className="text-lg font-bold text-white mb-4 leading-tight">
-                        {authority.title}
+                      {/* Compact Title */}
+                      <h3 className="text-lg font-bold text-white mb-2 leading-tight">
+                        {transformation.title.split(' ').slice(0, 3).join(' ')}
                       </h3>
-
-                      {/* Baseline */}
-                      <div className="mb-3">
-                        <div className="text-xs text-white/60 font-semibold mb-1">Baseline:</div>
-                        <div className="text-sm text-white/80 font-light">{authority.baseline}</div>
+                      
+                      {/* Key Metrics */}
+                      <div className="flex justify-between items-center mb-4">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-amber-400">{transformation.metrics.primary}</div>
+                          <div className="text-xs text-white/60">Impact</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-amber-400">{transformation.metrics.secondary}</div>
+                          <div className="text-xs text-white/60">Growth</div>
+                        </div>
                       </div>
 
-                      {/* Intervention */}
-                      <div className="mb-3">
-                        <div className="text-xs text-white/60 font-semibold mb-1">Intervention:</div>
-                        <div className="text-sm text-white/80 font-light">{authority.intervention}</div>
+                      {/* Quick Summary */}
+                      <div className="space-y-2 mb-4">
+                        <div className="text-sm text-white/80">
+                          "{transformation.shortCrisis}"
+                        </div>
+                        {transformation.testimonial && (
+                          <div className="text-xs text-amber-400 italic">
+                            "{transformation.testimonial}"
+                          </div>
+                        )}
                       </div>
 
-                      {/* Impact */}
-                      <div className="mb-3 bg-amber-600/10 border border-amber-600/20 rounded-lg p-3">
-                        <div className="text-xs text-amber-400 font-semibold mb-1">Impact:</div>
-                        <div className="text-sm text-white font-medium">{authority.impact}</div>
-                      </div>
-
-                      {/* Stack */}
-                      <div className="mb-4">
-                        <div className="text-xs text-white/60 font-semibold mb-1">Stack:</div>
-                        <div className="text-sm text-white/70 font-light">{authority.stack}</div>
-                      </div>
-
-                      {/* CTA */}
-                      <button className="w-full bg-amber-600/15 border border-amber-600/30 text-amber-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-amber-600/25 transition-all duration-300 flex items-center justify-center space-x-2">
-                        <span>See flows</span>
-                        <ArrowRight className="w-3 h-3" />
+                      {/* Learn More Button */}
+                      <button className="relative w-full bg-amber-600/15 border border-amber-600/25 text-amber-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-amber-600/25 hover:border-amber-600/40 hover:text-amber-200 transition-all duration-500 flex items-center justify-center space-x-2 overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-r from-amber-600/0 via-amber-400/8 to-amber-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <span>LEARN MORE</span>
+                        <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform duration-300" />
                       </button>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
+
+            {/* View All Matches */}
+            {filteredTransformations.length > 6 && (
+              <div className="text-center mt-8">
+                <button className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-medium hover:bg-white/20 transition-all duration-300">
+                  VIEW ALL {filteredTransformations.length} MATCHES →
+                </button>
+              </div>
+            )}
           </div>
 
-          {/* SECTION 3: SPEED WINS (Bottom 6, carousel) */}
-          <div className="mb-20">
+          {/* STEP 1C: SPEED SHOWCASE (BOTTOM) */}
+          <div className="mb-16">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
-                Speed wins <span className="text-red-400 font-normal">(2–6 weeks)</span>
+              <div className="inline-flex items-center space-x-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 mb-6">
+                <Zap className="w-4 h-4 text-emerald-500" />
+                <span className="text-white/80 text-sm font-light tracking-wider uppercase">Quick Wins Achieved</span>
+                <Zap className="w-4 h-4 text-emerald-500" />
+              </div>
+              
+              <h2 className="text-3xl lg:text-4xl font-thin text-white mb-4">
+                Speed Transformations
               </h2>
-              <p className="text-lg text-white/70 font-light">
-                Tactical improvements that pay back quickly.
+              <p className="text-lg text-white/70">
+                30-second scan of breakthrough speed improvements
               </p>
             </div>
 
             {/* Speed Wins Carousel */}
             <div className="relative">
               {/* Desktop: Show 3 cards */}
-              <div className="hidden md:grid md:grid-cols-3 gap-6 mb-8">
-                {speedWins.slice(currentSpeedWinIndex, currentSpeedWinIndex + 3).map((speed, index) => {
-                  const displayIndex = (currentSpeedWinIndex + index) % speedWins.length;
-                  const displaySpeed = speedWins[displayIndex];
-
-                  return (
-                    <div
-                      key={`${displaySpeed.id}-${displayIndex}`}
-                      className="relative group cursor-pointer transition-all duration-500"
-                      onMouseEnter={() => setCursorGlow({ color: '#10b981', isVisible: true })}
-                      onMouseLeave={() => setCursorGlow({ color: '', isVisible: false })}
-                    >
-                      <div className="relative bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:border-emerald-500/50 hover:bg-black/65 transition-all duration-300">
-
-                        {/* Grid Background */}
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-20 rounded-xl overflow-hidden transition-opacity duration-500">
-                          <svg width="100%" height="100%" className="absolute inset-0">
-                            <defs>
-                              <pattern id={`grid-speed-${displaySpeed.id}-${index}`} width="40" height="40" patternUnits="userSpaceOnUse">
-                                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#10b981" strokeWidth="0.5"/>
-                              </pattern>
-                            </defs>
-                            <rect width="100%" height="100%" fill={`url(#grid-speed-${displaySpeed.id}-${index})`} />
-                          </svg>
-                        </div>
-
-                        <div className="relative z-10">
-                          <h3 className="text-lg font-bold text-white mb-3">
-                            {displaySpeed.title}
-                          </h3>
-
-                          <div className="mb-3 bg-emerald-600/10 border border-emerald-600/20 rounded-lg p-3">
-                            <div className="text-sm text-white font-medium">{displaySpeed.impact}</div>
-                          </div>
-
-                          <div className="text-sm text-white/70 font-light mb-4">
-                            {displaySpeed.stack}
-                          </div>
-
-                          <button className="w-full bg-emerald-600/15 border border-emerald-600/30 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 transition-all duration-300">
-                            Quick View
-                          </button>
-                        </div>
+              <div className="hidden md:grid md:grid-cols-3 gap-6">
+                {speedWins.slice(currentSpeedWinIndex, currentSpeedWinIndex + 3).map((transformation, index) => (
+                  <div 
+                    key={transformation.id} 
+                    className="relative group cursor-pointer transition-all duration-500"
+                    onMouseEnter={() => setCursorGlow({ color: '#10b981', isVisible: true })}
+                    onMouseLeave={() => setCursorGlow({ color: '', isVisible: false })}
+                  >
+                    {/* Elite Speed Frame */}
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600/5 via-emerald-500/8 to-emerald-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                    
+                    <div className="relative bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 group-hover:border-emerald-500/70 group-hover:bg-black/65 group-hover:shadow-lg group-hover:shadow-emerald-500/15 transition-all duration-500 group-hover:scale-[1.005] group-hover:-translate-y-0.5">
+                    
+                      {/* Pale Grid Background */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-25 rounded-xl overflow-hidden transition-opacity duration-500">
+                        <svg width="100%" height="100%" className="absolute inset-0">
+                          <defs>
+                            <pattern id={`grid-speed-mobile-${transformation.id}`} width="40" height="40" patternUnits="userSpaceOnUse">
+                              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#10b981" strokeWidth="0.5"/>
+                            </pattern>
+                          </defs>
+                          <rect width="100%" height="100%" fill={`url(#grid-speed-mobile-${transformation.id})`} />
+                        </svg>
                       </div>
+                      
+                      {/* Pale Grid Background */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-25 rounded-xl overflow-hidden transition-opacity duration-500">
+                        <svg width="100%" height="100%" className="absolute inset-0">
+                          <defs>
+                            <pattern id={`grid-speed-${transformation.id}-${index}`} width="40" height="40" patternUnits="userSpaceOnUse">
+                              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#10b981" strokeWidth="0.5"/>
+                            </pattern>
+                          </defs>
+                          <rect width="100%" height="100%" fill={`url(#grid-speed-${transformation.id}-${index})`} />
+                        </svg>
+                      </div>
+                      
+                      {/* Speed Badge */}
+                      <div className="inline-flex items-center space-x-2 bg-emerald-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-emerald-600/30">
+                        <Zap className="w-3 h-3" />
+                        <span>SPEED WIN</span>
+                      </div>
+
+                      {/* Ultra-Compact Format */}
+                      <h3 className="text-lg font-bold text-white mb-2">
+                        {transformation.metrics.primary} FASTER
+                      </h3>
+                      
+                      <div className="text-sm text-white/70 mb-2">
+                        {transformation.industry} | {transformation.timeline}
+                      </div>
+                      
+                      <div className="text-sm text-white/80 mb-4">
+                        {transformation.shortCrisis} → {transformation.shortResult}
+                      </div>
+
+                      <button className="relative w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 hover:border-emerald-600/40 hover:text-emerald-200 transition-all duration-500 overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/0 via-emerald-400/8 to-emerald-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <span className="relative">QUICK VIEW</span>
+                        <ArrowRight className="inline w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform duration-300" />
+                      </button>
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
               </div>
 
               {/* Mobile: Show 1 card */}
-              <div className="md:hidden mb-8">
-                <div
+              <div className="md:hidden">
+                <div 
                   className="relative group cursor-pointer transition-all duration-500"
                   onMouseEnter={() => setCursorGlow({ color: '#10b981', isVisible: true })}
                   onMouseLeave={() => setCursorGlow({ color: '', isVisible: false })}
                 >
-                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 hover:border-emerald-500/50 hover:bg-black/65 transition-all duration-300">
-                    <div className="relative z-10">
-                      <h3 className="text-lg font-bold text-white mb-3">
-                        {speedWins[currentSpeedWinIndex].title}
-                      </h3>
-
-                      <div className="mb-3 bg-emerald-600/10 border border-emerald-600/20 rounded-lg p-3">
-                        <div className="text-sm text-white font-medium">{speedWins[currentSpeedWinIndex].impact}</div>
-                      </div>
-
-                      <div className="text-sm text-white/70 font-light mb-4">
-                        {speedWins[currentSpeedWinIndex].stack}
-                      </div>
-
-                      <button className="w-full bg-emerald-600/15 border border-emerald-600/30 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 transition-all duration-300">
-                        Quick View
-                      </button>
+                  {/* Elite Speed Frame */}
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600/5 via-emerald-500/8 to-emerald-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                  
+                  <div className="relative bg-black/50 backdrop-blur-sm border border-white/15 rounded-xl p-6 group-hover:border-emerald-500/70 group-hover:bg-black/65 group-hover:shadow-lg group-hover:shadow-emerald-500/15 transition-all duration-500 group-hover:scale-[1.005] group-hover:-translate-y-0.5">
+                    <div className="inline-flex items-center space-x-2 bg-emerald-600/90 text-white text-xs font-medium px-3 py-1 rounded-full mb-4 border border-emerald-600/30">
+                      <Zap className="w-3 h-3" />
+                      <span>SPEED WIN</span>
                     </div>
+
+                    <h3 className="text-lg font-bold text-white mb-2">
+                      {speedWins[currentSpeedWinIndex].metrics.primary} FASTER
+                    </h3>
+                    
+                    <div className="text-sm text-white/70 mb-2">
+                      {speedWins[currentSpeedWinIndex].industry} | {speedWins[currentSpeedWinIndex].timeline}
+                    </div>
+                    
+                    <div className="text-sm text-white/80 mb-4">
+                      {speedWins[currentSpeedWinIndex].shortCrisis} → {speedWins[currentSpeedWinIndex].shortResult}
+                    </div>
+
+                    <button className="relative w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 hover:border-emerald-600/40 hover:text-emerald-200 transition-all duration-500 overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/0 via-emerald-400/8 to-emerald-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <span className="relative">QUICK VIEW</span>
+                      <ArrowRight className="inline w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform duration-300" />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -695,7 +924,7 @@ export default function Portfolio() {
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-
+              
               <button
                 onClick={nextSpeedWin}
                 className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-black/40 backdrop-blur-sm border border-white/20 text-white p-3 rounded-full hover:border-emerald-500/40 transition-all duration-300"
@@ -716,19 +945,60 @@ export default function Portfolio() {
                 ))}
               </div>
             </div>
-
-            {/* Micro-CTA */}
-            <div className="text-center mt-8">
-              <p className="text-white/70 font-light mb-4">
-                Want the fast ROI play? Start with a 4-week Pilot
-              </p>
-              <button className="bg-red-600/90 hover:bg-red-600 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 flex items-center space-x-2 mx-auto">
-                <span>Book Audit</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
           </div>
 
+          {/* HORMOZI POWER CTA */}
+          <div className="text-center">
+            <div className="bg-black/60 backdrop-blur-sm border border-red-600/20 rounded-3xl p-10 lg:p-16 max-w-4xl mx-auto relative overflow-hidden">
+              {/* Background Effect */}
+              <div className="absolute inset-0 opacity-5">
+                <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 via-transparent to-red-600/10"></div>
+              </div>
+              
+              {/* Content */}
+              <div className="relative z-10">
+                <h2 className="text-3xl lg:text-5xl font-bold text-white mb-8 leading-tight">
+                  STOP LEAVING{' '}
+                  <span className="text-red-400">$MILLIONS</span>{' '}
+                  ON THE TABLE
+                </h2>
+                
+                {/* Social Proof */}
+                <div className="bg-red-600/10 border border-red-600/20 rounded-xl p-6 mb-8">
+                  <p className="text-xl font-light text-white mb-4">
+                    In the past 18 months, these transformations revealed{' '}
+                    <span className="font-bold text-red-400">$127M+</span>{' '}
+                    in missed opportunities.
+                  </p>
+                  <p className="text-lg font-extralight text-white/80">
+                    Your competitors are making the same mistakes these companies were.
+                  </p>
+                </div>
+                
+                {/* Value Proposition */}
+                <p className="text-xl font-light text-white mb-8 leading-relaxed">
+                  Get your <span className="font-bold text-red-400">FREE Vision Gap Analysis</span> and discover what you're missing:
+                </p>
+                
+                {/* CTA Button */}
+                <button className="group bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-12 py-6 rounded-full font-bold text-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center space-x-4 mx-auto mb-6 shadow-xl shadow-red-600/15 hover:scale-102 border border-red-600/30">
+                  <span>REVEAL MY HIDDEN OPPORTUNITIES</span>
+                  <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
+                </button>
+                
+                {/* Subtext */}
+                <p className="text-white/70 font-light mb-10">
+                  "Takes 90 seconds. Shows 7-8 figure potential."
+                </p>
+                
+                {/* Urgency & Risk Reversal */}
+                <div className="space-y-4 font-light text-white/80">
+                  <p>We only accept 3 new Vision Elevation clients per quarter. Current spots filling for Q1 2026.</p>
+                  <p>If we don't identify at least $500K in new opportunities, the analysis is free.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
