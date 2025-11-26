@@ -70,343 +70,343 @@ interface Transformation {
 const transformations: Transformation[] = [
   // FLAGSHIP RESULTS (Top 3)
   {
-    id: 'manufacturing-flagship',
+    id: 'b2b-sales-copilot',
     tier: 'flagship',
-    title: 'MANUFACTURING LEADERSHIP BREAKTHROUGH',
-    company: 'Fortune 500 Company',
-    timeline: '4 Months',
-    crisis: '$50M pipeline stalled - 60% of sales time wasted on unqualified leads',
-    breakthrough: 'AI revealed $12M in ignored high-value prospects hiding in their existing data',
-    domination: '467% qualified pipeline increase → Market leadership achieved in 6 months',
-    meaningForYou: 'If you\'re losing deals to lead quality issues, this shows exactly what\'s possible.',
-    industry: 'Manufacturing',
-    companySize: 'enterprise',
-    challengeType: 'acquisition',
-    shortCrisis: '$50M stalled pipeline',
-    shortResult: 'Market leadership in 6 months',
-    metrics: {
-      primary: '467%',
-      secondary: '$12M',
-      tertiary: '60%'
-    },
-    scarcity: 'Only 23 transformations like this completed worldwide',
-    authority: 'Fortune 500 leadership team calls this "impossible made routine"',
-    socialProof: '3 competitors tried to replicate this approach - all failed'
-  },
-  {
-    id: 'fintech-flagship',
-    tier: 'flagship',
-    title: 'HOW WE SAVED FINTECH CEO FROM $18M REVENUE COLLAPSE',
-    company: 'Series B FinTech',
-    timeline: '3 Months',
-    crisis: '3 months from bankruptcy - 45% customer abandonment during 14-day onboarding',
-    breakthrough: 'THE BREAKTHROUGH MOMENT: When their AI system identified 520% more qualified prospects in week 3',
-    domination: '$18M ARR recovery + 520% acquisition velocity → Now industry benchmark',
-    meaningForYou: 'If your onboarding is killing conversions, here\'s proof it\'s completely fixable.',
-    industry: 'FinTech',
+    title: 'B2B SALES CO-PILOT (DACH, 24 REPS)',
+    company: 'B2B SaaS (mid-market)',
+    timeline: '6-8 weeks',
+    crisis: 'Late follow-ups, messy notes, weak meeting→proposal rate; CRM underused',
+    breakthrough: 'AI Sales Co-Pilot (notes → tasks → follow-ups → CRM), weekly KPI email, enablement',
+    domination: '+31% qualified meetings and 7.2h saved/rep/week in 6 weeks; forecast accuracy +14% by week 8',
+    meaningForYou: 'Clear owner, one source of truth, adoption measured weekly',
+    industry: 'Technology',
     companySize: 'growth',
-    challengeType: 'retention',
-    shortCrisis: '3 months from bankruptcy',
-    shortResult: '$18M ARR recovery',
+    challengeType: 'acquisition',
+    shortCrisis: 'Late follow-ups, messy notes, weak meeting→proposal rate',
+    shortResult: '+31% qualified meetings and 7.2h saved/rep/week',
     metrics: {
-      primary: '520%',
-      secondary: '$18M',
-      tertiary: '45%'
+      primary: '+31%',
+      secondary: '7.2h',
+      tertiary: '+14%'
     },
-    scarcity: 'First FinTech transformation of this scale ever documented',
-    authority: 'Board of Directors: "This saved our company and our careers"',
-    socialProof: 'Now teaching this methodology to other Series B companies'
+    scarcity: 'Gong/Fathom • HubSpot • Custom assistant • Make',
+    authority: 'Clear owner, one source of truth, adoption measured weekly',
+    socialProof: 'See the 6-week plan →'
   },
   {
-    id: 'healthcare-flagship',
+    id: 'ai-receptionist-intake',
     tier: 'flagship',
-    title: 'HEALTHCARE NETWORK DOMINATION STRATEGY',
-    company: 'Regional Healthcare Network',
-    timeline: '5 Months',
-    crisis: 'Patient routing consuming 4 hours daily executive time - growth impossible',
-    breakthrough: 'Intelligent workflow revealed 40% hidden capacity + $2.4M acceleration opportunity',
-    domination: 'New market entry 18 months early → $2.4M revenue acceleration achieved',
-    meaningForYou: 'If operational bottlenecks are blocking your expansion, this proves breakthrough is possible.',
+    title: 'AI RECEPTIONIST & INTAKE (US CLINIC)',
+    company: 'Healthcare provider (multi-location)',
+    timeline: '6 weeks',
+    crisis: 'Slow intake, staff overloaded; patients waiting for answers; phone/email backlog',
+    breakthrough: 'AI receptionist + intake + triage, SOPs, escalation rules, staff training',
+    domination: 'First response time −43% within 6 weeks; staff hours reclaimed; CSAT up',
+    meaningForYou: 'Guardrails, human-in-the-loop, clear escalation and handoff',
     industry: 'Healthcare',
     companySize: 'enterprise',
     challengeType: 'operations',
-    shortCrisis: '4 hours daily executive time consumed',
-    shortResult: '$2.4M revenue acceleration',
+    shortCrisis: 'Slow intake, staff overloaded; patients waiting',
+    shortResult: 'First response time −43%; staff hours reclaimed',
     metrics: {
-      primary: '$2.4M',
-      secondary: '18mo',
-      tertiary: '4hrs'
+      primary: '−43%',
+      secondary: '6wks',
+      tertiary: 'CSAT↑'
     },
-    scarcity: 'Only healthcare transformation to achieve sub-6-month market entry',
-    authority: 'Chief Medical Officer: "This changed how we think about growth"',
-    socialProof: '2 major health systems now studying this approach'
+    scarcity: 'Web chat + Voiceflow • OpenAI (HIPAA-aware) • Helpdesk/EMR integrations',
+    authority: 'Guardrails, human-in-the-loop, clear escalation and handoff',
+    socialProof: 'View the intake flow map →'
+  },
+  {
+    id: 'trademark-lead-engine',
+    tier: 'flagship',
+    title: 'TRADEMARK LEAD ENGINE (CH MARKET)',
+    company: 'Swiss B2B firm (trademark enrichment)',
+    timeline: '3 weeks',
+    crisis: 'Manual research, fragmented data, slow list building; outreach capacity capped',
+    breakthrough: 'Extraction + enrichment pipeline (TMView/Swissreg), dedupe & scoring; delivery into Sheets/DB and outreach tools',
+    domination: 'Research time −80–90%; outreach-ready dataset delivered in 3 weeks; capacity to scale targeted campaigns',
+    meaningForYou: 'Clean schema, dedupe rules, clear scoring → instant list usability',
+    industry: 'Services',
+    companySize: 'growth',
+    challengeType: 'acquisition',
+    shortCrisis: 'Manual research, fragmented data, slow list building',
+    shortResult: 'Research time −80–90%; outreach-ready dataset',
+    metrics: {
+      primary: '−85%',
+      secondary: '3wks',
+      tertiary: 'Scale'
+    },
+    scarcity: 'Python/APIs • GSheets/DB • Clay/Make',
+    authority: 'Clean schema, dedupe rules, clear scoring → instant list usability',
+    socialProof: 'See the data schema →'
   },
 
   // AUTHORITY PROOF (Middle 6)
   {
-    id: 'technology-authority',
+    id: 'lead-ops-automation',
     tier: 'authority',
-    title: 'TECHNOLOGY FIRM SCALING BREAKTHROUGH',
-    company: 'High-Growth SaaS',
-    timeline: '7 Months',
-    crisis: 'Founders trapped in operational decisions - scaling impossible beyond 50 employees',
-    breakthrough: 'Executive liberation framework automated 73% of routine decisions',
-    domination: '300% team scaling + $8M valuation increase → Strategic partnerships unlocked',
-    meaningForYou: 'If you\'re stuck in operations instead of strategy, this shows the way out.',
-    industry: 'Technology',
-    companySize: 'growth',
-    challengeType: 'scaling',
-    shortCrisis: 'Founders trapped in operations',
-    shortResult: '300% team scaling + $8M valuation',
-    metrics: {
-      primary: '300%',
-      secondary: '$8M',
-      tertiary: '73%'
-    },
-    authority: 'CEO: "Finally free to think about the future instead of today\'s problems"',
-    testimonial: 'Finally free to think about the future instead of today\'s problems'
-  },
-  {
-    id: 'saas-authority',
-    tier: 'authority',
-    title: 'SAAS CUSTOMER RETENTION REVOLUTION',
-    company: 'B2B SaaS Platform',
-    timeline: '5 Months',
-    crisis: '28% monthly churn destroying growth - investors threatening to pull funding',
-    breakthrough: 'Predictive analytics identified at-risk customers 60 days early',
-    domination: '85% churn reduction + $12M revenue recovery → Series B funding secured',
-    meaningForYou: 'If churn is killing your growth, here\'s proof it can be virtually eliminated.',
-    industry: 'Technology',
-    companySize: 'growth',
-    challengeType: 'retention',
-    shortCrisis: '28% monthly churn destroying growth',
-    shortResult: '85% churn reduction + $12M recovery',
-    metrics: {
-      primary: '85%',
-      secondary: '$12M',
-      tertiary: '28%'
-    },
-    authority: 'Investor: "This single change made them fundable again"',
-    testimonial: 'This single change made them fundable again'
-  },
-  {
-    id: 'retail-authority',
-    tier: 'authority',
-    title: 'RETAIL EXPANSION INTELLIGENCE SYSTEM',
-    company: 'Regional Retail Chain',
-    timeline: '8 Months',
-    crisis: 'Market entry decisions taking 6 months each - competitors moving faster',
-    breakthrough: 'AI market intelligence reduced analysis from months to days',
-    domination: '5 new markets opened + 180% revenue growth → Acquisition discussions started',
-    meaningForYou: 'If slow decision-making is costing you market opportunities, here\'s your solution.',
+    title: 'LEAD OPS AUTOMATION (AGENCY, B2B)',
+    company: 'B2B Agency',
+    timeline: '5 weeks',
+    crisis: 'Replies lost in inboxes; manual triage; dirty CRM',
+    breakthrough: 'Intent lists, personalized sequences, reply parser to CRM; dedupe & enrichment',
+    domination: 'Qualified meetings +20–40%; manual triage −90%',
+    meaningForYou: 'Apollo/Clay • HubSpot/Salesforce • Make',
     industry: 'Services',
-    companySize: 'enterprise',
-    challengeType: 'operations',
-    shortCrisis: 'Market entry taking 6 months each',
-    shortResult: '5 new markets + 180% growth',
-    metrics: {
-      primary: '180%',
-      secondary: '5',
-      tertiary: '6mo'
-    },
-    authority: 'Board Chairman: "This gave us the speed advantage we needed"',
-    testimonial: 'This gave us the speed advantage we needed'
-  },
-  {
-    id: 'logistics-authority',
-    tier: 'authority',
-    title: 'LOGISTICS NETWORK OPTIMIZATION MASTERY',
-    company: 'National Logistics Provider',
-    timeline: '4 Months',
-    crisis: 'Route optimization consuming 6 hours daily - operational costs spiraling',
-    breakthrough: 'Real-time AI orchestration automated 90% of routing decisions',
-    domination: '340% delivery efficiency + $5.2M operational savings → Market leadership',
-    meaningForYou: 'If manual processes are eating your margins, this shows massive savings potential.',
-    industry: 'Services',
-    companySize: 'enterprise',
-    challengeType: 'operations',
-    shortCrisis: 'Route optimization consuming 6 hours daily',
-    shortResult: '340% efficiency + $5.2M savings',
-    metrics: {
-      primary: '340%',
-      secondary: '$5.2M',
-      tertiary: '6hrs'
-    },
-    authority: 'Operations Director: "We went from reactive to predictive overnight"',
-    testimonial: 'We went from reactive to predictive overnight'
-  },
-  {
-    id: 'realestate-authority',
-    tier: 'authority',
-    title: 'REAL ESTATE INVESTMENT ACCELERATION',
-    company: 'Commercial Real Estate Fund',
-    timeline: '6 Months',
-    crisis: '3 weeks per property evaluation limiting portfolio growth to 12 deals/year',
-    breakthrough: 'Investment intelligence automation reduced evaluation to 24 hours',
-    domination: '15x faster decisions + $25M portfolio expansion → Institutional partnerships',
-    meaningForYou: 'If slow analysis is limiting your deal flow, this shows how to accelerate dramatically.',
-    industry: 'Financial',
-    companySize: 'enterprise',
-    challengeType: 'operations',
-    shortCrisis: '3 weeks per property evaluation',
-    shortResult: '15x faster + $25M expansion',
-    metrics: {
-      primary: '15x',
-      secondary: '$25M',
-      tertiary: '3wks'
-    },
-    authority: 'Managing Partner: "We can now compete with the biggest funds"',
-    testimonial: 'We can now compete with the biggest funds'
-  },
-  {
-    id: 'ecommerce-authority',
-    tier: 'authority',
-    title: 'E-COMMERCE CONVERSION OPTIMIZATION',
-    company: 'Multi-Brand E-commerce',
-    timeline: '4 Months',
-    crisis: '2.1% conversion rate stagnation despite 300% traffic growth',
-    breakthrough: 'Hyper-personalization engine tripled conversion rates across all brands',
-    domination: '290% conversion increase + $8.7M revenue boost → Market expansion funded',
-    meaningForYou: 'If your traffic isn\'t converting, here\'s how to unlock massive revenue from existing visitors.',
-    industry: 'Technology',
     companySize: 'growth',
     challengeType: 'acquisition',
-    shortCrisis: '2.1% conversion despite 300% traffic',
-    shortResult: '290% conversion + $8.7M boost',
+    shortCrisis: 'Replies lost in inboxes; manual triage; dirty CRM',
+    shortResult: 'Qualified meetings +20–40%; manual triage −90%',
     metrics: {
-      primary: '290%',
-      secondary: '$8.7M',
-      tertiary: '2.1%'
+      primary: '+30%',
+      secondary: '−90%',
+      tertiary: '5wks'
     },
-    authority: 'CMO: "This turned our traffic into a revenue goldmine"',
-    testimonial: 'This turned our traffic into a revenue goldmine'
+    authority: 'Apollo/Clay • HubSpot/Salesforce • Make',
+    testimonial: 'See flows →'
+  },
+  {
+    id: 'acquisition-analytics-layer',
+    tier: 'authority',
+    title: 'ACQUISITION ANALYTICS LAYER (B2B)',
+    company: 'B2B multi-channel',
+    timeline: '6-8 weeks',
+    crisis: 'GA4/GAds/GSC separate; no CRM join; slow decisions',
+    breakthrough: 'Unify GA4/GAds/GSC + CRM; build KPI dashboard; weekly bottleneck alerts',
+    domination: 'Cycle time −15–30%; attribution clarity improves CAC decisions',
+    meaningForYou: 'GA4/GAds/GSC • BigQuery/Sheets • CRM',
+    industry: 'Technology',
+    companySize: 'growth',
+    challengeType: 'operations',
+    shortCrisis: 'GA4/GAds/GSC separate; no CRM join; slow decisions',
+    shortResult: 'Cycle time −15–30%; attribution clarity improves CAC',
+    metrics: {
+      primary: '−23%',
+      secondary: '6-8wks',
+      tertiary: 'CAC↓'
+    },
+    authority: 'GA4/GAds/GSC • BigQuery/Sheets • CRM',
+    testimonial: 'View dashboard sample →'
+  },
+  {
+    id: 'onboarding-assistant',
+    tier: 'authority',
+    title: 'ONBOARDING ASSISTANT (SME, INTERNAL)',
+    company: 'SME, internal',
+    timeline: '4-6 weeks',
+    crisis: 'New hires/clients ramp slowly; repetitive Q&A; errors in steps',
+    breakthrough: 'AI onboarding assistant with checklists, SOPs, and nudges',
+    domination: 'Ramp time −20–35%; handover errors down',
+    meaningForYou: 'Web/Slack assistant • Confluence/Notion • Make',
+    industry: 'Services',
+    companySize: 'growth',
+    challengeType: 'operations',
+    shortCrisis: 'New hires/clients ramp slowly; repetitive Q&A; errors',
+    shortResult: 'Ramp time −20–35%; handover errors down',
+    metrics: {
+      primary: '−28%',
+      secondary: '4-6wks',
+      tertiary: 'Errors↓'
+    },
+    authority: 'Web/Slack assistant • Confluence/Notion • Make',
+    testimonial: 'See SOP pack →'
+  },
+  {
+    id: 'persona-audience-simulation',
+    tier: 'authority',
+    title: 'PERSONA / AUDIENCE SIMULATION',
+    company: 'Creators/Agency',
+    timeline: '3-5 weeks',
+    crisis: 'Content/offer testing slow; guesswork on angles',
+    breakthrough: 'Build AI personas from reviews, transcripts, comments; run message tests',
+    domination: 'Ideation time −50–60%; engagement on test posts +12–20%',
+    meaningForYou: 'RAG + vector DB • Sheets/Notion',
+    industry: 'Services',
+    companySize: 'growth',
+    challengeType: 'acquisition',
+    shortCrisis: 'Content/offer testing slow; guesswork on angles',
+    shortResult: 'Ideation time −50–60%; engagement +12–20%',
+    metrics: {
+      primary: '−55%',
+      secondary: '+16%',
+      tertiary: '3-5wks'
+    },
+    authority: 'RAG + vector DB • Sheets/Notion',
+    testimonial: 'See test grid →'
+  },
+  {
+    id: 'cx-triage-macros',
+    tier: 'authority',
+    title: 'CX TRIAGE & MACROS (E-COM)',
+    company: 'E-commerce',
+    timeline: '4-8 weeks',
+    crisis: 'First response times high; refunds creeping; agents overloaded',
+    breakthrough: 'Intent routing, macro assist, refund guardrails, escalation rules',
+    domination: 'First response −30–45%; refunds −8–15%',
+    meaningForYou: 'Zendesk/Gorgias • Rules engine • Make',
+    industry: 'Services',
+    companySize: 'growth',
+    challengeType: 'retention',
+    shortCrisis: 'First response times high; refunds creeping; agents overloaded',
+    shortResult: 'First response −30–45%; refunds −8–15%',
+    metrics: {
+      primary: '−38%',
+      secondary: '−12%',
+      tertiary: '4-8wks'
+    },
+    authority: 'Zendesk/Gorgias • Rules engine • Make',
+    testimonial: 'See macro set →'
+  },
+  {
+    id: 'prequal-calendar-guardrails',
+    tier: 'authority',
+    title: 'PRE-QUAL & CALENDAR GUARDRAILS (B2B)',
+    company: 'B2B',
+    timeline: '3-4 weeks',
+    crisis: 'No-shows on discovery calls; low fit leads landing on calendar',
+    breakthrough: 'Intake scoring, pre-qual questions, slot limits, reminder flows',
+    domination: 'No-shows −18–30%; better call quality',
+    meaningForYou: 'Calendly/Cal • Typeform • Make/CRM',
+    industry: 'Services',
+    companySize: 'growth',
+    challengeType: 'acquisition',
+    shortCrisis: 'No-shows on discovery calls; low fit leads landing',
+    shortResult: 'No-shows −18–30%; better call quality',
+    metrics: {
+      primary: '−24%',
+      secondary: '3-4wks',
+      tertiary: 'Quality↑'
+    },
+    authority: 'Calendly/Cal • Typeform • Make/CRM',
+    testimonial: 'See intake form →'
   },
 
   // SPEED WINS (Bottom 6)
   {
-    id: 'consulting-proof',
+    id: 'reply-parser-crm',
     tier: 'proof',
-    title: 'CONSULTING FIRM RAPID TRANSFORMATION',
-    company: 'Management Consulting',
-    timeline: '1.5 Months',
-    crisis: 'Proposal generation taking 40 hours per client',
-    breakthrough: 'AI proposal system reduced time to 2 hours',
-    domination: '2000% efficiency gain → 5x more clients served',
-    meaningForYou: 'Quick wins are possible - this shows immediate impact potential.',
+    title: 'REPLY PARSER TO CRM',
+    company: 'Speed Win',
+    timeline: '3 weeks',
+    crisis: 'Manual reply triage',
+    breakthrough: 'Gmail/API • Make • CRM',
+    domination: 'Qualified meetings +18–25%; manual triage −90%',
+    meaningForYou: 'Gmail/API • Make • CRM',
+    industry: 'Services',
+    companySize: 'growth',
+    challengeType: 'acquisition',
+    shortCrisis: 'Manual reply triage',
+    shortResult: '+18–25% meetings; −90% triage',
+    metrics: {
+      primary: '+22%',
+      secondary: '−90%',
+      tertiary: '3wks'
+    }
+  },
+  {
+    id: 'call-summary-followups',
+    tier: 'proof',
+    title: 'CALL SUMMARY → FOLLOW-UPS',
+    company: 'Speed Win',
+    timeline: '2 weeks',
+    crisis: 'Slow follow-ups',
+    breakthrough: 'Fathom/Gong • Assistant • CRM',
+    domination: '5–8h saved/rep/week; follow-ups same-day',
+    meaningForYou: 'Fathom/Gong • Assistant • CRM',
     industry: 'Services',
     companySize: 'growth',
     challengeType: 'operations',
-    shortCrisis: '40 hours per proposal',
-    shortResult: '2000% efficiency gain',
+    shortCrisis: 'Slow follow-ups',
+    shortResult: '5–8h saved/rep/week; same-day follow-ups',
     metrics: {
-      primary: '2000%',
-      secondary: '5x',
-      tertiary: '40hrs'
+      primary: '6.5h',
+      secondary: '2wks',
+      tertiary: 'Same-day'
     }
   },
   {
-    id: 'legal-proof',
+    id: 'enrichment-pipeline',
     tier: 'proof',
-    title: 'LAW FIRM DOCUMENT INTELLIGENCE',
-    company: 'Corporate Law Firm',
-    timeline: '2 Months',
-    crisis: 'Contract review taking 8 hours per document',
-    breakthrough: 'Legal AI reduced review time to 30 minutes',
-    domination: '1600% faster processing → Premium pricing justified',
-    meaningForYou: 'Even complex professional services can be dramatically accelerated.',
+    title: 'ENRICHMENT PIPELINE (CLEAN LIST)',
+    company: 'Speed Win',
+    timeline: '2-4 weeks',
+    crisis: 'Slow list building',
+    breakthrough: 'Python/APIs • Clay/Sheets',
+    domination: 'Build 10–50k clean contacts; research time −80–90%',
+    meaningForYou: 'Python/APIs • Clay/Sheets',
     industry: 'Services',
-    companySize: 'enterprise',
-    challengeType: 'operations',
-    shortCrisis: '8 hours per contract review',
-    shortResult: '1600% faster processing',
+    companySize: 'growth',
+    challengeType: 'acquisition',
+    shortCrisis: 'Slow list building',
+    shortResult: '10–50k contacts; −80–90% research time',
     metrics: {
-      primary: '1600%',
-      secondary: '30min',
-      tertiary: '8hrs'
+      primary: '−85%',
+      secondary: '30k',
+      tertiary: '2-4wks'
     }
   },
   {
-    id: 'insurance-proof',
+    id: 'kpi-email-weekly',
     tier: 'proof',
-    title: 'INSURANCE CLAIMS AUTOMATION',
-    company: 'Regional Insurance',
-    timeline: '2.5 Months',
-    crisis: 'Claims processing taking 14 days average',
-    breakthrough: 'Intelligent claims system reduced to 2 hours',
-    domination: '8400% faster processing → Customer satisfaction soared',
-    meaningForYou: 'Regulatory industries can still achieve breakthrough speed improvements.',
-    industry: 'Financial',
-    companySize: 'enterprise',
-    challengeType: 'operations',
-    shortCrisis: '14 days claims processing',
-    shortResult: '8400% faster processing',
-    metrics: {
-      primary: '8400%',
-      secondary: '2hrs',
-      tertiary: '14days'
-    }
-  },
-  {
-    id: 'education-proof',
-    tier: 'proof',
-    title: 'EDUCATION PLATFORM OPTIMIZATION',
-    company: 'Online Education',
-    timeline: '3 Months',
-    crisis: 'Student matching taking 2 weeks per enrollment',
-    breakthrough: 'AI matching reduced to instant recommendations',
-    domination: 'Instant matching → 400% enrollment increase',
-    meaningForYou: 'Service businesses can eliminate waiting periods entirely.',
+    title: 'KPI EMAIL (WEEKLY)',
+    company: 'Speed Win',
+    timeline: '2 weeks',
+    crisis: 'Slow decisions',
+    breakthrough: 'GA4/GAds/GSC • CRM • Email automation',
+    domination: 'Decisions accelerated; bottlenecks surfaced weekly',
+    meaningForYou: 'GA4/GAds/GSC • CRM • Email automation',
     industry: 'Services',
     companySize: 'growth',
     challengeType: 'operations',
-    shortCrisis: '2 weeks per enrollment',
-    shortResult: 'Instant matching + 400% enrollment',
+    shortCrisis: 'Slow decisions',
+    shortResult: 'Decisions accelerated; weekly bottleneck visibility',
     metrics: {
-      primary: '400%',
-      secondary: 'Instant',
-      tertiary: '2wks'
+      primary: 'Weekly',
+      secondary: '2wks',
+      tertiary: 'Fast'
     }
   },
   {
-    id: 'hospitality-proof',
+    id: 'intake-routing-helpdesk',
     tier: 'proof',
-    title: 'HOSPITALITY REVENUE OPTIMIZATION',
-    company: 'Boutique Hotel Chain',
-    timeline: '2 Months',
-    crisis: 'Pricing decisions taking 4 hours daily',
-    breakthrough: 'Dynamic pricing AI automated all decisions',
-    domination: 'Automated pricing → 180% revenue per room',
-    meaningForYou: 'Even traditional industries can benefit from intelligent automation.',
+    title: 'INTAKE & ROUTING (HELPDESK)',
+    company: 'Speed Win',
+    timeline: '3-4 weeks',
+    crisis: 'High first response time',
+    breakthrough: 'Zendesk/Gorgias • Rules',
+    domination: 'First response −25–38%',
+    meaningForYou: 'Zendesk/Gorgias • Rules',
     industry: 'Services',
     companySize: 'growth',
-    challengeType: 'operations',
-    shortCrisis: '4 hours daily pricing decisions',
-    shortResult: '180% revenue per room',
+    challengeType: 'retention',
+    shortCrisis: 'High first response time',
+    shortResult: 'First response −25–38%',
     metrics: {
-      primary: '180%',
-      secondary: 'Auto',
-      tertiary: '4hrs'
+      primary: '−32%',
+      secondary: '3-4wks',
+      tertiary: 'Fast'
     }
   },
   {
-    id: 'agriculture-proof',
+    id: 'calendar-logic-reminders',
     tier: 'proof',
-    title: 'AGRICULTURE YIELD PREDICTION',
-    company: 'Commercial Farm Network',
-    timeline: '1.5 Months',
-    crisis: 'Crop planning based on guesswork and historical data',
-    breakthrough: 'Predictive agriculture AI optimized planting decisions',
-    domination: 'Data-driven farming → 250% yield improvement',
-    meaningForYou: 'Any industry with planning cycles can benefit from predictive intelligence.',
+    title: 'CALENDAR LOGIC & REMINDERS',
+    company: 'Speed Win',
+    timeline: '3 weeks',
+    crisis: 'High no-show rate',
+    breakthrough: 'Calendly/Cal • CRM • SMS/email',
+    domination: 'No-show rate −15–24%',
+    meaningForYou: 'Calendly/Cal • CRM • SMS/email',
     industry: 'Services',
-    companySize: 'enterprise',
-    challengeType: 'operations',
-    shortCrisis: 'Crop planning based on guesswork',
-    shortResult: '250% yield improvement',
+    companySize: 'growth',
+    challengeType: 'acquisition',
+    shortCrisis: 'High no-show rate',
+    shortResult: 'No-show rate −15–24%',
     metrics: {
-      primary: '250%',
-      secondary: 'Data',
-      tertiary: 'Guess'
+      primary: '−20%',
+      secondary: '3wks',
+      tertiary: 'Show↑'
     }
   }
 ];
@@ -541,15 +541,17 @@ export default function Portfolio() {
       <div className="relative z-10 pt-24 pb-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           
-          {/* STEP 1A: FLAGSHIP RESULTS SECTION (TOP) */}
+          {/* SECTION 1 — FLAGSHIP RESULTS (TOP 3) */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white leading-tight mb-8">
-              Impossible Challenges We've{' '}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white leading-tight mb-4">
+              Flagship Results:{' '}
               <span className="font-extralight italic text-red-400">
-                Transformed
-              </span>{' '}
-              Into Market Dominance
+                acquisition wins backed by KPIs
+              </span>
             </h1>
+            <p className="text-lg text-white/70 mt-4">
+              Three engagements that show our end-to-end approach—diagnose → pilot → scale.
+            </p>
           </div>
 
           {/* 3 Flagship Cards - Side by Side */}
@@ -598,49 +600,80 @@ export default function Portfolio() {
                       </span>
                     </div>
 
-                    {/* MASSIVE Metrics */}
-                    <div className="text-center mb-6">
-                      <div className="text-6xl lg:text-7xl font-bold text-red-400 mb-2">
-                        {transformation.metrics.primary}
-                      </div>
-                      <div className="text-2xl font-semibold text-white mb-1">
-                        {transformation.metrics.secondary} IMPACT
-                      </div>
-                      <div className="text-lg text-white/70">
-                        {transformation.industry} | {transformation.metrics.secondary} Impact
+                    {/* Title */}
+                    <h3 className="text-xl font-bold text-white mb-4 leading-tight">
+                      {transformation.title}
+                    </h3>
+
+                    {/* Client Type */}
+                    <div className="text-sm text-white/60 mb-4">
+                      <strong>Client type:</strong> {transformation.company}
+                    </div>
+
+                    {/* Problem */}
+                    <div className="mb-4">
+                      <div className="text-red-300 text-sm font-semibold mb-1">Problem (baseline):</div>
+                      <div className="text-white/80 text-sm">{transformation.crisis}</div>
+                    </div>
+
+                    {/* What we shipped */}
+                    <div className="mb-4">
+                      <div className="text-emerald-300 text-sm font-semibold mb-1">What we shipped:</div>
+                      <div className="text-white/80 text-sm">{transformation.breakthrough}</div>
+                    </div>
+
+                    {/* Impact & timeline */}
+                    <div className="mb-4">
+                      <div className="text-amber-300 text-sm font-semibold mb-1">Impact & timeline:</div>
+                      <div className="text-white/80 text-sm">{transformation.domination}</div>
+                    </div>
+
+                    {/* Stack */}
+                    <div className="mb-4">
+                      <div className="text-blue-300 text-sm font-semibold mb-1">Stack:</div>
+                      <div className="text-white/80 text-sm">{transformation.scarcity}</div>
+                    </div>
+
+                    {/* Why it worked */}
+                    <div className="mb-6">
+                      <div className="text-white/70 text-xs italic">
+                        <strong>Why it worked:</strong> {transformation.authority}
                       </div>
                     </div>
 
-                    {/* Crisis & Result */}
-                    <div className="space-y-3 mb-6">
-                      <div className="text-center">
-                        <div className="text-red-300 text-sm font-semibold mb-1">Crisis:</div>
-                        <div className="text-white/80 text-sm">{transformation.shortCrisis}</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-emerald-300 text-sm font-semibold mb-1">Result:</div>
-                        <div className="text-white/80 text-sm">{transformation.shortResult}</div>
-                      </div>
+                    {/* CTAs */}
+                    <div className="space-y-2">
+                      <button className="w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-white/20 transition-all duration-300">
+                        {transformation.socialProof}
+                      </button>
+                      <button className="w-full bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600/30">
+                        <span>Book a 20-min Audit</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
                     </div>
-
-                    {/* CTA Button */}
-                    <button className="w-full bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600/30">
-                      <span>VIEW FULL STORY</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          {/* STEP 1B: SMART FILTER SECTION (MIDDLE) */}
+          {/* Disclosure */}
+          <div className="text-center mb-20">
+            <p className="text-xs text-white/50">
+              Metrics reflect deltas vs. client baselines and may vary by team size, market, and data quality. References available on request.
+            </p>
+          </div>
+
+          {/* SECTION 2 — AUTHORITY PROOF (MIDDLE 6) */}
           <div className="mb-16">
-            {/* Smart Discovery System */}
+            {/* Authority Proof Header */}
             <div className="text-center mb-12">
-              <h2 className="text-3xl lg:text-4xl font-thin text-white mb-6">
-                Show Me Transformations For:
+              <h2 className="text-3xl lg:text-4xl font-thin text-white mb-4">
+                Show me transformations for…
               </h2>
+              <p className="text-base text-white/70 mb-8">
+                Use filters above. Each card shows baseline → intervention → KPI delta → timeline → stack.
+              </p>
               
               {/* Filter Dropdowns */}
               <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6 mb-8">
@@ -760,22 +793,34 @@ export default function Portfolio() {
                         </div>
                       </div>
 
-                      {/* Quick Summary */}
-                      <div className="space-y-2 mb-4">
-                        <div className="text-sm text-white/80">
-                          "{transformation.shortCrisis}"
-                        </div>
-                        {transformation.testimonial && (
-                          <div className="text-xs text-amber-400 italic">
-                            "{transformation.testimonial}"
-                          </div>
-                        )}
+                      {/* Baseline */}
+                      <div className="mb-3">
+                        <div className="text-xs text-red-300 font-semibold mb-1">Baseline:</div>
+                        <div className="text-sm text-white/80">{transformation.crisis}</div>
                       </div>
 
-                      {/* Learn More Button */}
+                      {/* Intervention */}
+                      <div className="mb-3">
+                        <div className="text-xs text-emerald-300 font-semibold mb-1">Intervention:</div>
+                        <div className="text-sm text-white/80">{transformation.breakthrough}</div>
+                      </div>
+
+                      {/* Impact */}
+                      <div className="mb-3">
+                        <div className="text-xs text-amber-300 font-semibold mb-1">Impact ({transformation.timeline}):</div>
+                        <div className="text-sm text-white/80">{transformation.domination}</div>
+                      </div>
+
+                      {/* Stack */}
+                      <div className="mb-4">
+                        <div className="text-xs text-blue-300 font-semibold mb-1">Stack:</div>
+                        <div className="text-xs text-white/70">{transformation.meaningForYou}</div>
+                      </div>
+
+                      {/* CTA */}
                       <button className="relative w-full bg-amber-600/15 border border-amber-600/25 text-amber-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-amber-600/25 hover:border-amber-600/40 hover:text-amber-200 transition-all duration-500 flex items-center justify-center space-x-2 overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-r from-amber-600/0 via-amber-400/8 to-amber-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <span>LEARN MORE</span>
+                        <span>{transformation.testimonial || 'See flows →'}</span>
                         <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform duration-300" />
                       </button>
                     </div>
@@ -794,20 +839,20 @@ export default function Portfolio() {
             )}
           </div>
 
-          {/* STEP 1C: SPEED SHOWCASE (BOTTOM) */}
+          {/* SECTION 3 — SPEED WINS (BOTTOM 6, CAROUSEL) */}
           <div className="mb-16">
             <div className="text-center mb-12">
               <div className="inline-flex items-center space-x-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 mb-6">
                 <Zap className="w-4 h-4 text-emerald-500" />
-                <span className="text-white/80 text-sm font-light tracking-wider uppercase">Quick Wins Achieved</span>
+                <span className="text-white/80 text-sm font-light tracking-wider uppercase">Speed wins (2–6 weeks)</span>
                 <Zap className="w-4 h-4 text-emerald-500" />
               </div>
-              
+
               <h2 className="text-3xl lg:text-4xl font-thin text-white mb-4">
-                Speed Transformations
+                Speed wins (2–6 weeks)
               </h2>
               <p className="text-lg text-white/70">
-                30-second scan of breakthrough speed improvements
+                Tactical improvements that pay back quickly.
               </p>
             </div>
 
@@ -857,24 +902,22 @@ export default function Portfolio() {
                         <span>SPEED WIN</span>
                       </div>
 
-                      {/* Ultra-Compact Format */}
-                      <h3 className="text-lg font-bold text-white mb-2">
-                        {transformation.metrics.primary} FASTER
+                      {/* Title */}
+                      <h3 className="text-lg font-bold text-white mb-3">
+                        {transformation.title}
                       </h3>
-                      
-                      <div className="text-sm text-white/70 mb-2">
-                        {transformation.industry} | {transformation.timeline}
-                      </div>
-                      
-                      <div className="text-sm text-white/80 mb-4">
-                        {transformation.shortCrisis} → {transformation.shortResult}
+
+                      {/* Impact */}
+                      <div className="mb-2">
+                        <div className="text-xs text-emerald-300 font-semibold mb-1">Impact:</div>
+                        <div className="text-sm text-white/80">{transformation.domination}</div>
                       </div>
 
-                      <button className="relative w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 hover:border-emerald-600/40 hover:text-emerald-200 transition-all duration-500 overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/0 via-emerald-400/8 to-emerald-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <span className="relative">QUICK VIEW</span>
-                        <ArrowRight className="inline w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform duration-300" />
-                      </button>
+                      {/* Stack */}
+                      <div className="mb-4">
+                        <div className="text-xs text-blue-300 font-semibold mb-1">Stack:</div>
+                        <div className="text-xs text-white/70">{transformation.meaningForYou}</div>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -896,23 +939,22 @@ export default function Portfolio() {
                       <span>SPEED WIN</span>
                     </div>
 
-                    <h3 className="text-lg font-bold text-white mb-2">
-                      {speedWins[currentSpeedWinIndex].metrics.primary} FASTER
+                    {/* Title */}
+                    <h3 className="text-lg font-bold text-white mb-3">
+                      {speedWins[currentSpeedWinIndex].title}
                     </h3>
-                    
-                    <div className="text-sm text-white/70 mb-2">
-                      {speedWins[currentSpeedWinIndex].industry} | {speedWins[currentSpeedWinIndex].timeline}
-                    </div>
-                    
-                    <div className="text-sm text-white/80 mb-4">
-                      {speedWins[currentSpeedWinIndex].shortCrisis} → {speedWins[currentSpeedWinIndex].shortResult}
+
+                    {/* Impact */}
+                    <div className="mb-2">
+                      <div className="text-xs text-emerald-300 font-semibold mb-1">Impact:</div>
+                      <div className="text-sm text-white/80">{speedWins[currentSpeedWinIndex].domination}</div>
                     </div>
 
-                    <button className="relative w-full bg-emerald-600/15 border border-emerald-600/25 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-600/25 hover:border-emerald-600/40 hover:text-emerald-200 transition-all duration-500 overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/0 via-emerald-400/8 to-emerald-600/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      <span className="relative">QUICK VIEW</span>
-                      <ArrowRight className="inline w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform duration-300" />
-                    </button>
+                    {/* Stack */}
+                    <div className="mb-4">
+                      <div className="text-xs text-blue-300 font-semibold mb-1">Stack:</div>
+                      <div className="text-xs text-white/70">{speedWins[currentSpeedWinIndex].meaningForYou}</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -944,10 +986,17 @@ export default function Portfolio() {
                   />
                 ))}
               </div>
+
+              {/* Micro-CTA under carousel */}
+              <div className="text-center mt-8">
+                <button className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-medium hover:bg-white/20 transition-all duration-300">
+                  Want the fast ROI play? Start with a 4-week Pilot → Book Audit
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* HORMOZI POWER CTA */}
+          {/* FINAL CTA */}
           <div className="text-center">
             <div className="bg-black/60 backdrop-blur-sm border border-red-600/20 rounded-3xl p-10 lg:p-16 max-w-4xl mx-auto relative overflow-hidden">
               {/* Background Effect */}
