@@ -553,11 +553,12 @@ export default function Portfolio() {
 
       {/* Project Detail Modal */}
       {selectedProject && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
-          onClick={() => setSelectedProject(null)}
-          style={{ isolation: 'isolate' }}
-        >
+        <>
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
+            onClick={() => setSelectedProject(null)}
+            style={{ isolation: 'isolate' }}
+          >
           <div
             className="relative bg-black/95 border border-white/20 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-300"
             onClick={(e) => e.stopPropagation()}
@@ -688,7 +689,8 @@ export default function Portfolio() {
               </div>
             </div>
           </div>
-        </div>
+          </div>
+        </>
       )}
       
       {/* Fixed Video Background */}
@@ -748,7 +750,7 @@ export default function Portfolio() {
                   key={transformation.id}
                   id={transformation.id}
                   ref={el => cardRefs.current[transformation.id] = el}
-                  className={`relative group cursor-pointer transition-all duration-700 ${
+                  className={`relative group transition-all duration-700 ${
                     isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                   }`}
                   style={{ transitionDelay: `${index * 0.2}s` }}
@@ -813,8 +815,12 @@ export default function Portfolio() {
 
                     {/* View Details Button */}
                     <button
-                      onClick={() => setSelectedProject(transformation)}
-                      className="w-full bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600/30"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setSelectedProject(transformation);
+                      }}
+                      className="w-full bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600/30 cursor-pointer"
                     >
                       <span>View Full Case Study</span>
                       <ArrowRight className="w-4 h-4" />
