@@ -98,7 +98,7 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
             <img
               src="/business.png"
               alt="Business growth and success"
-              className="w-full h-32 object-cover object-top opacity-50"
+              className="w-full h-32 object-cover opacity-50"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
           </div>
