@@ -60,8 +60,12 @@ export default function ProblemSlide() {
           <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
             <img
               src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1200"
-              alt="Professional working with multiple systems"
+              alt="Professional working with multiple systems struggling with complexity"
               className="w-full h-32 object-cover opacity-40"
+              loading="lazy"
+              width="1200"
+              height="128"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
           </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Filter, TrendingUp, Clock, Target, Star, Award, Zap, ChevronDown, ChevronLeft, ChevronRight, X, Play } from 'lucide-react';
 import Header from './Header';
+import SEOHead from './SEOHead';
 
 // Cursor glow component
 const CursorGlow = ({ color, isVisible }: { color: string; isVisible: boolean }) => {
@@ -543,6 +544,12 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-black relative">
+      <SEOHead
+        title="Case Studies & Results - AI Automation Success Stories | Upgrade Vision AI"
+        description="Real AI automation case studies with proven results: +31% qualified meetings, 7.2h saved per rep weekly, -43% response time. B2B SaaS, healthcare, and professional services transformations."
+        keywords="AI automation case studies, B2B sales results, CRM automation success, sales AI case studies, lead generation results, business process automation examples, AI for sales teams results"
+        canonical="https://www.upgradevision.ai/portfolio"
+      />
       <Header isScrolled={isScrolled} />
 
       {/* Elite Cursor Glow */}
@@ -727,8 +734,12 @@ export default function Portfolio() {
             <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
               <img
                 src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                alt="Business success and growth"
+                alt="Business success and growth with AI automation"
                 className="w-full h-48 object-cover opacity-40"
+                loading="lazy"
+                width="1200"
+                height="192"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
             </div>
@@ -834,8 +845,12 @@ export default function Portfolio() {
             <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
               <img
                 src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                alt="Professional team collaboration"
+                alt="Professional team collaboration in modern office"
                 className="w-full h-40 object-cover opacity-35"
+                loading="lazy"
+                width="1200"
+                height="160"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
             </div>
@@ -1005,8 +1020,12 @@ export default function Portfolio() {
             <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
               <img
                 src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                alt="Fast-paced business action"
+                alt="Fast-paced business action and results"
                 className="w-full h-40 object-cover opacity-35"
+                loading="lazy"
+                width="1200"
+                height="160"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
             </div>

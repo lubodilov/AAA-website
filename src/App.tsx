@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
+import SEOHead from './components/SEOHead';
 import Hero from './components/Hero';
 import CredibilitySlide from './components/CredibilitySlide';
 import ProblemSlide from './components/ProblemSlide';
@@ -147,8 +148,9 @@ function HomePage() {
 
   return (
     <div className="bg-black">
+      <SEOHead />
       {/* Fixed Video Background */}
-      <div className="fixed inset-0 z-0">
+      <div className="fixed inset-0 z-0" role="presentation" aria-hidden="true">
         <video
           autoPlay
           loop
@@ -158,6 +160,7 @@ function HomePage() {
           preload="auto"
           disablePictureInPicture
           controlsList="nodownload nofullscreen noremoteplayback"
+          aria-label="Background animation video"
         >
           <source src="/hero_animation.mp4" type="video/mp4" />
           <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
@@ -171,9 +174,11 @@ function HomePage() {
       />
 
       {/* Main Scroll Container with Snap */}
-      <div
+      <main
         ref={containerRef}
         className="relative z-10 snap-y snap-mandatory overflow-y-auto h-screen"
+        role="main"
+        aria-label="Main content"
       >
         <div ref={el => slideRefs.current[0] = el} className="snap-start snap-always">
           <Hero
@@ -218,7 +223,7 @@ function HomePage() {
         <div ref={el => slideRefs.current[9] = el} className="snap-start snap-always">
           <BookAuditSlide isOpen={true} />
         </div>
-      </div>
+      </main>
 
 
       {/* CONTACT POPUP */}
@@ -228,7 +233,8 @@ function HomePage() {
           className="fixed inset-0 z-[100] backdrop-blur-[6px] flex items-center justify-center p-4"
           aria-modal="true"
           role="dialog"
-          aria-label="Contact"
+          aria-label="Contact Form"
+          aria-describedby="contact-description"
         >
           <div
             className="absolute inset-0 pointer-events-none"
@@ -246,7 +252,7 @@ function HomePage() {
           >
             <div className="bg-black/60 border border-white/10 rounded-2xl shadow-2xl flex flex-col flex-1 overflow-hidden">
               <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-                <h3 className="text-white text-lg font-light">Get Started</h3>
+                <h3 id="contact-description" className="text-white text-lg font-light">Get Started</h3>
                 <button
                   onClick={() => setContactOpen(false)}
                   className="text-white/70 hover:text-white transition text-2xl leading-none"
@@ -273,6 +279,7 @@ function HomePage() {
           aria-modal="true"
           role="dialog"
           aria-label="Schedule a Call"
+          aria-describedby="schedule-description"
           aria-hidden={scheduleOpen ? 'false' : 'true'}
         >
           <div
@@ -303,7 +310,7 @@ function HomePage() {
               {/* Left Side - Calendly Widget */}
               <div className="flex-1 flex flex-col overflow-hidden">
                 <div className="px-6 py-4 border-b border-white/10">
-                  <h3 className="text-white text-xl font-light">Book Your Acquisition Audit</h3>
+                  <h3 id="schedule-description" className="text-white text-xl font-light">Book Your Acquisition Audit</h3>
                   <p className="text-gray-400 text-sm font-light mt-1">Choose a time that works for you</p>
                 </div>
                 <div className="p-6 overflow-y-auto flex-1">

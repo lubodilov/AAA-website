@@ -141,8 +141,12 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
               <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-red-600/30 shadow-lg">
                 <img
                   src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400"
-                  alt="Professional testimonial"
+                  alt="Professional business executive testimonial"
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  width="64"
+                  height="64"
+                  decoding="async"
                 />
               </div>
               <div className="text-center">
