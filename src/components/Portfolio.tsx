@@ -727,15 +727,6 @@ export default function Portfolio() {
 
           {/* SECTION 1 — FLAGSHIP RESULTS (TOP 3) */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-thin text-white leading-tight mb-4">
-              Flagship Results:{' '}
-              <span className="font-extralight italic text-red-400">
-                acquisition wins backed by KPIs
-              </span>
-            </h2>
-            <p className="text-lg text-white/70 mt-4">
-              Three engagements that show our end-to-end approach—diagnose → pilot → scale.
-            </p>
           </div>
 
           {/* 3 Flagship Cards - Side by Side */}
