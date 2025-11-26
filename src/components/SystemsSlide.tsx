@@ -118,19 +118,19 @@ export default function SystemsSlide({ onOpenSchedule }: SystemsSlideProps) {
               >
                 {/* Icon & Title */}
                 <div className="mb-4">
-                  <Icon className="w-7 h-7 text-white mb-3" strokeWidth={1.5} />
-                  <h3 className="text-white font-normal text-lg tracking-tight">{system.title}</h3>
+                  <Icon className="w-8 h-8 text-white mb-3" strokeWidth={1.5} />
+                  <h3 className="text-white font-bold text-xl tracking-tight">{system.title}</h3>
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-500 font-light text-sm leading-relaxed mb-4">
+                <p className="text-gray-300 font-normal text-base leading-relaxed mb-4">
                   {system.description}
                 </p>
 
                 {/* KPIs */}
                 <div className="space-y-2">
                   {system.kpis.map((kpi, index) => (
-                    <div key={index} className="text-gray-600 text-xs font-light">
+                    <div key={index} className="text-gray-300 text-sm font-medium">
                       {kpi}
                     </div>
                   ))}

@@ -491,20 +491,20 @@ export default function TransformationProcess() {
                       transitionDelay: '1.0s'
                     }}
                   >
-                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-thin text-white mb-4 leading-tight">
+                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-4 leading-tight">
                       {slide.title}
                     </h3>
-                    
-                    <p 
-                      className="text-xl md:text-2xl font-extralight italic text-red-400 mb-6"
+
+                    <p
+                      className="text-xl md:text-2xl font-medium italic text-red-400 mb-6"
                       style={{
                         fontFamily: 'Inter, system-ui, sans-serif'
                       }}
                     >
                       {slide.outcome}
                     </p>
-                    
-                    <p className="text-lg font-extralight text-white/90 leading-relaxed max-w-2xl">
+
+                    <p className="text-lg font-normal text-white/95 leading-relaxed max-w-2xl">
                       {slide.description}
                     </p>
                   </div>

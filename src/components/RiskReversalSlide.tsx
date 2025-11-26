@@ -72,8 +72,8 @@ export default function RiskReversalSlide() {
                         <Icon className="w-5 h-5 text-green-400" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-white font-normal text-base mb-1">{rule.title}</h4>
-                        <p className="text-gray-400 font-light text-sm leading-relaxed">
+                        <h4 className="text-white font-semibold text-lg mb-1">{rule.title}</h4>
+                        <p className="text-gray-300 font-normal text-base leading-relaxed">
                           {rule.description}
                         </p>
                       </div>
@@ -97,7 +97,7 @@ export default function RiskReversalSlide() {
                       <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-black/40 backdrop-blur-sm flex items-center justify-center border border-blue-500/10">
                         <Icon className="w-5 h-5 text-blue-400" />
                       </div>
-                      <p className="text-gray-300 font-light text-sm">{point.text}</p>
+                      <p className="text-gray-200 font-medium text-base">{point.text}</p>
                     </div>
                   );
                 })}

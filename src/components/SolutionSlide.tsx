@@ -51,8 +51,8 @@ export default function SolutionSlide({ onScrollToSystems }: SolutionSlideProps)
                 <div className="mb-4">
                   <Icon className="w-7 h-7 text-green-600" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-white text-lg font-normal mb-3 tracking-tight">{solution.title}</h3>
-                <p className="text-gray-500 text-sm font-light leading-relaxed">
+                <h3 className="text-white text-xl font-semibold mb-3 tracking-tight">{solution.title}</h3>
+                <p className="text-gray-300 text-base font-normal leading-relaxed">
                   {solution.description}
                 </p>
               </div>

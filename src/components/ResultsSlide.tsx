@@ -116,13 +116,13 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
               >
                 {/* Header */}
                 <div className="mb-4">
-                  <h3 className="text-lg font-normal text-white mb-1 tracking-tight">{caseStudy.title}</h3>
-                  <p className="text-gray-600 text-xs font-light">{caseStudy.subtitle}</p>
+                  <h3 className="text-xl font-bold text-white mb-1 tracking-tight">{caseStudy.title}</h3>
+                  <p className="text-gray-500 text-sm font-medium">{caseStudy.subtitle}</p>
                 </div>
 
                 {/* Quote */}
                 <div className="mb-4">
-                  <p className="text-gray-400 text-base font-light leading-relaxed italic">
+                  <p className="text-gray-300 text-base font-normal leading-relaxed italic">
                     "{caseStudy.problem}"
                   </p>
                 </div>
@@ -132,8 +132,8 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
                   {caseStudy.impact.map((metric, index) => {
                     return (
                       <div key={index} className="flex items-baseline justify-between">
-                        <span className="text-gray-500 text-sm font-light">{metric.label}</span>
-                        <span className="text-white text-lg font-normal">{metric.value}</span>
+                        <span className="text-gray-300 text-sm font-medium">{metric.label}</span>
+                        <span className="text-white text-xl font-bold">{metric.value}</span>
                       </div>
                     );
                   })}
