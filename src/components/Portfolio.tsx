@@ -816,12 +816,6 @@ export default function Portfolio() {
             })}
           </div>
 
-          {/* Disclosure */}
-          <div className="text-center mb-20">
-            <p className="text-xs text-white/50">
-              Metrics reflect deltas vs. client baselines and may vary by team size, market, and data quality. References available on request.
-            </p>
-          </div>
 
           {/* SECTION 2 — AUTHORITY PROOF (MIDDLE 6) */}
           <div className="mb-16">
