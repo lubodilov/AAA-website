@@ -92,12 +92,12 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
           </h2>
         </div>
 
-        {/* Visual Element - Dashboard/Analytics imagery */}
+        {/* Visual Element - Business imagery */}
         <div className="mb-6 max-w-3xl mx-auto">
           <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
             <img
-              src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=1200"
-              alt="Analytics dashboard showing growth metrics"
+              src="/business.png"
+              alt="Business growth and success"
               className="w-full h-32 object-cover opacity-50"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
