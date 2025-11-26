@@ -720,9 +720,6 @@ export default function Portfolio() {
                 Proof Over Promises
               </span>
             </h1>
-            <p className="text-xl text-white/70 max-w-4xl mx-auto">
-              Real projects in plain language: baseline → intervention → KPI delta → timeline. Meetings ↑, cycle time ↓, CAC ↓—most wins in 30–60 days.
-            </p>
           </div>
 
           {/* SECTION 1 — FLAGSHIP RESULTS (TOP 3) */}
