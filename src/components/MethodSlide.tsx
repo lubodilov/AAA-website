@@ -79,33 +79,54 @@ export default function MethodSlide() {
 
       <div className="relative max-w-6xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight mb-3">
-            3 steps. <span className="text-red-600 font-normal">Measured weekly</span>
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight mb-3">
+            3 steps. <span className="text-red-600 font-bold">Measured weekly</span>
           </h2>
         </div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {steps.map((step, index) => {
             const Icon = step.icon;
             const colors = getColorClasses(step.color);
 
             return (
-              <div key={index} className="relative">
-                <div className="relative p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300 h-full">
+              <div key={index} className="relative group">
+                <div className="relative p-8 rounded-2xl bg-gradient-to-br from-zinc-900/60 to-zinc-900/40 border-2 border-zinc-800/80 hover:border-zinc-700 hover:shadow-2xl hover:shadow-zinc-900/50 transition-all duration-500 h-full">
+                  {/* Step Number Badge */}
+                  <div className="absolute -top-3 -left-3 w-12 h-12 rounded-full bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center border-4 border-black shadow-lg">
+                    <span className="text-white font-bold text-xl">{index + 1}</span>
+                  </div>
+
                   {/* Title */}
-                  <div className="mb-4">
-                    <Icon className="w-7 h-7 text-white mb-3" strokeWidth={1.5} />
-                    <p className="text-gray-600 text-xs font-light mb-1">{step.week}</p>
-                    <h3 className="text-lg font-normal text-white tracking-tight">{step.title}</h3>
+                  <div className="mb-6 pt-2">
+                    <Icon className="w-10 h-10 text-red-500 mb-4 group-hover:scale-110 transition-transform duration-300" strokeWidth={1.5} />
+                    <p className="text-gray-500 text-xs font-medium uppercase tracking-wider mb-2">{step.week}</p>
+                    <h3 className="text-2xl font-bold text-white tracking-tight mb-4">{step.title}</h3>
                   </div>
 
                   {/* Deliverables */}
-                  <div className="space-y-2">
-                    {step.deliverables.map((deliverable, idx) => (
-                      <div key={idx} className="text-gray-500 text-sm font-light">
-                        {deliverable.text}
+                  <div className="space-y-3 mb-6">
+                    <p className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-3">Deliverables</p>
+                    {step.deliverables.map((deliverable, idx) => {
+                      const DeliverableIcon = deliverable.icon;
+                      return (
+                        <div key={idx} className="flex items-start gap-3 text-gray-300 text-sm font-normal">
+                          <DeliverableIcon className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" strokeWidth={2} />
+                          <span>{deliverable.text}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* You Provide */}
+                  <div className="pt-4 border-t border-zinc-800/60">
+                    <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">You Provide</p>
+                    {step.youProvide.map((item, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-gray-400 text-sm font-light">
+                        <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div>
+                        <span>{item}</span>
                       </div>
                     ))}
                   </div>
