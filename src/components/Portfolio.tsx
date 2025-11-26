@@ -555,18 +555,18 @@ export default function Portfolio() {
       {selectedProject && (
         <>
           <div
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-white/95 backdrop-blur-sm animate-in fade-in duration-200"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
             onClick={() => setSelectedProject(null)}
             style={{ isolation: 'isolate' }}
           >
           <div
-            className="relative bg-black/95 border border-white/20 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-300"
+            className="relative bg-white border border-gray-200 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-300 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={() => setSelectedProject(null)}
-              className="absolute top-4 right-4 z-10 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-all duration-300"
+              className="absolute top-4 right-4 z-10 bg-gray-100 hover:bg-gray-200 text-gray-800 p-2 rounded-full transition-all duration-300"
             >
               <X className="w-6 h-6" />
             </button>
@@ -581,69 +581,69 @@ export default function Portfolio() {
                 </div>
 
                 {/* Title */}
-                <h2 className="text-3xl font-bold text-white mb-6">{selectedProject.title}</h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-6">{selectedProject.title}</h2>
 
                 {/* Client Type & Timeline */}
-                <div className="flex items-center justify-between mb-6 pb-6 border-b border-white/10">
+                <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-200">
                   <div>
-                    <div className="text-sm text-white/50">Client Type</div>
-                    <div className="text-white font-medium">{selectedProject.company}</div>
+                    <div className="text-sm text-gray-500">Client Type</div>
+                    <div className="text-gray-900 font-medium">{selectedProject.company}</div>
                   </div>
                   <div>
-                    <div className="text-sm text-white/50">Timeline</div>
-                    <div className="text-white font-medium">{selectedProject.timeline}</div>
+                    <div className="text-sm text-gray-500">Timeline</div>
+                    <div className="text-gray-900 font-medium">{selectedProject.timeline}</div>
                   </div>
                 </div>
 
                 {/* Metrics */}
                 <div className={`grid ${selectedProject.metrics.tertiary ? 'grid-cols-3' : 'grid-cols-2'} gap-4 mb-8`}>
-                  <div className="bg-red-600/10 border border-red-600/20 rounded-xl p-4 text-center">
-                    <div className="text-3xl font-bold text-red-400">{selectedProject.metrics.primary}</div>
-                    <div className="text-xs text-white/60 mt-1">Primary Impact</div>
+                  <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
+                    <div className="text-3xl font-bold text-red-600">{selectedProject.metrics.primary}</div>
+                    <div className="text-xs text-gray-600 mt-1">Primary Impact</div>
                   </div>
-                  <div className="bg-amber-600/10 border border-amber-600/20 rounded-xl p-4 text-center">
-                    <div className="text-3xl font-bold text-amber-400">{selectedProject.metrics.secondary}</div>
-                    <div className="text-xs text-white/60 mt-1">Secondary</div>
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+                    <div className="text-3xl font-bold text-amber-600">{selectedProject.metrics.secondary}</div>
+                    <div className="text-xs text-gray-600 mt-1">Secondary</div>
                   </div>
                   {selectedProject.metrics.tertiary && (
-                    <div className="bg-emerald-600/10 border border-emerald-600/20 rounded-xl p-4 text-center">
-                      <div className="text-3xl font-bold text-emerald-400">{selectedProject.metrics.tertiary}</div>
-                      <div className="text-xs text-white/60 mt-1">Tertiary</div>
+                    <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
+                      <div className="text-3xl font-bold text-emerald-600">{selectedProject.metrics.tertiary}</div>
+                      <div className="text-xs text-gray-600 mt-1">Tertiary</div>
                     </div>
                   )}
                 </div>
 
                 {/* Problem */}
                 <div className="mb-6">
-                  <h3 className="text-red-300 text-sm font-semibold mb-2">Problem (baseline):</h3>
-                  <p className="text-white/80">{selectedProject.crisis}</p>
+                  <h3 className="text-red-600 text-sm font-semibold mb-2">Problem (baseline):</h3>
+                  <p className="text-gray-700">{selectedProject.crisis}</p>
                 </div>
 
                 {/* What we shipped */}
                 <div className="mb-6">
-                  <h3 className="text-emerald-300 text-sm font-semibold mb-2">What we shipped:</h3>
-                  <p className="text-white/80">{selectedProject.breakthrough}</p>
+                  <h3 className="text-emerald-600 text-sm font-semibold mb-2">What we shipped:</h3>
+                  <p className="text-gray-700">{selectedProject.breakthrough}</p>
                 </div>
 
                 {/* Impact & timeline */}
                 <div className="mb-6">
-                  <h3 className="text-amber-300 text-sm font-semibold mb-2">Impact & timeline:</h3>
-                  <p className="text-white/80">{selectedProject.domination}</p>
+                  <h3 className="text-amber-600 text-sm font-semibold mb-2">Impact & timeline:</h3>
+                  <p className="text-gray-700">{selectedProject.domination}</p>
                 </div>
 
                 {/* Stack */}
                 {selectedProject.scarcity && (
                   <div className="mb-6">
-                    <h3 className="text-blue-300 text-sm font-semibold mb-2">Stack:</h3>
-                    <p className="text-white/80">{selectedProject.scarcity}</p>
+                    <h3 className="text-blue-600 text-sm font-semibold mb-2">Stack:</h3>
+                    <p className="text-gray-700">{selectedProject.scarcity}</p>
                   </div>
                 )}
 
                 {/* Why it worked */}
                 {selectedProject.authority && (
                   <div className="mb-6">
-                    <h3 className="text-white/70 text-sm font-semibold mb-2">Why it worked:</h3>
-                    <p className="text-white/80 italic">{selectedProject.authority}</p>
+                    <h3 className="text-gray-700 text-sm font-semibold mb-2">Why it worked:</h3>
+                    <p className="text-gray-700 italic">{selectedProject.authority}</p>
                   </div>
                 )}
 
@@ -655,7 +655,7 @@ export default function Portfolio() {
               </div>
 
               {/* Right: Media */}
-              <div className="relative bg-gradient-to-br from-red-600/5 to-black hidden lg:flex items-center justify-center p-12">
+              <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 hidden lg:flex items-center justify-center p-12">
                 {selectedProject.mediaType === 'video' && selectedProject.mediaUrl ? (
                   <video
                     autoPlay
@@ -673,14 +673,14 @@ export default function Portfolio() {
                     className="w-full h-full object-cover rounded-xl"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center rounded-xl border-2 border-dashed border-white/20 bg-gradient-to-br from-white/5 to-transparent">
+                  <div className="w-full h-full flex items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-white">
                     <div className="text-center px-8">
-                      <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-white/10 border-2 border-white/20 mb-6 hover:bg-white/15 transition-all duration-300 cursor-pointer group">
-                        <Play className="w-12 h-12 text-white/40 group-hover:text-white/60 transition-all duration-300 ml-1" fill="currentColor" />
+                      <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gray-100 border-2 border-gray-300 mb-6 hover:bg-gray-200 transition-all duration-300 cursor-pointer group">
+                        <Play className="w-12 h-12 text-gray-400 group-hover:text-gray-600 transition-all duration-300 ml-1" fill="currentColor" />
                       </div>
-                      <div className="text-2xl font-semibold text-white/60 mb-3">Case Study Video</div>
-                      <div className="text-lg text-white/40">Coming Soon</div>
-                      <div className="text-sm text-white/30 mt-4">
+                      <div className="text-2xl font-semibold text-gray-700 mb-3">Case Study Video</div>
+                      <div className="text-lg text-gray-500">Coming Soon</div>
+                      <div className="text-sm text-gray-400 mt-4">
                         We're preparing an in-depth video walkthrough of this project
                       </div>
                     </div>
