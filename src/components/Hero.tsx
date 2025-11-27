@@ -29,7 +29,6 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayText, setDisplayText] = useState({ line1: '', highlight: '', line2: '' });
   const [isTyping, setIsTyping] = useState(true);
-  const [showCursor, setShowCursor] = useState(true);
 
   useEffect(() => {
     const currentHeadline = headlines[currentIndex];
@@ -73,14 +72,6 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
     return () => clearInterval(typeInterval);
   }, [currentIndex]);
 
-  useEffect(() => {
-    const cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 500);
-
-    return () => clearInterval(cursorInterval);
-  }, []);
-
   return (
     <section className="h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/20 z-0"></div>
@@ -92,8 +83,8 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
               {displayText.line1}
               {isTyping && displayText.line1.length > 0 && !displayText.highlight && !displayText.line2 && (
                 <span
-                  className={`inline-block w-1 bg-white ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
-                  style={{ height: '0.8em', animation: 'none' }}
+                  className="inline-block w-1 bg-white ml-1 cursor-blink"
+                  style={{ height: '0.8em' }}
                 >
                   |
                 </span>
@@ -108,8 +99,8 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
               </span>
               {isTyping && displayText.highlight.length > 0 && !displayText.line2 && (
                 <span
-                  className={`inline-block w-1 ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
-                  style={{ height: '0.8em', animation: 'none', backgroundColor: '#991923' }}
+                  className="inline-block w-1 ml-1 cursor-blink"
+                  style={{ height: '0.8em', backgroundColor: '#991923' }}
                 >
                   |
                 </span>
@@ -119,16 +110,16 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
               {displayText.line2}
               {isTyping && displayText.line2.length > 0 && (
                 <span
-                  className={`inline-block w-1 bg-white ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
-                  style={{ height: '0.8em', animation: 'none' }}
+                  className="inline-block w-1 bg-white ml-1 cursor-blink"
+                  style={{ height: '0.8em' }}
                 >
                   |
                 </span>
               )}
               {!isTyping && (
                 <span
-                  className={`inline-block w-1 bg-white ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
-                  style={{ height: '0.8em', animation: 'none' }}
+                  className="inline-block w-1 bg-white ml-1 cursor-blink"
+                  style={{ height: '0.8em' }}
                 >
                   |
                 </span>

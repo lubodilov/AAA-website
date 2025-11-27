@@ -733,7 +733,7 @@ export default function Portfolio() {
           <div className="mb-20 max-w-3xl mx-auto">
             <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
               <img
-                src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800"
                 alt="Business success and growth with AI automation"
                 className="w-full h-48 object-cover opacity-40"
                 loading="lazy"
@@ -844,7 +844,7 @@ export default function Portfolio() {
           <div className="mb-16 max-w-2xl mx-auto">
             <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
               <img
-                src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=800"
                 alt="Professional team collaboration in modern office"
                 className="w-full h-40 object-cover opacity-35"
                 loading="lazy"
@@ -1019,7 +1019,7 @@ export default function Portfolio() {
           <div className="mb-16 max-w-2xl mx-auto">
             <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
               <img
-                src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800"
                 alt="Fast-paced business action and results"
                 className="w-full h-40 object-cover opacity-35"
                 loading="lazy"

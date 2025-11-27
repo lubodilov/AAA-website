@@ -24,22 +24,24 @@ export default function VoiceflowWidget({
   embeddedTargetId, // omit for floating bubble
 }: Props) {
   useEffect(() => {
-    // (A) Preload your stylesheet so it’s ready before the widget paints (reduces FOUC)
-    if (stylesheetUrl) {
-      const preload = document.createElement('link');
-      preload.rel = 'preload';
-      preload.as = 'style';
-      preload.href = stylesheetUrl;
-      document.head.appendChild(preload);
+    // Defer Voiceflow loading by 3 seconds to prioritize initial page load
+    const loadTimer = setTimeout(() => {
+      // (A) Preload your stylesheet so it's ready before the widget paints (reduces FOUC)
+      if (stylesheetUrl) {
+        const preload = document.createElement('link');
+        preload.rel = 'preload';
+        preload.as = 'style';
+        preload.href = stylesheetUrl;
+        document.head.appendChild(preload);
 
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = stylesheetUrl;
-      document.head.appendChild(link);
-    }
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = stylesheetUrl;
+        document.head.appendChild(link);
+      }
 
-    // (B) Load Voiceflow bundle once
-    if (window.__vfWidgetLoaded) return;
+      // (B) Load Voiceflow bundle once
+      if (window.__vfWidgetLoaded) return;
 
     const init = () => {
       if (!window.voiceflow?.chat?.load) {
@@ -89,15 +91,17 @@ export default function VoiceflowWidget({
       window.__vfWidgetLoaded = true;
     };
 
-    const script = document.createElement('script');
-    script.type = 'module';
-    script.src = 'https://cdn.voiceflow.com/widget/bundle.mjs';
-    script.defer = true;
-    script.onload = init;
-    script.onerror = () => console.error('Voiceflow widget failed to load.');
-    document.head.appendChild(script);
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = 'https://cdn.voiceflow.com/widget/bundle.mjs';
+      script.defer = true;
+      script.onload = init;
+      script.onerror = () => console.error('Voiceflow widget failed to load.');
+      document.head.appendChild(script);
+    }, 3000);
 
-    // Keep widget across unmounts (don’t remove script or unset flag)
+    // Keep widget across unmounts (don't remove script or unset flag)
+    return () => clearTimeout(loadTimer);
   }, [projectID, url, versionID, stylesheetUrl, embeddedTargetId]);
 
   return null;

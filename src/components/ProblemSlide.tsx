@@ -59,7 +59,7 @@ export default function ProblemSlide() {
         <div className="mb-4 max-w-2xl mx-auto">
           <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
             <img
-              src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Professional working with multiple systems struggling with complexity"
               className="w-full h-32 object-cover opacity-40"
               loading="lazy"

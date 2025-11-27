@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import SEOHead from './components/SEOHead';
@@ -12,18 +12,34 @@ import MethodSlide from './components/MethodSlide';
 import OfferPricingSlide from './components/OfferPricingSlide';
 import FAQSlide from './components/FAQSlide';
 import BookAuditSlide from './components/BookAuditSlide';
-import Portfolio from './components/Portfolio';
 import ContactForm from './components/ContactForm';
 import ScheduleCall from './components/ScheduleCall';
 import StickyCTABar from './components/StickyCTABar';
 import VoiceflowWidget from './components/VoiceflowWidget';
+
+// Lazy load Portfolio page for better initial load performance
+const Portfolio = lazy(() => import('./components/Portfolio'));
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/portfolio" element={<Portfolio />} />
+        <Route
+          path="/portfolio"
+          element={
+            <Suspense fallback={
+              <div className="min-h-screen bg-black flex items-center justify-center">
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-red-600 mx-auto mb-4"></div>
+                  <p className="text-white text-lg">Loading portfolio...</p>
+                </div>
+              </div>
+            }>
+              <Portfolio />
+            </Suspense>
+          }
+        />
       </Routes>
     </Router>
   );
@@ -115,27 +131,28 @@ function HomePage() {
       });
     };
 
-    // Throttle scroll events for performance
-    let ticking = false;
+    // Throttle scroll events for performance (100ms delay for better performance)
+    let timeoutId: NodeJS.Timeout | null = null;
     const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
+      if (timeoutId) return;
+      timeoutId = setTimeout(() => {
+        handleScroll();
+        timeoutId = null;
+      }, 100);
     };
 
     const container = containerRef.current;
     if (container) {
-      container.addEventListener('scroll', throttledScroll);
+      container.addEventListener('scroll', throttledScroll, { passive: true });
       handleScroll();
     }
 
     return () => {
       if (container) {
         container.removeEventListener('scroll', throttledScroll);
+      }
+      if (timeoutId) {
+        clearTimeout(timeoutId);
       }
     };
   }, []);
