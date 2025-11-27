@@ -39,7 +39,6 @@ interface CredibilitySlideProps {
 
 export default function CredibilitySlide({ onScrollToCases }: CredibilitySlideProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [logoSet, setLogoSet] = useState(0);
 
   const logos = [
     '/logo1.png',
@@ -55,15 +54,6 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
     }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // Rotate logo sets (show 4 at a time)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLogoSet((prev) => (prev + 1) % 2); // 2 sets: 0-3 and 2-5 (overlapping)
-    }, 4000);
 
     return () => clearInterval(interval);
   }, []);
@@ -87,42 +77,15 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
           <p className="text-gray-400 text-xs font-light uppercase tracking-widest mb-8 opacity-70">Trusted by</p>
 
           <div className="relative overflow-hidden h-36">
-            <div
-              className="flex items-center justify-center gap-8 absolute inset-0 transition-all duration-[1500ms] ease-in-out"
-              style={{
-                transform: logoSet === 0 ? 'translateX(0)' : 'translateX(-100%)',
-                opacity: 1,
-              }}
-            >
-              {logos.slice(0, 4).map((logo, index) => (
+            <div className="flex items-center gap-8 animate-scroll-left">
+              {[...logos, ...logos].map((logo, index) => (
                 <div
-                  key={`set1-${index}`}
+                  key={index}
                   className="flex-shrink-0 px-4 py-3 border border-white/30 rounded-xl backdrop-blur-sm bg-white/[0.08] hover:bg-white/[0.12] hover:border-white/40 transition-all duration-300"
                 >
                   <img
                     src={logo}
-                    alt={`Client logo ${index + 1}`}
-                    className="h-16 w-auto object-contain filter brightness-110 hover:brightness-125 transition-all duration-300"
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div
-              className="flex items-center justify-center gap-8 absolute inset-0 transition-all duration-[1500ms] ease-in-out"
-              style={{
-                transform: logoSet === 0 ? 'translateX(100%)' : 'translateX(0)',
-                opacity: 1,
-              }}
-            >
-              {logos.slice(2, 6).map((logo, index) => (
-                <div
-                  key={`set2-${index}`}
-                  className="flex-shrink-0 px-4 py-3 border border-white/30 rounded-xl backdrop-blur-sm bg-white/[0.08] hover:bg-white/[0.12] hover:border-white/40 transition-all duration-300"
-                >
-                  <img
-                    src={logo}
-                    alt={`Client logo ${index + 3}`}
+                    alt={`Client logo ${(index % logos.length) + 1}`}
                     className="h-16 w-auto object-contain filter brightness-110 hover:brightness-125 transition-all duration-300"
                   />
                 </div>
