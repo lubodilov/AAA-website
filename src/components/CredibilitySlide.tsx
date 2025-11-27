@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, ArrowDown, Quote } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-react';
 
 interface Testimonial {
   quote: string;
@@ -94,56 +94,29 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
           </div>
         </div>
 
-        <div className="relative max-w-5xl mx-auto">
-          <div className="py-12">
-            {/* Testimonial Card */}
-            <div
-              key={currentIndex}
-              className="relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl testimonial-fade"
-            >
-              {/* Quote Icon */}
-              <div className="absolute top-6 left-6 opacity-10">
-                <Quote className="w-16 h-16 text-red-600" />
+        <div className="relative max-w-4xl mx-auto">
+          <div className="py-8">
+            <blockquote className="text-2xl md:text-3xl font-light text-gray-400 leading-relaxed mb-8 text-center tracking-tight">
+              "{currentTestimonial.quote}"
+            </blockquote>
+
+            <div className="flex flex-col items-center space-y-3">
+              <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-red-600/30 shadow-lg">
+                <img
+                  src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400"
+                  alt="Professional business executive testimonial"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  width="64"
+                  height="64"
+                  decoding="async"
+                />
               </div>
-
-              {/* Metric Badge - Prominent Display */}
-              <div className="flex justify-center mb-8">
-                <div className="inline-flex items-center px-6 py-3 bg-red-600/20 border border-red-600/30 rounded-full">
-                  <span className="text-red-500 font-semibold text-2xl tracking-tight">
-                    {currentTestimonial.metric}
-                  </span>
-                </div>
-              </div>
-
-              {/* Quote */}
-              <blockquote className="relative z-10 text-2xl md:text-3xl lg:text-4xl font-light text-white leading-relaxed mb-10 text-center tracking-tight">
-                "{currentTestimonial.quote}"
-              </blockquote>
-
-              {/* Author Info */}
-              <div className="flex flex-col md:flex-row items-center justify-center gap-6 pt-6 border-t border-white/10">
-                <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-red-600/40 shadow-xl ring-4 ring-red-600/10">
-                  <img
-                    src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400"
-                    alt="Professional business executive testimonial"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    width="80"
-                    height="80"
-                    decoding="async"
-                  />
-                </div>
-                <div className="text-center md:text-left">
-                  <p className="text-white font-semibold text-xl mb-1">
-                    {currentTestimonial.name}
-                  </p>
-                  <p className="text-gray-400 font-normal text-base">
-                    {currentTestimonial.role}
-                  </p>
-                  <p className="text-red-500 font-medium text-sm mt-1">
-                    {currentTestimonial.company}
-                  </p>
-                </div>
+              <div className="text-center">
+                <p className="text-red-600 font-normal text-base mb-1">{currentTestimonial.name}</p>
+                <p className="text-gray-600 font-light text-sm">
+                  {currentTestimonial.role}
+                </p>
               </div>
             </div>
 
