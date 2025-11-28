@@ -28,42 +28,42 @@ export default function FAQSlide() {
   ];
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 pt-24 pb-12 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-4xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12 px-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white leading-tight tracking-tight">
             <span className="text-gray-600">Objections</span> <span className="text-red-600 font-normal">→ Answers</span>
           </h2>
         </div>
 
         {/* FAQ Accordion */}
-        <div className="space-y-3">
+        <div className="space-y-2.5 sm:space-y-3">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
 
             return (
               <div
                 key={index}
-                className="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300"
+                className="p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   className="w-full flex items-start justify-between text-left"
                 >
-                  <div className="flex-1">
-                    <h3 className="text-white font-normal text-lg mb-3 tracking-tight">{faq.question}</h3>
+                  <div className="flex-1 pr-2">
+                    <h3 className="text-white font-normal text-base sm:text-lg mb-2 sm:mb-3 tracking-tight">{faq.question}</h3>
                     {isOpen && (
-                      <p className="text-gray-500 font-light text-base leading-relaxed">
+                      <p className="text-gray-500 font-light text-sm sm:text-base leading-relaxed">
                         {faq.answer}
                       </p>
                     )}
                   </div>
 
                   <ChevronDown
-                    className={`w-5 h-5 text-gray-600 flex-shrink-0 ml-4 transition-transform duration-300 ${
+                    className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-600 flex-shrink-0 ml-2 sm:ml-4 transition-transform duration-300 ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                     strokeWidth={1.5}

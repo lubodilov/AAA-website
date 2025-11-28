@@ -79,13 +79,13 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 pt-24 pb-12 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-6xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-6">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight tracking-tight">
+        <div className="text-center mb-4 sm:mb-6 px-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight tracking-tight">
             <span className="text-red-600 font-normal">Real results.</span>
             <br />
             <span className="text-gray-600">Proof. Not promises.</span>
@@ -93,47 +93,47 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
         </div>
 
         {/* Visual Element - Business imagery */}
-        <div className="mb-6 max-w-3xl mx-auto">
+        <div className="mb-4 sm:mb-6 max-w-3xl mx-auto">
           <div className="relative rounded-lg overflow-hidden border border-zinc-800/60 shadow-xl">
             <img
               src="/business.png"
               alt="Business growth and success"
-              className="w-full h-32 object-cover opacity-50"
+              className="w-full h-24 sm:h-32 object-cover opacity-50"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
           </div>
         </div>
 
         {/* Case Tiles */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 mb-3 sm:mb-4">
           {cases.map((caseStudy) => {
             const colors = getColorClasses(caseStudy.color);
 
             return (
               <div
                 key={caseStudy.id}
-                className="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300"
+                className="p-5 sm:p-6 rounded-xl sm:rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300"
               >
                 {/* Header */}
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-white mb-1 tracking-tight">{caseStudy.title}</h3>
-                  <p className="text-gray-500 text-sm font-medium">{caseStudy.subtitle}</p>
+                <div className="mb-3 sm:mb-4">
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-1 tracking-tight">{caseStudy.title}</h3>
+                  <p className="text-gray-500 text-xs sm:text-sm font-medium">{caseStudy.subtitle}</p>
                 </div>
 
                 {/* Quote */}
-                <div className="mb-4">
-                  <p className="text-gray-300 text-base font-normal leading-relaxed italic">
+                <div className="mb-3 sm:mb-4">
+                  <p className="text-gray-300 text-sm sm:text-base font-normal leading-relaxed italic">
                     "{caseStudy.problem}"
                   </p>
                 </div>
 
                 {/* Impact */}
-                <div className="space-y-2.5">
+                <div className="space-y-2">
                   {caseStudy.impact.map((metric, index) => {
                     return (
-                      <div key={index} className="flex items-baseline justify-between">
-                        <span className="text-gray-300 text-sm font-medium">{metric.label}</span>
-                        <span className={`${index === 0 ? 'text-red-600' : 'text-white'} text-xl font-bold`}>{metric.value}</span>
+                      <div key={index} className="flex items-baseline justify-between gap-2">
+                        <span className="text-gray-300 text-xs sm:text-sm font-medium">{metric.label}</span>
+                        <span className={`${index === 0 ? 'text-red-600' : 'text-white'} text-lg sm:text-xl font-bold flex-shrink-0`}>{metric.value}</span>
                       </div>
                     );
                   })}
@@ -144,17 +144,17 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
         </div>
 
         {/* Footnote & CTA */}
-        <div className="text-center space-y-3">
-          <p className="text-gray-500 text-xs font-extralight max-w-2xl mx-auto">
+        <div className="text-center space-y-2 sm:space-y-3 px-4">
+          <p className="text-gray-500 text-xs font-extralight max-w-2xl mx-auto px-2">
             Ranges vary by size & baseline. Full references on request.
           </p>
 
           <button
             onClick={onOpenSchedule}
-            className="group inline-flex items-center space-x-2 bg-white text-black px-8 py-3.5 rounded-full hover:bg-gray-100 transition-all duration-300 font-normal text-base tracking-tight"
+            className="group inline-flex items-center justify-center space-x-2 bg-white text-black px-5 sm:px-8 py-3 sm:py-3.5 rounded-full hover:bg-gray-100 transition-all duration-300 font-normal text-sm sm:text-base tracking-tight w-full sm:w-auto max-w-md sm:max-w-none mx-auto"
           >
-            <span>See if your numbers are possible</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" strokeWidth={2} />
+            <span className="text-center">See if your numbers are possible</span>
+            <ArrowRight className="w-4 h-4 flex-shrink-0 group-hover:translate-x-1 transition-transform duration-300" strokeWidth={2} />
           </button>
         </div>
       </div>

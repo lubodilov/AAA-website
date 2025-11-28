@@ -73,11 +73,11 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
   }, [currentIndex]);
 
   return (
-    <section className="h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center px-4 sm:px-6 pt-20 pb-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/20 z-0"></div>
 
-      <div className="relative text-center max-w-6xl mx-auto z-10">
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-extralight text-white leading-tight mb-12 min-h-[300px] md:min-h-[350px] flex flex-col justify-center">
+      <div className="relative text-center max-w-6xl mx-auto z-10 w-full">
+        <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-extralight text-white leading-tight mb-8 sm:mb-12 min-h-[240px] sm:min-h-[300px] md:min-h-[350px] flex flex-col justify-center px-2">
           <div className="font-thin" style={{ fontFamily: 'Inter, sans-serif' }}>
             <div>
               {displayText.line1}
@@ -128,23 +128,23 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
           </div>
         </h1>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 px-4 w-full max-w-lg sm:max-w-none mx-auto">
           <button
             onClick={onOpenSchedule}
-            className="group relative bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-4 rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center space-x-3 shadow-lg shadow-red-600/25 hover:shadow-red-600/40 hover:scale-105"
+            className="group relative bg-gradient-to-r from-red-600 to-red-700 text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center justify-center space-x-2 sm:space-x-3 shadow-lg shadow-red-600/25 hover:shadow-red-600/40 hover:scale-105 w-full sm:w-auto"
           >
-            <Calendar className="w-5 h-5" />
-            <span className="font-light text-lg">Book a Call</span>
-            <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+            <Calendar className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+            <span className="font-light text-base sm:text-lg">Book a Call</span>
+            <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
           </button>
 
           <button
             onClick={onScrollToResults}
-            className="group relative bg-transparent border border-gray-600 text-white px-8 py-4 rounded-full hover:border-red-600 transition-all duration-300 flex items-center space-x-3 overflow-hidden"
+            className="group relative bg-transparent border border-gray-600 text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full hover:border-red-600 transition-all duration-300 flex items-center justify-center space-x-2 sm:space-x-3 overflow-hidden w-full sm:w-auto"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/10 to-red-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-            <span className="relative z-10 font-light">See our work</span>
-            <ArrowUpRight className="relative z-10 w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+            <span className="relative z-10 font-light text-base sm:text-base">See our work</span>
+            <ArrowUpRight className="relative z-10 w-4 h-4 flex-shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
           </button>
         </div>
       </div>

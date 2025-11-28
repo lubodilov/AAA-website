@@ -49,38 +49,38 @@ export default function OfferPricingSlide({ onOpenSchedule }: OfferPricingSlideP
   ];
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 pt-24 pb-12 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
         {/* Heading */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight mb-3">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12 px-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white leading-tight tracking-tight mb-2 sm:mb-3">
             Start with an <span className="text-red-600 font-normal">Acquisition Audit</span>
           </h2>
         </div>
 
 
         {/* Pricing Tiers */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
           {pricingTiers.map((tier, index) => (
             <div
               key={index}
-              className="p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300"
+              className="p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300"
             >
-              <div className="mb-6">
-                <h3 className="text-lg font-normal text-white mb-2 tracking-tight">
+              <div className="mb-4 sm:mb-5 md:mb-6">
+                <h3 className="text-base sm:text-lg font-normal text-white mb-1.5 sm:mb-2 tracking-tight">
                   {tier.title}
                 </h3>
-                <p className="text-gray-600 text-sm font-light mb-4">{tier.description}</p>
-                <p className="text-white text-2xl font-light tracking-tight">
+                <p className="text-gray-600 text-xs sm:text-sm font-light mb-3 sm:mb-4">{tier.description}</p>
+                <p className="text-white text-xl sm:text-2xl font-light tracking-tight">
                   {tier.price}
                 </p>
               </div>
 
-              <ul className="space-y-2.5">
+              <ul className="space-y-2">
                 {tier.features.map((feature, idx) => (
-                  <li key={idx} className="text-sm text-gray-500 font-light">
+                  <li key={idx} className="text-xs sm:text-sm text-gray-500 font-light">
                     {feature}
                   </li>
                 ))}
@@ -90,13 +90,13 @@ export default function OfferPricingSlide({ onOpenSchedule }: OfferPricingSlideP
         </div>
 
         {/* CTA */}
-        <div className="text-center">
+        <div className="text-center px-4">
           <button
             onClick={onOpenSchedule}
-            className="group inline-flex items-center space-x-2 bg-white text-black px-8 py-3.5 rounded-full hover:bg-gray-100 transition-all duration-300 font-normal text-base tracking-tight"
+            className="group inline-flex items-center justify-center space-x-2 bg-white text-black px-6 sm:px-8 py-3 sm:py-3.5 rounded-full hover:bg-gray-100 transition-all duration-300 font-normal text-sm sm:text-base tracking-tight w-full sm:w-auto max-w-sm sm:max-w-none mx-auto"
           >
             <span>Book the 20-min Audit</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" strokeWidth={2} />
+            <ArrowRight className="w-4 h-4 flex-shrink-0 group-hover:translate-x-1 transition-transform duration-300" strokeWidth={2} />
           </button>
         </div>
       </div>
