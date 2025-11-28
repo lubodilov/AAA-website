@@ -16,6 +16,7 @@ import ContactForm from './components/ContactForm';
 import ScheduleCall from './components/ScheduleCall';
 import StickyCTABar from './components/StickyCTABar';
 import VoiceflowWidget from './components/VoiceflowWidget';
+import SlideNavigation from './components/SlideNavigation';
 
 // Lazy load Portfolio page for better initial load performance
 const Portfolio = lazy(() => import('./components/Portfolio'));
@@ -242,6 +243,12 @@ function HomePage() {
         </div>
       </main>
 
+      {/* Slide Navigation Dots */}
+      <SlideNavigation
+        slides={slides}
+        currentSlide={currentSlide}
+        onSlideChange={scrollToSlide}
+      />
 
       {/* CONTACT POPUP */}
       {contactOpen && (
