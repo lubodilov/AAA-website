@@ -5,7 +5,6 @@ type Props = {
   projectID: string;
   url?: string;        // Voiceflow runtime
   versionID?: string;  // 'production' or version id
-  stylesheetUrl?: string; // <-- NEW: your custom CSS file (absolute or public path)
   embeddedTargetId?: string; // optional: if you want embedded mode (not floating)
 };
 
@@ -20,27 +19,12 @@ export default function VoiceflowWidget({
   projectID,
   url = 'https://general-runtime.voiceflow.com',
   versionID = 'production',
-  stylesheetUrl = '/voiceflow-custom.css', // default to a file in /public
   embeddedTargetId, // omit for floating bubble
 }: Props) {
   useEffect(() => {
     // Defer Voiceflow loading by 3 seconds to prioritize initial page load
     const loadTimer = setTimeout(() => {
-      // (A) Preload your stylesheet so it's ready before the widget paints (reduces FOUC)
-      if (stylesheetUrl) {
-        const preload = document.createElement('link');
-        preload.rel = 'preload';
-        preload.as = 'style';
-        preload.href = stylesheetUrl;
-        document.head.appendChild(preload);
-
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = stylesheetUrl;
-        document.head.appendChild(link);
-      }
-
-      // (B) Load Voiceflow bundle once
+      // Load Voiceflow bundle once
       if (window.__vfWidgetLoaded) return;
 
     const init = () => {
@@ -56,10 +40,6 @@ export default function VoiceflowWidget({
         voice: {
           url: "https://runtime-api.voiceflow.com"
         },
-        assistant: {
-          // This is how we inject our CSS overrides
-          stylesheet: stylesheetUrl,
-        },
       };
 
       // If you want embedded mode (mounted into a specific element):
@@ -70,26 +50,7 @@ export default function VoiceflowWidget({
         };
       }
 
-      // (C) IMPORTANT: wait for the widget to finish initializing
-      window.voiceflow.chat
-        .load(options)
-        .then(() => {
-          // 🔥 You can safely manipulate DOM/CSS now or do programmatic actions
-          // Example: proactively start a conversation
-          // window.voiceflow.chat.proactive.push({ type: 'launch' });
-
-          // Example: tweak container at runtime (in addition to CSS file)
-          const root =
-            document.querySelector('[data-testid="vf-chat"]') ||
-            document.querySelector('.vfrc-widget') || // floating bubble
-            document.querySelector('.vfrc-container'); // fallback
-
-          if (root instanceof HTMLElement) {
-            // minor style nudges if desired
-            root.style.setProperty('--uv-accent', '#ef4444');
-            // root.style.zIndex = '70';
-          }
-        });
+      window.voiceflow.chat.load(options);
 
       window.__vfWidgetLoaded = true;
     };
@@ -105,7 +66,7 @@ export default function VoiceflowWidget({
 
     // Keep widget across unmounts (don't remove script or unset flag)
     return () => clearTimeout(loadTimer);
-  }, [projectID, url, versionID, stylesheetUrl, embeddedTargetId]);
+  }, [projectID, url, versionID, embeddedTargetId]);
 
   return null;
 }
