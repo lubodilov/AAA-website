@@ -53,6 +53,9 @@ export default function VoiceflowWidget({
         verify: { projectID },
         url,
         versionID,
+        voice: {
+          url: "https://runtime-api.voiceflow.com"
+        },
         assistant: {
           // This is how we inject our CSS overrides
           stylesheet: stylesheetUrl,
@@ -92,8 +95,8 @@ export default function VoiceflowWidget({
     };
 
       const script = document.createElement('script');
-      script.type = 'module';
-      script.src = 'https://cdn.voiceflow.com/widget/bundle.mjs';
+      script.type = 'text/javascript';
+      script.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs';
       script.defer = true;
       script.onload = init;
       script.onerror = () => console.error('Voiceflow widget failed to load.');
