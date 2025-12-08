@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar, CheckCircle2, Clock, FileText, Target } from 'lucide-react';
 
 interface BookAuditSlideProps {
@@ -6,6 +6,8 @@ interface BookAuditSlideProps {
 }
 
 export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+
   const benefits = [
     { icon: Target, text: "See where your revenue is leaking" },
     { icon: FileText, text: "Get a prioritized 3-item action plan" },
@@ -14,13 +16,18 @@ export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
   ];
 
   useEffect(() => {
-    // Load Calendly script if not already loaded
-    if (!document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')) {
-      const script = document.createElement('script');
-      script.src = 'https://assets.calendly.com/assets/external/widget.js';
-      script.async = true;
-      document.body.appendChild(script);
+    // Check if script is already loaded
+    if (document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')) {
+      setScriptLoaded(true);
+      return;
     }
+
+    // Load Calendly script
+    const script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true;
+    script.onload = () => setScriptLoaded(true);
+    document.body.appendChild(script);
   }, []);
 
   return (
@@ -78,11 +85,19 @@ export default function BookAuditSlide({ isOpen }: BookAuditSlideProps) {
 
           {/* Right: Calendly Embed */}
           <div className="bg-gradient-to-br from-black/40 via-black/30 to-black/40 backdrop-blur-md border border-white/5 rounded-xl sm:rounded-2xl p-1.5 sm:p-2 overflow-hidden order-1 lg:order-2">
-            <div className="h-[500px] sm:h-[550px] md:h-[600px] overflow-y-auto rounded-lg">
+            <div className="h-[500px] sm:h-[550px] md:h-[600px] overflow-y-auto rounded-lg relative">
+              {!scriptLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                  <div className="text-white text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
+                    <p className="text-gray-400">Loading calendar...</p>
+                  </div>
+                </div>
+              )}
               <div
                 className="calendly-inline-widget"
                 data-url="https://calendly.com/lubo-daniel-dilov/acquisition-audit-20-minute-strategy-call?hide_gdpr_banner=1&primary_color=c40000"
-                style={{ minWidth: '280px', height: '100%' }}
+                style={{ minWidth: '280px', height: '100%', opacity: scriptLoaded ? 1 : 0 }}
               />
             </div>
           </div>
