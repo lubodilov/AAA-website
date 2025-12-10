@@ -254,7 +254,7 @@ function HomePage() {
       {contactOpen && (
         <div
           onMouseDown={onBackdrop}
-          className="fixed inset-0 z-[100] backdrop-blur-[6px] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] backdrop-blur-[4px] flex items-center justify-center p-4"
           aria-modal="true"
           role="dialog"
           aria-label="Contact Form"
@@ -264,10 +264,10 @@ function HomePage() {
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.0) 22%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.88) 100%)'
+                'radial-gradient(circle at 50% 50%, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.15) 30%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.6) 100%)'
             }}
           />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-black/15" />
 
           <div
             ref={contactRef}
@@ -297,7 +297,7 @@ function HomePage() {
       {hasOpenedSchedule && (
         <div
           onMouseDown={onBackdrop}
-          className={`fixed inset-0 z-[100] backdrop-blur-[6px] flex items-center justify-center p-4 ${
+          className={`fixed inset-0 z-[100] backdrop-blur-[4px] flex items-center justify-center p-4 ${
             scheduleOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'
           } transition-opacity duration-300`}
           aria-modal="true"
@@ -310,10 +310,10 @@ function HomePage() {
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.0) 22%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.88) 100%)'
+                'radial-gradient(circle at 50% 50%, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.15) 30%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.6) 100%)'
             }}
           />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-black/15" />
           <div
             ref={scheduleRef}
             tabIndex={-1}
@@ -346,7 +346,7 @@ function HomePage() {
               <div className="hidden md:block md:w-80 lg:w-96 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20 z-10"></div>
                 <img
-                  src="/lubo_dilov_ai.png"
+                  src="/lubo_dilov_ai.jpg"
                   alt="Lubo Dilov"
                   className="w-full h-full object-cover"
                 />
