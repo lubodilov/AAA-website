@@ -325,7 +325,7 @@ function HomePage() {
               {/* Close Button - Positioned Absolutely */}
               <button
                 onClick={() => setScheduleOpen(false)}
-                className="absolute top-4 right-4 z-20 text-white/70 hover:text-white transition text-2xl leading-none w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10"
+                className="absolute top-4 right-4 z-20 text-black/70 hover:text-black transition text-2xl leading-none w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/10"
                 aria-label="Close"
               >
                 ×
