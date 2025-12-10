@@ -34,13 +34,26 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
     const currentHeadline = headlines[currentIndex];
     const fullText = currentHeadline.line1 + ' ' + currentHeadline.highlight + ' ' + currentHeadline.line2;
     let charIndex = 0;
+    let timeoutId: NodeJS.Timeout;
 
     setDisplayText({ line1: '', highlight: '', line2: '' });
     setIsTyping(true);
 
-    const typeInterval = setInterval(() => {
+    const getTypingSpeed = (char: string, nextChar?: string) => {
+      // Faster for spaces
+      if (char === ' ') return 30;
+      // Pause at punctuation
+      if ([',', '.', '!', '?', ':', ';'].includes(char)) return 200;
+      // Slightly longer for end of words
+      if (nextChar === ' ') return 60;
+      // Variable speed for natural feel (40-70ms)
+      return 40 + Math.random() * 30;
+    };
+
+    const typeNextChar = () => {
       if (charIndex < fullText.length) {
         const char = fullText[charIndex];
+        const nextChar = fullText[charIndex + 1];
         const line1Length = currentHeadline.line1.length;
         const highlightLength = currentHeadline.highlight.length;
 
@@ -48,28 +61,33 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
           setDisplayText(prev => ({ ...prev, line1: prev.line1 + char }));
         } else if (charIndex === line1Length) {
           charIndex++;
+          timeoutId = setTimeout(typeNextChar, 30);
           return;
         } else if (charIndex <= line1Length + highlightLength) {
           setDisplayText(prev => ({ ...prev, highlight: prev.highlight + char }));
         } else if (charIndex === line1Length + highlightLength + 1) {
           charIndex++;
+          timeoutId = setTimeout(typeNextChar, 30);
           return;
         } else {
           setDisplayText(prev => ({ ...prev, line2: prev.line2 + char }));
         }
 
         charIndex++;
+        const delay = getTypingSpeed(char, nextChar);
+        timeoutId = setTimeout(typeNextChar, delay);
       } else {
-        clearInterval(typeInterval);
         setIsTyping(false);
 
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
           setCurrentIndex((prevIndex) => (prevIndex + 1) % headlines.length);
-        }, 3000);
+        }, 2500);
       }
-    }, 80);
+    };
 
-    return () => clearInterval(typeInterval);
+    typeNextChar();
+
+    return () => clearTimeout(timeoutId);
   }, [currentIndex]);
 
   return (
@@ -83,11 +101,12 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
               {displayText.line1}
               {isTyping && displayText.line1.length > 0 && !displayText.highlight && !displayText.line2 && (
                 <span
-                  className="inline-block w-1 bg-white ml-1 cursor-blink"
-                  style={{ height: '0.8em' }}
-                >
-                  |
-                </span>
+                  className="inline-block w-0.5 bg-white ml-1 animate-pulse"
+                  style={{
+                    height: '0.8em',
+                    animation: 'blink 1s step-end infinite'
+                  }}
+                />
               )}
             </div>
             <div>
@@ -99,30 +118,34 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
               </span>
               {isTyping && displayText.highlight.length > 0 && !displayText.line2 && (
                 <span
-                  className="inline-block w-1 ml-1 cursor-blink"
-                  style={{ height: '0.8em', backgroundColor: '#991923' }}
-                >
-                  |
-                </span>
+                  className="inline-block w-0.5 ml-1"
+                  style={{
+                    height: '0.8em',
+                    backgroundColor: '#991923',
+                    animation: 'blink 1s step-end infinite'
+                  }}
+                />
               )}
             </div>
             <div>
               {displayText.line2}
               {isTyping && displayText.line2.length > 0 && (
                 <span
-                  className="inline-block w-1 bg-white ml-1 cursor-blink"
-                  style={{ height: '0.8em' }}
-                >
-                  |
-                </span>
+                  className="inline-block w-0.5 bg-white ml-1"
+                  style={{
+                    height: '0.8em',
+                    animation: 'blink 1s step-end infinite'
+                  }}
+                />
               )}
               {!isTyping && (
                 <span
-                  className="inline-block w-1 bg-white ml-1 cursor-blink"
-                  style={{ height: '0.8em' }}
-                >
-                  |
-                </span>
+                  className="inline-block w-0.5 bg-white ml-1"
+                  style={{
+                    height: '0.8em',
+                    animation: 'blink 1s step-end infinite'
+                  }}
+                />
               )}
             </div>
           </div>
