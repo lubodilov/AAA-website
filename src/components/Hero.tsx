@@ -12,7 +12,7 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
     {
       line1: "AI for B2B acquisition",
       highlight: "that pays for itself",
-      line2: "in 30–60 days"
+      line2: "in 28 days"
     },
     {
       line1: "Turn your acquisition",
