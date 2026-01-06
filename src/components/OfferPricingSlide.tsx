@@ -66,25 +66,28 @@ export default function OfferPricingSlide({ onOpenSchedule }: OfferPricingSlideP
           {pricingTiers.map((tier, index) => (
             <div
               key={index}
-              className="p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300"
+              className="group relative p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl glass-panel transition-all duration-500 hover:-translate-y-1"
             >
-              <div className="mb-4 sm:mb-5 md:mb-6">
-                <h3 className="text-base sm:text-lg font-normal text-white mb-1.5 sm:mb-2 tracking-tight">
-                  {tier.title}
-                </h3>
-                <p className="text-gray-600 text-xs sm:text-sm font-light mb-3 sm:mb-4">{tier.description}</p>
-                <p className="text-white text-xl sm:text-2xl font-light tracking-tight">
-                  {tier.price}
-                </p>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-br from-red-600/0 via-red-600/0 to-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
+              <div className="relative z-10">
+                <div className="mb-4 sm:mb-5 md:mb-6">
+                  <h3 className="text-base sm:text-lg font-medium text-white mb-1.5 sm:mb-2 tracking-tight group-hover:text-red-100 transition-colors">
+                    {tier.title}
+                  </h3>
+                  <p className="text-gray-500 text-xs sm:text-sm font-light mb-3 sm:mb-4">{tier.description}</p>
+                  <p className="text-white text-xl sm:text-2xl font-light tracking-tight">
+                    {tier.price}
+                  </p>
+                </div>
 
-              <ul className="space-y-2">
-                {tier.features.map((feature, idx) => (
-                  <li key={idx} className="text-xs sm:text-sm text-gray-500 font-light">
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+                <ul className="space-y-2">
+                  {tier.features.map((feature, idx) => (
+                    <li key={idx} className="text-xs sm:text-sm text-gray-400 font-light group-hover:text-gray-300 transition-colors">
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>

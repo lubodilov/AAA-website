@@ -24,6 +24,7 @@ const Portfolio = lazy(() => import('./components/Portfolio'));
 function App() {
   return (
     <Router>
+      <div className="fixed inset-0 pointer-events-none z-[60] opacity-[0.03] mix-blend-overlay bg-noise"></div>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route

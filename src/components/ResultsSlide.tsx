@@ -112,31 +112,31 @@ export default function ResultsSlide({ onOpenSchedule }: ResultsSlideProps) {
             return (
               <div
                 key={caseStudy.id}
-                className="p-5 sm:p-6 rounded-xl sm:rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300"
+                className="group relative p-5 sm:p-6 rounded-xl sm:rounded-2xl glass-panel transition-all duration-500 hover:-translate-y-1"
               >
-                {/* Header */}
-                <div className="mb-3 sm:mb-4">
-                  <h3 className="text-lg sm:text-xl font-bold text-white mb-1 tracking-tight">{caseStudy.title}</h3>
-                  <p className="text-gray-500 text-xs sm:text-sm font-medium">{caseStudy.subtitle}</p>
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-red-600/0 via-red-600/0 to-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
+                <div className="relative z-10">
+                  <div className="mb-3 sm:mb-4">
+                    <h3 className="text-lg sm:text-xl font-medium text-white mb-1 tracking-tight group-hover:text-red-100 transition-colors">{caseStudy.title}</h3>
+                    <p className="text-gray-500 text-xs sm:text-sm font-medium">{caseStudy.subtitle}</p>
+                  </div>
 
-                {/* Quote */}
-                <div className="mb-3 sm:mb-4">
-                  <p className="text-gray-300 text-sm sm:text-base font-normal leading-relaxed italic">
-                    "{caseStudy.problem}"
-                  </p>
-                </div>
+                  <div className="mb-3 sm:mb-4">
+                    <p className="text-gray-400 text-sm sm:text-base leading-relaxed italic group-hover:text-gray-300 transition-colors">
+                      "{caseStudy.problem}"
+                    </p>
+                  </div>
 
-                {/* Impact */}
-                <div className="space-y-2">
-                  {caseStudy.impact.map((metric, index) => {
-                    return (
-                      <div key={index} className="flex items-baseline justify-between gap-2">
-                        <span className="text-gray-300 text-xs sm:text-sm font-medium">{metric.label}</span>
-                        <span className={`${index === 0 ? 'text-red-600' : 'text-white'} text-lg sm:text-xl font-bold flex-shrink-0`}>{metric.value}</span>
-                      </div>
-                    );
-                  })}
+                  <div className="space-y-2">
+                    {caseStudy.impact.map((metric, index) => {
+                      return (
+                        <div key={index} className="flex items-baseline justify-between gap-2">
+                          <span className="text-gray-400 text-xs sm:text-sm font-medium group-hover:text-gray-300 transition-colors">{metric.label}</span>
+                          <span className={`${index === 0 ? 'text-red-400' : 'text-white'} text-lg sm:text-xl font-bold flex-shrink-0`}>{metric.value}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             );

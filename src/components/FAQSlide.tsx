@@ -47,16 +47,17 @@ export default function FAQSlide() {
             return (
               <div
                 key={index}
-                className="p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300"
+                className="group relative p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl glass-panel transition-all duration-500"
               >
+                <div className="absolute inset-0 bg-gradient-to-br from-red-600/0 via-red-600/0 to-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full flex items-start justify-between text-left"
+                  className="relative z-10 w-full flex items-start justify-between text-left"
                 >
                   <div className="flex-1 pr-2">
-                    <h3 className="text-white font-normal text-base sm:text-lg mb-2 sm:mb-3 tracking-tight">{faq.question}</h3>
+                    <h3 className="text-white font-normal text-base sm:text-lg mb-2 sm:mb-3 tracking-tight group-hover:text-red-100 transition-colors">{faq.question}</h3>
                     {isOpen && (
-                      <p className="text-gray-500 font-light text-sm sm:text-base leading-relaxed">
+                      <p className="text-gray-400 font-light text-sm sm:text-base leading-relaxed group-hover:text-gray-300 transition-colors">
                         {faq.answer}
                       </p>
                     )}

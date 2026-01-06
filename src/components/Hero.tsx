@@ -92,16 +92,17 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
 
   return (
     <section className="h-screen flex items-center justify-center px-4 sm:px-6 pt-20 pb-8 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90 z-0"></div>
       <div className="absolute inset-0 bg-black/20 z-0"></div>
 
-      <div className="relative text-center max-w-6xl mx-auto z-10 w-full">
-        <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-extralight text-white leading-tight mb-8 sm:mb-12 min-h-[240px] sm:min-h-[300px] md:min-h-[350px] flex flex-col justify-center px-2">
-          <div className="font-thin" style={{ fontFamily: 'Inter, sans-serif' }}>
-            <div>
+      <div className="relative text-center max-w-6xl mx-auto z-30 w-full">
+        <h1 className="text-4xl sm:text-6xl md:text-8xl font-medium text-white leading-[1.1] mb-8 sm:mb-12 min-h-[240px] sm:min-h-[300px] md:min-h-[350px] flex flex-col justify-center px-2 drop-shadow-2xl tracking-tighter">
+          <div style={{ fontFamily: 'Inter, sans-serif' }}>
+            <div className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70">
               {displayText.line1}
               {isTyping && displayText.line1.length > 0 && !displayText.highlight && !displayText.line2 && (
                 <span
-                  className="inline-block w-0.5 bg-white ml-1 animate-pulse"
+                  className="inline-block w-0.5 bg-white ml-1"
                   style={{
                     height: '0.8em',
                     animation: 'blink 1s step-end infinite'
@@ -109,25 +110,28 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
                 />
               )}
             </div>
-            <div>
+            <div className="relative inline-block my-2">
               <span
-                className="font-extralight italic"
-                style={{ color: '#991923' }}
+                className="italic font-light relative z-10"
+                style={{ color: '#ff4d5e' }}
               >
                 {displayText.highlight}
               </span>
+              {displayText.highlight && (
+                <div className="absolute inset-0 blur-2xl bg-red-600/20 opacity-50 z-0"></div>
+              )}
               {isTyping && displayText.highlight.length > 0 && !displayText.line2 && (
                 <span
-                  className="inline-block w-0.5 ml-1"
+                  className="inline-block w-0.5 ml-1 relative z-10"
                   style={{
                     height: '0.8em',
-                    backgroundColor: '#991923',
+                    backgroundColor: '#ff4d5e',
                     animation: 'blink 1s step-end infinite'
                   }}
                 />
               )}
             </div>
-            <div>
+            <div className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70">
               {displayText.line2}
               {isTyping && displayText.line2.length > 0 && (
                 <span
@@ -151,23 +155,28 @@ export default function Hero({ onOpenContact, onOpenSchedule, onScrollToResults 
           </div>
         </h1>
 
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 px-4 w-full max-w-lg sm:max-w-none mx-auto">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-4 w-full">
           <button
             onClick={onOpenSchedule}
-            className="group relative bg-gradient-to-r from-red-600 to-red-700 text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center justify-center space-x-2 sm:space-x-3 shadow-lg shadow-red-600/25 hover:shadow-red-600/40 hover:scale-105 w-full sm:w-auto"
+            className="group relative px-8 py-4 rounded-full transition-all duration-300 hover:scale-105"
           >
-            <Calendar className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-            <span className="font-light text-base sm:text-lg">Book a Call</span>
-            <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 rounded-full blur opacity-40 group-hover:opacity-60 transition-opacity"></div>
+            <div className="relative bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-4 rounded-full flex items-center justify-center space-x-3 border border-white/10">
+              <Calendar className="w-5 h-5" />
+              <span className="font-medium text-lg tracking-wide">Book a Call</span>
+              <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </div>
           </button>
 
           <button
             onClick={onScrollToResults}
-            className="group relative bg-transparent border border-gray-600 text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full hover:border-red-600 transition-all duration-300 flex items-center justify-center space-x-2 sm:space-x-3 overflow-hidden w-full sm:w-auto"
+            className="group relative px-8 py-4 rounded-full transition-all duration-300"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-600/10 to-red-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-            <span className="relative z-10 font-light text-base sm:text-base">See our work</span>
-            <ArrowUpRight className="relative z-10 w-4 h-4 flex-shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-white/5 rounded-full border border-white/10 backdrop-blur-sm group-hover:bg-white/10 transition-colors"></div>
+            <div className="relative flex items-center justify-center space-x-3 text-white">
+              <span className="font-light text-lg tracking-wide">See our work</span>
+              <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </div>
           </button>
         </div>
       </div>

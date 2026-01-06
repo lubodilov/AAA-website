@@ -114,26 +114,28 @@ export default function SystemsSlide({ onOpenSchedule }: SystemsSlideProps) {
             return (
               <div
                 key={system.id}
-                className="group p-5 sm:p-6 rounded-xl sm:rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300"
+                className="group relative p-5 sm:p-6 rounded-xl sm:rounded-2xl glass-panel transition-all duration-500 hover:-translate-y-1"
               >
-                {/* Icon & Title */}
-                <div className="mb-3 sm:mb-4">
-                  <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-white mb-2 sm:mb-3" strokeWidth={1.5} />
-                  <h3 className="text-white font-bold text-lg sm:text-xl tracking-tight">{system.title}</h3>
-                </div>
-
-                {/* Description */}
-                <p className="text-gray-300 font-normal text-sm sm:text-base leading-relaxed mb-3 sm:mb-4">
-                  {system.description}
-                </p>
-
-                {/* KPIs */}
-                <div className="space-y-1.5 sm:space-y-2">
-                  {system.kpis.map((kpi, index) => (
-                    <div key={index} className="text-gray-300 text-xs sm:text-sm font-medium">
-                      {kpi}
+                <div className="absolute inset-0 bg-gradient-to-br from-red-600/0 via-red-600/0 to-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
+                <div className="relative z-10">
+                  <div className="mb-3 sm:mb-4">
+                    <div className="inline-flex p-3 rounded-lg bg-white/5 border border-white/10 text-white group-hover:scale-110 transition-all duration-300 mb-2 sm:mb-3">
+                      <Icon className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={1.5} />
                     </div>
-                  ))}
+                    <h3 className="text-white font-medium text-lg sm:text-xl tracking-tight group-hover:text-red-100 transition-colors">{system.title}</h3>
+                  </div>
+
+                  <p className="text-gray-400 text-sm sm:text-base leading-relaxed mb-3 sm:mb-4 group-hover:text-gray-300 transition-colors">
+                    {system.description}
+                  </p>
+
+                  <div className="space-y-1.5 sm:space-y-2">
+                    {system.kpis.map((kpi, index) => (
+                      <div key={index} className="text-gray-400 text-xs sm:text-sm font-medium group-hover:text-gray-300 transition-colors">
+                        {kpi}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             );

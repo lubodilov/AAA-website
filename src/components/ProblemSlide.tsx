@@ -42,14 +42,17 @@ export default function ProblemSlide() {
           {problems.map((problem, index) => {
             const Icon = problem.icon;
             return (
-              <div key={index} className="group p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700/80 transition-all duration-300">
-                <div className="mb-3 sm:mb-4">
-                  <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-red-600" strokeWidth={1.5} />
+              <div key={index} className="group relative p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl glass-panel transition-all duration-500 hover:-translate-y-1">
+                <div className="absolute inset-0 bg-gradient-to-br from-red-600/0 via-red-600/0 to-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
+                <div className="relative z-10">
+                  <div className="mb-3 sm:mb-4 inline-flex p-3 rounded-lg bg-white/5 border border-white/10 text-red-500 group-hover:text-red-400 group-hover:scale-110 transition-all duration-300">
+                    <Icon className="w-6 h-6" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-white text-lg sm:text-xl font-medium mb-2 sm:mb-3 tracking-tight group-hover:text-red-100 transition-colors">{problem.title}</h3>
+                  <p className="text-gray-400 text-sm sm:text-base leading-relaxed group-hover:text-gray-300 transition-colors">
+                    {problem.description}
+                  </p>
                 </div>
-                <h3 className="text-white text-lg sm:text-xl font-semibold mb-2 sm:mb-3 tracking-tight">{problem.title}</h3>
-                <p className="text-gray-300 text-sm sm:text-base font-normal leading-relaxed">
-                  {problem.description}
-                </p>
               </div>
             );
           })}
