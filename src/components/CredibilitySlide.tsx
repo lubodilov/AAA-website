@@ -73,20 +73,28 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-black/5 z-0"></div>
 
       <div className="relative max-w-5xl mx-auto z-10 w-full">
-        <div className="text-center mb-6 sm:mb-8">
-          <p className="text-gray-400 text-xs font-light uppercase tracking-widest mb-6 sm:mb-8 opacity-70">Trusted by</p>
+        <div className="text-center mb-10 sm:mb-16">
+          <p className="text-white/40 text-[10px] sm:text-xs font-medium uppercase tracking-[0.2em] mb-8 sm:mb-10">
+            Trusted by industry leaders
+          </p>
 
-          <div className="relative overflow-hidden h-24 sm:h-28 md:h-36">
-            <div className="flex items-center gap-8 animate-scroll-left">
+          <div 
+            className="relative overflow-hidden h-16 sm:h-20 md:h-24 w-full max-w-5xl mx-auto"
+            style={{
+              maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
+            }}
+          >
+            <div className="flex items-center gap-12 sm:gap-20 animate-scroll-left w-max">
               {[...logos, ...logos].map((logo, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 px-3 sm:px-4 py-2 sm:py-3 border border-white/30 rounded-lg sm:rounded-xl backdrop-blur-sm bg-white/[0.08] hover:bg-white/[0.12] hover:border-white/40 transition-all duration-300"
+                  className="flex-shrink-0 flex items-center justify-center group"
                 >
                   <img
                     src={logo}
                     alt={`Client logo ${(index % logos.length) + 1}`}
-                    className="h-10 sm:h-12 md:h-16 w-auto object-contain filter brightness-110 hover:brightness-125 transition-all duration-300"
+                    className="h-8 sm:h-10 md:h-12 w-auto object-contain filter grayscale opacity-40 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500 will-change-[opacity,filter]"
                   />
                 </div>
               ))}

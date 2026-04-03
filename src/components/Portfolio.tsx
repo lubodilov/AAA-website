@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Filter, TrendingUp, Clock, Target, Star, Award, Zap, ChevronDown, ChevronLeft, ChevronRight, X, Play } from 'lucide-react';
 import Header from './Header';
 import SEOHead from './SEOHead';
+import ScheduleCall from './ScheduleCall';
 
 // Cursor glow component
 const CursorGlow = ({ color, isVisible }: { color: string; isVisible: boolean }) => {
@@ -450,6 +451,7 @@ export default function Portfolio() {
   const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
   const [cursorGlow, setCursorGlow] = useState({ color: '', isVisible: false });
   const [selectedProject, setSelectedProject] = useState<Transformation | null>(null);
+  const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
   const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   useEffect(() => {
@@ -521,7 +523,7 @@ export default function Portfolio() {
 
   // Prevent body scroll when modal is open
   useEffect(() => {
-    if (selectedProject) {
+    if (selectedProject || isAuditModalOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -529,18 +531,19 @@ export default function Portfolio() {
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [selectedProject]);
+  }, [selectedProject, isAuditModalOpen]);
 
   // Close modal on escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && selectedProject) {
-        setSelectedProject(null);
+      if (e.key === 'Escape') {
+        if (selectedProject) setSelectedProject(null);
+        if (isAuditModalOpen) setIsAuditModalOpen(false);
       }
     };
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
-  }, [selectedProject]);
+  }, [selectedProject, isAuditModalOpen]);
 
   return (
     <div className="min-h-screen bg-black relative">
@@ -554,6 +557,85 @@ export default function Portfolio() {
 
       {/* Elite Cursor Glow */}
       <CursorGlow color={cursorGlow.color} isVisible={cursorGlow.isVisible} />
+
+      {/* Premium Audit Modal */}
+      {isAuditModalOpen && (
+        <div
+          className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-300"
+          onClick={() => setIsAuditModalOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-6xl max-h-[90vh] bg-[#0a0a0a] border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row animate-in zoom-in-95 duration-500"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setIsAuditModalOpen(false)}
+              className="absolute top-4 right-4 z-10 bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white p-2 rounded-full transition-all duration-300"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Left Column - Value Prop */}
+            <div className="w-full lg:w-5/12 p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-white/10 bg-gradient-to-br from-red-600/5 to-transparent flex flex-col justify-center relative overflow-hidden">
+              {/* Background Glow */}
+              <div className="absolute top-0 left-0 w-full h-full bg-red-600/5 blur-[100px] pointer-events-none"></div>
+              
+              <div className="relative z-10">
+                <div className="inline-flex items-center space-x-2 bg-red-600/10 text-red-500 text-xs font-semibold px-3 py-1.5 rounded-full border border-red-600/20 mb-6">
+                  <Star className="w-3 h-3" />
+                  <span>FREE VISION GAP ANALYSIS</span>
+                </div>
+                
+                <h2 className="text-3xl lg:text-4xl font-bold text-white leading-tight mb-6">
+                  Ready to uncover your <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">hidden $millions</span>?
+                </h2>
+                
+                <p className="text-white/70 text-lg mb-8 font-light leading-relaxed">
+                  Book your 20-minute strategy call. We'll audit your exact acquisition and retention bottlenecks and prove the ROI before you commit to anything.
+                </p>
+
+                <div className="space-y-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-red-600/10 border border-red-600/20 flex items-center justify-center mt-1">
+                      <Target className="w-5 h-5 text-red-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-medium mb-1">Takes 20 minutes</h4>
+                      <p className="text-sm font-light text-white/50">A no-fluff, hyper-focused teardown of your current stack.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mt-1">
+                      <Clock className="w-5 h-5 text-amber-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-medium mb-1">Extremely Limited</h4>
+                      <p className="text-sm font-light text-white/50">Only 3 new clients accepted per quarter. Book to secure your spot.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mt-1">
+                      <Zap className="w-5 h-5 text-emerald-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-medium mb-1">$500K Guarantee</h4>
+                      <p className="text-sm font-light text-white/50">If we don't spot $500K+ in missed opportunity, the audit is entirely free.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Booking Form */}
+            <div className="w-full lg:w-7/12 bg-[#050505] overflow-y-auto">
+              <ScheduleCall isOpen={isAuditModalOpen} />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Project Detail Modal */}
       {selectedProject && (
@@ -1211,7 +1293,10 @@ export default function Portfolio() {
 
               {/* Micro-CTA under carousel */}
               <div className="text-center mt-8">
-                <button className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-medium hover:bg-white/20 transition-all duration-300">
+                <button 
+                  onClick={() => setIsAuditModalOpen(true)}
+                  className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-medium hover:bg-white/20 transition-all duration-300 hover:scale-105"
+                >
                   Want the fast ROI play? Start with a 4-week Pilot → Book Audit
                 </button>
               </div>
@@ -1252,7 +1337,10 @@ export default function Portfolio() {
                 </p>
                 
                 {/* CTA Button */}
-                <button className="group bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-12 py-6 rounded-full font-bold text-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center space-x-4 mx-auto mb-6 shadow-xl shadow-red-600/15 hover:scale-102 border border-red-600/30">
+                <button 
+                  onClick={() => setIsAuditModalOpen(true)}
+                  className="group bg-gradient-to-r from-red-600/90 to-red-700/90 text-white px-12 py-6 rounded-full font-bold text-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center space-x-4 mx-auto mb-6 shadow-xl shadow-red-600/15 hover:scale-105 border border-red-600/30"
+                >
                   <span>REVEAL MY HIDDEN OPPORTUNITIES</span>
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
