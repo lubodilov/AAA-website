@@ -1,35 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowDown, Target, Bot, Database } from 'lucide-react';
 
 interface Testimonial {
   quote: string;
-  name: string;
-  role: string;
-  company: string;
+  solution: string;
+  category: string;
   metric: string;
+  icon: React.ElementType;
 }
 
 const testimonials: Testimonial[] = [
   {
-    quote: "Booked 31% more meetings in 6 weeks; reps stopped drowning in admin.",
-    name: "Michael Chen",
-    role: "VP Sales",
-    company: "B2B SaaS",
-    metric: "+31% meetings"
+    quote: "Discovered 4 major workflow bottlenecks and mapped a comprehensive AI strategy that reduced overhead by 40%.",
+    solution: "AI Audit & Strategy",
+    category: "Process Optimization",
+    metric: "40% less overhead",
+    icon: Target
   },
   {
-    quote: "Refunds −11% with AI triage; CX happier.",
-    name: "Sarah Williams",
-    role: "Head of CX",
-    company: "E-commerce",
-    metric: "−11% refunds"
+    quote: "Automated 80% of inbound calls and booked 45% more appointments without human intervention.",
+    solution: "AI Receptionist",
+    category: "Front-desk Automation",
+    metric: "80% call automation",
+    icon: Bot
   },
   {
-    quote: "7.2h saved/rep/week; forecast accuracy +14%.",
-    name: "David Rodriguez",
-    role: "RevOps Lead",
-    company: "Professional Services",
-    metric: "7.2h saved/week"
+    quote: "Centralized our entire company documentation. Team members find answers in seconds instead of hours.",
+    solution: "AI Knowledge Base",
+    category: "Internal Operations",
+    metric: "10x faster search",
+    icon: Database
   }
 ];
 
@@ -108,22 +108,20 @@ export default function CredibilitySlide({ onScrollToCases }: CredibilitySlidePr
               "{currentTestimonial.quote}"
             </blockquote>
 
-            <div className="flex flex-col items-center space-y-2 sm:space-y-3">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-red-600/30 shadow-lg">
-                <img
-                  src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400"
-                  alt="Professional business executive testimonial"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  width="64"
-                  height="64"
-                  decoding="async"
-                />
+            <div className="flex flex-col items-center space-y-3 sm:space-y-4 pt-2">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-center shadow-lg relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <currentTestimonial.icon className="w-6 h-6 sm:w-8 sm:h-8 text-red-500 relative z-10" strokeWidth={1.5} />
               </div>
               <div className="text-center">
-                <p className="text-red-600 font-normal text-sm sm:text-base mb-1">{currentTestimonial.name}</p>
-                <p className="text-gray-600 font-light text-xs sm:text-sm">
-                  {currentTestimonial.role}
+                <div className="flex items-center justify-center space-x-2 mb-1">
+                  <p className="text-red-500 font-medium text-sm sm:text-base">{currentTestimonial.solution}</p>
+                  <span className="px-2 py-0.5 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] sm:text-xs text-red-400 font-medium tracking-wide">
+                    {currentTestimonial.metric}
+                  </span>
+                </div>
+                <p className="text-gray-500 font-light text-xs sm:text-sm">
+                  {currentTestimonial.category}
                 </p>
               </div>
             </div>
