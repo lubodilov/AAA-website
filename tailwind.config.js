@@ -1,56 +1,62 @@
+const v = (name) => `rgb(var(--${name}) / <alpha-value>)`;
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: {
-        red: {
-          400: '#ff4d5e',
-          500: '#dc2626',
-          600: '#991923',
-          700: '#7d1420',
-          800: '#4a0c11',
-          900: '#2b0508',
-          950: '#1a0203',
+        ink: {
+          DEFAULT: v('ink-rgb'),
+          900: v('ink-rgb'),
+          850: v('ink-850-rgb'),
+          800: v('ink-800-rgb'),
+          700: v('ink-700-rgb'),
+          600: v('ink-600-rgb'),
         },
-        gray: {
-          850: '#1f1f1f',
-          900: '#121212',
-          950: '#0a0a0a',
-        }
+        bone: {
+          DEFAULT: v('bone-rgb'),
+          dim: v('bone-dim-rgb'),
+        },
+        ash: v('ash-rgb'),
+        smoke: v('smoke-rgb'),
+        line: 'var(--line)',
+        signal: {
+          DEFAULT: '#ff2b1e',
+          hot: v('signal-hot-rgb'),
+          deep: '#a8160d',
+          ember: '#4a0805',
+        },
+        // older names still used by the forms and the case pages
+        paper: v('ink-rgb'),
+        char: {
+          DEFAULT: v('bone-rgb'),
+          2: v('bone-dim-rgb'),
+          3: v('ash-rgb'),
+        },
+        red: {
+          DEFAULT: '#ff2b1e',
+          text: v('signal-hot-rgb'),
+        },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['"Inter Tight"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+        serif: ['"Instrument Serif"', 'ui-serif', 'Georgia', 'serif'],
+        mono: ['"Geist Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'hero-glow': 'conic-gradient(from 180deg at 50% 50%, #1a0507 0deg, #4a0c11 55deg, #991923 120deg, #1a0507 160deg, transparent 360deg)',
+      transitionTimingFunction: {
+        out: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        'in-out': 'cubic-bezier(0.65, 0, 0.35, 1)',
       },
-      animation: {
-        'pulse': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'ping': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
-        'float': 'float 6s ease-in-out infinite',
-        'infinite-scroll-right': 'infinite-scroll-right 30s linear infinite',
-        'infinite-scroll-left': 'infinite-scroll-left 40s linear infinite',
-        'shimmer': 'shimmer 2s linear infinite',
-      },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
-        shimmer: {
-          from: { backgroundPosition: '0 0' },
-          to: { backgroundPosition: '-200% 0' },
-        },
-        'infinite-scroll-right': {
-          '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-50%)' }
-        },
-        'infinite-scroll-left': {
-          '0%': { transform: 'translateX(-50%)' },
-          '100%': { transform: 'translateX(0%)' }
-        },
+      maxWidth: {
+        frame: '1520px',
       },
     },
   },

@@ -1,96 +1,126 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { ArrowUpRight, Menu, X, Calendar, Briefcase } from 'lucide-react';
+import { MouseEvent, useEffect, useState } from 'react';
+import { Button } from './Button';
+import { ThemeToggle } from './ThemeToggle';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Logo } from './Logo';
+import { Locale, loadLocale, swapLocale, useLocale } from '../content';
+import { useUI } from './UI';
+import { lockScroll, onScrollFrame, scrollToTarget } from '../lib/scroll';
 
-interface HeaderProps {
-  onOpenContact?: () => void;
-  onOpenSchedule?: () => void;
-  isScrolled?: boolean;
+export function useHashNav() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  return (href: string, e?: MouseEvent) => {
+    const [path, hash] = href.split('#');
+    if (!hash) return;
+    e?.preventDefault();
+    if (pathname === (path || '/')) scrollToTarget(`#${hash}`);
+    else navigate(`${path || '/'}#${hash}`);
+  };
 }
 
-export default function Header({ onOpenContact, onOpenSchedule, isScrolled = false }: HeaderProps) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
+/** The same page in the other language, fetched first so nothing flashes. */
+export function LangSwitch({ className = '', full = false }: { className?: string; full?: boolean }) {
+  const { t, locale } = useLocale();
+  const { pathname, hash } = useLocation();
+  const navigate = useNavigate();
+  const h = t.ui.header;
+  const other: Locale = locale === 'en' ? 'bg' : 'en';
+  const to = swapLocale(pathname, hash);
+  const warm = () => void loadLocale(other);
+  const go = (e: MouseEvent) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    void loadLocale(other).then(() => navigate(to));
+  };
+  return (
+    <Link to={to} hrefLang={other} lang={other} aria-label={h.langLabel} className={className} onClick={go} onPointerEnter={warm} onFocus={warm}>
+      {full ? h.langLabel : h.lang}
+    </Link>
+  );
+}
+
+export function Header() {
+  const { t, href } = useLocale();
+  const { nav, site } = t;
+  const h = t.ui.header;
+  const { open, warm } = useUI();
+  const [solid, setSolid] = useState(false);
+  const [menu, setMenu] = useState(false);
+  const go = useHashNav();
+  const { pathname } = useLocation();
+
+  useEffect(() => onScrollFrame(() => {
+    const hero = document.querySelector('.hero-track');
+    setSolid(hero ? hero.getBoundingClientRect().bottom < window.innerHeight + 8 : window.scrollY > 12);
+  }), []);
+  useEffect(() => setMenu(false), [pathname]);
+  useEffect(() => {
+    lockScroll(menu);
+  }, [menu]);
+
+  const item = (n: { label: string; href: string }, cls: string) =>
+    n.href.includes('#') ? (
+      <a key={n.href} href={n.href} className={cls} onClick={(e) => { go(n.href, e); setMenu(false); }}>
+        {n.label}
+      </a>
+    ) : (
+      <Link key={n.href} to={n.href} className={cls}>
+        {n.label}
+      </Link>
+    );
 
   return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-black/30 backdrop-blur-md"
-    >
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex justify-between items-center">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group cursor-pointer">
-            <img
-              src="/upgrade_vision_ai.png"
-              alt="Upgrade Vision AI Solutions"
-              className="h-12 w-12 object-contain transition-all duration-300 group-hover:scale-105"
-            />
-            <span
-              className="font-semibold text-xl tracking-wide hidden sm:block"
-              style={{
-                background: 'linear-gradient(135deg, #ffffff 0%, #ef4444 60%, #dc2626 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}
-            >
-              Upgrade Vision AI
-            </span>
+    <>
+      <header className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${solid || menu ? 'border-b border-[var(--line)] bg-ink/90 backdrop-blur-md' : 'border-b border-transparent'}`}>
+        <div className="wrap flex h-[var(--header-h)] items-center justify-between gap-6">
+          <Link to={href('/')} aria-label={`${site.name}: ${h.homeAria}`}>
+            <Logo />
           </Link>
-
-          {/* CTA Button and Portfolio Link */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link
-              to="/portfolio"
-              className="group relative text-white/70 hover:text-white px-4 py-2 rounded-full transition-all duration-300 flex items-center space-x-2"
-            >
-              <Briefcase className="w-4 h-4" />
-              <span className="font-light text-sm">Case Studies</span>
-            </Link>
-            <button
-              onClick={onOpenSchedule}
-              className="group relative bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-2.5 rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center space-x-2 shadow-lg shadow-red-600/25 hover:shadow-red-600/40"
-            >
-              <Calendar className="w-4 h-4" />
-              <span className="font-light">Book Audit</span>
+          <nav aria-label={h.menu} className="hidden items-center gap-9 md:flex">
+            {nav.map((n) => item(n, 'text-[15.5px] transition-colors hover:text-char'))}
+          </nav>
+          <div className="flex items-center gap-2 md:gap-4">
+            <span className="hidden md:inline-flex">
+              <ThemeToggle />
+            </span>
+            <LangSwitch className="hidden min-h-[44px] items-center px-1 text-[15px] text-char-2 transition-colors hover:text-char md:inline-flex" />
+            <button type="button" className="inline-flex min-h-[44px] items-center px-1 text-[15px] font-medium md:hidden" onClick={() => open('booking')} onPointerEnter={warm}>
+              {h.bookCall}
             </button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-white p-2 hover:bg-red-600/10 rounded-lg transition-colors duration-300"
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        <div className={`md:hidden transition-all duration-300 overflow-hidden ${
-          isMobileMenuOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
-        }`}>
-          <div className="bg-black/80 backdrop-blur-md rounded-xl border border-red-600/20 p-6 space-y-4">
-            <Link
-              to="/portfolio"
-              className="block font-light py-2 text-gray-300 hover:text-white transition-colors duration-300 flex items-center space-x-2"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <Briefcase className="w-4 h-4" />
-              <span>Case Studies</span>
-            </Link>
-            <button
-              onClick={() => {
-                onOpenSchedule?.();
-                setIsMobileMenuOpen(false);
-              }}
-              className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full font-light hover:from-red-700 hover:to-red-800 transition-all duration-300 flex items-center justify-center space-x-2 mt-4"
-            >
-              <Calendar className="w-4 h-4" />
-              <span>Book Audit</span>
+            <span className="hidden md:inline-flex" onPointerEnter={warm} onFocus={warm}>
+              <Button size="sm" onClick={() => open('booking')}>
+                {h.bookCall}
+              </Button>
+            </span>
+            <button type="button" className="inline-flex min-h-[44px] items-center px-1 text-[15px] md:hidden" aria-expanded={menu} aria-controls="mobile-menu" onClick={() => setMenu((m) => !m)}>
+              {menu ? h.close : h.menu}
             </button>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+      {menu && (
+        <div id="mobile-menu" className="fixed inset-0 z-40 flex flex-col bg-paper pt-[calc(var(--header-h)+24px)] md:hidden" data-lenis-prevent>
+          <nav aria-label={h.menu} className="wrap flex flex-col">
+            {[{ label: h.home, href: href('/') }, ...nav].map((n) => (
+              <div key={n.href} className="border-b border-[var(--rule)] py-4">
+                {item(n, 'serif text-[34px] leading-tight')}
+              </div>
+            ))}
+          </nav>
+          <div className="wrap mt-auto pb-8">
+            <div className="mb-5 flex items-center justify-between">
+              <span onClickCapture={() => setMenu(false)}>
+                <LangSwitch full className="inline-flex min-h-[44px] items-center text-[17px]" />
+              </span>
+              <ThemeToggle />
+            </div>
+            <Button className="w-full justify-center" onClick={() => { setMenu(false); open('booking'); }}>
+              {h.bookCall}
+            </Button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

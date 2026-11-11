@@ -1,23 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-  <!-- Homepage -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://www.upgradevision.ai/</loc>
-    <lastmod>2025-11-26</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://upgradevision.ai/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://upgradevision.ai/" />
+    <xhtml:link rel="alternate" hreflang="bg" href="https://upgradevision.ai/bg" />
   </url>
-
-  <!-- Portfolio / Case Studies -->
   <url>
-    <loc>https://www.upgradevision.ai/portfolio</loc>
-    <lastmod>2025-11-26</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://upgradevision.ai/work</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://upgradevision.ai/work" />
+    <xhtml:link rel="alternate" hreflang="bg" href="https://upgradevision.ai/bg/work" />
   </url>
-
+  <url>
+    <loc>https://upgradevision.ai/bg</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://upgradevision.ai/" />
+    <xhtml:link rel="alternate" hreflang="bg" href="https://upgradevision.ai/bg" />
+  </url>
+  <url>
+    <loc>https://upgradevision.ai/bg/work</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://upgradevision.ai/work" />
+    <xhtml:link rel="alternate" hreflang="bg" href="https://upgradevision.ai/bg/work" />
+  </url>
+  <url>
+    <loc>https://upgradevision.ai/privacy</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://upgradevision.ai/privacy" />
+    <xhtml:link rel="alternate" hreflang="bg" href="https://upgradevision.ai/bg/privacy" />
+  </url>
+  <url>
+    <loc>https://upgradevision.ai/bg/privacy</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://upgradevision.ai/privacy" />
+    <xhtml:link rel="alternate" hreflang="bg" href="https://upgradevision.ai/bg/privacy" />
+  </url>
 </urlset>

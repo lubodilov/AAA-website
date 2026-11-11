@@ -2,34 +2,25 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react()],
-  optimizeDeps: {
-    exclude: ['lucide-react'],
-  },
   build: {
-    // Enable minification for smaller bundle sizes (using esbuild which is faster)
+    target: 'es2020',
     minify: 'esbuild',
-    // Code splitting for better caching
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'icons': ['lucide-react'],
-        },
-      },
-    },
-    // Increase chunk size warning limit
-    chunkSizeWarningLimit: 1000,
-    // Enable CSS code splitting
     cssCodeSplit: true,
-    // Generate source maps for production debugging
     sourcemap: false,
-    // Optimize assets
     assetsInlineLimit: 4096,
+    rollupOptions: isSsrBuild
+      ? {}
+      : {
+          output: {
+            manualChunks: {
+              react: ['react', 'react-dom', 'react-router-dom'],
+            },
+          },
+        },
   },
-  server: {
-    // Compress responses
-    compress: true,
+  ssr: {
+    noExternal: ['lenis'],
   },
-});
+}));
